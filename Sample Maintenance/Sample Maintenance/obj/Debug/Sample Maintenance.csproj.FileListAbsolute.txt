@@ -1,0 +1,17 @@
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\Sample Maintenance\Sample Maintenance\bin\Debug\Sample Maintenance.exe.config
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\Sample Maintenance\Sample Maintenance\obj\Debug\Sample Maintenance.csprojResolveAssemblyReference.cache
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\Sample Maintenance\Sample Maintenance\obj\Debug\MainWindow.baml
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\Sample Maintenance\Sample Maintenance\obj\Debug\MainWindow.g.cs
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\Sample Maintenance\Sample Maintenance\obj\Debug\App.g.cs
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\Sample Maintenance\Sample Maintenance\obj\Debug\Sample Maintenance_MarkupCompile.cache
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\Sample Maintenance\Sample Maintenance\obj\Debug\Sample Maintenance.g.resources
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\Sample Maintenance\Sample Maintenance\obj\Debug\Sample_Maintenance.Properties.Resources.resources
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\Sample Maintenance\Sample Maintenance\obj\Debug\Sample Maintenance.csproj.GenerateResource.Cache
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\Sample Maintenance\Sample Maintenance\bin\Debug\Sample Maintenance.exe
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\Sample Maintenance\Sample Maintenance\bin\Debug\Sample Maintenance.pdb
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\Sample Maintenance\Sample Maintenance\bin\Debug\EntityFramework.dll
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\Sample Maintenance\Sample Maintenance\bin\Debug\EntityFramework.xml
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\Sample Maintenance\Sample Maintenance\obj\Debug\Sample Maintenance.exe
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\Sample Maintenance\Sample Maintenance\obj\Debug\Sample Maintenance.pdb
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\Sample Maintenance\Sample Maintenance\obj\Debug\Sample_Maintenance.Migrations.InitialCreate.resources
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\Sample Maintenance\Sample Maintenance\obj\Debug\Sample_Maintenance.Migrations.AddAddressEmployee.resources

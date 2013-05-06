@@ -1,0 +1,15 @@
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\SampleEF\SampleEF\bin\Debug\SampleEF.exe.config
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\SampleEF\SampleEF\bin\Debug\SampleEF.exe
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\SampleEF\SampleEF\bin\Debug\SampleEF.pdb
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\SampleEF\SampleEF\bin\Debug\EntityFramework.dll
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\SampleEF\SampleEF\bin\Debug\EntityFramework.xml
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\SampleEF\SampleEF\obj\Debug\SampleEF.csprojResolveAssemblyReference.cache
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\SampleEF\SampleEF\obj\Debug\MainWindow.baml
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\SampleEF\SampleEF\obj\Debug\MainWindow.g.cs
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\SampleEF\SampleEF\obj\Debug\App.g.cs
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\SampleEF\SampleEF\obj\Debug\SampleEF_MarkupCompile.cache
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\SampleEF\SampleEF\obj\Debug\SampleEF.g.resources
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\SampleEF\SampleEF\obj\Debug\SampleEF.Properties.Resources.resources
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\SampleEF\SampleEF\obj\Debug\SampleEF.csproj.GenerateResource.Cache
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\SampleEF\SampleEF\obj\Debug\SampleEF.exe
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\SampleEF\SampleEF\obj\Debug\SampleEF.pdb

@@ -1,0 +1,7 @@
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\CodeFirstSample\CodeFirstSample\bin\Debug\CodeFirstSample.exe.config
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\CodeFirstSample\CodeFirstSample\bin\Debug\CodeFirstSample.exe
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\CodeFirstSample\CodeFirstSample\bin\Debug\CodeFirstSample.pdb
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\CodeFirstSample\CodeFirstSample\bin\Debug\EntityFramework.dll
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\CodeFirstSample\CodeFirstSample\bin\Debug\EntityFramework.xml
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\CodeFirstSample\CodeFirstSample\obj\Debug\CodeFirstSample.exe
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\CodeFirstSample\CodeFirstSample\obj\Debug\CodeFirstSample.pdb
