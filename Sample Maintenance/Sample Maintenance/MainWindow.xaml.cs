@@ -102,6 +102,14 @@ namespace Sample_Maintenance
         private void Grid_Loaded_1(object sender, RoutedEventArgs e)
         {
             resetGrid();
+            if (cb1.IsChecked == true)
+            {
+                tb2.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                tb2.Visibility = Visibility.Hidden;
+            }
         }
 
         private void resetGrid()
@@ -148,6 +156,58 @@ namespace Sample_Maintenance
                 }
             }
         }
+
+        public System.Drawing.Image byteArrayToImage(byte[] byteArrayIn)
+        {
+            MemoryStream ms = new MemoryStream(byteArrayIn);
+            System.Drawing.Image returnImage = System.Drawing.Image.FromStream(ms);
+            return returnImage;
+
+        }
+
+        private void btnDel_Copy_Click(object sender, RoutedEventArgs e)
+        {
+            
+            object item = dg1.SelectedItem;
+            String ID = (dg1.SelectedCells[0].Column.GetCellContent(item) as TextBlock).Text;
+            System.Windows.MessageBox.Show(ID);
+            byte[] imageArr;
+            using(var ctx=new MyContext()) 
+            {
+                var pic = ctx.Employees.Find(ID);
+                imageArr = pic.Photo;
+            }
+
+            BitmapImage bi = new BitmapImage();
+            bi.BeginInit();
+            bi.CreateOptions = BitmapCreateOptions.None;
+            bi.CacheOption = BitmapCacheOption.Default;
+            bi.StreamSource = new MemoryStream(imageArr);
+            bi.EndInit();
+            img1.Source = bi;
+
+            //Image img = new Image();  //Image control of wpf
+
+            //img.Source = bi;
+
+        }
+
+        private void CheckBox_Checked_1(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void cb1_Click(object sender, RoutedEventArgs e)
+        {
+            if (cb1.IsChecked == true)
+            {
+                tb2.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                tb2.Visibility = Visibility.Hidden;
+            }
+        } 
 
 
     }
