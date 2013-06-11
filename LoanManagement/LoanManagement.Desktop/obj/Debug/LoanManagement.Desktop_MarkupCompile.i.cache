@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\App.xaml
-8254559195
+10-682770778
 
-161913403314
+18-1340912668
 20747497199
-wpfBank.xaml;wpfBankInfo.xaml;wpfEmployee.xaml;wpfEmployeeInfo.xaml;wpfLogin.xaml;wpfMain.xaml;wpfServiceInfo.xaml;wpfServices.xaml;
+wpfBank.xaml;wpfBankInfo.xaml;wpfClient.xaml;wpfClientInfo.xaml;wpfEmployee.xaml;wpfEmployeeInfo.xaml;wpfLogin.xaml;wpfMain.xaml;wpfServiceInfo.xaml;wpfServices.xaml;
 
 False
 

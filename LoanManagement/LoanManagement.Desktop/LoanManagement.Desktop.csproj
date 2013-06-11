@@ -69,6 +69,12 @@
     <Compile Include="wpfBankInfo.xaml.cs">
       <DependentUpon>wpfBankInfo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="wpfClient.xaml.cs">
+      <DependentUpon>wpfClient.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="wpfClientInfo.xaml.cs">
+      <DependentUpon>wpfClientInfo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="wpfEmployee.xaml.cs">
       <DependentUpon>wpfEmployee.xaml</DependentUpon>
     </Compile>
@@ -96,6 +102,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="wpfBankInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="wpfClient.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="wpfClientInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
