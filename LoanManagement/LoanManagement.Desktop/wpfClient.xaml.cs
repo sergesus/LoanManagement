@@ -26,7 +26,9 @@ namespace LoanManagement.Desktop
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-
+            wpfClientInfo frm = new wpfClientInfo();
+            frm.status = "Add";
+            frm.ShowDialog();
         }
 
         private void btnView_Click(object sender, RoutedEventArgs e)

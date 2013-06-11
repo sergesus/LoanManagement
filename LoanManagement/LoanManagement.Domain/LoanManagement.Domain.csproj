@@ -77,6 +77,10 @@
     <Compile Include="Migrations\201306100833007_UpdatedContext.Designer.cs">
       <DependentUpon>201306100833007_UpdatedContext.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201306110850330_AddedClient.cs" />
+    <Compile Include="Migrations\201306110850330_AddedClient.Designer.cs">
+      <DependentUpon>201306110850330_AddedClient.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemData.cs" />
@@ -109,6 +113,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201306100833007_UpdatedContext.resx">
       <DependentUpon>201306100833007_UpdatedContext.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201306110850330_AddedClient.resx">
+      <DependentUpon>201306110850330_AddedClient.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

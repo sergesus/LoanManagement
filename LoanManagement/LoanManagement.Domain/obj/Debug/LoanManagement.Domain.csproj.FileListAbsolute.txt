@@ -15,3 +15,4 @@ C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManageme
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Domain\obj\Debug\LoanManagement.Domain.Migrations.UpdatedTempReqs.resources
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Domain\obj\Debug\LoanManagement.Domain.Migrations.UpdatedTempReqs2.resources
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Domain\obj\Debug\LoanManagement.Domain.Migrations.UpdatedContext.resources
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Domain\obj\Debug\LoanManagement.Domain.Migrations.AddedClient.resources
