@@ -599,6 +599,7 @@ namespace LoanManagement.Desktop
                         System.Windows.MessageBox.Show("Added New Employee");
                         this.Close();
 
+
                     }
                 }
                 else

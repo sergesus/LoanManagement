@@ -129,8 +129,11 @@ namespace LoanManagement.Desktop
             {
                 using (var ctx = new SystemContext())
                 {
-                    //num1 = ctx.EmployeeAddresses.Where(x => x.EmployeeID == uId).Count();
-                    //num2 = ctx.EmployeeContacts.Where(x => x.EmployeeID == uId).Count();
+                    num1 = ctx.HomeAddresses.Where(x => x.ClientID == cId).Count();
+                    num2 = ctx.ClientContacts.Where(x => x.ClientID == cId).Count();
+                    num3 = ctx.Dependents.Where(x => x.ClientID == cId).Count();
+                    num4 = ctx.Works.Where(x => x.ClientID == cId).Count();
+                    num5 = ctx.References.Where(x => x.ClientID == cId).Count();
                 }
             }
             if (num1 > 0)
@@ -278,6 +281,87 @@ namespace LoanManagement.Desktop
                     ctx.Database.ExecuteSqlCommand("delete from dbo.TempWorks");
                     ctx.Database.ExecuteSqlCommand("delete from dbo.TempReferences");
                 }
+
+                selectedFileName = AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\myImg.gif";
+                BitmapImage bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.UriSource = new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\myImg.gif");
+                bitmap.EndInit();
+                img.Source = bitmap;
+            }
+            else
+            {
+                using (var ctx = new SystemContext())
+                {
+                    var clt = ctx.Clients.Find(cId);
+                    txtLName.Text = clt.LastName;
+                    txtFName.Text = clt.FirstName;
+                    txtMName.Text = clt.MiddleName;
+                    txtSuffix.Text = clt.Suffix;
+                    cmbSex.Text = clt.Sex;
+                    txtSSS.Text = clt.SSS;
+                    txtTIN.Text = clt.TIN;
+                    txtEmail.Text = clt.Email;
+                    dtBDay.SelectedDate = clt.Birthday;
+                    cmbStatus.Text = clt.Status;
+
+                    if (clt.Status == "Married")
+                    {
+                        var sps = ctx.Spouses.Where(x => x.ClientID == cId).First();
+                        dtSBday.SelectedDate = sps.Birthday; 
+                        txtSWName.Text=sps.BusinessName; 
+                        txtSBsNumber.Text = sps.BusinessNumber; 
+                        txtSCity.Text = sps.City; 
+                        txtSDTI.Text = sps.DTI; 
+                        cmbSEmployment.Text = sps.Employment; 
+                        txtSFName.Text = sps.FirstName; 
+                        txtSLName.Text = sps.LastName; 
+                        txtSLength.Text = sps.LengthOfStay; 
+                        txtSMName.Text = sps.MiddleName; 
+                        txtSIncome.Text = sps.MonthlyIncome.ToString(); 
+                        txtSPLNumber.Text = sps.PLNumber; 
+                        txtSPosition.Text = sps.Position; 
+                        txtSProvince.Text = sps.Province; 
+                        cmbSStatus.Text = sps.status; 
+                        txtSStreet.Text = sps.Street;
+                        txtSuffix.Text = sps.Suffix;
+                    }
+
+                    byte[] imageArr;
+                    imageArr = clt.Photo;
+                    BitmapImage bi = new BitmapImage();
+                    bi.BeginInit();
+                    bi.CreateOptions = BitmapCreateOptions.None;
+                    bi.CacheOption = BitmapCacheOption.Default;
+                    bi.StreamSource = new MemoryStream(imageArr);
+                    bi.EndInit();
+                    img.Source = bi;
+
+                    var ads = from ad in ctx.HomeAddresses
+                              where ad.ClientID==cId
+                              select new { AddressNumber = ad.AddressNumber, Street = ad.Street, Province = ad.Province, City = ad.City, OwnershipType = ad.OwnershipType, MonthlyFee = ad.MonthlyFee, LengthOfStay = ad.LengthOfStay };
+                    dgAddress.ItemsSource = ads.ToList();
+
+                    var cts = from ct in ctx.ClientContacts
+                              where ct.ClientID==cId
+                              select new { ContactNumber = ct.ContactNumber, Contact = ct.Contact, Primary = ct.Primary };
+                    dgContact.ItemsSource = cts.ToList();
+
+                    var dps = from td in ctx.Dependents
+                              where td.ClientID==cId
+                              select new { DependentNumber = td.DependentNumber, LastName = td.LastName, FirstName = td.FirstName, MiddleName = td.MiddleName, Suffix = td.Suffix, Birthday = td.Birthday, School = td.School };
+                    dgDependents.ItemsSource = dps.ToList();
+
+                    var wrk = from wr in ctx.Works
+                              where wr.ClientID==cId
+                              select new { WorkNumber = wr.WorkNumber, BusinessName = wr.BusinessName, DTI = wr.DTI, Street = wr.Street, Province = wr.Province, City = wr.City, Employment = wr.Employment, LengthOfStay = wr.LengthOfStay, BusinessNumber = wr.BusinessNumber, Position = wr.Position, MonthlyIncome = wr.MonthlyIncome, PLNumber = wr.PLNumber, Status = wr.status };
+                    dgWork.ItemsSource = wrk.ToList();
+
+                    var rfs = from rf in ctx.References
+                              where rf.ClientID==cId
+                              select new { ReferenceNumber = rf.ReferenceNumber, LastName = rf.LastName, FirstName = rf.FirstName, MI = rf.MiddleName, Suffix = rf.Suffix, Street = rf.Street, Province = rf.Province, City = rf.City, Contact = rf.Contact };
+                    dgReference.ItemsSource = rfs.ToList();
+                }
             }
             reset();
         }
@@ -329,19 +413,38 @@ namespace LoanManagement.Desktop
                         ownership = "Rented";
                         val = Convert.ToDouble(txtRentedVal.Text);
                     }
-                    /*using (var ctx = new SystemContext())
+                    using (var ctx = new SystemContext())
                     {
-                        var ctr = ctx.Requirements.Where(x => x.ServiceID == sId).Count() + 1;
-                        Requirement tr = new Requirement { ServiceID = sId, RequirementNum = ctr, Name = txtReqName.Text, Description = txtReqDesc.Text };
-                        ctx.Requirements.Add(tr);
+                        var ctr = ctx.HomeAddresses.Where(x=> x.ClientID==cId).Count() + 1;
+
+                        HomeAddress th = new HomeAddress {ClientID=cId, AddressNumber = ctr, City = txtHCity.Text, LengthOfStay = txtHLength.Text, MonthlyFee = val, OwnershipType = ownership, Province = txtHProvince.Text, Street = txtHStreet.Text };
+                        ctx.HomeAddresses.Add(th);
                         ctx.SaveChanges();
-                        var reqs = from rq in ctx.Requirements
-                                   where rq.ServiceID == sId
-                                   select new { ReqNumber = rq.RequirementNum, Name = rq.Name, Description = rq.Description };
-                        dgReq.ItemsSource = reqs.ToList();
+
+                        var ads = from ad in ctx.HomeAddresses
+                                  select new { AddressNumber = ad.AddressNumber, Street = ad.Street, Province = ad.Province, City = ad.City, OwnershipType = ad.OwnershipType, MonthlyFee = ad.MonthlyFee, LengthOfStay = ad.LengthOfStay };
+                        dgAddress.ItemsSource = ads.ToList();
                     }
                     reset();
-                    return;*/
+                    return;
+                }
+
+                if (rdOwned1.IsChecked == true)
+                {
+                    ownership = "Owned(Not Mortgage)";
+                }
+                else if (rdOwned2.IsChecked == true)
+                {
+                    ownership = "Owned(Mortgage)";
+                }
+                else if (rdUsed.IsChecked == true)
+                {
+                    ownership = "Used Free";
+                }
+                else
+                {
+                    ownership = "Rented";
+                    val = Convert.ToDouble(txtRentedVal.Text);
                 }
 
 
@@ -367,21 +470,23 @@ namespace LoanManagement.Desktop
                 //for view
                 if (status == "View")
                 {
-                    /*using (var ctx = new SystemContext())
+                    using (var ctx = new SystemContext())
                     {
-                        int num = Convert.ToInt16(getRow(dgReq, 0));
-                        var tr = ctx.Requirements.Where(x => x.RequirementNum == num && x.ServiceID == sId).First();
-                        tr.Name = txtReqName.Text;
-                        tr.Description = txtReqDesc.Text;
+                        int num = Convert.ToInt16(getRow(dgAddress, 0));
+                        var tr = ctx.HomeAddresses.Where(x => x.AddressNumber == num && x.ClientID==cId).First();
+                        tr.City = txtHCity.Text;
+                        tr.LengthOfStay = txtHLength.Text;
+                        tr.MonthlyFee = val;
+                        tr.OwnershipType = ownership;
+                        tr.Province = txtHProvince.Text;
+                        tr.Street = txtHStreet.Text;
                         ctx.SaveChanges();
-
-                        var reqs = from rq in ctx.Requirements
-                                   where rq.ServiceID == sId
-                                   select new { ReqNumber = rq.RequirementNum, Name = rq.Name, Description = rq.Description };
-                        dgReq.ItemsSource = reqs.ToList();
+                        var ads = from ad in ctx.HomeAddresses
+                                  select new { AddressNumber = ad.AddressNumber, Street = ad.Street, Province = ad.Province, City = ad.City, OwnershipType = ad.OwnershipType, MonthlyFee = ad.MonthlyFee, LengthOfStay = ad.LengthOfStay };
+                        dgAddress.ItemsSource = ads.ToList();
+                        reset();
                     }
-                    reset();
-                    return;*/
+                    return;
                 }
                 if (rdOwned1.IsChecked == true)
                 {
@@ -435,16 +540,35 @@ namespace LoanManagement.Desktop
                     //for view
                     if (status == "View")
                     {
-                        /*using (var ctx = new SystemContext())
+                        using (var ctx = new SystemContext())
                         {
-                            int num = Convert.ToInt16(getRow(dgReq, 0));
-                            var tr = ctx.Requirements.Where(x => x.RequirementNum == num && x.ServiceID == sId).First();
-                            txtReqName.Text = tr.Name;
-                            txtReqDesc.Text = tr.Description;
+                            int num = Convert.ToInt16(getRow(dgAddress, 0));
+                            var tr = ctx.HomeAddresses.Where(x => x.AddressNumber == num && x.ClientID==cId).First();
+                            txtHCity.Text = tr.City;
+                            txtHLength.Text = tr.LengthOfStay;
+                            txtRentedVal.Text = tr.MonthlyFee.ToString();
+                            txtHProvince.Text = tr.Province;
+                            txtHStreet.Text = tr.Street;
+                            if (tr.OwnershipType == "Owned(Not Mortgage)")
+                            {
+                                rdOwned1.IsChecked = true;
+                            }
+                            else if (tr.OwnershipType == "Owned(Mortgage)")
+                            {
+                                rdOwned2.IsChecked = true;
+                            }
+                            else if (tr.OwnershipType == "Used Free")
+                            {
+                                rdUsed.IsChecked = true;
+                            }
+                            else
+                            {
+                                rdRented.IsChecked = true;
+                            }
                         }
 
                         return;
-                        */
+                        
                     }
 
                     using (var ctx = new SystemContext())
@@ -494,46 +618,45 @@ namespace LoanManagement.Desktop
                     //for view
                     if (status == "View")
                     {
-                        /*int nums = Convert.ToInt16(getRow(dgReq, 0));
-                        var tr1 = ctx.Requirements.Where(x => x.RequirementNum == nums && x.ServiceID == sId).First();
-                        ctx.Requirements.Remove(tr1);
+                        int num = Convert.ToInt16(getRow(dgAddress, 0));
+                        var th = ctx.HomeAddresses.Where(x => x.AddressNumber == num && x.ClientID==cId).First();
+                        ctx.HomeAddresses.Remove(th);
                         ctx.SaveChanges();
 
-                        var reqs1 = from req in ctx.Requirements
-                                    select req;
-                        int ctr1 = 1;
-                        foreach (var item in reqs1)
+                        var adds = from add in ctx.HomeAddresses
+                                   where add.ClientID==cId
+                                   select add;
+                        int ctr = 1;
+                        foreach (var item in adds)
                         {
-                            item.RequirementNum = ctr1;
-                            ctr1++;
+                            item.AddressNumber = ctr;
+                            ctr++;
                         }
-
                         ctx.SaveChanges();
-                        var reqs2 = from rq in ctx.Requirements
-                                    where rq.ServiceID == sId
-                                    select new { ReqNumber = rq.RequirementNum, Name = rq.Name, Description = rq.Description };
-                        dgReq.ItemsSource = reqs2.ToList();
+                        var ads = from ad in ctx.HomeAddresses
+                                  select new { AddressNumber = ad.AddressNumber, Street = ad.Street, Province = ad.Province, City = ad.City, OwnershipType = ad.OwnershipType, MonthlyFee = ad.MonthlyFee, LengthOfStay = ad.LengthOfStay };
+                        dgAddress.ItemsSource = ads.ToList();
                         return;
-                         */
+                         
                     }
 
-                    int num = Convert.ToInt16(getRow(dgAddress, 0));
-                    var th = ctx.TempHomeAddresses.Where(x => x.AddressNumber == num).First();
-                    ctx.TempHomeAddresses.Remove(th);
+                    int num1 = Convert.ToInt16(getRow(dgAddress, 0));
+                    var th1 = ctx.TempHomeAddresses.Where(x => x.AddressNumber == num1).First();
+                    ctx.TempHomeAddresses.Remove(th1);
                     ctx.SaveChanges();
 
-                    var adds = from add in ctx.TempHomeAddresses
+                    var adds1 = from add in ctx.TempHomeAddresses
                                select add;
-                    int ctr = 1;
-                    foreach (var item in adds)
+                    int ctr1 = 1;
+                    foreach (var item in adds1)
                     {
-                        item.AddressNumber = ctr;
-                        ctr++;
+                        item.AddressNumber = ctr1;
+                        ctr1++;
                     }
                     ctx.SaveChanges();
-                    var ads = from ad in ctx.TempHomeAddresses
+                    var ads1 = from ad in ctx.TempHomeAddresses
                               select new { AddressNumber = ad.AddressNumber, Street = ad.Street, Province = ad.Province, City = ad.City, OwnershipType = ad.OwnershipType, MonthlyFee = ad.MonthlyFee, LengthOfStay = ad.LengthOfStay };
-                    dgAddress.ItemsSource = ads.ToList();
+                    dgAddress.ItemsSource = ads1.ToList();
                     reset();
                 }
                 catch (Exception ex)
@@ -565,20 +688,27 @@ namespace LoanManagement.Desktop
                 //for view
                 if (status == "View")
                 {
-                    
-                    /*using (var ctx = new SystemContext())
+
+                    using (var ctx = new SystemContext())
                     {
-                        var ctr = ctx.Requirements.Where(x => x.ServiceID == sId).Count() + 1;
-                        Requirement tr = new Requirement { ServiceID = sId, RequirementNum = ctr, Name = txtReqName.Text, Description = txtReqDesc.Text };
-                        ctx.Requirements.Add(tr);
+                        var ctr = ctx.ClientContacts.Where(x=> x.ClientID==cId).Count() + 1;
+                        bool pr = false;
+                        if (ctr == 1)
+                        {
+                            pr = true;
+                        }
+
+                        ClientContact tc = new ClientContact {ClientID=cId, ContactNumber = ctr, Contact = txtContact.Text, Primary = pr };
+                        ctx.ClientContacts.Add(tc);
                         ctx.SaveChanges();
-                        var reqs = from rq in ctx.Requirements
-                                   where rq.ServiceID == sId
-                                   select new { ReqNumber = rq.RequirementNum, Name = rq.Name, Description = rq.Description };
-                        dgReq.ItemsSource = reqs.ToList();
+
+                        var cts = from ct in ctx.ClientContacts
+                                  select new { ContactNumber = ct.ContactNumber, Contact = ct.Contact, Primary = ct.Primary };
+                        dgContact.ItemsSource = cts.ToList();
+                        reset();
+
                     }
-                    reset();
-                    return;*/
+                    return;
                 }
 
 
@@ -609,21 +739,18 @@ namespace LoanManagement.Desktop
                 //for view
                 if (status == "View")
                 {
-                    /*using (var ctx = new SystemContext())
+                    using (var ctx = new SystemContext())
                     {
-                        int num = Convert.ToInt16(getRow(dgReq, 0));
-                        var tr = ctx.Requirements.Where(x => x.RequirementNum == num && x.ServiceID == sId).First();
-                        tr.Name = txtReqName.Text;
-                        tr.Description = txtReqDesc.Text;
+                        int num = Convert.ToInt16(getRow(dgContact, 0));
+                        var tc = ctx.ClientContacts.Where(x => x.ContactNumber == num && x.ClientID==cId).First();
+                        tc.Contact = txtContact.Text;
                         ctx.SaveChanges();
-
-                        var reqs = from rq in ctx.Requirements
-                                   where rq.ServiceID == sId
-                                   select new { ReqNumber = rq.RequirementNum, Name = rq.Name, Description = rq.Description };
-                        dgReq.ItemsSource = reqs.ToList();
+                        var cts = from ct in ctx.ClientContacts
+                                  select new { ContactNumber = ct.ContactNumber, Contact = ct.Contact, Primary = ct.Primary };
+                        dgContact.ItemsSource = cts.ToList();
+                        reset();
                     }
-                    reset();
-                    return;*/
+                    return;
                 }
                 
 
@@ -656,16 +783,15 @@ namespace LoanManagement.Desktop
                     //for view
                     if (status == "View")
                     {
-                        /*using (var ctx = new SystemContext())
+                        using (var ctx = new SystemContext())
                         {
-                            int num = Convert.ToInt16(getRow(dgReq, 0));
-                            var tr = ctx.Requirements.Where(x => x.RequirementNum == num && x.ServiceID == sId).First();
-                            txtReqName.Text = tr.Name;
-                            txtReqDesc.Text = tr.Description;
+                            int num = Convert.ToInt16(getRow(dgContact, 0));
+                            var tc = ctx.ClientContacts.Where(x => x.ContactNumber == num && x.ClientID==cId).First();
+                            txtContact.Text = tc.Contact;
                         }
 
                         return;
-                        */
+                        
                     }
 
                     using (var ctx = new SystemContext())
@@ -695,27 +821,27 @@ namespace LoanManagement.Desktop
                     //for view
                     if (status == "View")
                     {
-                        /*int nums = Convert.ToInt16(getRow(dgReq, 0));
-                        var tr1 = ctx.Requirements.Where(x => x.RequirementNum == nums && x.ServiceID == sId).First();
-                        ctx.Requirements.Remove(tr1);
+                        int num1 = Convert.ToInt16(getRow(dgContact, 0));
+                        var tc1 = ctx.ClientContacts.Where(x => x.ContactNumber == num1 && x.ClientID==cId).First();
+                        ctx.ClientContacts.Remove(tc1);
                         ctx.SaveChanges();
 
-                        var reqs1 = from req in ctx.Requirements
-                                    select req;
+                        var cts1 = from ct in ctx.ClientContacts
+                                   where ct.ClientID==cId
+                                  select ct;
                         int ctr1 = 1;
-                        foreach (var item in reqs1)
+                        foreach (var item in cts1)
                         {
-                            item.RequirementNum = ctr1;
+                            item.ContactNumber = ctr1;
                             ctr1++;
                         }
-
                         ctx.SaveChanges();
-                        var reqs2 = from rq in ctx.Requirements
-                                    where rq.ServiceID == sId
-                                    select new { ReqNumber = rq.RequirementNum, Name = rq.Name, Description = rq.Description };
-                        dgReq.ItemsSource = reqs2.ToList();
+                        var cts2 = from ct in ctx.ClientContacts
+                                   select new { ContactNumber = ct.ContactNumber, Contact = ct.Contact, Primary = ct.Primary };
+                        dgContact.ItemsSource = cts2.ToList();
+                        reset();
                         return;
-                         */
+                         
                     }
 
                     int num = Convert.ToInt16(getRow(dgContact, 0));
@@ -732,9 +858,9 @@ namespace LoanManagement.Desktop
                         ctr++;
                     }
                     ctx.SaveChanges();
-                    var cts1 = from ct in ctx.TempClientContacts
+                    var cts4 = from ct in ctx.TempClientContacts
                               select new { ContactNumber = ct.ContactNumber, Contact = ct.Contact, Primary = ct.Primary };
-                    dgContact.ItemsSource = cts1.ToList();
+                    dgContact.ItemsSource = cts4.ToList();
                     reset();
                 }
                 catch (Exception ex)
@@ -767,19 +893,21 @@ namespace LoanManagement.Desktop
                 if (status == "View")
                 {
 
-                    /*using (var ctx = new SystemContext())
+                    using (var ctx = new SystemContext())
                     {
-                        var ctr = ctx.Requirements.Where(x => x.ServiceID == sId).Count() + 1;
-                        Requirement tr = new Requirement { ServiceID = sId, RequirementNum = ctr, Name = txtReqName.Text, Description = txtReqDesc.Text };
-                        ctx.Requirements.Add(tr);
+                        var ctr = ctx.Dependents.Where(x=> x.ClientID==cId).Count() + 1;
+
+                        Dependent tdp = new Dependent {ClientID=cId, Birthday = Convert.ToDateTime(dtDBDay.SelectedDate).Date, DependentNumber = ctr, FirstName = txtDFName.Text, LastName = txtDLName.Text, MiddleName = txtDMName.Text, School = txtDSchool.Text, Suffix = txtDSuffix.Text };
+                        ctx.Dependents.Add(tdp);
                         ctx.SaveChanges();
-                        var reqs = from rq in ctx.Requirements
-                                   where rq.ServiceID == sId
-                                   select new { ReqNumber = rq.RequirementNum, Name = rq.Name, Description = rq.Description };
-                        dgReq.ItemsSource = reqs.ToList();
+
+                        var dps = from td in ctx.Dependents
+                                  select new { DependentNumber = td.DependentNumber, LastName = td.LastName, FirstName = td.FirstName, MiddleName = td.MiddleName, Suffix = td.Suffix, Birthday = td.Birthday, School = td.School };
+                        dgDependents.ItemsSource = dps.ToList();
+                        reset();
+
                     }
-                    reset();
-                    return;*/
+                    return;
                 }
 
 
@@ -787,7 +915,7 @@ namespace LoanManagement.Desktop
                 {
                     var ctr = ctx.TempDependents.Count() + 1;
 
-                    TempDependent tdp = new TempDependent { Birthday = Convert.ToDateTime(dtDBDay.SelectedDate), DependentNumber = ctr, FirstName = txtDFName.Text, LastName = txtDLName.Text, MiddleName = txtDMName.Text, School = txtDSchool.Text, Suffix = txtDSuffix.Text };
+                    TempDependent tdp = new TempDependent { Birthday = Convert.ToDateTime(dtDBDay.SelectedDate).Date, DependentNumber = ctr, FirstName = txtDFName.Text, LastName = txtDLName.Text, MiddleName = txtDMName.Text, School = txtDSchool.Text, Suffix = txtDSuffix.Text };
                     ctx.TempDependents.Add(tdp);
                     ctx.SaveChanges();
 
@@ -805,21 +933,23 @@ namespace LoanManagement.Desktop
                 //for view
                 if (status == "View")
                 {
-                    /*using (var ctx = new SystemContext())
+                    using (var ctx = new SystemContext())
                     {
-                        int num = Convert.ToInt16(getRow(dgReq, 0));
-                        var tr = ctx.Requirements.Where(x => x.RequirementNum == num && x.ServiceID == sId).First();
-                        tr.Name = txtReqName.Text;
-                        tr.Description = txtReqDesc.Text;
+                        int num = Convert.ToInt16(getRow(dgDependents, 0));
+                        var td = ctx.Dependents.Where(x => x.DependentNumber == num && x.ClientID==cId).First();
+                        td.Birthday = Convert.ToDateTime(dtDBDay.SelectedDate).Date;
+                        td.FirstName = txtDFName.Text;
+                        td.LastName = txtDLName.Text;
+                        td.MiddleName = txtDMName.Text;
+                        td.School = txtDSchool.Text;
+                        td.Suffix = txtDSuffix.Text;
                         ctx.SaveChanges();
-
-                        var reqs = from rq in ctx.Requirements
-                                   where rq.ServiceID == sId
-                                   select new { ReqNumber = rq.RequirementNum, Name = rq.Name, Description = rq.Description };
-                        dgReq.ItemsSource = reqs.ToList();
+                        var dps = from tdp in ctx.Dependents
+                                  select new { DependentNumber = tdp.DependentNumber, LastName = tdp.LastName, FirstName = tdp.FirstName, MiddleName = tdp.MiddleName, Suffix = tdp.Suffix, Birthday = tdp.Birthday, School = tdp.School };
+                        dgDependents.ItemsSource = dps.ToList();
+                        reset();
                     }
-                    reset();
-                    return;*/
+                    return;
                 }
 
 
@@ -827,7 +957,7 @@ namespace LoanManagement.Desktop
                 {
                     int num = Convert.ToInt16(getRow(dgDependents, 0));
                     var td = ctx.TempDependents.Where(x => x.DependentNumber == num).First();
-                    td.Birthday = Convert.ToDateTime(dtDBDay.SelectedDate);
+                    td.Birthday = Convert.ToDateTime(dtDBDay.SelectedDate).Date;
                     td.FirstName = txtDFName.Text;
                     td.LastName = txtDLName.Text;
                     td.MiddleName = txtDMName.Text;
@@ -857,16 +987,20 @@ namespace LoanManagement.Desktop
                     //for view
                     if (status == "View")
                     {
-                        /*using (var ctx = new SystemContext())
+                        using (var ctx = new SystemContext())
                         {
-                            int num = Convert.ToInt16(getRow(dgReq, 0));
-                            var tr = ctx.Requirements.Where(x => x.RequirementNum == num && x.ServiceID == sId).First();
-                            txtReqName.Text = tr.Name;
-                            txtReqDesc.Text = tr.Description;
+                            int num = Convert.ToInt16(getRow(dgDependents, 0));
+                            var td = ctx.Dependents.Where(x => x.DependentNumber == num && x.ClientID==cId).First();
+                            dtDBDay.SelectedDate = td.Birthday;
+                            txtDFName.Text = td.FirstName;
+                            txtDLName.Text = td.LastName;
+                            txtDMName.Text = td.MiddleName;
+                            txtDSchool.Text = td.School;
+                            txtDSuffix.Text = td.Suffix;
                         }
 
                         return;
-                        */
+                        
                     }
 
                     using (var ctx = new SystemContext())
@@ -901,27 +1035,27 @@ namespace LoanManagement.Desktop
                     //for view
                     if (status == "View")
                     {
-                        /*int nums = Convert.ToInt16(getRow(dgReq, 0));
-                        var tr1 = ctx.Requirements.Where(x => x.RequirementNum == nums && x.ServiceID == sId).First();
-                        ctx.Requirements.Remove(tr1);
+                        int num1 = Convert.ToInt16(getRow(dgDependents, 0));
+                        var td1 = ctx.Dependents.Where(x => x.DependentNumber == num1 && x.ClientID==cId).First();
+                        ctx.Dependents.Remove(td1);
                         ctx.SaveChanges();
 
-                        var reqs1 = from req in ctx.Requirements
-                                    select req;
+                        var dps1 = from dp in ctx.Dependents
+                                   where dp.ClientID==cId
+                                  select dp;
                         int ctr1 = 1;
-                        foreach (var item in reqs1)
+                        foreach (var item in dps1)
                         {
-                            item.RequirementNum = ctr1;
+                            item.DependentNumber = ctr1;
                             ctr1++;
                         }
-
                         ctx.SaveChanges();
-                        var reqs2 = from rq in ctx.Requirements
-                                    where rq.ServiceID == sId
-                                    select new { ReqNumber = rq.RequirementNum, Name = rq.Name, Description = rq.Description };
-                        dgReq.ItemsSource = reqs2.ToList();
+                        var dps2 = from tdp in ctx.Dependents
+                                   select new { DependentNumber = tdp.DependentNumber, LastName = tdp.LastName, FirstName = tdp.FirstName, MiddleName = tdp.MiddleName, Suffix = tdp.Suffix, Birthday = tdp.Birthday, School = tdp.School };
+                        dgDependents.ItemsSource = dps2.ToList();
+                        reset();
                         return;
-                         */
+                         
                     }
 
                     int num = Convert.ToInt16(getRow(dgDependents, 0));
@@ -938,9 +1072,9 @@ namespace LoanManagement.Desktop
                         ctr++;
                     }
                     ctx.SaveChanges();
-                    var dps1 = from tdp in ctx.TempDependents
+                    var dps4 = from tdp in ctx.TempDependents
                               select new { DependentNumber = tdp.DependentNumber, LastName = tdp.LastName, FirstName = tdp.FirstName, MiddleName = tdp.MiddleName, Suffix = tdp.Suffix, Birthday = tdp.Birthday, School = tdp.School };
-                    dgDependents.ItemsSource = dps1.ToList();
+                    dgDependents.ItemsSource = dps4.ToList();
                     reset();
                 }
                 catch (Exception ex)
@@ -973,19 +1107,21 @@ namespace LoanManagement.Desktop
                 if (status == "View")
                 {
 
-                    /*using (var ctx = new SystemContext())
+                    using (var ctx = new SystemContext())
                     {
-                        var ctr = ctx.Requirements.Where(x => x.ServiceID == sId).Count() + 1;
-                        Requirement tr = new Requirement { ServiceID = sId, RequirementNum = ctr, Name = txtReqName.Text, Description = txtReqDesc.Text };
-                        ctx.Requirements.Add(tr);
+                        var ctr = ctx.Works.Where(x=> x.ClientID==cId).Count() + 1;
+
+                        Work tw = new Work {ClientID=cId, WorkNumber = ctr, BusinessNumber = txtWBsNumber.Text, BusinessName = txtWName.Text, City = txtWCity.Text, DTI = txtWDTI.Text, Employment = cmbWEmployment.Text, LengthOfStay = txtWLength.Text, MonthlyIncome = Convert.ToDouble(txtWIncome.Text), PLNumber = txtWPLNumber.Text, Position = txtWPosition.Text, Province = txtWProvince.Text, status = cmbWStatus.Text, Street = txtWStreet.Text };
+                        ctx.Works.Add(tw);
                         ctx.SaveChanges();
-                        var reqs = from rq in ctx.Requirements
-                                   where rq.ServiceID == sId
-                                   select new { ReqNumber = rq.RequirementNum, Name = rq.Name, Description = rq.Description };
-                        dgReq.ItemsSource = reqs.ToList();
+
+                        var wrk = from wr in ctx.Works
+                                  select new { WorkNumber = wr.WorkNumber, BusinessName = wr.BusinessName, DTI = wr.DTI, Street = wr.Street, Province = wr.Province, City = wr.City, Employment = wr.Employment, LengthOfStay = wr.LengthOfStay, BusinessNumber = wr.BusinessNumber, Position = wr.Position, MonthlyIncome = wr.MonthlyIncome, PLNumber = wr.PLNumber, Status = wr.status };
+                        dgWork.ItemsSource = wrk.ToList();
+                        reset();
+
                     }
-                    reset();
-                    return;*/
+                    return;
                 }
 
 
@@ -1011,21 +1147,29 @@ namespace LoanManagement.Desktop
                 //for view
                 if (status == "View")
                 {
-                    /*using (var ctx = new SystemContext())
+                    using (var ctx = new SystemContext())
                     {
-                        int num = Convert.ToInt16(getRow(dgReq, 0));
-                        var tr = ctx.Requirements.Where(x => x.RequirementNum == num && x.ServiceID == sId).First();
-                        tr.Name = txtReqName.Text;
-                        tr.Description = txtReqDesc.Text;
+                        int num = Convert.ToInt16(getRow(dgWork, 0));
+                        var tw = ctx.Works.Where(x => x.WorkNumber == num && x.ClientID==cId).First();
+                        tw.BusinessNumber = txtWBsNumber.Text;
+                        tw.BusinessName = txtWName.Text;
+                        tw.City = txtWCity.Text;
+                        tw.DTI = txtWDTI.Text;
+                        tw.Employment = cmbWEmployment.Text;
+                        tw.LengthOfStay = txtWLength.Text;
+                        tw.MonthlyIncome = Convert.ToDouble(txtWIncome.Text);
+                        tw.PLNumber = txtWPLNumber.Text;
+                        tw.Position = txtWPosition.Text;
+                        tw.Province = txtWProvince.Text;
+                        tw.status = cmbWStatus.Text;
+                        tw.Street = txtWStreet.Text; 
                         ctx.SaveChanges();
-
-                        var reqs = from rq in ctx.Requirements
-                                   where rq.ServiceID == sId
-                                   select new { ReqNumber = rq.RequirementNum, Name = rq.Name, Description = rq.Description };
-                        dgReq.ItemsSource = reqs.ToList();
+                        var wrk = from wr in ctx.Works
+                                  select new { WorkNumber=wr.WorkNumber, BusinessName = wr.BusinessName, DTI= wr.DTI, Street= wr.Street, Province= wr.Province, City=wr.City, Employment= wr.Employment, LengthOfStay=wr.LengthOfStay, BusinessNumber=wr.BusinessNumber, Position= wr.Position, MonthlyIncome=wr.MonthlyIncome, PLNumber=wr.PLNumber, Status=wr.status };
+                        dgWork.ItemsSource = wrk.ToList();
+                        reset();
                     }
-                    reset();
-                    return;*/
+                    return;
                 }
 
 
@@ -1069,16 +1213,26 @@ namespace LoanManagement.Desktop
                     //for view
                     if (status == "View")
                     {
-                        /*using (var ctx = new SystemContext())
+                        using (var ctx = new SystemContext())
                         {
-                            int num = Convert.ToInt16(getRow(dgReq, 0));
-                            var tr = ctx.Requirements.Where(x => x.RequirementNum == num && x.ServiceID == sId).First();
-                            txtReqName.Text = tr.Name;
-                            txtReqDesc.Text = tr.Description;
+                            int num = Convert.ToInt16(getRow(dgWork, 0));
+                            var tw = ctx.Works.Where(x => x.WorkNumber == num && x.ClientID==cId).First();
+                            txtWBsNumber.Text = tw.BusinessNumber;
+                            txtWName.Text = tw.BusinessName;
+                            txtWCity.Text = tw.City;
+                            txtWDTI.Text = tw.DTI;
+                            cmbWEmployment.Text = tw.Employment;
+                            txtWLength.Text = tw.LengthOfStay;
+                            txtWIncome.Text = tw.MonthlyIncome.ToString();
+                            txtWPLNumber.Text = tw.PLNumber;
+                            txtWPosition.Text = tw.Position;
+                            txtWProvince.Text = tw.Province;
+                            cmbWStatus.Text = tw.status;
+                            txtWStreet.Text = tw.Street;
                         }
 
                         return;
-                        */
+                        
                     }
 
                     using (var ctx = new SystemContext())
@@ -1119,27 +1273,30 @@ namespace LoanManagement.Desktop
                     //for view
                     if (status == "View")
                     {
-                        /*int nums = Convert.ToInt16(getRow(dgReq, 0));
-                        var tr1 = ctx.Requirements.Where(x => x.RequirementNum == nums && x.ServiceID == sId).First();
-                        ctx.Requirements.Remove(tr1);
+                        int num1 = Convert.ToInt16(getRow(dgWork, 0));
+                        var tw1 = ctx.Works.Where(x => x.WorkNumber == num1 && x.ClientID==cId).First();
+                        ctx.Works.Remove(tw1);
                         ctx.SaveChanges();
 
-                        var reqs1 = from req in ctx.Requirements
-                                    select req;
+                        var wrks1 = from wrk in ctx.Works
+                                   where wrk.ClientID==cId
+                                   select wrk;
                         int ctr1 = 1;
-                        foreach (var item in reqs1)
+                        foreach (var item in wrks1)
                         {
-                            item.RequirementNum = ctr1;
+                            item.WorkNumber = ctr1;
                             ctr1++;
                         }
-
                         ctx.SaveChanges();
-                        var reqs2 = from rq in ctx.Requirements
-                                    where rq.ServiceID == sId
-                                    select new { ReqNumber = rq.RequirementNum, Name = rq.Name, Description = rq.Description };
-                        dgReq.ItemsSource = reqs2.ToList();
+
+                        var wrk2 = from wr in ctx.Works
+                                   select new { WorkNumber = wr.WorkNumber, BusinessName = wr.BusinessName, DTI = wr.DTI, Street = wr.Street, Province = wr.Province, City = wr.City, Employment = wr.Employment, LengthOfStay = wr.LengthOfStay, BusinessNumber = wr.BusinessNumber, Position = wr.Position, MonthlyIncome = wr.MonthlyIncome, PLNumber = wr.PLNumber, Status = wr.status };
+                        dgWork.ItemsSource = wrk2.ToList();
+
+                        reset();
+                        
                         return;
-                         */
+                         
                     }
 
                     int num = Convert.ToInt16(getRow(dgWork, 0));
@@ -1192,20 +1349,22 @@ namespace LoanManagement.Desktop
                 //for view
                 if (status == "View")
                 {
-
-                    /*using (var ctx = new SystemContext())
+                    using (var ctx = new SystemContext())
                     {
-                        var ctr = ctx.Requirements.Where(x => x.ServiceID == sId).Count() + 1;
-                        Requirement tr = new Requirement { ServiceID = sId, RequirementNum = ctr, Name = txtReqName.Text, Description = txtReqDesc.Text };
-                        ctx.Requirements.Add(tr);
+                        var ctr = ctx.References.Where(x=> x.ClientID==cId).Count() + 1;
+
+                        Reference tr = new Reference {ClientID=cId, ReferenceNumber = ctr, City = txtRCity.Text, Contact = txtRContact.Text, FirstName = txtRFName.Text, LastName = txtRLName.Text, MiddleName = txtRMI.Text, Province = txtRProvince.Text, Street = txtRStreet.Text, Suffix = txtRSuffix.Text };
+                        ctx.References.Add(tr);
                         ctx.SaveChanges();
-                        var reqs = from rq in ctx.Requirements
-                                   where rq.ServiceID == sId
-                                   select new { ReqNumber = rq.RequirementNum, Name = rq.Name, Description = rq.Description };
-                        dgReq.ItemsSource = reqs.ToList();
+
+                        var rfs = from rf in ctx.References
+                                  select new { ReferenceNumber = rf.ReferenceNumber, LastName = rf.LastName, FirstName = rf.FirstName, MI = rf.MiddleName, Suffix = rf.Suffix, Street = rf.Street, Province = rf.Province, City = rf.City, Contact = rf.Contact };
+                        dgReference.ItemsSource = rfs.ToList();
+                        reset();
+
                     }
-                    reset();
-                    return;*/
+                    
+                    return;
                 }
 
 
@@ -1231,21 +1390,25 @@ namespace LoanManagement.Desktop
                 //for view
                 if (status == "View")
                 {
-                    /*using (var ctx = new SystemContext())
+                    using (var ctx = new SystemContext())
                     {
-                        int num = Convert.ToInt16(getRow(dgReq, 0));
-                        var tr = ctx.Requirements.Where(x => x.RequirementNum == num && x.ServiceID == sId).First();
-                        tr.Name = txtReqName.Text;
-                        tr.Description = txtReqDesc.Text;
+                        int num = Convert.ToInt16(getRow(dgReference, 0));
+                        var tr = ctx.References.Where(x => x.ReferenceNumber == num && x.ClientID==cId).First();
+                        tr.City=txtRCity.Text;
+                        tr.Contact=txtRContact.Text;
+                        tr.FirstName=txtRFName.Text;
+                        tr.LastName=txtRLName.Text;
+                        tr.MiddleName=txtRMI.Text;
+                        tr.Province=txtRProvince.Text;
+                        tr.Street=txtRStreet.Text;
+                        tr.Suffix = txtRSuffix.Text;
                         ctx.SaveChanges();
-
-                        var reqs = from rq in ctx.Requirements
-                                   where rq.ServiceID == sId
-                                   select new { ReqNumber = rq.RequirementNum, Name = rq.Name, Description = rq.Description };
-                        dgReq.ItemsSource = reqs.ToList();
+                        var rfs = from rf in ctx.References
+                                  select new { ReferenceNumber= rf.ReferenceNumber, LastName = rf.LastName, FirstName=rf.FirstName, MI=rf.MiddleName, Suffix=rf.Suffix, Street = rf.Street, Province = rf.Province, City = rf.City, Contact = rf.Contact };
+                        dgReference.ItemsSource = rfs.ToList();
+                        reset();
                     }
-                    reset();
-                    return;*/
+                    return;
                 }
 
 
@@ -1285,16 +1448,22 @@ namespace LoanManagement.Desktop
                     //for view
                     if (status == "View")
                     {
-                        /*using (var ctx = new SystemContext())
+                        using (var ctx = new SystemContext())
                         {
-                            int num = Convert.ToInt16(getRow(dgReq, 0));
-                            var tr = ctx.Requirements.Where(x => x.RequirementNum == num && x.ServiceID == sId).First();
-                            txtReqName.Text = tr.Name;
-                            txtReqDesc.Text = tr.Description;
+                            int num = Convert.ToInt16(getRow(dgReference, 0));
+                            var tr = ctx.References.Where(x => x.ReferenceNumber == num && x.ClientID==cId).First();
+                            txtRCity.Text = tr.City;
+                            txtRContact.Text = tr.Contact;
+                            txtRFName.Text = tr.FirstName;
+                            txtRLName.Text = tr.LastName;
+                            txtRMI.Text = tr.MiddleName;
+                            txtRProvince.Text = tr.Province;
+                            txtRStreet.Text = tr.Street;
+                            txtRSuffix.Text = tr.Suffix;
                         }
 
                         return;
-                        */
+                        
                     }
 
                     using (var ctx = new SystemContext())
@@ -1331,27 +1500,29 @@ namespace LoanManagement.Desktop
                     //for view
                     if (status == "View")
                     {
-                        /*int nums = Convert.ToInt16(getRow(dgReq, 0));
-                        var tr1 = ctx.Requirements.Where(x => x.RequirementNum == nums && x.ServiceID == sId).First();
-                        ctx.Requirements.Remove(tr1);
+                        int num1 = Convert.ToInt16(getRow(dgReference, 0));
+                        var tr1 = ctx.References.Where(x => x.ReferenceNumber == num1 && x.ClientID==cId).First();
+                        ctx.References.Remove(tr1);
                         ctx.SaveChanges();
 
-                        var reqs1 = from req in ctx.Requirements
-                                    select req;
+                        var rfs1 = from rf in ctx.References
+                                  where rf.ClientID==cId
+                                  select rf;
                         int ctr1 = 1;
-                        foreach (var item in reqs1)
+                        foreach (var item in rfs1)
                         {
-                            item.RequirementNum = ctr1;
+                            item.ReferenceNumber = ctr1;
                             ctr1++;
                         }
-
                         ctx.SaveChanges();
-                        var reqs2 = from rq in ctx.Requirements
-                                    where rq.ServiceID == sId
-                                    select new { ReqNumber = rq.RequirementNum, Name = rq.Name, Description = rq.Description };
-                        dgReq.ItemsSource = reqs2.ToList();
+
+                        var rfs3 = from rf in ctx.TempReferences
+                                   select new { ReferenceNumber = rf.ReferenceNumber, LastName = rf.LastName, FirstName = rf.FirstName, MI = rf.MiddleName, Suffix = rf.Suffix, Street = rf.Street, Province = rf.Province, City = rf.City, Contact = rf.Contact };
+                        dgReference.ItemsSource = rfs3.ToList();
+
+                        reset();
                         return;
-                         */
+                         
                     }
 
                     int num = Convert.ToInt16(getRow(dgReference, 0));
@@ -1369,9 +1540,9 @@ namespace LoanManagement.Desktop
                     }
                     ctx.SaveChanges();
 
-                    var rfs1 = from rf in ctx.TempReferences
+                    var rfs4 = from rf in ctx.TempReferences
                               select new { ReferenceNumber = rf.ReferenceNumber, LastName = rf.LastName, FirstName = rf.FirstName, MI = rf.MiddleName, Suffix = rf.Suffix, Street = rf.Street, Province = rf.Province, City = rf.City, Contact = rf.Contact };
-                    dgReference.ItemsSource = rfs1.ToList();
+                    dgReference.ItemsSource = rfs4.ToList();
 
                     reset();
                 }
@@ -1379,6 +1550,115 @@ namespace LoanManagement.Desktop
                 {
                     return;
                 }
+            }
+        }
+
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (status == "Add")
+                {
+                    DialogResult dr = System.Windows.Forms.MessageBox.Show("Are you sure you want to add this record?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (dr == System.Windows.Forms.DialogResult.No)
+                    {
+                        return;
+                    }
+
+                    using (var ctx = new SystemContext())
+                    {
+                        var num = ctx.Clients.Where(x => x.FirstName == txtFName.Text && x.LastName == txtLName.Text && x.MiddleName == txtMName.Text && x.Birthday == dtBDay.SelectedDate).Count();
+                        if (num > 0)
+                        {
+                            System.Windows.MessageBox.Show("Client already exists");
+                            return;
+                        }
+
+                        Client clt = new Client { Birthday = Convert.ToDateTime(dtBDay.SelectedDate).Date, Active = true, MiddleName = txtMName.Text, LastName = txtLName.Text, FirstName = txtFName.Text, Email = txtEmail.Text, Sex = cmbSex.Text, SSS = txtSSS.Text, Suffix = txtSuffix.Text, TIN = txtTIN.Text, Status = cmbStatus.Text, Photo = ConvertImageToByteArray(selectedFileName) };
+
+                        var ads = from ad in ctx.TempHomeAddresses
+                                  select ad;
+                        foreach (var item in ads)
+                        {
+                            HomeAddress add = new HomeAddress { AddressNumber = item.AddressNumber, City = item.City, LengthOfStay = item.LengthOfStay, MonthlyFee = item.MonthlyFee, OwnershipType = item.OwnershipType, Province = item.Province, Street = item.Street };
+                            ctx.HomeAddresses.Add(add);
+                        }
+
+                        var cts = from ct in ctx.TempClientContacts
+                                  select ct;
+                        foreach (var item in cts)
+                        {
+                            ClientContact con = new ClientContact { Contact = item.Contact, ContactNumber = item.ContactNumber, Primary = item.Primary };
+                            ctx.ClientContacts.Add(con);
+                        }
+
+                        var dps = from dp in ctx.TempDependents
+                                  select dp;
+                        foreach (var item in dps)
+                        {
+                            Dependent dep = new Dependent { Birthday = item.Birthday, DependentNumber = item.DependentNumber, FirstName = item.FirstName, LastName = item.LastName, MiddleName = item.LastName, School = item.School, Suffix = item.Suffix };
+                            ctx.Dependents.Add(dep);
+                        }
+                        var wks = from wk in ctx.TempWorks
+                                  select wk;
+                        foreach (var item in wks)
+                        {
+                            Work wrk = new Work { BusinessName = item.BusinessName, BusinessNumber = item.BusinessNumber, City = item.City, DTI = item.DTI, Employment = item.Employment, LengthOfStay = item.LengthOfStay, MonthlyIncome = item.MonthlyIncome, PLNumber = item.PLNumber, Position = item.Position, Province = item.Province, status = item.status, Street = item.Street, WorkNumber = item.WorkNumber };
+                            ctx.Works.Add(wrk);
+                        }
+                        var rfs = from rf in ctx.TempReferences
+                                  select rf;
+                        foreach (var item in rfs)
+                        {
+                            Reference rfr = new Reference { City = item.City, Contact = item.Contact, FirstName = item.FirstName, LastName = item.LastName, MiddleName = item.MiddleName, Province = item.Province, ReferenceNumber = item.ReferenceNumber, Street = item.Street, Suffix = item.Suffix };
+                            ctx.References.Add(rfr);
+                        }
+
+                        if (cmbStatus.Text == "Married")
+                        {
+                            Spouse sps = new Spouse { Birthday = Convert.ToDateTime(dtSBday.SelectedDate).Date, BusinessName = txtSWName.Text, BusinessNumber = txtSBsNumber.Text, City = txtSCity.Text, DTI = txtSDTI.Text, Employment = cmbSEmployment.Text, FirstName = txtSFName.Text, LastName = txtSLName.Text, LengthOfStay = txtSLength.Text, MiddleName = txtSMName.Text, MonthlyIncome = Convert.ToDouble(txtSIncome.Text), PLNumber = txtSPLNumber.Text, Position = txtSPosition.Text, Province = txtSProvince.Text, status = cmbSStatus.Text, Street = txtSStreet.Text, Suffix = txtSuffix.Text };
+                            ctx.Spouses.Add(sps);
+                        }
+
+                        ctx.Clients.Add(clt);
+                        ctx.SaveChanges();
+                        System.Windows.MessageBox.Show("Client successfuly added");
+                        this.Close();
+                    }
+                }
+                else
+                {
+                    DialogResult dr = System.Windows.Forms.MessageBox.Show("Are you sure you want to update this record?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (dr == System.Windows.Forms.DialogResult.No)
+                    {
+                        return;
+                    }
+                    using (var ctx = new SystemContext())
+                    {
+                        var clt = ctx.Clients.Find(cId);
+                        clt.Birthday = Convert.ToDateTime(dtBDay.SelectedDate).Date;
+                        clt.MiddleName = txtMName.Text;
+                        clt.LastName = txtLName.Text;
+                        clt.FirstName = txtFName.Text;
+                        clt.Email = txtEmail.Text;
+                        clt.Sex = cmbSex.Text;
+                        clt.SSS = txtSSS.Text;
+                        clt.Suffix = txtSuffix.Text;
+                        clt.TIN = txtTIN.Text;
+                        clt.Status = cmbStatus.Text;
+                        if (isChanged == true)
+                        {
+                            clt.Photo = ConvertImageToByteArray(selectedFileName);
+                        }
+                        ctx.SaveChanges();
+                        System.Windows.MessageBox.Show("User Updated", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                        this.Close();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return;
             }
         }
     }

@@ -1,14 +1,14 @@
 ﻿<Window x:Class="LoanManagement.Desktop.wpfClientInfo"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="wpfClientInfo" Height="512.383" Width="754.985" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded_1">
+        Title="wpfClientInfo" Height="512.383" Width="741.985" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded_1">
     <Grid Margin="0,0,4,-29">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="93*"/>
             <ColumnDefinition Width="56*"/>
         </Grid.ColumnDefinitions>
         <DockPanel HorizontalAlignment="Left" Height="29" LastChildFill="False" VerticalAlignment="Top" Width="847" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Margin="-2,0,-100,0" Grid.ColumnSpan="2">
-            <Button x:Name="btnSave" Content="Save" Height="29" VerticalAlignment="Bottom" Width="98" BorderThickness="0"/>
+            <Button x:Name="btnSave" Content="Save" Height="29" VerticalAlignment="Top" Width="98" BorderThickness="0" Click="btnSave_Click"/>
             <Button x:Name="btnClear" Content="Clear" Height="29" VerticalAlignment="Top" Width="98" BorderThickness="0"/>
             <Button x:Name="btnDel" Content="Delete" Height="29" VerticalAlignment="Top" Width="98" BorderThickness="0"/>
         </DockPanel>
@@ -40,7 +40,7 @@
             </ComboBox>
             <TextBox x:Name="txtSSS" HorizontalAlignment="Left" Height="24" Margin="85,311,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="217" FontSize="14"/>
             <Label Content="SSS:" HorizontalAlignment="Left" Height="31" Margin="6,308,0,0" VerticalAlignment="Top" Width="79" Foreground="Black" FontSize="14"/>
-            <TextBox x:Name="tstTIN" HorizontalAlignment="Left" Height="24" Margin="85,337,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="217" FontSize="14"/>
+            <TextBox x:Name="txtTIN" HorizontalAlignment="Left" Height="24" Margin="85,337,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="217" FontSize="14"/>
             <Label Content="TIN:" HorizontalAlignment="Left" Height="31" Margin="6,334,0,0" VerticalAlignment="Top" Width="79" Foreground="Black" FontSize="14"/>
         </Grid>
         <Grid HorizontalAlignment="Left" Height="419" Margin="323,29,0,0" VerticalAlignment="Top" Width="400" Grid.ColumnSpan="2">
@@ -253,17 +253,17 @@
                         </GroupBox>
                         <TextBox x:Name="txtSLName" HorizontalAlignment="Left" Height="24" Margin="92,25,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="294" FontSize="14" ToolTip="" Grid.ColumnSpan="4"/>
                         <Label Content="First Name:" HorizontalAlignment="Left" Height="31" Margin="13,49,0,0" VerticalAlignment="Top" Width="79" Foreground="Red" FontSize="14" Grid.Column="1"/>
-                        <TextBox x:Name="txtHFName" HorizontalAlignment="Left" Height="24" Margin="92,53,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="294" FontSize="14" Grid.ColumnSpan="4"/>
+                        <TextBox x:Name="txtSFName" HorizontalAlignment="Left" Height="24" Margin="92,53,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="294" FontSize="14" Grid.ColumnSpan="4"/>
                         <Label Content="Last Name:" HorizontalAlignment="Left" Height="31" Margin="13,22,0,0" VerticalAlignment="Top" Width="79" Foreground="Red" FontSize="14" Grid.ColumnSpan="2"/>
                         <TextBox x:Name="txtSMName" HorizontalAlignment="Left" Height="24" Margin="92,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="294" FontSize="14" Grid.ColumnSpan="4"/>
                         <Label Content="Mid. Name:" HorizontalAlignment="Left" Height="31" Margin="13,76,0,0" VerticalAlignment="Top" Width="104" Foreground="Black" FontSize="14" Grid.ColumnSpan="3"/>
                         <TextBox x:Name="txtSSuffix" HorizontalAlignment="Left" Height="24" Margin="92,107,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" FontSize="14" Grid.ColumnSpan="4"/>
                         <Label Content="Suffix:" HorizontalAlignment="Left" Height="31" Margin="13,104,0,0" VerticalAlignment="Top" Width="79" Foreground="Black" FontSize="14" Grid.ColumnSpan="2"/>
                         <Label Content="Birthday:" HorizontalAlignment="Left" Height="31" Margin="13,129,0,0" VerticalAlignment="Top" Width="79" Foreground="Red" FontSize="14" RenderTransformOrigin="0.506,3.129" Grid.ColumnSpan="2"/>
-                        <DatePicker x:Name="dtBDay_Copy" HorizontalAlignment="Left" Height="26" Margin="92,134,0,0" VerticalAlignment="Top" Width="294" Grid.ColumnSpan="4"/>
+                        <DatePicker x:Name="dtSBday" HorizontalAlignment="Left" Height="26" Margin="92,134,0,0" VerticalAlignment="Top" Width="294" Grid.ColumnSpan="4"/>
                     </Grid>
                 </TabItem>
-                <TabItem Header="Reference" Margin="-56,-1,55,-1">
+                <TabItem Header="Reference" Margin="-56,-1,55,-1" HorizontalAlignment="Right" Width="66">
                     <Grid Background="#FFE5E5E5" Margin="0,0,0,-1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0*"/>

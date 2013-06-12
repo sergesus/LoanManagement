@@ -257,6 +257,7 @@ namespace LoanManagement.Domain
         public string TIN { get; set; }
         public string Email { get; set; }
         public bool Active { get; set; }
+        public byte[] Photo { get; set; }
 
         public ICollection<HomeAddress> HomeAddress { get; set; }
         public ICollection<ClientContact> ClientContact { get; set; }
