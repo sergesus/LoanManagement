@@ -1,7 +1,22 @@
-﻿<Window x:Class="LoanManagement.Desktop.wpfBranch"
+﻿<Controls:MetroWindow x:Name="wdw1" x:Class="LoanManagement.Desktop.wpfBranch"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         Title="Bank" Height="320.301" Width="515.414" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded_1" Activated="Window_Activated_1">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedTabControl.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
     <Grid>
         <DockPanel HorizontalAlignment="Left" Height="26" LastChildFill="False" VerticalAlignment="Top" Width="512" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Margin="-2,0,-218,0">
             <Button x:Name="btnAdd" Content="Add" Height="26" VerticalAlignment="Bottom" Width="115" Click="btnAdd_Click" BorderThickness="0"/>
@@ -13,4 +28,4 @@
         </Grid>
 
     </Grid>
-</Window>
+</Controls:MetroWindow>

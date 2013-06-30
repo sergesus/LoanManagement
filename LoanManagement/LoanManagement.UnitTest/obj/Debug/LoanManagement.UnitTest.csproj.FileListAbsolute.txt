@@ -22,3 +22,5 @@ C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManageme
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.UnitTest\obj\Debug\LoanManagement.UnitTest.csprojResolveAssemblyReference.cache
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.UnitTest\obj\Debug\LoanManagement.UnitTest.dll
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.UnitTest\obj\Debug\LoanManagement.UnitTest.pdb
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.UnitTest\bin\Debug\MahApps.Metro.dll
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.UnitTest\bin\Debug\System.Windows.Interactivity.dll

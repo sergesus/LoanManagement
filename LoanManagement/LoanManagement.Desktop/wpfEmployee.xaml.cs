@@ -19,14 +19,14 @@ using System.Data.Entity;
 using System.Drawing.Imaging;
 using System.Drawing;
 using System.ComponentModel.DataAnnotations;
-
+using MahApps.Metro.Controls;
 
 namespace LoanManagement.Desktop
 {
     /// <summary>
     /// Interaction logic for wpfEmployee.xaml
     /// </summary>
-    public partial class wpfEmployee : Window
+    public partial class wpfEmployee : MetroWindow
     {
         public wpfEmployee()
         {
@@ -74,6 +74,12 @@ namespace LoanManagement.Desktop
 
         private void EmpWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            ImageBrush myBrush = new ImageBrush();
+            System.Windows.Controls.Image image = new System.Windows.Controls.Image();
+            image.Source = new BitmapImage(
+                new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
+            myBrush.ImageSource = image.Source;
+            EmpWindow.Background = myBrush;
             resetGrid();
         }
 
@@ -85,7 +91,7 @@ namespace LoanManagement.Desktop
                 using (var ctx = new SystemContext())
                 {
                     img.Visibility = Visibility.Visible;
-                    var emp = ctx.Employees.Find(Convert.ToInt16(getRow(dgEmp, 0)));
+                    var emp = ctx.Employees.Find(Convert.ToInt32(getRow(dgEmp, 0)));
                     byte[] imageArr;
                     imageArr = emp.Photo;
                     BitmapImage bi = new BitmapImage();
@@ -134,7 +140,7 @@ namespace LoanManagement.Desktop
             {
                 wpfEmployeeInfo emp = new wpfEmployeeInfo();
                 emp.status = "View";
-                emp.uId = Convert.ToInt16(getRow(dgEmp, 0));
+                emp.uId = Convert.ToInt32(getRow(dgEmp, 0));
                 emp.ShowDialog();
             }
             catch (Exception ex)
@@ -150,7 +156,7 @@ namespace LoanManagement.Desktop
                 using (var ctx = new SystemContext())
                 {
                     img.Visibility = Visibility.Visible;
-                    var emp = ctx.Employees.Find(Convert.ToInt16(getRow(dgEmp, 0)));
+                    var emp = ctx.Employees.Find(Convert.ToInt32(getRow(dgEmp, 0)));
                     byte[] imageArr;
                     imageArr = emp.Photo;
                     BitmapImage bi = new BitmapImage();

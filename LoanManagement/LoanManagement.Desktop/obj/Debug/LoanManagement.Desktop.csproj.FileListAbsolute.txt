@@ -33,3 +33,14 @@ C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManageme
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\wpfClient.g.cs
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\wpfClientInfo.baml
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\wpfClientInfo.g.cs
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\wpfLoanApplication.baml
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\wpfLoanApplication.g.cs
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\wpfSelectClient.baml
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\wpfSelectClient.g.cs
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\wpfClientSearch.baml
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\wpfClientSearch.g.cs
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\bin\Debug\FirstFloor.ModernUI.dll
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\bin\Debug\Microsoft.Windows.Shell.dll
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\bin\Debug\FirstFloor.ModernUI.xml
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\bin\Debug\MahApps.Metro.dll
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\bin\Debug\System.Windows.Interactivity.dll

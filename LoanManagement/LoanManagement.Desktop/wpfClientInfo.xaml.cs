@@ -21,6 +21,8 @@ using System.Drawing;
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 
+using MahApps.Metro.Controls;
+
 namespace LoanManagement.Desktop
 {
     /// <summary>
@@ -259,6 +261,12 @@ namespace LoanManagement.Desktop
 
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
         {
+            ImageBrush myBrush = new ImageBrush();
+            System.Windows.Controls.Image image = new System.Windows.Controls.Image();
+            image.Source = new BitmapImage(
+                new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
+            myBrush.ImageSource = image.Source;
+            wdw1.Background = myBrush;
             //System.Windows.MessageBox.Show(cmbStatus.Text);
             if (cmbStatus.Text == "Married")
             {
@@ -472,7 +480,7 @@ namespace LoanManagement.Desktop
                 {
                     using (var ctx = new SystemContext())
                     {
-                        int num = Convert.ToInt16(getRow(dgAddress, 0));
+                        int num = Convert.ToInt32(getRow(dgAddress, 0));
                         var tr = ctx.HomeAddresses.Where(x => x.AddressNumber == num && x.ClientID==cId).First();
                         tr.City = txtHCity.Text;
                         tr.LengthOfStay = txtHLength.Text;
@@ -508,7 +516,7 @@ namespace LoanManagement.Desktop
 
                 using (var ctx = new SystemContext())
                 {
-                    int num = Convert.ToInt16(getRow(dgAddress, 0));
+                    int num = Convert.ToInt32(getRow(dgAddress, 0));
                     var tr = ctx.TempHomeAddresses.Where(x => x.AddressNumber == num).First();
                     tr.City = txtHCity.Text;
                     tr.LengthOfStay = txtHLength.Text;
@@ -542,7 +550,7 @@ namespace LoanManagement.Desktop
                     {
                         using (var ctx = new SystemContext())
                         {
-                            int num = Convert.ToInt16(getRow(dgAddress, 0));
+                            int num = Convert.ToInt32(getRow(dgAddress, 0));
                             var tr = ctx.HomeAddresses.Where(x => x.AddressNumber == num && x.ClientID==cId).First();
                             txtHCity.Text = tr.City;
                             txtHLength.Text = tr.LengthOfStay;
@@ -573,7 +581,7 @@ namespace LoanManagement.Desktop
 
                     using (var ctx = new SystemContext())
                     {
-                        int num = Convert.ToInt16(getRow(dgAddress, 0));
+                        int num = Convert.ToInt32(getRow(dgAddress, 0));
                         var tr = ctx.TempHomeAddresses.Where(x => x.AddressNumber == num).First();
                         txtHCity.Text=tr.City;
                         txtHLength.Text = tr.LengthOfStay;
@@ -618,7 +626,7 @@ namespace LoanManagement.Desktop
                     //for view
                     if (status == "View")
                     {
-                        int num = Convert.ToInt16(getRow(dgAddress, 0));
+                        int num = Convert.ToInt32(getRow(dgAddress, 0));
                         var th = ctx.HomeAddresses.Where(x => x.AddressNumber == num && x.ClientID==cId).First();
                         ctx.HomeAddresses.Remove(th);
                         ctx.SaveChanges();
@@ -640,7 +648,7 @@ namespace LoanManagement.Desktop
                          
                     }
 
-                    int num1 = Convert.ToInt16(getRow(dgAddress, 0));
+                    int num1 = Convert.ToInt32(getRow(dgAddress, 0));
                     var th1 = ctx.TempHomeAddresses.Where(x => x.AddressNumber == num1).First();
                     ctx.TempHomeAddresses.Remove(th1);
                     ctx.SaveChanges();
@@ -741,7 +749,7 @@ namespace LoanManagement.Desktop
                 {
                     using (var ctx = new SystemContext())
                     {
-                        int num = Convert.ToInt16(getRow(dgContact, 0));
+                        int num = Convert.ToInt32(getRow(dgContact, 0));
                         var tc = ctx.ClientContacts.Where(x => x.ContactNumber == num && x.ClientID==cId).First();
                         tc.Contact = txtContact.Text;
                         ctx.SaveChanges();
@@ -756,7 +764,7 @@ namespace LoanManagement.Desktop
 
                 using (var ctx = new SystemContext())
                 {
-                    int num = Convert.ToInt16(getRow(dgContact, 0));
+                    int num = Convert.ToInt32(getRow(dgContact, 0));
                     var tc = ctx.TempClientContacts.Where(x => x.ContactNumber == num).First();
                     tc.Contact = txtContact.Text;
                     ctx.SaveChanges();
@@ -785,7 +793,7 @@ namespace LoanManagement.Desktop
                     {
                         using (var ctx = new SystemContext())
                         {
-                            int num = Convert.ToInt16(getRow(dgContact, 0));
+                            int num = Convert.ToInt32(getRow(dgContact, 0));
                             var tc = ctx.ClientContacts.Where(x => x.ContactNumber == num && x.ClientID==cId).First();
                             txtContact.Text = tc.Contact;
                         }
@@ -796,7 +804,7 @@ namespace LoanManagement.Desktop
 
                     using (var ctx = new SystemContext())
                     {
-                        int num = Convert.ToInt16(getRow(dgContact, 0));
+                        int num = Convert.ToInt32(getRow(dgContact, 0));
                         var tc = ctx.TempClientContacts.Where(x => x.ContactNumber == num).First();
                         txtContact.Text = tc.Contact;
                     }
@@ -821,7 +829,7 @@ namespace LoanManagement.Desktop
                     //for view
                     if (status == "View")
                     {
-                        int num1 = Convert.ToInt16(getRow(dgContact, 0));
+                        int num1 = Convert.ToInt32(getRow(dgContact, 0));
                         var tc1 = ctx.ClientContacts.Where(x => x.ContactNumber == num1 && x.ClientID==cId).First();
                         ctx.ClientContacts.Remove(tc1);
                         ctx.SaveChanges();
@@ -844,7 +852,7 @@ namespace LoanManagement.Desktop
                          
                     }
 
-                    int num = Convert.ToInt16(getRow(dgContact, 0));
+                    int num = Convert.ToInt32(getRow(dgContact, 0));
                     var tc = ctx.TempClientContacts.Where(x => x.ContactNumber == num).First();
                     ctx.TempClientContacts.Remove(tc);
                     ctx.SaveChanges();
@@ -935,7 +943,7 @@ namespace LoanManagement.Desktop
                 {
                     using (var ctx = new SystemContext())
                     {
-                        int num = Convert.ToInt16(getRow(dgDependents, 0));
+                        int num = Convert.ToInt32(getRow(dgDependents, 0));
                         var td = ctx.Dependents.Where(x => x.DependentNumber == num && x.ClientID==cId).First();
                         td.Birthday = Convert.ToDateTime(dtDBDay.SelectedDate).Date;
                         td.FirstName = txtDFName.Text;
@@ -955,7 +963,7 @@ namespace LoanManagement.Desktop
 
                 using (var ctx = new SystemContext())
                 {
-                    int num = Convert.ToInt16(getRow(dgDependents, 0));
+                    int num = Convert.ToInt32(getRow(dgDependents, 0));
                     var td = ctx.TempDependents.Where(x => x.DependentNumber == num).First();
                     td.Birthday = Convert.ToDateTime(dtDBDay.SelectedDate).Date;
                     td.FirstName = txtDFName.Text;
@@ -989,7 +997,7 @@ namespace LoanManagement.Desktop
                     {
                         using (var ctx = new SystemContext())
                         {
-                            int num = Convert.ToInt16(getRow(dgDependents, 0));
+                            int num = Convert.ToInt32(getRow(dgDependents, 0));
                             var td = ctx.Dependents.Where(x => x.DependentNumber == num && x.ClientID==cId).First();
                             dtDBDay.SelectedDate = td.Birthday;
                             txtDFName.Text = td.FirstName;
@@ -1005,7 +1013,7 @@ namespace LoanManagement.Desktop
 
                     using (var ctx = new SystemContext())
                     {
-                        int num = Convert.ToInt16(getRow(dgDependents, 0));
+                        int num = Convert.ToInt32(getRow(dgDependents, 0));
                         var td = ctx.TempDependents.Where(x => x.DependentNumber == num).First();
                         dtDBDay.SelectedDate = td.Birthday;
                         txtDFName.Text=td.FirstName;
@@ -1035,7 +1043,7 @@ namespace LoanManagement.Desktop
                     //for view
                     if (status == "View")
                     {
-                        int num1 = Convert.ToInt16(getRow(dgDependents, 0));
+                        int num1 = Convert.ToInt32(getRow(dgDependents, 0));
                         var td1 = ctx.Dependents.Where(x => x.DependentNumber == num1 && x.ClientID==cId).First();
                         ctx.Dependents.Remove(td1);
                         ctx.SaveChanges();
@@ -1058,7 +1066,7 @@ namespace LoanManagement.Desktop
                          
                     }
 
-                    int num = Convert.ToInt16(getRow(dgDependents, 0));
+                    int num = Convert.ToInt32(getRow(dgDependents, 0));
                     var td = ctx.TempDependents.Where(x => x.DependentNumber == num).First();
                     ctx.TempDependents.Remove(td);
                     ctx.SaveChanges();
@@ -1149,7 +1157,7 @@ namespace LoanManagement.Desktop
                 {
                     using (var ctx = new SystemContext())
                     {
-                        int num = Convert.ToInt16(getRow(dgWork, 0));
+                        int num = Convert.ToInt32(getRow(dgWork, 0));
                         var tw = ctx.Works.Where(x => x.WorkNumber == num && x.ClientID==cId).First();
                         tw.BusinessNumber = txtWBsNumber.Text;
                         tw.BusinessName = txtWName.Text;
@@ -1175,7 +1183,7 @@ namespace LoanManagement.Desktop
 
                 using (var ctx = new SystemContext())
                 {
-                    int num = Convert.ToInt16(getRow(dgWork, 0));
+                    int num = Convert.ToInt32(getRow(dgWork, 0));
                     var tw = ctx.TempWorks.Where(x => x.WorkNumber == num).First();
                     tw.BusinessNumber = txtWBsNumber.Text;
                     tw.BusinessName = txtWName.Text;
@@ -1215,7 +1223,7 @@ namespace LoanManagement.Desktop
                     {
                         using (var ctx = new SystemContext())
                         {
-                            int num = Convert.ToInt16(getRow(dgWork, 0));
+                            int num = Convert.ToInt32(getRow(dgWork, 0));
                             var tw = ctx.Works.Where(x => x.WorkNumber == num && x.ClientID==cId).First();
                             txtWBsNumber.Text = tw.BusinessNumber;
                             txtWName.Text = tw.BusinessName;
@@ -1237,7 +1245,7 @@ namespace LoanManagement.Desktop
 
                     using (var ctx = new SystemContext())
                     {
-                        int num = Convert.ToInt16(getRow(dgWork, 0));
+                        int num = Convert.ToInt32(getRow(dgWork, 0));
                         var tw = ctx.TempWorks.Where(x => x.WorkNumber == num).First();
                         txtWBsNumber.Text=tw.BusinessNumber;
                         txtWName.Text = tw.BusinessName;
@@ -1273,7 +1281,7 @@ namespace LoanManagement.Desktop
                     //for view
                     if (status == "View")
                     {
-                        int num1 = Convert.ToInt16(getRow(dgWork, 0));
+                        int num1 = Convert.ToInt32(getRow(dgWork, 0));
                         var tw1 = ctx.Works.Where(x => x.WorkNumber == num1 && x.ClientID==cId).First();
                         ctx.Works.Remove(tw1);
                         ctx.SaveChanges();
@@ -1299,7 +1307,7 @@ namespace LoanManagement.Desktop
                          
                     }
 
-                    int num = Convert.ToInt16(getRow(dgWork, 0));
+                    int num = Convert.ToInt32(getRow(dgWork, 0));
                     var tw = ctx.TempWorks.Where(x => x.WorkNumber == num).First();
                     ctx.TempWorks.Remove(tw);
                     ctx.SaveChanges();
@@ -1392,7 +1400,7 @@ namespace LoanManagement.Desktop
                 {
                     using (var ctx = new SystemContext())
                     {
-                        int num = Convert.ToInt16(getRow(dgReference, 0));
+                        int num = Convert.ToInt32(getRow(dgReference, 0));
                         var tr = ctx.References.Where(x => x.ReferenceNumber == num && x.ClientID==cId).First();
                         tr.City=txtRCity.Text;
                         tr.Contact=txtRContact.Text;
@@ -1414,7 +1422,7 @@ namespace LoanManagement.Desktop
 
                 using (var ctx = new SystemContext())
                 {
-                    int num = Convert.ToInt16(getRow(dgReference, 0));
+                    int num = Convert.ToInt32(getRow(dgReference, 0));
                     var tr = ctx.TempReferences.Where(x => x.ReferenceNumber == num).First();
                     tr.City=txtRCity.Text;
                     tr.Contact=txtRContact.Text;
@@ -1450,7 +1458,7 @@ namespace LoanManagement.Desktop
                     {
                         using (var ctx = new SystemContext())
                         {
-                            int num = Convert.ToInt16(getRow(dgReference, 0));
+                            int num = Convert.ToInt32(getRow(dgReference, 0));
                             var tr = ctx.References.Where(x => x.ReferenceNumber == num && x.ClientID==cId).First();
                             txtRCity.Text = tr.City;
                             txtRContact.Text = tr.Contact;
@@ -1468,7 +1476,7 @@ namespace LoanManagement.Desktop
 
                     using (var ctx = new SystemContext())
                     {
-                        int num = Convert.ToInt16(getRow(dgReference, 0));
+                        int num = Convert.ToInt32(getRow(dgReference, 0));
                         var tr = ctx.TempReferences.Where(x => x.ReferenceNumber == num).First();
                         txtRCity.Text = tr.City;
                         txtRContact.Text = tr.Contact;
@@ -1500,7 +1508,7 @@ namespace LoanManagement.Desktop
                     //for view
                     if (status == "View")
                     {
-                        int num1 = Convert.ToInt16(getRow(dgReference, 0));
+                        int num1 = Convert.ToInt32(getRow(dgReference, 0));
                         var tr1 = ctx.References.Where(x => x.ReferenceNumber == num1 && x.ClientID==cId).First();
                         ctx.References.Remove(tr1);
                         ctx.SaveChanges();
@@ -1525,7 +1533,7 @@ namespace LoanManagement.Desktop
                          
                     }
 
-                    int num = Convert.ToInt16(getRow(dgReference, 0));
+                    int num = Convert.ToInt32(getRow(dgReference, 0));
                     var tr = ctx.TempReferences.Where(x => x.ReferenceNumber == num).First();
                     ctx.TempReferences.Remove(tr);
                     ctx.SaveChanges();
@@ -1659,6 +1667,66 @@ namespace LoanManagement.Desktop
             catch (Exception ex)
             {
                 return;
+            }
+        }
+
+        private void btnPrimary_Click(object sender, RoutedEventArgs e)
+        {
+            if (status == "Add")
+            {
+                using (var ctx = new SystemContext())
+                {
+                    if (ctx.TempClientContacts.Count() < 2)
+                    {
+                        return;
+                    }
+                    else
+                    {
+                        int n = Convert.ToInt32(getRow(dgContact, 0));
+                        var cts = from ct in ctx.TempClientContacts
+                                  select ct;
+                        foreach (var item in cts)
+                        {
+                            if (item.ContactNumber != n)
+                            {
+                                item.Primary = false;
+                            }
+                            else
+                            {
+                                item.Primary = true;
+                            }
+                        }
+                        ctx.SaveChanges();
+                        var cts3 = from ct in ctx.TempClientContacts
+                                  select new { ContactNumber = ct.ContactNumber, Contact = ct.Contact, Primary = ct.Primary };
+                        dgContact.ItemsSource = cts3.ToList();
+                    }
+                }
+            }
+            else
+            {
+                int n = Convert.ToInt32(getRow(dgContact, 0));
+                using (var ctx = new SystemContext())
+                {
+                    var cts = from ct in ctx.ClientContacts
+                              where ct.ClientID == cId
+                              select ct;
+                    foreach (var item in cts)
+                    {
+                        if (item.ContactNumber != n)
+                        {
+                            item.Primary = false;
+                        }
+                        else
+                        {
+                            item.Primary = true;
+                        }
+                    }
+                    ctx.SaveChanges();
+                    var cts1 = from ct in ctx.ClientContacts
+                               select new { ContactNumber = ct.ContactNumber, Contact = ct.Contact, Primary = ct.Primary };
+                    dgContact.ItemsSource = cts1.ToList();
+                }
             }
         }
     }

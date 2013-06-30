@@ -12,41 +12,95 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+
+using MahApps.Metro.Controls;
 namespace LoanManagement.Desktop
 {
     /// <summary>
     /// Interaction logic for wpfMain.xaml
     /// </summary>
-    public partial class wpfMain : Window
+    public partial class wpfMain : MetroWindow
     {
+
+
         public wpfMain()
         {
             InitializeComponent();
         }
 
-        private void txtEmployee_MouseUp(object sender, MouseButtonEventArgs e)
+        private void btnSettings_Click(object sender, RoutedEventArgs e)
         {
-            wpfEmployee emp = new wpfEmployee();
-            emp.ShowDialog();
+            MessageBox.Show("asd");
         }
 
-        private void txtServices_MouseUp(object sender, MouseButtonEventArgs e)
+        private void ListBox_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
         {
-            wpfServices ser = new wpfServices();
-            ser.ShowDialog();
+            if (lb1.SelectedIndex == 0)
+            {
+                tb1.IsSelected = true;
+            }
+            else if (lb1.SelectedIndex == 1)
+            {
+                tb2.IsSelected = true;
+            }
         }
 
-        private void txtEmployee_Click(object sender, RoutedEventArgs e)
+        private void MetroWindow_Activated_1(object sender, EventArgs e)
         {
-            wpfEmployee emp = new wpfEmployee();
-            emp.ShowDialog();
+            //lbM.UnselectAll();
         }
 
-        private void txtServices_Click(object sender, RoutedEventArgs e)
+
+        private void ListBoxItem_Selected_2(object sender, RoutedEventArgs e)
         {
-            wpfServices ser = new wpfServices();
-            ser.ShowDialog();
+            wpfLogin frm = new wpfLogin();
+            frm.Show();
+            this.Close();
         }
+
+        private void wdw1_Loaded(object sender, RoutedEventArgs e)
+        {
+            ImageBrush myBrush = new ImageBrush();
+            System.Windows.Controls.Image image = new System.Windows.Controls.Image();
+            image.Source = new BitmapImage(
+                new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
+            myBrush.ImageSource = image.Source;
+            //Grid grid = new Grid();
+            wdw1.Background = myBrush;
+            //grdLo.Background = myBrush;
+            //grdM.Background = myBrush;
+            //grdBG.Background = myBrush;
+        }
+
+
+        private void ListBoxItem_MouseUp_1(object sender, MouseButtonEventArgs e)
+        {
+            wpfClient frm = new wpfClient();
+            frm.ShowDialog();
+        }
+
+        private void ListBoxItem_MouseUp_2(object sender, MouseButtonEventArgs e)
+        {
+
+            wpfServices frm = new wpfServices();
+            frm.ShowDialog();
+        }
+
+        private void ListBoxItem_MouseUp_3(object sender, MouseButtonEventArgs e)
+        {
+
+            wpfBranch frm = new wpfBranch();
+            frm.ShowDialog();
+        }
+
+        private void ListBoxItem_MouseUp_4(object sender, MouseButtonEventArgs e)
+        {
+            wpfEmployee frm = new wpfEmployee();
+            frm.ShowDialog();
+        }
+
+
+
 
     }
 }

@@ -14,13 +14,14 @@ using System.Windows.Shapes;
 
 using System.Data.Entity;
 using LoanManagement.Domain;
+using MahApps.Metro.Controls;
 
 namespace LoanManagement.Desktop
 {
     /// <summary>
     /// Interaction logic for wpfServiceInfo.xaml
     /// </summary>
-    public partial class wpfServiceInfo : Window
+    public partial class wpfServiceInfo : MetroWindow
     {
         public string status;
         public int sId;
@@ -116,7 +117,7 @@ namespace LoanManagement.Desktop
 
                 using (var ctx = new SystemContext())
                 {
-                    Service ser = new Service { Name = txtName.Text, Department = cmbDept.Text, Description = txtDesc.Text, Type = cmbType.Text, Active = true, Interest = Convert.ToDouble(txtInterest.Text), MinTerm = Convert.ToInt16(txtMinTerm.Text), MaxTerm = Convert.ToInt16(txtMaxTerm.Text), MinValue = Convert.ToDouble(txtMinVal.Text), MaxValue = Convert.ToDouble(txtMaxVal.Text) };
+                    Service ser = new Service { Name = txtName.Text, Department = cmbDept.Text, Description = txtDesc.Text, Type = cmbType.Text, Active = true, Interest = Convert.ToDouble(txtInterest.Text), MinTerm = Convert.ToInt32(txtMinTerm.Text), MaxTerm = Convert.ToInt32(txtMaxTerm.Text), MinValue = Convert.ToDouble(txtMinVal.Text), MaxValue = Convert.ToDouble(txtMaxVal.Text) };
 
 
                     var deds = from dd in ctx.TempoDeductions
@@ -152,8 +153,8 @@ namespace LoanManagement.Desktop
                     ser.Description = txtDesc.Text;
                     ser.Type = cmbType.Text;
                     ser.Interest = Convert.ToDouble(txtInterest.Text);
-                    ser.MinTerm = Convert.ToInt16(txtMinTerm.Text);
-                    ser.MaxTerm = Convert.ToInt16(txtMaxTerm.Text);
+                    ser.MinTerm = Convert.ToInt32(txtMinTerm.Text);
+                    ser.MaxTerm = Convert.ToInt32(txtMaxTerm.Text);
                     ser.MinValue = Convert.ToDouble(txtMinVal.Text);
                     ser.MaxValue = Convert.ToDouble(txtMaxVal.Text);
                     ctx.SaveChanges();
@@ -175,6 +176,12 @@ namespace LoanManagement.Desktop
 
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
         {
+            ImageBrush myBrush = new ImageBrush();
+            System.Windows.Controls.Image image = new System.Windows.Controls.Image();
+            image.Source = new BitmapImage(
+                new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
+            myBrush.ImageSource = image.Source;
+            wdw1.Background = myBrush;
             if (status == "Add")
             {
                 using (var ctx = new SystemContext())
@@ -273,7 +280,7 @@ namespace LoanManagement.Desktop
                 {
                     using (var ctx = new SystemContext())
                     {
-                        int num = Convert.ToInt16(getRow(dgDed, 0));
+                        int num = Convert.ToInt32(getRow(dgDed, 0));
                         var td = ctx.Deductions.Where(x => x.DeductionNum == num && x.ServiceID == sId).First();
                         td.Name = txtDedName.Text;
                         td.Percentage = Convert.ToDouble(txtDedPerc.Text);
@@ -291,7 +298,7 @@ namespace LoanManagement.Desktop
 
                 using (var ctx = new SystemContext())
                 {
-                    int num = Convert.ToInt16(getRow(dgDed, 0));
+                    int num = Convert.ToInt32(getRow(dgDed, 0));
                     var td = ctx.TempoDeductions.Where(x => x.DeductionNum == num).First();
                     td.Name = txtDedName.Text;
                     td.Percentage = Convert.ToDouble(txtDedPerc.Text);
@@ -364,7 +371,7 @@ namespace LoanManagement.Desktop
                 {
                     using (var ctx = new SystemContext())
                     {
-                        int num = Convert.ToInt16(getRow(dgReq, 0));
+                        int num = Convert.ToInt32(getRow(dgReq, 0));
                         var tr = ctx.Requirements.Where(x => x.RequirementNum == num && x.ServiceID==sId).First();
                         tr.Name = txtReqName.Text;
                         tr.Description = txtReqDesc.Text;
@@ -382,7 +389,7 @@ namespace LoanManagement.Desktop
 
                 using (var ctx = new SystemContext())
                 {
-                    int num = Convert.ToInt16(getRow(dgReq, 0));
+                    int num = Convert.ToInt32(getRow(dgReq, 0));
                     var tr  = ctx.TempoRequirements.Where(x=> x.RequirementNum==num).First();
                     tr.Name = txtReqName.Text;
                     tr.Description = txtReqDesc.Text;
@@ -412,7 +419,7 @@ namespace LoanManagement.Desktop
                     {
                         using (var ctx = new SystemContext())
                         {
-                            int num = Convert.ToInt16(getRow(dgReq, 0));
+                            int num = Convert.ToInt32(getRow(dgReq, 0));
                             var tr = ctx.Requirements.Where(x => x.RequirementNum == num && x.ServiceID == sId).First();
                             txtReqName.Text=tr.Name;
                             txtReqDesc.Text=tr.Description;
@@ -423,7 +430,7 @@ namespace LoanManagement.Desktop
 
                     using (var ctx = new SystemContext())
                     {
-                        int num = Convert.ToInt16(getRow(dgReq, 0));
+                        int num = Convert.ToInt32(getRow(dgReq, 0));
                         var tr = ctx.TempoRequirements.Where(x => x.RequirementNum == num).First();
                         txtReqName.Text = tr.Name;
                         txtReqDesc.Text = tr.Description;
@@ -449,7 +456,7 @@ namespace LoanManagement.Desktop
                     //for view
                     if (status == "View")
                     {
-                        int nums = Convert.ToInt16(getRow(dgReq, 0));
+                        int nums = Convert.ToInt32(getRow(dgReq, 0));
                         var tr1 = ctx.Requirements.Where(x => x.RequirementNum == nums && x.ServiceID==sId).First();
                         ctx.Requirements.Remove(tr1);
                         ctx.SaveChanges();
@@ -471,7 +478,7 @@ namespace LoanManagement.Desktop
                         return;
                     }
 
-                    int num = Convert.ToInt16(getRow(dgReq, 0));
+                    int num = Convert.ToInt32(getRow(dgReq, 0));
                     var tr = ctx.TempoRequirements.Where(x => x.RequirementNum == num).First();
                     ctx.TempoRequirements.Remove(tr);
                     ctx.SaveChanges();
@@ -514,7 +521,7 @@ namespace LoanManagement.Desktop
                     {
                         using (var ctx = new SystemContext())
                         {
-                            int num = Convert.ToInt16(getRow(dgDed, 0));
+                            int num = Convert.ToInt32(getRow(dgDed, 0));
                             var td = ctx.Deductions.Where(x => x.DeductionNum == num && x.ServiceID==sId).First();
                             txtDedName.Text = td.Name;
                             txtDedPerc.Text = td.Percentage.ToString();
@@ -525,7 +532,7 @@ namespace LoanManagement.Desktop
 
                     using (var ctx = new SystemContext())
                     {
-                        int num = Convert.ToInt16(getRow(dgDed, 0));
+                        int num = Convert.ToInt32(getRow(dgDed, 0));
                         var td = ctx.TempoDeductions.Where(x => x.DeductionNum == num).First();
                         txtDedName.Text = td.Name;
                         txtDedPerc.Text = td.Percentage.ToString();
@@ -551,7 +558,7 @@ namespace LoanManagement.Desktop
                     //for view
                     if (status == "View")
                     {
-                        int num1 = Convert.ToInt16(getRow(dgDed, 0));
+                        int num1 = Convert.ToInt32(getRow(dgDed, 0));
                         var td1 = ctx.Deductions.Where(x => x.DeductionNum == num1 && x.ServiceID==sId).First();
                         ctx.Deductions.Remove(td1);
                         ctx.SaveChanges();
@@ -574,7 +581,7 @@ namespace LoanManagement.Desktop
                         return;
                     }
 
-                    int num = Convert.ToInt16(getRow(dgDed, 0));
+                    int num = Convert.ToInt32(getRow(dgDed, 0));
                     var td = ctx.TempoDeductions.Where(x => x.DeductionNum == num).First();
                     ctx.TempoDeductions.Remove(td);
                     ctx.SaveChanges();

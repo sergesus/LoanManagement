@@ -23,6 +23,8 @@ using System.Drawing;
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 
+using MahApps.Metro.Controls;
+
 namespace LoanManagement.Desktop
 {
     /// <summary>
@@ -159,6 +161,13 @@ namespace LoanManagement.Desktop
             //grpAddress.Visibility = Visibility.Hidden;
             //grpContact.Visibility = Visibility.Hidden;
 
+            ImageBrush myBrush = new ImageBrush();
+            System.Windows.Controls.Image image = new System.Windows.Controls.Image();
+            image.Source = new BitmapImage(
+                new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
+            myBrush.ImageSource = image.Source;
+            wdw1.Background = myBrush;
+
             selectedFileName = AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\myImg.gif";
 
             reset();
@@ -283,7 +292,7 @@ namespace LoanManagement.Desktop
                 {
                     using (var ctx = new SystemContext())
                     {
-                        var adds = ctx.EmployeeAddresses.Find(Convert.ToInt16(getRow(dgAddress, 0)));
+                        var adds = ctx.EmployeeAddresses.Find(Convert.ToInt32(getRow(dgAddress, 0)));
                         adds.City = txtCity.Text;
                         adds.Province = txtProvince.Text;
                         adds.Street = txtStreet.Text;
@@ -300,7 +309,7 @@ namespace LoanManagement.Desktop
 
                 using (var ctx = new SystemContext())
                 {
-                    var add = ctx.TempAdresses.Find(Convert.ToInt16(getRow(dgAddress, 0)));
+                    var add = ctx.TempAdresses.Find(Convert.ToInt32(getRow(dgAddress, 0)));
                     add.City=txtCity.Text;
                     add.Province = txtProvince.Text;
                     add.Street = txtStreet.Text;
@@ -329,7 +338,7 @@ namespace LoanManagement.Desktop
                     {
                         using (var ctx = new SystemContext())
                         {
-                            var add = ctx.EmployeeAddresses.Find(Convert.ToInt16(getRow(dgAddress, 0)));
+                            var add = ctx.EmployeeAddresses.Find(Convert.ToInt32(getRow(dgAddress, 0)));
                             txtCity.Text = add.City;
                             txtProvince.Text = add.Province;
                             txtStreet.Text = add.Street;
@@ -340,7 +349,7 @@ namespace LoanManagement.Desktop
 
                     using (var ctx = new SystemContext())
                     {
-                        var add=ctx.TempAdresses.Find(Convert.ToInt16(getRow(dgAddress, 0)));
+                        var add=ctx.TempAdresses.Find(Convert.ToInt32(getRow(dgAddress, 0)));
                         txtCity.Text = add.City;
                         txtProvince.Text = add.Province;
                         txtStreet.Text = add.Street;
@@ -410,7 +419,7 @@ namespace LoanManagement.Desktop
                 {
                     using (var ctx = new SystemContext())
                     {
-                        var conts = ctx.EmployeeContacts.Find(Convert.ToInt16(getRow(dgAddress, 0)));
+                        var conts = ctx.EmployeeContacts.Find(Convert.ToInt32(getRow(dgAddress, 0)));
                         conts.Contact = txtContact.Text;
                         ctx.SaveChanges();
                         var cont = from cn in ctx.EmployeeContacts
@@ -424,7 +433,7 @@ namespace LoanManagement.Desktop
 
                 using (var ctx = new SystemContext())
                 {
-                    var con = ctx.TempContacts.Find(Convert.ToInt16(getRow(dgContact, 0)));
+                    var con = ctx.TempContacts.Find(Convert.ToInt32(getRow(dgContact, 0)));
                     con.Contact = txtContact.Text;
                     ctx.SaveChanges();
                     dgContact.ItemsSource = ctx.TempContacts.ToList();
@@ -449,7 +458,7 @@ namespace LoanManagement.Desktop
                 {
                     using (var ctx = new SystemContext())
                     {
-                        var cont= ctx.EmployeeContacts.Find(Convert.ToInt16(getRow(dgAddress, 0)));
+                        var cont= ctx.EmployeeContacts.Find(Convert.ToInt32(getRow(dgAddress, 0)));
                         txtContact.Text = cont.Contact;
                     }
 
@@ -458,7 +467,7 @@ namespace LoanManagement.Desktop
 
                 using (var ctx = new SystemContext())
                 {
-                    var add = ctx.TempContacts.Find(Convert.ToInt16(getRow(dgContact, 0)));
+                    var add = ctx.TempContacts.Find(Convert.ToInt32(getRow(dgContact, 0)));
                     txtContact.Text = add.Contact;
                 }
             }
@@ -477,7 +486,7 @@ namespace LoanManagement.Desktop
                     //for view
                     if (status == "View")
                     {
-                        var conts = ctx.EmployeeContacts.Find(Convert.ToInt16(getRow(dgAddress, 0)));
+                        var conts = ctx.EmployeeContacts.Find(Convert.ToInt32(getRow(dgAddress, 0)));
                         ctx.EmployeeContacts.Remove(conts);
                         ctx.SaveChanges();
                         var cont = from cn in ctx.EmployeeContacts
@@ -487,7 +496,7 @@ namespace LoanManagement.Desktop
                         return;
                     }
 
-                    var add = ctx.TempAdresses.Find(Convert.ToInt16(getRow(dgAddress, 0)));
+                    var add = ctx.TempAdresses.Find(Convert.ToInt32(getRow(dgAddress, 0)));
                     ctx.TempAdresses.Remove(add);
                     ctx.SaveChanges();
                     dgAddress.ItemsSource = ctx.TempAdresses.ToList();
@@ -509,7 +518,7 @@ namespace LoanManagement.Desktop
                     //for view
                     if (status == "View")
                     {
-                        var adds = ctx.EmployeeAddresses.Find(Convert.ToInt16(getRow(dgAddress, 0)));
+                        var adds = ctx.EmployeeAddresses.Find(Convert.ToInt32(getRow(dgAddress, 0)));
                         ctx.EmployeeAddresses.Remove(adds);
                         ctx.SaveChanges();
                         var addr = from cn in ctx.EmployeeAddresses
@@ -520,7 +529,7 @@ namespace LoanManagement.Desktop
                         return;
                     }
 
-                    var con = ctx.TempContacts.Find(Convert.ToInt16(getRow(dgContact, 0)));
+                    var con = ctx.TempContacts.Find(Convert.ToInt32(getRow(dgContact, 0)));
                     ctx.TempContacts.Remove(con);
                     ctx.SaveChanges();
                     dgContact.ItemsSource = ctx.TempContacts.ToList();

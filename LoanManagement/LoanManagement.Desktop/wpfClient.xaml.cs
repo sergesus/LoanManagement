@@ -19,12 +19,14 @@ using System.Data.Entity;
 using System.Drawing.Imaging;
 using System.Drawing;
 using System.ComponentModel.DataAnnotations;
+using MahApps.Metro.Controls;
+
 namespace LoanManagement.Desktop
 {
     /// <summary>
     /// Interaction logic for wpfClient.xaml
     /// </summary>
-    public partial class wpfClient : Window
+    public partial class wpfClient : MetroWindow
     {
         public wpfClient()
         {
@@ -72,7 +74,7 @@ namespace LoanManagement.Desktop
             {
                 wpfClientInfo frm = new wpfClientInfo();
                 frm.status = "View";
-                frm.cId = Convert.ToInt16(getRow(dgClient, 0));
+                frm.cId = Convert.ToInt32(getRow(dgClient, 0));
                 frm.ShowDialog();
             }
             catch (Exception ex)
@@ -83,7 +85,12 @@ namespace LoanManagement.Desktop
 
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
         {
-
+            ImageBrush myBrush = new ImageBrush();
+            System.Windows.Controls.Image image = new System.Windows.Controls.Image();
+            image.Source = new BitmapImage(
+                new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
+            myBrush.ImageSource = image.Source;
+            wdw1.Background = myBrush;
         }
 
         private void resetGrid()
@@ -109,7 +116,7 @@ namespace LoanManagement.Desktop
                 using (var ctx = new SystemContext())
                 {
                     img.Visibility = Visibility.Visible;
-                    var clt = ctx.Clients.Find(Convert.ToInt16(getRow(dgClient, 0)));
+                    var clt = ctx.Clients.Find(Convert.ToInt32(getRow(dgClient, 0)));
                     byte[] imageArr;
                     imageArr = clt.Photo;
                     BitmapImage bi = new BitmapImage();

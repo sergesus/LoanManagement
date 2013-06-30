@@ -21,12 +21,14 @@ using System.Drawing.Imaging;
 using System.Drawing;
 using System.ComponentModel.DataAnnotations;
 
+using MahApps.Metro.Controls;
+
 namespace LoanManagement.Desktop
 {
     /// <summary>
     /// Interaction logic for wpfServices.xaml
     /// </summary>
-    public partial class wpfServices : Window
+    public partial class wpfServices : MetroWindow
     {
         public wpfServices()
         {
@@ -62,7 +64,7 @@ namespace LoanManagement.Desktop
             {
                 wpfServiceInfo frm = new wpfServiceInfo();
                 frm.status = "View";
-                frm.sId = Convert.ToInt16(getRow(dgServ, 0));
+                frm.sId = Convert.ToInt32(getRow(dgServ, 0));
                 frm.ShowDialog();
             }
             catch (Exception ex)
@@ -73,7 +75,12 @@ namespace LoanManagement.Desktop
 
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
         {
-
+            ImageBrush myBrush = new ImageBrush();
+            System.Windows.Controls.Image image = new System.Windows.Controls.Image();
+            image.Source = new BitmapImage(
+                new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
+            myBrush.ImageSource = image.Source;
+            wdw1.Background = myBrush;
         }
 
         private void Window_Activated_1(object sender, EventArgs e)

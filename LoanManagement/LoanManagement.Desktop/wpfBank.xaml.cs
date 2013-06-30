@@ -14,13 +14,14 @@ using System.Windows.Shapes;
 
 using LoanManagement.Domain;
 using System.Data.Entity;
+using MahApps.Metro.Controls;
 
 namespace LoanManagement.Desktop
 {
     /// <summary>
     /// Interaction logic for wpfBranch.xaml
     /// </summary>
-    public partial class wpfBranch : Window
+    public partial class wpfBranch : MetroWindow
     {
         public wpfBranch()
         {
@@ -44,6 +45,12 @@ namespace LoanManagement.Desktop
 
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
         {
+            ImageBrush myBrush = new ImageBrush();
+            System.Windows.Controls.Image image = new System.Windows.Controls.Image();
+            image.Source = new BitmapImage(
+                new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
+            myBrush.ImageSource = image.Source;
+            wdw1.Background = myBrush;
             resetGrid();
         }
 
@@ -73,7 +80,7 @@ namespace LoanManagement.Desktop
             {
                 wpfBranchInfo frm = new wpfBranchInfo();
                 frm.status = "View";
-                frm.bId = Convert.ToInt16(getRow(dgBank, 0));
+                frm.bId = Convert.ToInt32(getRow(dgBank, 0));
                 frm.txtDesc.Text = getRow(dgBank, 2);
                 frm.txtName.Text = getRow(dgBank, 1);
                 frm.ShowDialog();

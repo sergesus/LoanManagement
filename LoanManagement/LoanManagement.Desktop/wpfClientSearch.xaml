@@ -1,0 +1,14 @@
+﻿<Window x:Class="LoanManagement.Desktop.wpfClientSearch"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="wpfClientSearch" Height="479.819" Width="804.203" Loaded="Window_Loaded_1" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="0*"/>
+        </Grid.ColumnDefinitions>
+        <DataGrid x:Name="dgClient" HorizontalAlignment="Left" Height="331" Margin="10,55,0,0" VerticalAlignment="Top" Width="763" GridLinesVisibility="None" FontSize="22"/>
+        <Button x:Name="btnSelect" Content="Select" HorizontalAlignment="Left" Height="37" Margin="636,391,0,0" VerticalAlignment="Top" Width="137" Click="btnSelect_Click" RenderTransformOrigin="0.327,0.46"/>
+
+    </Grid>
+</Window>

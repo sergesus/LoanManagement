@@ -1,7 +1,20 @@
-﻿<Window x:Class="LoanManagement.Desktop.wpfClientInfo"
+﻿<Controls:MetroWindow x:Name="wdw1" x:Class="LoanManagement.Desktop.wpfClientInfo"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"              
         Title="wpfClientInfo" Height="512.383" Width="741.985" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Loaded="Window_Loaded_1">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
     <Grid Margin="0,0,4,-29">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="93*"/>
@@ -83,7 +96,7 @@
                         </GroupBox>
                     </Grid>
                 </TabItem>
-                <TabItem Header="Contact" Margin="-6,-1,1,-1">
+                <TabItem Header="Contact" Margin="-4,-1,-1,-1">
                     <Grid Background="#FFE5E5E5">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="11*"/>
@@ -101,6 +114,7 @@
 
                             </Grid>
                         </GroupBox>
+                        <Button x:Name="btnPrimary" Content="Set as Primary" HorizontalAlignment="Left" Height="24" Margin="208,136,0,0" VerticalAlignment="Top" Width="90" RenderTransformOrigin="1.635,0.625" Grid.Column="2" Click="btnPrimary_Click"/>
                     </Grid>
                 </TabItem>
                 <TabItem Header="Dependents" Margin="-1,-1,1,-1">
@@ -263,7 +277,7 @@
                         <DatePicker x:Name="dtSBday" HorizontalAlignment="Left" Height="26" Margin="92,134,0,0" VerticalAlignment="Top" Width="294" Grid.ColumnSpan="4"/>
                     </Grid>
                 </TabItem>
-                <TabItem Header="Reference" Margin="-56,-1,55,-1" HorizontalAlignment="Right" Width="66">
+                <TabItem Header="Reference" Margin="-56,-1,56,-1" HorizontalAlignment="Right" Width="66">
                     <Grid Background="#FFE5E5E5" Margin="0,0,0,-1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0*"/>
@@ -308,4 +322,4 @@
         <Button x:Name="btnBrowse" Content="Browse.." HorizontalAlignment="Left" Height="26" Margin="128,80,0,0" VerticalAlignment="Top" Width="84" Click="btnBrowse_Click"/>
 
     </Grid>
-</Window>
+</Controls:MetroWindow>

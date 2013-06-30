@@ -38,12 +38,24 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\EntityFramework.5.0.0\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
+    <Reference Include="FirstFloor.ModernUI">
+      <HintPath>..\Extensions\net40\FirstFloor.ModernUI.dll</HintPath>
+    </Reference>
+    <Reference Include="MahApps.Metro">
+      <HintPath>..\packages\MahApps.Metro.0.10.1.1\lib\net45\MahApps.Metro.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Windows.Shell">
+      <HintPath>..\Extensions\net40\Microsoft.Windows.Shell.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
     <Reference Include="System.Data.Entity" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Windows.Interactivity">
+      <HintPath>..\packages\MahApps.Metro.0.10.1.1\lib\net45\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -75,11 +87,17 @@
     <Compile Include="wpfClientInfo.xaml.cs">
       <DependentUpon>wpfClientInfo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="wpfClientSearch.xaml.cs">
+      <DependentUpon>wpfClientSearch.xaml</DependentUpon>
+    </Compile>
     <Compile Include="wpfEmployee.xaml.cs">
       <DependentUpon>wpfEmployee.xaml</DependentUpon>
     </Compile>
     <Compile Include="wpfEmployeeInfo.xaml.cs">
       <DependentUpon>wpfEmployeeInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="wpfLoanApplication.xaml.cs">
+      <DependentUpon>wpfLoanApplication.xaml</DependentUpon>
     </Compile>
     <Compile Include="wpfLogin.xaml.cs">
       <DependentUpon>wpfLogin.xaml</DependentUpon>
@@ -90,6 +108,9 @@
     </Compile>
     <Compile Include="wpfMain.xaml.cs">
       <DependentUpon>wpfMain.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="wpfSelectClient.xaml.cs">
+      <DependentUpon>wpfSelectClient.xaml</DependentUpon>
     </Compile>
     <Compile Include="wpfServiceInfo.xaml.cs">
       <DependentUpon>wpfServiceInfo.xaml</DependentUpon>
@@ -113,6 +134,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="wpfClientSearch.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="wpfEmployee.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -121,11 +146,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="wpfLoanApplication.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="wpfLogin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="wpfMain.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="wpfSelectClient.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -171,6 +204,9 @@
       <Project>{af47e968-ba89-4841-a19d-bbf247513d37}</Project>
       <Name>LoanManagement.Domain</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

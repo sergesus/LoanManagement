@@ -15,13 +15,14 @@ using System.Windows.Shapes;
 using LoanManagement.Domain;
 using System.Data.Entity;
 using System.Windows.Forms;
+using MahApps.Metro.Controls;
 
 namespace LoanManagement.Desktop
 {
     /// <summary>
     /// Interaction logic for wpfBranchInfo.xaml
     /// </summary>
-    public partial class wpfBranchInfo : Window
+    public partial class wpfBranchInfo : MetroWindow
     {
         public string status;
         public int bId;
@@ -143,7 +144,7 @@ namespace LoanManagement.Desktop
                 {
                     using (var ctx = new SystemContext())
                     {
-                        int bankNum=Convert.ToInt16(getRow(dgAddress, 0));
+                        int bankNum=Convert.ToInt32(getRow(dgAddress, 0));
                         var add = ctx.BankAdresses.Where(x => x.BankID == bId && x.BankNum == bankNum).First();
                         add.City = txtCity.Text;
                         add.Province = txtProvince.Text;
@@ -161,7 +162,7 @@ namespace LoanManagement.Desktop
 
                 using (var ctx = new SystemContext())
                 {
-                    var add = ctx.TempAdresses.Find(Convert.ToInt16(getRow(dgAddress, 0)));
+                    var add = ctx.TempAdresses.Find(Convert.ToInt32(getRow(dgAddress, 0)));
                     add.City = txtCity.Text;
                     add.Province = txtProvince.Text;
                     add.Street = txtStreet.Text;
@@ -190,7 +191,7 @@ namespace LoanManagement.Desktop
                     {
                         using (var ctx = new SystemContext())
                         {
-                            var add = ctx.BankAdresses.Where(x=> x.BankID==bId && x.BankNum==Convert.ToInt16(getRow(dgAddress,0))).First();
+                            var add = ctx.BankAdresses.Where(x=> x.BankID==bId && x.BankNum==Convert.ToInt32(getRow(dgAddress,0))).First();
                             txtCity.Text = add.City;
                             txtProvince.Text = add.Province;
                             txtStreet.Text = add.Street;
@@ -201,7 +202,7 @@ namespace LoanManagement.Desktop
 
                     using (var ctx = new SystemContext())
                     {
-                        var add = ctx.TempAdresses.Find(Convert.ToInt16(getRow(dgAddress, 0)));
+                        var add = ctx.TempAdresses.Find(Convert.ToInt32(getRow(dgAddress, 0)));
                         txtCity.Text = add.City;
                         txtProvince.Text = add.Province;
                         txtStreet.Text = add.Street;
@@ -227,7 +228,7 @@ namespace LoanManagement.Desktop
                     //for view
                     if (status == "View")
                     {
-                        int bankNum = Convert.ToInt16(getRow(dgAddress, 0));
+                        int bankNum = Convert.ToInt32(getRow(dgAddress, 0));
                         var add1 = ctx.BankAdresses.Where(x => x.BankID == bId && x.BankNum == bankNum).First();
                         ctx.BankAdresses.Remove(add1);
                         ctx.SaveChanges();
@@ -249,7 +250,7 @@ namespace LoanManagement.Desktop
                         return;
                     }
 
-                    var add = ctx.TempAdresses.Find(Convert.ToInt16(getRow(dgAddress, 0)));
+                    var add = ctx.TempAdresses.Find(Convert.ToInt32(getRow(dgAddress, 0)));
                     ctx.TempAdresses.Remove(add);
                     ctx.SaveChanges();
                     dgAddress.ItemsSource = ctx.TempAdresses.ToList();
@@ -339,6 +340,13 @@ namespace LoanManagement.Desktop
 
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
         {
+            ImageBrush myBrush = new ImageBrush();
+            System.Windows.Controls.Image image = new System.Windows.Controls.Image();
+            image.Source = new BitmapImage(
+                new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
+            myBrush.ImageSource = image.Source;
+            wdw1.Background = myBrush;
+
             if (status == "Add")
             {
                 using (var ctx = new SystemContext())

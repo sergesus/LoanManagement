@@ -1,7 +1,22 @@
-﻿<Window x:Name="EmpWindow" x:Class="LoanManagement.Desktop.wpfEmployee"
+﻿<Controls:MetroWindow x:Name="EmpWindow" x:Class="LoanManagement.Desktop.wpfEmployee"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro" 
         Title="Employee Maintenance" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Width="731.872" Height="405.195" Loaded="EmpWindow_Loaded" Activated="EmpWindow_Activated">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedTabControl.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
     <Window.BorderBrush>
         <ImageBrush/>
     </Window.BorderBrush>
@@ -29,4 +44,4 @@
             <Label x:Name="lblDept" Content="" HorizontalAlignment="Left" Height="32" Margin="14,193,0,0" VerticalAlignment="Top" Width="244" RenderTransformOrigin="0.547,-0.275" FontFamily="Cambria" FontSize="18"/>
         </Grid>
     </Grid>
-</Window>
+</Controls:MetroWindow>
