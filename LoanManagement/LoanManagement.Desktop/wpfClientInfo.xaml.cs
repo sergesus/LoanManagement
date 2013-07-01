@@ -28,7 +28,7 @@ namespace LoanManagement.Desktop
     /// <summary>
     /// Interaction logic for wpfClientInfo.xaml
     /// </summary>
-    public partial class wpfClientInfo : Window
+    public partial class wpfClientInfo : MetroWindow
     {
 
         public string status;

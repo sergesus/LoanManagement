@@ -30,7 +30,7 @@ namespace LoanManagement.Desktop
     /// <summary>
     /// Interaction logic for wpfEmployeeInfo.xaml
     /// </summary>
-    public partial class wpfEmployeeInfo : Window
+    public partial class wpfEmployeeInfo : MetroWindow
     {
         public string status;
         public int uId;

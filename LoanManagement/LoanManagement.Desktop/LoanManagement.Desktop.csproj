@@ -75,6 +75,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="wpfAgent.xaml.cs">
+      <DependentUpon>wpfAgent.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="wpfAgentInfo.xaml.cs">
+      <DependentUpon>wpfAgentInfo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="wpfBank.xaml.cs">
       <DependentUpon>wpfBank.xaml</DependentUpon>
     </Compile>
@@ -118,6 +124,14 @@
     <Compile Include="wpfServices.xaml.cs">
       <DependentUpon>wpfServices.xaml</DependentUpon>
     </Compile>
+    <Page Include="wpfAgent.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="wpfAgentInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="wpfBank.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

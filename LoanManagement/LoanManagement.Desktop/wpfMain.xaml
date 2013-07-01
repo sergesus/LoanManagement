@@ -23,11 +23,15 @@
         
     </Controls:MetroWindow.WindowCommands>
     <Grid HorizontalAlignment="Left" Height="518" VerticalAlignment="Top" Width="1104">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="13*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="66*"/>
             <RowDefinition Height="107*"/>
         </Grid.RowDefinitions>
-        <Grid x:Name="grdBG" HorizontalAlignment="Left" Height="535" Margin="182,0,0,-17" Grid.RowSpan="2" VerticalAlignment="Top" Width="922"/>
+        <Grid x:Name="grdBG" HorizontalAlignment="Left" Height="535" Margin="182,0,0,-17" Grid.RowSpan="2" VerticalAlignment="Top" Width="922" Grid.ColumnSpan="2"/>
         <Rectangle Fill="#FFF4F4F5" HorizontalAlignment="Left" Height="535" Stroke="#FFF4F4F5" VerticalAlignment="Top" Width="182" Margin="0,0,0,-17" OpacityMask="Black" Grid.RowSpan="2" Opacity="0.5"/>
         <ListBox x:Name="lb1" HorizontalAlignment="Left" Height="375" VerticalAlignment="Top" Width="182" OpacityMask="#FFA0A0A0" BorderBrush="#FFB4A1A1" SelectionChanged="ListBox_SelectionChanged_1" Margin="0,133,0,0" Grid.RowSpan="2">
             <ListBox.Background>
@@ -37,9 +41,9 @@
                 </LinearGradientBrush>
             </ListBox.Background>
             <ListBoxItem Content="File" FontSize="25"/>
-            <ListBoxItem Content="Transaction" FontSize="25"/>
+            <ListBoxItem Content="Transaction" FontSize="25" MouseUp="ListBoxItem_MouseUp_5"/>
         </ListBox>
-        <TabControl HorizontalAlignment="Left" Height="498" Margin="187,10,0,0" VerticalAlignment="Top" Width="907" Grid.RowSpan="2">
+        <TabControl HorizontalAlignment="Left" Height="498" Margin="187,10,0,0" VerticalAlignment="Top" Width="907" Grid.RowSpan="2" Grid.ColumnSpan="2">
             <TabItem x:Name="tb0" Header="">
                 <Grid/>
             </TabItem>
@@ -47,7 +51,7 @@
                 <Grid>
 
                     <TabControl HorizontalAlignment="Left" Height="381" VerticalAlignment="Top" Width="901" Margin="0,10,0,0">
-                        <TabItem Header="Maintenance" BorderBrush="{x:Null}" Background="Black" Foreground="Black">
+                        <TabItem Header="Maintenance" BorderBrush="{x:Null}" Background="Black" Foreground="Black" MouseUp="TabItem_MouseUp_2">
                             <Grid x:Name="grdM">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="46*"/>
@@ -60,14 +64,15 @@
                                             <GradientStop Color="#FF9C9C9C" Offset="1"/>
                                         </LinearGradientBrush>
                                     </ListBox.Background>
-                                    <ListBoxItem Content="&gt;Client" FontSize="25" Foreground="#FF32AFD4" MouseUp="ListBoxItem_MouseUp_1"/>
-                                    <ListBoxItem Content="&gt;Services" FontSize="25" Foreground="#FF32AFD4" MouseUp="ListBoxItem_MouseUp_2"/>
-                                    <ListBoxItem Content="&gt;Bank Info" FontSize="25" Foreground="#FF32AFD4" MouseUp="ListBoxItem_MouseUp_3"/>
-                                    <ListBoxItem Content="&gt;Employee" FontSize="25" Foreground="#FF32AFD4" MouseUp="ListBoxItem_MouseUp_4"/>
+                                    <ListBoxItem x:Name="itm1" Content="Client" FontSize="25" Foreground="#FF32AFD4" MouseUp="ListBoxItem_MouseUp_1"/>
+                                    <ListBoxItem x:Name="itm2" Content="Services" FontSize="25" Foreground="#FF32AFD4" MouseUp="ListBoxItem_MouseUp_2"/>
+                                    <ListBoxItem x:Name="itm3" Content="Bank Info" FontSize="25" Foreground="#FF32AFD4" MouseUp="ListBoxItem_MouseUp_3"/>
+                                    <ListBoxItem x:Name="itm4" Content="Employee" FontSize="25" Foreground="#FF32AFD4" MouseUp="ListBoxItem_MouseUp_4"/>
+                                    <ListBoxItem x:Name="itm5" Content="Agents" FontSize="25" Foreground="#FF32AFD4" MouseUp="itm5_MouseUp"/>
                                 </ListBox>
                             </Grid>
                         </TabItem>
-                        <TabItem Header="Log Out">
+                        <TabItem Header="Log Out" MouseUp="TabItem_MouseUp_1">
                             <Grid x:Name="grdLo">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="13*"/>

@@ -85,6 +85,10 @@
     <Compile Include="Migrations\201306120143282_AddedPhotoOnClient.Designer.cs">
       <DependentUpon>201306120143282_AddedPhotoOnClient.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201307010050490_AddedAgents.cs" />
+    <Compile Include="Migrations\201307010050490_AddedAgents.Designer.cs">
+      <DependentUpon>201307010050490_AddedAgents.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemData.cs" />
@@ -123,6 +127,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201306120143282_AddedPhotoOnClient.resx">
       <DependentUpon>201306120143282_AddedPhotoOnClient.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201307010050490_AddedAgents.resx">
+      <DependentUpon>201307010050490_AddedAgents.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

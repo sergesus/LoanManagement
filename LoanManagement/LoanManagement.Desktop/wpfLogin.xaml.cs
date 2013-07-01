@@ -24,6 +24,7 @@ using System.Drawing;
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 
+
 namespace LoanManagement.Desktop
 {
     /// <summary>
@@ -52,6 +53,11 @@ namespace LoanManagement.Desktop
                 ctx.Users.Add(usr);
                 ctx.Employees.Add(emp);
                 ctx.SaveChanges();*/
+                var ctr = ctx.Users.Count();
+                if (ctr < 1)
+                { 
+                    //
+                }
             }
             String selectedFileName = AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\myImg.gif";
             BitmapImage bitmap = new BitmapImage();

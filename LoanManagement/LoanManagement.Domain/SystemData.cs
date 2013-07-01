@@ -36,6 +36,11 @@ namespace LoanManagement.Domain
         public DbSet<TempDependent> TempDependents { get; set; }
         public DbSet<TempWork> TempWorks { get; set; }
         public DbSet<TempReference> TempReferences { get; set; }
+        public DbSet<Agent> Agents { get; set; }
+        public DbSet<AgentContact> AgentContacts { get; set; }
+        public DbSet<AgentAddress> AgentAddresses { get; set; }
+        public DbSet<TempAgentAddress> TempAgentAddresses { get; set; }
+        public DbSet<TempAgentContact> TempAgentContact { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -434,6 +439,59 @@ namespace LoanManagement.Domain
         public string Street { get; set; }
         public string Province { get; set; }
         public string City { get; set; }
+        public string Contact { get; set; }
+    }
+
+    public class Agent
+    {
+        public int AgentID { get; set; }
+        public string FirstName { get; set; }
+        public string MI { get; set; }
+        public string LastName { get; set; }
+        public string Suffix { get; set; }
+        public string Email { get; set; }
+        public byte[] Photo { get; set; }
+        public bool Active { get; set; }
+
+        public ICollection<EmployeeAddress> AgentAddress { get; set; }
+        public ICollection<EmployeeContact> AgentContact { get; set; }
+    }
+
+    public class AgentAddress
+    {
+        public int AgentAddressID { get; set; }
+        public int AddressNumber { get; set; }
+        public string Street { get; set; }
+        public string Province { get; set; }
+        public string City { get; set; }
+
+        public int AgentID { get; set; }
+        public virtual Agent Agent { get; set; }
+    }
+
+    public class AgentContact
+    {
+        public int AgentContactID { get; set; }
+        public int CNumber { get; set; }
+        public string Contact { get; set; }
+
+        public int AgentID { get; set; }
+        public virtual Agent Agent { get; set; }
+    }
+
+    public class TempAgentAddress
+    {
+        public int TempAgentAddressID { get; set; }
+        public int AddressNumber { get; set; }
+        public string Street { get; set; }
+        public string Province { get; set; }
+        public string City { get; set; }
+    }
+
+    public class TempAgentContact
+    {
+        public int TempAgentContactID { get; set; }
+        public int CNumber { get; set; }
         public string Contact { get; set; }
     }
 

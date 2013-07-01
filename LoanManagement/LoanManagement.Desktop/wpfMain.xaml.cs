@@ -35,6 +35,7 @@ namespace LoanManagement.Desktop
 
         private void ListBox_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
         {
+            reset();
             if (lb1.SelectedIndex == 0)
             {
                 tb1.IsSelected = true;
@@ -48,6 +49,16 @@ namespace LoanManagement.Desktop
         private void MetroWindow_Activated_1(object sender, EventArgs e)
         {
             //lbM.UnselectAll();
+            reset();
+        }
+
+        private void reset()
+        {
+            itm1.IsSelected = false;
+            itm2.IsSelected = false;
+            itm3.IsSelected = false;
+            itm4.IsSelected = false;
+            itm5.IsSelected = false;
         }
 
 
@@ -98,6 +109,28 @@ namespace LoanManagement.Desktop
             wpfEmployee frm = new wpfEmployee();
             frm.ShowDialog();
         }
+
+        private void TabItem_MouseUp_1(object sender, MouseButtonEventArgs e)
+        {
+            reset();
+        }
+
+        private void TabItem_MouseUp_2(object sender, MouseButtonEventArgs e)
+        {
+            reset();
+        }
+
+        private void ListBoxItem_MouseUp_5(object sender, MouseButtonEventArgs e)
+        {
+            reset();
+        }
+
+        private void itm5_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            wpfAgent frm = new wpfAgent();
+            frm.ShowDialog();
+        }
+
 
 
 
