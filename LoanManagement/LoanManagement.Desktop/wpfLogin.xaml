@@ -20,11 +20,11 @@
             <ColumnDefinition Width="551*"/>
             <ColumnDefinition Width="31*"/>
         </Grid.ColumnDefinitions>
-        <Label Content="Username:" HorizontalAlignment="Left" VerticalAlignment="Top" Height="35" Width="121" Margin="198,123,0,0" FontSize="22" Foreground="White" FontWeight="Bold"/>
+        <Label Content="Username:" HorizontalAlignment="Left" VerticalAlignment="Top" Height="35" Width="121" Margin="198,123,0,0" FontSize="22" Foreground="#FF32AFD4"/>
         <TextBox x:Name="txtUsername" HorizontalAlignment="Left" Height="25" TextWrapping="Wrap" VerticalAlignment="Top" Width="205" Margin="319,133,0,0" FontFamily="Segoe UI" Controls:TextboxHelper.ClearTextButton="True" FontSize="16" LostFocus="txtUsername_LostFocus"/>
-        <Label Content="Password:" HorizontalAlignment="Left" VerticalAlignment="Top" Height="35" Width="121" Margin="198,154,0,0" FontSize="22" Foreground="White" FontWeight="Bold"/>
+        <Label Content="Password:" HorizontalAlignment="Left" VerticalAlignment="Top" Height="35" Width="121" Margin="198,154,0,0" FontSize="22" Foreground="#FF32AFD4"/>
         <PasswordBox x:Name="txtPassword" HorizontalAlignment="Left" Height="26" Margin="319,163,0,0" VerticalAlignment="Top" Width="175" Controls:TextboxHelper.ClearTextButton="True" FontFamily="Segoe UI" FontSize="16"/>
-        <Button x:Name="btnLogIn" Content="-&gt;" HorizontalAlignment="Left" VerticalAlignment="Top" Width="30" Margin="494,164,0,0" Height="25" FontFamily="Segoe UI" FontSize="14" Click="btnLogIn_Click" FontWeight="Normal"/>
+        <Button x:Name="btnLogIn" Content="↵" HorizontalAlignment="Left" VerticalAlignment="Top" Width="30" Margin="494,163,0,0" Height="26" FontFamily="Segoe UI" FontSize="15" Click="btnLogIn_Click" FontWeight="Bold" IsDefault="True"/>
         <Image x:Name="img" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100" Margin="93,89,0,0" RenderTransformOrigin="0.698,1.038"/>
     </Grid>
     <Controls:MetroWindow.WindowCommands>

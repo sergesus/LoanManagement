@@ -55,7 +55,7 @@ namespace LoanManagement.Desktop
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show("Please select a row", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                //System.Windows.MessageBox.Show("Please select a row", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 
                 return "";
             }
@@ -107,6 +107,8 @@ namespace LoanManagement.Desktop
         private void Window_Activated_1(object sender, EventArgs e)
         {
             resetGrid();
+            lblName.Content = "";
+            img.Visibility = Visibility.Hidden;
         }
 
         private void dgClient_SelectionChanged(object sender, SelectionChangedEventArgs e)

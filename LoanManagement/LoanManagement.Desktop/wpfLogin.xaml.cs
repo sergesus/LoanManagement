@@ -70,7 +70,7 @@ namespace LoanManagement.Desktop
             ImageBrush myBrush = new ImageBrush();
             System.Windows.Controls.Image image = new System.Windows.Controls.Image();
             image.Source = new BitmapImage(
-                new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg.jpg"));
+                new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
             myBrush.ImageSource = image.Source;
             //Grid grid = new Grid();
             wdw1.Background = myBrush;  

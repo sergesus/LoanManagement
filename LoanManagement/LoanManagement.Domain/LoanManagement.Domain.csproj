@@ -89,6 +89,10 @@
     <Compile Include="Migrations\201307010050490_AddedAgents.Designer.cs">
       <DependentUpon>201307010050490_AddedAgents.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201307020037268_AddedPenaltyAndCommision.cs" />
+    <Compile Include="Migrations\201307020037268_AddedPenaltyAndCommision.Designer.cs">
+      <DependentUpon>201307020037268_AddedPenaltyAndCommision.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemData.cs" />
@@ -130,6 +134,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201307010050490_AddedAgents.resx">
       <DependentUpon>201307010050490_AddedAgents.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201307020037268_AddedPenaltyAndCommision.resx">
+      <DependentUpon>201307020037268_AddedPenaltyAndCommision.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -31,13 +31,14 @@
             <Button x:Name="btnView" Content="View/Edit Info" Width="115" Click="btnView_Click" BorderThickness="0" Height="26" VerticalAlignment="Top"/>
 
         </DockPanel>
-        <Grid Height="364" Margin="0,26,37,-361" VerticalAlignment="Top" RenderTransformOrigin="0.321,0.525" Grid.ColumnSpan="3" Background="#FFFDFDFD">
+        <Grid Height="364" Margin="0,26,37,-361" VerticalAlignment="Top" RenderTransformOrigin="0.321,0.525" Grid.ColumnSpan="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="136*"/>
-                <ColumnDefinition Width="229*"/>
+                <ColumnDefinition Width="146*"/>
+                <ColumnDefinition Width="83*"/>
             </Grid.ColumnDefinitions>
             <GroupBox Header="Basic Info" HorizontalAlignment="Left" Height="315" Margin="5,10,0,0" VerticalAlignment="Top" Width="264"/>
-            <DataGrid x:Name="dgEmp" HorizontalAlignment="Left" Height="242" Margin="2,20,0,0" VerticalAlignment="Top" Width="444" FontFamily="Cambria" FontSize="18" MouseUp="dgEmp_MouseUp" MouseEnter="dgEmp_MouseEnter" Grid.Column="1" GridLinesVisibility="None" SelectionChanged="dgEmp_SelectionChanged"/>
+            <DataGrid x:Name="dgEmp" HorizontalAlignment="Left" Height="242" Margin="2,20,0,0" VerticalAlignment="Top" Width="444" FontFamily="Cambria" FontSize="18" MouseUp="dgEmp_MouseUp" MouseEnter="dgEmp_MouseEnter" Grid.Column="1" GridLinesVisibility="None" SelectionChanged="dgEmp_SelectionChanged" Grid.ColumnSpan="2"/>
             <Image x:Name="img" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100" Margin="14,43,0,0" RenderTransformOrigin="0.698,1.038"/>
             <Label x:Name="lblName" Content="" HorizontalAlignment="Left" Height="32" Margin="15,133,0,0" VerticalAlignment="Top" Width="244" RenderTransformOrigin="0.547,-0.275" FontFamily="Cambria" FontSize="18"/>
             <Label x:Name="lblPosition" Content="" HorizontalAlignment="Left" Height="32" Margin="15,161,0,0" VerticalAlignment="Top" Width="244" RenderTransformOrigin="0.547,-0.275" FontFamily="Cambria" FontSize="18"/>

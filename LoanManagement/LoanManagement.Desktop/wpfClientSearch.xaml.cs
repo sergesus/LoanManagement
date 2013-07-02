@@ -14,14 +14,17 @@ using System.Windows.Shapes;
 
 using LoanManagement.Domain;
 using System.Data.Entity;
+using MahApps.Metro.Controls;
 
 namespace LoanManagement.Desktop
 {
     /// <summary>
     /// Interaction logic for wpfClientSearch.xaml
     /// </summary>
-    public partial class wpfClientSearch : Window
+    public partial class wpfClientSearch : MetroWindow
     {
+        public string status;
+
         public wpfClientSearch()
         {
             InitializeComponent();
@@ -44,24 +47,58 @@ namespace LoanManagement.Desktop
 
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
         {
-            using (var ctx = new SystemContext())
+            resetGrid();
+            ImageBrush myBrush = new ImageBrush();
+            System.Windows.Controls.Image image = new System.Windows.Controls.Image();
+            image.Source = new BitmapImage(
+                new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
+            myBrush.ImageSource = image.Source;
+            wdw1.Background = myBrush;
+        }
+
+        public void resetGrid()
+        {
+            if (status == "Client")
             {
-                var clt = from cl in ctx.Clients
-                          where cl.Active == true
-                          select new { ClientID = cl.ClientID, FirstName = cl.FirstName, MiddleName = cl.MiddleName, LastName = cl.LastName, Suffix = cl.Suffix };
-                dgClient.ItemsSource = clt.ToList();
+                using (var ctx = new SystemContext())
+                {
+                    var clt = from cl in ctx.Clients
+                              where cl.Active == true
+                              select new { ClientID = cl.ClientID, FirstName = cl.FirstName, MiddleName = cl.MiddleName, LastName = cl.LastName, Suffix = cl.Suffix };
+                    dgClient.ItemsSource = clt.ToList();
+                }
+            }
+            else if (status == "Agent")
+            {
+                using (var ctx = new SystemContext())
+                {
+                    var agt = from ag in ctx.Agents
+                              where ag.Active == true
+                              select new { AgentID = ag.AgentID, FirstName = ag.FirstName, MiddleName = ag.MI, LastName = ag.LastName, Suffix = ag.Suffix };
+                    dgClient.ItemsSource = agt.ToList();
+                }
             }
         }
 
         private void btnSelect_Click(object sender, RoutedEventArgs e)
         {
-            var frm = Application.Current.Windows[0] as wpfSelectClient;
-            frm.txtID.Text = getRow(dgClient, 0);
-            if (frm.txtID.Text == "")
+            if (status == "Client")
             {
-                return;
+                var frm = Application.Current.Windows[0] as wpfSelectClient;
+                frm.txtID.Text = getRow(dgClient, 0);
+                if (frm.txtID.Text == "")
+                {
+                    return;
+                }
+                this.Close();
             }
-            this.Close();
+            else if (status == "Agent")
+            {
+                var frm = Application.Current.Windows[0] as wpfLoanApplication;
+                int num=Convert.ToInt32(getRow(dgClient, 0));
+                frm.agentId = num;
+                this.Close();
+            }
         }
     }
 }

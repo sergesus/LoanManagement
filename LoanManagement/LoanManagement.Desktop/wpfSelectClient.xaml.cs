@@ -14,13 +14,14 @@ using System.Windows.Shapes;
 
 using System.Data.Entity;
 using LoanManagement.Domain;
+using MahApps.Metro.Controls;
 
 namespace LoanManagement.Desktop
 {
     /// <summary>
     /// Interaction logic for wpfSelectClient.xaml
     /// </summary>
-    public partial class wpfSelectClient : Window
+    public partial class wpfSelectClient : MetroWindow
     {
         public string status;
 
@@ -33,11 +34,18 @@ namespace LoanManagement.Desktop
         {
             //toEdit
             status = "Application";
+            ImageBrush myBrush = new ImageBrush();
+            System.Windows.Controls.Image image = new System.Windows.Controls.Image();
+            image.Source = new BitmapImage(
+                new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
+            myBrush.ImageSource = image.Source;
+            wdw1.Background = myBrush;
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
             wpfClientSearch frm = new wpfClientSearch();
+            frm.status = "Client";
             frm.ShowDialog();
         }
 
@@ -63,8 +71,9 @@ namespace LoanManagement.Desktop
                     }
                     wpfLoanApplication frm = new wpfLoanApplication();
                     frm.cId = Convert.ToInt32(txtID.Text);
-                    frm.ShowDialog();
                     this.Close();
+                    frm.ShowDialog();
+                    //this.Close();
                 }
             }
             catch(Exception ex)

@@ -18,3 +18,4 @@ C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManageme
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Domain\obj\Debug\LoanManagement.Domain.Migrations.AddedClient.resources
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Domain\obj\Debug\LoanManagement.Domain.Migrations.AddedPhotoOnClient.resources
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Domain\obj\Debug\LoanManagement.Domain.Migrations.AddedAgents.resources
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Domain\obj\Debug\LoanManagement.Domain.Migrations.AddedPenaltyAndCommision.resources

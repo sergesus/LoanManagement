@@ -78,15 +78,15 @@
                                     <ColumnDefinition Width="13*"/>
                                     <ColumnDefinition Width="115*"/>
                                 </Grid.ColumnDefinitions>
-                                <Label Content="Do you want to log out?" HorizontalAlignment="Left" Height="59" Margin="10,10,0,0" VerticalAlignment="Top" Width="286" FontSize="25" Foreground="#FF32AFD4" Grid.ColumnSpan="2"/>
-                                <ListBox x:Name="lb1_Copy" HorizontalAlignment="Left" Height="293" VerticalAlignment="Top" Width="182" OpacityMask="#FFA0A0A0" BorderBrush="#FFB4A1A1" SelectionChanged="ListBox_SelectionChanged_1" Margin="26,69,0,-34" Grid.ColumnSpan="2">
+                                <Label Content="Do you want to log out?" HorizontalAlignment="Left" Height="59" VerticalAlignment="Top" Width="286" FontSize="25" Foreground="#FF32AFD4" Grid.ColumnSpan="2" Margin="10,0,0,0"/>
+                                <ListBox x:Name="lb1_Copy" HorizontalAlignment="Left" Height="293" VerticalAlignment="Top" Width="182" OpacityMask="#FFA0A0A0" BorderBrush="#FFB4A1A1" SelectionChanged="ListBox_SelectionChanged_1" Margin="10,39,0,-4" Grid.ColumnSpan="2">
                                     <ListBox.Background>
                                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                             <GradientStop Color="Black" Offset="0"/>
                                             <GradientStop Color="#FF9C9C9C" Offset="1"/>
                                         </LinearGradientBrush>
                                     </ListBox.Background>
-                                    <ListBoxItem Content="&gt;Yes" FontSize="25" Selected="ListBoxItem_Selected_2" Foreground="#FF32AFD4"/>
+                                    <ListBoxItem Content="Yes" FontSize="25" Selected="ListBoxItem_Selected_2" Foreground="#FF32AFD4"/>
                                 </ListBox>
 
                             </Grid>
@@ -95,7 +95,7 @@
                 </Grid>
             </TabItem>
             <TabItem x:Name="tb2" Header="">
-                <Grid Background="White"/>
+                <Grid/>
             </TabItem>
         </TabControl>
     </Grid>

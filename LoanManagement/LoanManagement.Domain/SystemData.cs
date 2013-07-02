@@ -185,6 +185,8 @@ namespace LoanManagement.Domain
         public double MinValue { get; set; }
         public double MaxValue { get; set; }
         public double Interest {get;set;}
+        public double AgentCommission { get; set; }
+        public double Penalty { get; set; }
         public bool Active { get; set; }
 
         public ICollection<Requirement> Requirement { get; set; }

@@ -27,7 +27,7 @@
             <Button x:Name="btnView" Content="View/Edit Info" Width="115" Click="btnView_Click" BorderThickness="0"/>
 
         </DockPanel>
-        <Grid Height="364" Margin="0,26,10,-1" VerticalAlignment="Top" RenderTransformOrigin="0.321,0.525" Background="#FFFDFDFD">
+        <Grid Height="364" Margin="0,26,10,-1" VerticalAlignment="Top" RenderTransformOrigin="0.321,0.525">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="136*"/>
                 <ColumnDefinition Width="229*"/>

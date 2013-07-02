@@ -21,14 +21,18 @@ using System.Drawing;
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 
+using MahApps.Metro.Controls;
+
 namespace LoanManagement.Desktop
 {
     /// <summary>
     /// Interaction logic for wpfLoanApplication.xaml
     /// </summary>
-    public partial class wpfLoanApplication : Window
+    public partial class wpfLoanApplication : MetroWindow
     {
         public int cId;
+        public int agentId;
+        public int servId;
 
         public wpfLoanApplication()
         {
@@ -76,6 +80,15 @@ namespace LoanManagement.Desktop
                     cmbServices.Items.Add(itm);
                 }
             }
+
+            grdAgent.Visibility = Visibility.Hidden;
+
+            ImageBrush myBrush = new ImageBrush();
+            System.Windows.Controls.Image image = new System.Windows.Controls.Image();
+            image.Source = new BitmapImage(
+                new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
+            myBrush.ImageSource = image.Source;
+            wdw1.Background = myBrush;
         }
 
         private void reset()
@@ -128,6 +141,22 @@ namespace LoanManagement.Desktop
         private void Window_Activated_1(object sender, EventArgs e)
         {
             reset();
+            try
+            {
+                if (txtAgent.Text == "")
+                {
+                    using (var ctx = new SystemContext())
+                    {
+                        var agt = ctx.Agents.Find(agentId);
+                        String str = "(" + agentId.ToString() + ")" + agt.FirstName + " " + agt.MI + ". " + agt.LastName;
+                        txtAgent.Text = str;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return;
+            }
         }
 
         private void cmbServices_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -138,6 +167,7 @@ namespace LoanManagement.Desktop
                 string value = typeItem.Content.ToString();
                 var ser = ctx.Services.Where(x => x.Name == value).First();
                 txtCat.Text = ser.Type;
+                servId = ser.ServiceID;
 
                 cmbMode.Items.Clear();
 
@@ -171,6 +201,78 @@ namespace LoanManagement.Desktop
             {
                 txtAmt.Text = Convert.ToDouble(txtAmt.Text).ToString("N0");
                 txtAmt.SelectionStart = txtAmt.Text.Length;
+            }
+            catch (Exception ex)
+            {
+                return;
+            }
+        }
+
+        private void cboxAgent_Checked(object sender, RoutedEventArgs e)
+        {
+            grdAgent.Visibility = Visibility.Visible;
+        }
+
+        private void cboxAgent_Unchecked(object sender, RoutedEventArgs e)
+        {
+            grdAgent.Visibility = Visibility.Hidden;
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            wpfClientSearch frm = new wpfClientSearch();
+            frm.status = "Agent";
+            frm.ShowDialog();
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            wpfAgentInfo frm = new wpfAgentInfo();
+            frm.status = "Add";
+            frm.ShowDialog();
+        }
+
+        private void txtAmt_LostFocus(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                using (var ctx = new SystemContext())
+                {
+                    var ser = ctx.Services.Find(servId);
+                    double val=Convert.ToDouble(txtAmt.Text);
+                    if (val > ser.MaxValue || val < ser.MinValue)
+                    {
+                        txtAmt.Foreground = System.Windows.Media.Brushes.Red;
+                    }
+                    else
+                    {
+                        txtAmt.Foreground = System.Windows.Media.Brushes.Black;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                return;
+            }
+        }
+
+        private void txtTerm_LostFocus(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                using (var ctx = new SystemContext())
+                {
+                    var ser = ctx.Services.Find(servId);
+                    double val = Convert.ToDouble(txtTerm.Text);
+                    if (val > ser.MaxTerm || val < ser.MinTerm)
+                    {
+                        txtTerm.Foreground = System.Windows.Media.Brushes.Red;
+                    }
+                    else
+                    {
+                        txtTerm.Foreground = System.Windows.Media.Brushes.Black;
+                    }
+                }
             }
             catch (Exception ex)
             {

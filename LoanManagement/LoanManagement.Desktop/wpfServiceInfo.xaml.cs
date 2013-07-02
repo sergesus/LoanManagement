@@ -117,7 +117,7 @@ namespace LoanManagement.Desktop
 
                 using (var ctx = new SystemContext())
                 {
-                    Service ser = new Service { Name = txtName.Text, Department = cmbDept.Text, Description = txtDesc.Text, Type = cmbType.Text, Active = true, Interest = Convert.ToDouble(txtInterest.Text), MinTerm = Convert.ToInt32(txtMinTerm.Text), MaxTerm = Convert.ToInt32(txtMaxTerm.Text), MinValue = Convert.ToDouble(txtMinVal.Text), MaxValue = Convert.ToDouble(txtMaxVal.Text) };
+                    Service ser = new Service { Name = txtName.Text, Department = cmbDept.Text, Description = txtDesc.Text, Type = cmbType.Text, Active = true, Interest = Convert.ToDouble(txtInterest.Text), MinTerm = Convert.ToInt32(txtMinTerm.Text), MaxTerm = Convert.ToInt32(txtMaxTerm.Text), MinValue = Convert.ToDouble(txtMinVal.Text), MaxValue = Convert.ToDouble(txtMaxVal.Text), AgentCommission=Convert.ToDouble(txtCom.Text), Penalty=Convert.ToDouble(txtPenalty.Text) };
 
 
                     var deds = from dd in ctx.TempoDeductions
@@ -157,6 +157,8 @@ namespace LoanManagement.Desktop
                     ser.MaxTerm = Convert.ToInt32(txtMaxTerm.Text);
                     ser.MinValue = Convert.ToDouble(txtMinVal.Text);
                     ser.MaxValue = Convert.ToDouble(txtMaxVal.Text);
+                    ser.Penalty = Convert.ToDouble(txtPenalty.Text);
+                    ser.AgentCommission = Convert.ToDouble(txtCom.Text);
                     ctx.SaveChanges();
                     MessageBox.Show("Service updated");
                     this.Close();
@@ -204,6 +206,8 @@ namespace LoanManagement.Desktop
                     txtName.Text = ser.Name;
                     cmbDept.Text = ser.Department;
                     cmbType.Text = ser.Type;
+                    txtPenalty.Text = ser.Penalty.ToString();
+                    txtCom.Text = ser.AgentCommission.ToString();
 
                     var reqs = from rq in ctx.Requirements
                                where rq.ServiceID == sId
