@@ -41,6 +41,8 @@ namespace LoanManagement.Domain
         public DbSet<AgentAddress> AgentAddresses { get; set; }
         public DbSet<TempAgentAddress> TempAgentAddresses { get; set; }
         public DbSet<TempAgentContact> TempAgentContact { get; set; }
+        public DbSet<Loan> Loans { get; set; }
+        public DbSet<LoanApplication> LoanApplications { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -497,5 +499,36 @@ namespace LoanManagement.Domain
         public string Contact { get; set; }
     }
 
+    public class Loan
+    {
+        public int LoanID { get; set; }
+        public string TypeOfLoan { get; set; }
+        public string Type { get; set; }
+        public string Mode { get; set; }
+        public double Interest { get; set; }
+        public double Deduction { get; set; }
+        public double Penalty { get; set; }
+        public double Commission { get; set; }
+        public int Term { get; set; }
+        public double Principal { get; set; }
+        public int CoBorrower { get; set; }
+        public string Status { get; set; }
+
+        public int ClientID { get; set; }
+        public int AgentID { get; set; }
+        public virtual Client Client { get; set; }
+        public virtual Agent Agent { get; set; }
+        public ICollection<LoanApplication> LoanApplication { get; set; }
+    }
+
+    public class LoanApplication
+    {
+        public int LoanApplicationID { get; set; }
+        public double AmmountApplied { get; set; }
+        public DateTime DateApplied { get; set; }
+
+        public int LoanID { get; set; }
+        public virtual Loan Loan { get; set; }
+    }
 
 }

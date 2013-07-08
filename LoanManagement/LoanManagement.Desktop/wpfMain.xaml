@@ -95,7 +95,34 @@
                 </Grid>
             </TabItem>
             <TabItem x:Name="tb2" Header="">
-                <Grid/>
+                <TabControl HorizontalAlignment="Left" Height="381" VerticalAlignment="Top" Width="901">
+                    <TabItem Header="Financing Department" BorderBrush="{x:Null}" Background="Black" Foreground="Black" MouseUp="TabItem_MouseUp_2">
+                        <Grid x:Name="grdM1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="46*"/>
+                                <ColumnDefinition Width="829*"/>
+                            </Grid.ColumnDefinitions>
+                            <ListBox x:Name="lb1_Copy2" HorizontalAlignment="Left" Height="375" VerticalAlignment="Top" Width="211" OpacityMask="#FFA0A0A0" BorderBrush="#FFB4A1A1" SelectionChanged="ListBox_SelectionChanged_1" Margin="10,10,0,-57" Grid.ColumnSpan="2">
+                                <ListBox.Background>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop Color="Black" Offset="0"/>
+                                        <GradientStop Color="#FF9C9C9C" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </ListBox.Background>
+                                <ListBoxItem x:Name="itm6" Content="Loan Application" FontSize="25" Foreground="#FF32AFD4" MouseUp="itm6_MouseUp"/>
+                            </ListBox>
+                        </Grid>
+                    </TabItem>
+                    <TabItem Header="Micro-Business" MouseUp="TabItem_MouseUp_1">
+                        <Grid x:Name="grdLo1">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="13*"/>
+                                <ColumnDefinition Width="115*"/>
+                            </Grid.ColumnDefinitions>
+
+                        </Grid>
+                    </TabItem>
+                </TabControl>
             </TabItem>
         </TabControl>
     </Grid>

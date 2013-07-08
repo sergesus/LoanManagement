@@ -26,19 +26,19 @@
         <Grid HorizontalAlignment="Left" Height="471" Margin="18,34,0,0" VerticalAlignment="Top" Width="336">
             <Image x:Name="img" HorizontalAlignment="Left" Height="100" Margin="20,10,0,0" VerticalAlignment="Top" Width="100"/>
             <TextBox x:Name="txtFName" HorizontalAlignment="Left" Height="24" Margin="95,159,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="217" FontSize="14" ToolTip="" IsEnabled="False"/>
-            <Label Content="Last Name:" HorizontalAlignment="Left" Height="31" Margin="16,129,0,0" VerticalAlignment="Top" Width="79" Foreground="Red" FontSize="14"/>
+            <Label Content="Last Name:" HorizontalAlignment="Left" Height="31" Margin="16,129,0,0" VerticalAlignment="Top" Width="79" Foreground="Black" FontSize="14"/>
             <TextBox x:Name="txtLName" HorizontalAlignment="Left" Height="24" Margin="95,131,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="217" FontSize="14" IsEnabled="False"/>
-            <Label Content="First Name:" HorizontalAlignment="Left" Height="31" Margin="16,159,0,0" VerticalAlignment="Top" Width="79" Foreground="Red" FontSize="14"/>
+            <Label Content="First Name:" HorizontalAlignment="Left" Height="31" Margin="16,159,0,0" VerticalAlignment="Top" Width="79" Foreground="Black" FontSize="14"/>
             <TextBox x:Name="txtMName" HorizontalAlignment="Left" Height="24" Margin="95,187,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="217" FontSize="14" IsEnabled="False"/>
             <Label Content="Mid. Name:" HorizontalAlignment="Left" Height="31" Margin="16,183,0,0" VerticalAlignment="Top" Width="104" Foreground="Black" FontSize="14"/>
             <TextBox x:Name="txtSuffix" HorizontalAlignment="Left" Height="24" Margin="95,214,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" FontSize="14" IsEnabled="False"/>
             <Label Content="Suffix:" HorizontalAlignment="Left" Height="31" Margin="16,211,0,0" VerticalAlignment="Top" Width="79" Foreground="Black" FontSize="14"/>
-            <Label Content="Birthday:" HorizontalAlignment="Left" Height="31" Margin="16,236,0,0" VerticalAlignment="Top" Width="79" Foreground="Red" FontSize="14" RenderTransformOrigin="0.506,3.129"/>
-            <Label Content="Sex:" HorizontalAlignment="Left" Height="31" Margin="16,264,0,0" VerticalAlignment="Top" Width="74" Foreground="Red" FontSize="14" RenderTransformOrigin="0.506,3.129"/>
+            <Label Content="Birthday:" HorizontalAlignment="Left" Height="31" Margin="16,236,0,0" VerticalAlignment="Top" Width="79" Foreground="Black" FontSize="14" RenderTransformOrigin="0.506,3.129"/>
+            <Label Content="Sex:" HorizontalAlignment="Left" Height="31" Margin="16,264,0,0" VerticalAlignment="Top" Width="74" Foreground="Black" FontSize="14" RenderTransformOrigin="0.506,3.129"/>
             <TextBox x:Name="txtEmail" HorizontalAlignment="Left" Height="24" Margin="95,382,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="217" FontSize="14" IsEnabled="False"/>
             <Label Content="Email:" HorizontalAlignment="Left" Height="31" Margin="16,379,0,0" VerticalAlignment="Top" Width="79" Foreground="Black" FontSize="14"/>
             <DatePicker x:Name="dtBDay" HorizontalAlignment="Left" Height="26" Margin="95,241,0,0" VerticalAlignment="Top" Width="217" IsEnabled="False"/>
-            <Label Content="Status:" HorizontalAlignment="Left" Height="31" Margin="16,292,0,0" VerticalAlignment="Top" Width="74" Foreground="Red" FontSize="14" RenderTransformOrigin="0.506,3.129"/>
+            <Label Content="Status:" HorizontalAlignment="Left" Height="31" Margin="16,292,0,0" VerticalAlignment="Top" Width="74" Foreground="Black" FontSize="14" RenderTransformOrigin="0.506,3.129"/>
             <TextBox x:Name="txtSSS" HorizontalAlignment="Left" Height="24" Margin="95,327,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="217" FontSize="14" IsEnabled="False"/>
             <Label Content="SSS:" HorizontalAlignment="Left" Height="31" Margin="16,324,0,0" VerticalAlignment="Top" Width="79" Foreground="Black" FontSize="14"/>
             <TextBox x:Name="txtTIN" HorizontalAlignment="Left" Height="24" Margin="95,353,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="217" FontSize="14" IsEnabled="False"/>
@@ -46,20 +46,19 @@
             <Button Content="View / Edit Info" HorizontalAlignment="Left" Height="31" Margin="214,411,0,0" VerticalAlignment="Top" Width="98" Click="Button_Click_1"/>
             <TextBox x:Name="txtSex" HorizontalAlignment="Left" Height="24" Margin="95,272,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="217" FontSize="14" RenderTransformOrigin="0.56,3" IsEnabled="False"/>
             <TextBox x:Name="txtStatus" HorizontalAlignment="Left" Height="24" Margin="95,298,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="217" FontSize="14" RenderTransformOrigin="0.56,3" IsEnabled="False"/>
-            <Border BorderBrush="Black" BorderThickness="1" HorizontalAlignment="Left" Height="471" VerticalAlignment="Top" Width="336"/>
         </Grid>
         <Grid HorizontalAlignment="Left" Height="471" Margin="365,36,0,0" VerticalAlignment="Top" Width="422" Grid.ColumnSpan="3">
-            <Label Content="Type of Loan:" HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="132" Margin="10,10,0,0" FontSize="16"/>
+            <Label Content="Type of Loan:" HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="132" Margin="10,10,0,0" FontSize="16" Foreground="Red"/>
             <ComboBox x:Name="cmbServices" HorizontalAlignment="Left" Height="26" Margin="158,14,0,0" VerticalAlignment="Top" Width="249" FontSize="16" SelectionChanged="cmbServices_SelectionChanged"/>
-            <Label Content="Category:" HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="132" Margin="10,40,0,0" FontSize="16" RenderTransformOrigin="0.545,1.9"/>
+            <Label Content="Service Type:" HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="132" Margin="10,40,0,0" FontSize="16" RenderTransformOrigin="0.545,1.9" Foreground="Black"/>
             <Label Content="Label" HorizontalAlignment="Left" Height="0" Margin="158,70,0,0" VerticalAlignment="Top" Width="0"/>
             <TextBox x:Name="txtCat" HorizontalAlignment="Left" Height="25" Margin="158,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="249" FontSize="16" IsEnabled="False"/>
-            <Label Content="Mode Of Payment:" HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="148" Margin="10,71,0,0" FontSize="16"/>
+            <Label Content="Mode Of Payment:" HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="148" Margin="10,71,0,0" FontSize="16" Foreground="Red"/>
             <ComboBox x:Name="cmbMode" HorizontalAlignment="Left" Height="27" Margin="158,74,0,0" VerticalAlignment="Top" Width="249" FontSize="16"/>
-            <Label Content="Desired Ammount:" HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="143" Margin="10,99,0,0" FontSize="16"/>
+            <Label Content="Desired Ammount:" HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="143" Margin="10,99,0,0" FontSize="16" Foreground="Red"/>
             <TextBox x:Name="txtAmt" HorizontalAlignment="Left" Height="25" Margin="158,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="249" FontSize="16" TextChanged="txtAmt_TextChanged" Foreground="Black" LostFocus="txtAmt_LostFocus"/>
             <Label x:Name="lblAmt" Content="" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Width="313" Margin="111,131,-2,0"/>
-            <Label Content="Desired Term:" HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="143" Margin="10,159,0,0" FontSize="16"/>
+            <Label Content="Desired Term:" HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="143" Margin="10,159,0,0" FontSize="16" Foreground="Red"/>
             <TextBox x:Name="txtTerm" HorizontalAlignment="Left" Height="25" Margin="158,159,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="182" FontSize="16" LostFocus="txtTerm_LostFocus"/>
             <Label x:Name="lblTerm" Content="" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Width="285" Margin="134,183,0,0"/>
             <Label Content="Months" HorizontalAlignment="Left" Height="27" VerticalAlignment="Top" Width="74" Margin="345,156,0,0" FontSize="16"/>
@@ -69,6 +68,14 @@
                 <TextBox x:Name="txtAgent" HorizontalAlignment="Left" Height="31" Margin="69,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="271" FontFamily="Cambria" FontSize="18" IsEnabled="False"/>
                 <Button Content="..." HorizontalAlignment="Left" Height="31" Margin="344,10,0,0" VerticalAlignment="Top" Width="43" Click="Button_Click_2"/>
                 <Button Content="Add New" HorizontalAlignment="Left" Height="28" Margin="301,46,0,0" VerticalAlignment="Top" Width="86" RenderTransformOrigin="1.988,0.687" Click="Button_Click_3"/>
+                <TextBlock HorizontalAlignment="Left" Margin="101,34,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top"/>
+            </Grid>
+            <Button x:Name="btnContinue" Content="Continue" HorizontalAlignment="Left" Height="28" Margin="321,433,0,0" VerticalAlignment="Top" Width="86" RenderTransformOrigin="1.988,0.687" Click="btnContinue_Click"/>
+            <Grid x:Name="grdCoBorrower" HorizontalAlignment="Left" Height="82" Margin="10,323,0,0" VerticalAlignment="Top" Width="397" Background="#FFF3F0F0">
+                <Label x:Name="___No_Name_1" Content="Co-Borrower:" HorizontalAlignment="Left" Height="31" Margin="10,10,0,0" VerticalAlignment="Top" Width="117" FontFamily="Cambria" FontSize="18"/>
+                <TextBox x:Name="txtID" HorizontalAlignment="Left" Height="31" Margin="127,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="213" FontFamily="Cambria" FontSize="18" IsEnabled="False"/>
+                <Button Content="..." HorizontalAlignment="Left" Height="31" Margin="344,10,0,0" VerticalAlignment="Top" Width="43" Click="Button_Click_4"/>
+                <Button Content="Add New" HorizontalAlignment="Left" Height="28" Margin="301,46,0,0" VerticalAlignment="Top" Width="86" RenderTransformOrigin="1.988,0.687"/>
             </Grid>
         </Grid>
     </Grid>

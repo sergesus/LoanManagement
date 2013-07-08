@@ -46,6 +46,7 @@ namespace LoanManagement.Desktop
         {
             wpfClientSearch frm = new wpfClientSearch();
             frm.status = "Client";
+            frm.cId = 0;
             frm.ShowDialog();
         }
 

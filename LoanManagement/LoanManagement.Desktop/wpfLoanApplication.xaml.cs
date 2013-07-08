@@ -31,6 +31,7 @@ namespace LoanManagement.Desktop
     public partial class wpfLoanApplication : MetroWindow
     {
         public int cId;
+        public int cbId;
         public int agentId;
         public int servId;
 
@@ -82,6 +83,7 @@ namespace LoanManagement.Desktop
             }
 
             grdAgent.Visibility = Visibility.Hidden;
+            grdCoBorrower.Visibility = Visibility.Hidden;
 
             ImageBrush myBrush = new ImageBrush();
             System.Windows.Controls.Image image = new System.Windows.Controls.Image();
@@ -152,6 +154,7 @@ namespace LoanManagement.Desktop
                         txtAgent.Text = str;
                     }
                 }
+                
             }
             catch (Exception ex)
             {
@@ -192,6 +195,15 @@ namespace LoanManagement.Desktop
 
                 lblAmt.Content = "(Min. of " + ser.MinValue.ToString("C") + " and Max. of "+ ser.MaxValue.ToString("C") +")";
                 lblTerm.Content = "(Min. of " + ser.MinTerm + " month(s) and Max. of " + ser.MaxTerm + " month(s))";
+
+                if (ser.Type == "Collateral")
+                {
+                    grdCoBorrower.Visibility = Visibility.Hidden;
+                }
+                else
+                {
+                    grdCoBorrower.Visibility = Visibility.Visible;
+                }
             }
         }
 
@@ -277,6 +289,84 @@ namespace LoanManagement.Desktop
             catch (Exception ex)
             {
                 return;
+            }
+        }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            wpfClientSearch frm = new wpfClientSearch();
+            frm.status = "Client";
+            frm.status2 = "LoanApplication";
+            frm.cId = cId;
+            frm.ShowDialog();
+        }
+
+        private void btnContinue_Click(object sender, RoutedEventArgs e)
+        {
+            if (cmbServices.Text == "" || cmbMode.Text == "" || txtAmt.Text == "" || txtTerm.Text == "")
+            {
+                System.Windows.MessageBox.Show("Please complete the required information");
+                return;
+            }
+            if (cboxAgent.IsChecked == true && txtAgent.Text == "")
+            {
+                System.Windows.MessageBox.Show("Please select the agent");
+                return;
+            }
+
+            using (var ctx = new SystemContext())
+            {
+                var ser=ctx.Services.Find(servId);
+                if (ser.Type == "Non-Collateral" && txtID.Text == "")
+                {
+                    System.Windows.MessageBox.Show("Please select the Co-Borrower");
+                    return;
+                }
+                double val = Convert.ToDouble(txtAmt.Text);
+                if (val > ser.MaxValue || val < ser.MinValue)
+                {
+                    System.Windows.MessageBox.Show("Invalid loan ammount");
+                    return;
+                }
+                val = Convert.ToDouble(txtTerm.Text);
+                if (val > ser.MaxTerm || val < ser.MinTerm)
+                {
+                    System.Windows.MessageBox.Show("Invalid desired term");
+                }
+                
+            }
+
+            using (var ctx = new SystemContext())
+            {
+                var ser = ctx.Services.Find(servId);
+                double deduction = 0;
+                var ded = from de in ctx.Deductions
+                          where de.ServiceID == servId
+                          select de;
+                foreach(var item in ded)
+                {
+                    deduction = deduction + item.Percentage;
+                }
+                if (ser.Type == "Collateral")
+                {
+                    cbId = 0;
+                }
+                Loan loan=new Loan{};
+                if (cboxAgent.IsChecked == true)
+                {
+                    loan = new Loan { AgentID = agentId, ClientID = cId, CoBorrower = cbId, Commission = ser.AgentCommission, Deduction = deduction, Interest = ser.Interest, Mode = cmbMode.Text, Penalty = ser.Penalty, Status = "Applied", Term = Convert.ToInt32(txtTerm.Text), Type = txtCat.Text, TypeOfLoan = cmbServices.Text };
+                }
+                else
+                {
+                    loan = new Loan { ClientID = cId, CoBorrower = cbId, Commission = ser.AgentCommission, Deduction = deduction, Interest = ser.Interest, Mode = cmbMode.Text, Penalty = ser.Penalty, Status = "Applied", Term = Convert.ToInt32(txtTerm.Text), Type = txtCat.Text, TypeOfLoan = cmbServices.Text };
+                }
+
+                LoanApplication la = new LoanApplication { AmmountApplied = Convert.ToDouble(txtAmt.Text), DateApplied = DateTime.Now.Date };
+                ctx.LoanApplications.Add(la);
+                ctx.Loans.Add(loan);
+                ctx.SaveChanges();
+                System.Windows.MessageBox.Show("Loan Successfuly Applied");
+
             }
         }
 

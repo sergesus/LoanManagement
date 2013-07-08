@@ -24,6 +24,8 @@ namespace LoanManagement.Desktop
     public partial class wpfClientSearch : MetroWindow
     {
         public string status;
+        public int cId;
+        public string status2;
 
         public wpfClientSearch()
         {
@@ -63,7 +65,7 @@ namespace LoanManagement.Desktop
                 using (var ctx = new SystemContext())
                 {
                     var clt = from cl in ctx.Clients
-                              where cl.Active == true
+                              where cl.Active == true && cl.ClientID != cId
                               select new { ClientID = cl.ClientID, FirstName = cl.FirstName, MiddleName = cl.MiddleName, LastName = cl.LastName, Suffix = cl.Suffix };
                     dgClient.ItemsSource = clt.ToList();
                 }
@@ -84,17 +86,34 @@ namespace LoanManagement.Desktop
         {
             if (status == "Client")
             {
-                var frm = Application.Current.Windows[0] as wpfSelectClient;
-                frm.txtID.Text = getRow(dgClient, 0);
-                if (frm.txtID.Text == "")
+                var ctr = Application.Current.Windows.Count;
+                if (status2 == "LoanApplication")
                 {
-                    return;
+                    var frm = Application.Current.Windows[ctr - 2] as wpfLoanApplication;
+                    int cbId = Convert.ToInt32(getRow(dgClient, 0));
+                    frm.cbId = Convert.ToInt32(getRow(dgClient, 0));
+                    using (var ctx = new SystemContext())
+                    {
+                        var agt = ctx.Clients.Find(cbId);
+                        String str = "(" + cbId + ")" + agt.FirstName + " " + agt.MiddleName + " " + agt.LastName;
+                        frm.txtID.Text = str;
+                    }
+                }
+                else
+                {
+                    var frm = Application.Current.Windows[ctr - 2] as wpfSelectClient;
+                    frm.txtID.Text = getRow(dgClient, 0);
+                    if (frm.txtID.Text == "")
+                    {
+                        return;
+                    }
                 }
                 this.Close();
             }
             else if (status == "Agent")
             {
-                var frm = Application.Current.Windows[0] as wpfLoanApplication;
+                var ctr = Application.Current.Windows.Count;
+                var frm = Application.Current.Windows[ctr-2] as wpfLoanApplication;
                 int num=Convert.ToInt32(getRow(dgClient, 0));
                 frm.agentId = num;
                 this.Close();

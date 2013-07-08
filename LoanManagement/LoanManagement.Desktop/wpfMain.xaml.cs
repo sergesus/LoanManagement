@@ -59,6 +59,7 @@ namespace LoanManagement.Desktop
             itm3.IsSelected = false;
             itm4.IsSelected = false;
             itm5.IsSelected = false;
+            itm6.IsSelected = false;
         }
 
 
@@ -128,6 +129,12 @@ namespace LoanManagement.Desktop
         private void itm5_MouseUp(object sender, MouseButtonEventArgs e)
         {
             wpfAgent frm = new wpfAgent();
+            frm.ShowDialog();
+        }
+
+        private void itm6_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            wpfSelectClient frm = new wpfSelectClient();
             frm.ShowDialog();
         }
 
