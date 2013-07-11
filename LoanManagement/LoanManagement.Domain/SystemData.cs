@@ -513,11 +513,11 @@ namespace LoanManagement.Domain
         public double Principal { get; set; }
         public int CoBorrower { get; set; }
         public string Status { get; set; }
+        public int CI { get; set; }
 
         public int ClientID { get; set; }
         public int AgentID { get; set; }
         public virtual Client Client { get; set; }
-        public virtual Agent Agent { get; set; }
         public ICollection<LoanApplication> LoanApplication { get; set; }
     }
 

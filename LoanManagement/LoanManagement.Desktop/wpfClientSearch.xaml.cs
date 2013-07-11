@@ -80,6 +80,16 @@ namespace LoanManagement.Desktop
                     dgClient.ItemsSource = agt.ToList();
                 }
             }
+            else if (status == "CI")
+            {
+                using (var ctx = new SystemContext())
+                {
+                    var agt = from ag in ctx.Employees
+                              where ag.Active == true
+                              select new { AgentID = ag.EmployeeID, FirstName = ag.FirstName, MI = ag.MI, LastName = ag.LastName, Suffix = ag.Suffix };
+                    dgClient.ItemsSource = agt.ToList();
+                }
+            }
         }
 
         private void btnSelect_Click(object sender, RoutedEventArgs e)
@@ -116,6 +126,20 @@ namespace LoanManagement.Desktop
                 var frm = Application.Current.Windows[ctr-2] as wpfLoanApplication;
                 int num=Convert.ToInt32(getRow(dgClient, 0));
                 frm.agentId = num;
+                this.Close();
+            }
+            else if (status == "CI")
+            {
+                var ctr = Application.Current.Windows.Count;
+                var frm = Application.Current.Windows[ctr - 2] as wpfLoanApplication;
+                int num = Convert.ToInt32(getRow(dgClient, 0));
+                frm.ciId = num;
+                using (var ctx = new SystemContext())
+                {
+                    var agt = ctx.Employees.Find(num);
+                    String str = "(" + num + ")" + agt.FirstName + " " + agt.MI + " " + agt.LastName;
+                    frm.txtID.Text = str;
+                }
                 this.Close();
             }
         }

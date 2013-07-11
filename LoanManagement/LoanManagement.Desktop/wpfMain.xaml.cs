@@ -134,8 +134,13 @@ namespace LoanManagement.Desktop
 
         private void itm6_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            wpfSelectClient frm = new wpfSelectClient();
+            wpfSelectApplication frm = new wpfSelectApplication();
             frm.ShowDialog();
+        }
+
+        private void itm6_Selected(object sender, RoutedEventArgs e)
+        {
+
         }
 
 

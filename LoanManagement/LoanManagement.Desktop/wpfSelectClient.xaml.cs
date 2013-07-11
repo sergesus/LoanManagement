@@ -72,6 +72,8 @@ namespace LoanManagement.Desktop
                     }
                     wpfLoanApplication frm = new wpfLoanApplication();
                     frm.cId = Convert.ToInt32(txtID.Text);
+                    frm.status = "Add";
+                    frm.btnContinue.Content = "Continue";
                     this.Close();
                     frm.ShowDialog();
                     //this.Close();

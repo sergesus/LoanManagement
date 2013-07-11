@@ -105,6 +105,12 @@
     <Compile Include="wpfLoanApplication.xaml.cs">
       <DependentUpon>wpfLoanApplication.xaml</DependentUpon>
     </Compile>
+    <Compile Include="wpfLoanInfo.xaml.cs">
+      <DependentUpon>wpfLoanInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="wpfLoanSearch.xaml.cs">
+      <DependentUpon>wpfLoanSearch.xaml</DependentUpon>
+    </Compile>
     <Compile Include="wpfLogin.xaml.cs">
       <DependentUpon>wpfLogin.xaml</DependentUpon>
     </Compile>
@@ -114,6 +120,9 @@
     </Compile>
     <Compile Include="wpfMain.xaml.cs">
       <DependentUpon>wpfMain.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="wpfSelectApplication.xaml.cs">
+      <DependentUpon>wpfSelectApplication.xaml</DependentUpon>
     </Compile>
     <Compile Include="wpfSelectClient.xaml.cs">
       <DependentUpon>wpfSelectClient.xaml</DependentUpon>
@@ -164,11 +173,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="wpfLoanInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="wpfLoanSearch.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="wpfLogin.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="wpfMain.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="wpfSelectApplication.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

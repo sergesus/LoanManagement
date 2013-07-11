@@ -99,7 +99,7 @@ namespace LoanManagement.Desktop
             {
                 var clt = from cl in ctx.Clients
                           where cl.Active == true
-                          select cl;
+                          select new { ClientID=cl.ClientID, FirstName=cl.FirstName, MiddleName=cl.MiddleName, LastName=cl.LastName, Suffix=cl.Suffix, Birthday=cl.Birthday };
                 dgClient.ItemsSource = clt.ToList();
             }
         }

@@ -1666,7 +1666,7 @@ namespace LoanManagement.Desktop
             }
             catch (Exception ex)
             {
-                return;
+                System.Windows.MessageBox.Show(ex.Message.ToString());
             }
         }
 
