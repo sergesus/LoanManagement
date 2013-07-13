@@ -44,6 +44,7 @@
     <Reference Include="MahApps.Metro">
       <HintPath>..\packages\MahApps.Metro.0.10.1.1\lib\net45\MahApps.Metro.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Microsoft.Windows.Shell">
       <HintPath>..\Extensions\net40\Microsoft.Windows.Shell.dll</HintPath>
     </Reference>
@@ -81,6 +82,9 @@
     <Compile Include="wpfAgentInfo.xaml.cs">
       <DependentUpon>wpfAgentInfo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="wpfAppliedLoanInfo.xaml.cs">
+      <DependentUpon>wpfAppliedLoanInfo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="wpfBank.xaml.cs">
       <DependentUpon>wpfBank.xaml</DependentUpon>
     </Compile>
@@ -104,6 +108,9 @@
     </Compile>
     <Compile Include="wpfLoanApplication.xaml.cs">
       <DependentUpon>wpfLoanApplication.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="wpfLoanApproval.xaml.cs">
+      <DependentUpon>wpfLoanApproval.xaml</DependentUpon>
     </Compile>
     <Compile Include="wpfLoanInfo.xaml.cs">
       <DependentUpon>wpfLoanInfo.xaml</DependentUpon>
@@ -141,6 +148,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="wpfAppliedLoanInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="wpfBank.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -170,6 +181,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="wpfLoanApplication.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="wpfLoanApproval.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

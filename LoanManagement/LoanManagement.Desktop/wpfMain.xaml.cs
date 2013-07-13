@@ -60,6 +60,12 @@ namespace LoanManagement.Desktop
             itm4.IsSelected = false;
             itm5.IsSelected = false;
             itm6.IsSelected = false;
+            itm7.IsSelected = false;
+            itm8.IsSelected = false;
+            itm9.IsSelected = false;
+            itm10.IsSelected = false;
+            itm11.IsSelected = false;
+
         }
 
 
@@ -135,13 +141,18 @@ namespace LoanManagement.Desktop
         private void itm6_MouseUp(object sender, MouseButtonEventArgs e)
         {
             wpfSelectApplication frm = new wpfSelectApplication();
+            //frm.status = "Application";
             frm.ShowDialog();
         }
 
-        private void itm6_Selected(object sender, RoutedEventArgs e)
+        private void itm8_MouseUp(object sender, MouseButtonEventArgs e)
         {
-
+            wpfLoanSearch frm = new wpfLoanSearch();
+            frm.status = "Approval";
+            frm.ShowDialog();
         }
+
+
 
 
 

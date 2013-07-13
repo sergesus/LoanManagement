@@ -23,6 +23,8 @@ namespace LoanManagement.Desktop
     /// </summary>
     public partial class wpfLoanSearch : MetroWindow
     {
+        public string status;
+
         public wpfLoanSearch()
         {
             InitializeComponent();
@@ -69,12 +71,22 @@ namespace LoanManagement.Desktop
 
         private void btnView_Click(object sender, RoutedEventArgs e)
         {
-            wpfLoanApplication frm = new wpfLoanApplication();
-            frm.status = "Edit";
-            int id=Convert.ToInt32(getRow(dgLoan, 0));
-            frm.lId = id;
-            frm.btnContinue.Content = "Update";
-            frm.ShowDialog();
+            if (status == "Application")
+            {
+                wpfLoanApplication frm = new wpfLoanApplication();
+                frm.status = "Edit";
+                int id = Convert.ToInt32(getRow(dgLoan, 0));
+                frm.lId = id;
+                frm.btnContinue.Content = "Update";
+                frm.ShowDialog();
+            }
+            else
+            {
+                wpfAppliedLoanInfo frm = new wpfAppliedLoanInfo();
+                int num = Convert.ToInt32(getRow(dgLoan, 0));
+                frm.lId = num;
+                frm.ShowDialog();
+            }
         }
     }
 }

@@ -22,3 +22,6 @@ C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManageme
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Domain\obj\Debug\LoanManagement.Domain.Migrations.AddedLoanAndLoanApplication.resources
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Domain\obj\Debug\LoanManagement.Domain.Migrations.RemovedAgent.resources
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Domain\obj\Debug\LoanManagement.Domain.Migrations.AddedCI.resources
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Domain\obj\Debug\LoanManagement.Domain.Migrations.AddedOneToOne.resources
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Domain\obj\Debug\LoanManagement.Domain.Migrations.UpdatedToAmount.resources
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Domain\obj\Debug\LoanManagement.Domain.Migrations.AddedGenSOA.resources

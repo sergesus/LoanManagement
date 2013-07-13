@@ -138,7 +138,7 @@ namespace LoanManagement.Desktop
                 {
                     var agt = ctx.Employees.Find(num);
                     String str = "(" + num + ")" + agt.FirstName + " " + agt.MI + " " + agt.LastName;
-                    frm.txtID.Text = str;
+                    frm.txtCI.Text = str;
                 }
                 this.Close();
             }

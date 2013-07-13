@@ -20,6 +20,8 @@ namespace LoanManagement.Desktop
     /// </summary>
     public partial class wpfSelectApplication : MetroWindow
     {
+        public string status;
+
         public wpfSelectApplication()
         {
             InitializeComponent();
@@ -38,16 +40,21 @@ namespace LoanManagement.Desktop
 
         private void btnNew_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
-            wpfSelectClient frm = new wpfSelectClient();
-            frm.ShowDialog();
+
+                this.Close();
+                wpfSelectClient frm = new wpfSelectClient();
+                frm.ShowDialog();
+
         }
 
         private void btnView_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
-            wpfLoanSearch frm = new wpfLoanSearch();
-            frm.ShowDialog();
+
+                this.Close();
+                wpfLoanSearch frm = new wpfLoanSearch();
+                frm.status = "Application";
+                frm.ShowDialog();
+            
         }
     }
 }

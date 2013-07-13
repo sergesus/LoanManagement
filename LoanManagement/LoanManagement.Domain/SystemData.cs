@@ -43,6 +43,7 @@ namespace LoanManagement.Domain
         public DbSet<TempAgentContact> TempAgentContact { get; set; }
         public DbSet<Loan> Loans { get; set; }
         public DbSet<LoanApplication> LoanApplications { get; set; }
+        public DbSet<GenSOA> GenSOA { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -100,6 +101,9 @@ namespace LoanManagement.Domain
                 .HasKey(x => x.WorkID);
             modelBuilder.Entity<TempReference>()
                 .HasKey(x => x.ReferenceID);
+            modelBuilder.Entity<LoanApplication>()
+                .HasKey(x=> x.LoanID)
+                .HasRequired(x => x.Loan);
 
                 
                 
@@ -518,17 +522,25 @@ namespace LoanManagement.Domain
         public int ClientID { get; set; }
         public int AgentID { get; set; }
         public virtual Client Client { get; set; }
-        public ICollection<LoanApplication> LoanApplication { get; set; }
+        public virtual LoanApplication LoanApplication { get; set; }
     }
 
     public class LoanApplication
     {
-        public int LoanApplicationID { get; set; }
-        public double AmmountApplied { get; set; }
-        public DateTime DateApplied { get; set; }
-
         public int LoanID { get; set; }
+        public double AmountApplied { get; set; }
+        public DateTime DateApplied { get; set; }
+        
         public virtual Loan Loan { get; set; }
+    }
+
+    public class GenSOA
+    {
+        public int GenSOAID { get; set; }
+        public int PaymentNumber { get; set; }
+        public string Amount { get; set; }
+        public DateTime PaymentDate { get; set; }
+        public string RemainingBalance { get; set; }
     }
 
 }

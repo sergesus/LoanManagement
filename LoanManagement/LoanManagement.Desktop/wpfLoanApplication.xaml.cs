@@ -103,7 +103,7 @@ namespace LoanManagement.Desktop
                     txtCat.Text = lon.Type;
                     cmbMode.Text = lon.Mode;
                     var la = ctx.LoanApplications.Where(x => x.LoanID == lId).First();
-                    txtAmt.Text = la.AmmountApplied.ToString();
+                    txtAmt.Text = la.AmountApplied.ToString();
                     txtTerm.Text = lon.Term.ToString();
                     if (lon.AgentID!=0)
                     {
@@ -118,7 +118,7 @@ namespace LoanManagement.Desktop
                     if (lon.CI != 0)
                     {
                         ciId = lon.CI;
-                        var agt = ctx.Agents.Find(agentId);
+                        var agt = ctx.Employees.Find(ciId);
                         String str = "(" + agentId.ToString() + ")" + agt.FirstName + " " + agt.MI + ". " + agt.LastName;
                         txtCI.Text = str;
                     }
@@ -402,6 +402,7 @@ namespace LoanManagement.Desktop
                 {
                     deduction = deduction + item.Percentage;
                 }
+                deduction = deduction + ser.AgentCommission;
                 if (ser.Type == "Collateral")
                 {
                     cbId = 0;
@@ -412,17 +413,17 @@ namespace LoanManagement.Desktop
 
                     Loan loan = new Loan { };
 
+                    LoanApplication la = new LoanApplication { AmountApplied = Convert.ToDouble(txtAmt.Text), DateApplied = DateTime.Now.Date };
                     if (cboxAgent.IsChecked == true)
                     {
-                        loan = new Loan {CI=ciId, AgentID = agentId, ClientID = cId, CoBorrower = cbId, Commission = ser.AgentCommission, Deduction = deduction, Interest = ser.Interest, Mode = cmbMode.Text, Penalty = ser.Penalty, Status = "Applied", Term = Convert.ToInt32(txtTerm.Text), Type = txtCat.Text, TypeOfLoan = cmbServices.Text };
+                        loan = new Loan {CI=ciId, AgentID = agentId, ClientID = cId, CoBorrower = cbId, Commission = ser.AgentCommission, Deduction = deduction, Interest = ser.Interest, Mode = cmbMode.Text, Penalty = ser.Penalty, Status = "Applied", Term = Convert.ToInt32(txtTerm.Text), Type = txtCat.Text, TypeOfLoan = cmbServices.Text, LoanApplication=la };
                     }
                     else
                     {
-                        loan = new Loan {CI=ciId, AgentID=0, ClientID = cId, CoBorrower = cbId, Commission = ser.AgentCommission, Deduction = deduction, Interest = ser.Interest, Mode = cmbMode.Text, Penalty = ser.Penalty, Status = "Applied", Term = Convert.ToInt32(txtTerm.Text), Type = txtCat.Text, TypeOfLoan = cmbServices.Text };
+                        loan = new Loan {CI=ciId, AgentID=0, ClientID = cId, CoBorrower = cbId, Commission = ser.AgentCommission, Deduction = deduction, Interest = ser.Interest, Mode = cmbMode.Text, Penalty = ser.Penalty, Status = "Applied", Term = Convert.ToInt32(txtTerm.Text), Type = txtCat.Text, TypeOfLoan = cmbServices.Text, LoanApplication=la };
                     }
 
-                    LoanApplication la = new LoanApplication {AmmountApplied = Convert.ToDouble(txtAmt.Text), DateApplied = DateTime.Now.Date };
-                    ctx.LoanApplications.Add(la);
+                    
                     ctx.Loans.Add(loan);
                     ctx.SaveChanges();
                     System.Windows.MessageBox.Show("Loan Successfuly Applied");
@@ -442,8 +443,7 @@ namespace LoanManagement.Desktop
                             ln.CoBorrower = cbId;
                             ln.Mode = cmbMode.Text;
                             ln.CI = ciId;
-                            var la = ctx.LoanApplications.Where(x => x.LoanID == lId).First();
-                            la.AmmountApplied = Convert.ToDouble(txtAmt.Text);
+                            ln.LoanApplication.AmountApplied = Convert.ToDouble(txtAmt.Text);
                             ln.Term = Convert.ToInt32(txtTerm.Text);
                         }
                         else
@@ -451,8 +451,7 @@ namespace LoanManagement.Desktop
                             ln.CoBorrower = cbId;
                             ln.Mode = cmbMode.Text;
                             ln.CI = ciId;
-                            var la = ctx.LoanApplications.Where(x => x.LoanID == lId).First();
-                            la.AmmountApplied = Convert.ToDouble(txtAmt.Text);
+                            ln.LoanApplication.AmountApplied = Convert.ToDouble(txtAmt.Text);
                             ln.Term = Convert.ToInt32(txtTerm.Text);
                         }
                         ctx.SaveChanges();

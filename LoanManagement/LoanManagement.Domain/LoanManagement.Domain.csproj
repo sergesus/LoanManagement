@@ -105,6 +105,18 @@
     <Compile Include="Migrations\201307110134572_AddedCI.Designer.cs">
       <DependentUpon>201307110134572_AddedCI.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201307130843102_AddedOneToOne.cs" />
+    <Compile Include="Migrations\201307130843102_AddedOneToOne.Designer.cs">
+      <DependentUpon>201307130843102_AddedOneToOne.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201307130856458_UpdatedToAmount.cs" />
+    <Compile Include="Migrations\201307130856458_UpdatedToAmount.Designer.cs">
+      <DependentUpon>201307130856458_UpdatedToAmount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201307130928523_AddedGenSOA.cs" />
+    <Compile Include="Migrations\201307130928523_AddedGenSOA.Designer.cs">
+      <DependentUpon>201307130928523_AddedGenSOA.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemData.cs" />
@@ -158,6 +170,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201307110134572_AddedCI.resx">
       <DependentUpon>201307110134572_AddedCI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201307130843102_AddedOneToOne.resx">
+      <DependentUpon>201307130843102_AddedOneToOne.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201307130856458_UpdatedToAmount.resx">
+      <DependentUpon>201307130856458_UpdatedToAmount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201307130928523_AddedGenSOA.resx">
+      <DependentUpon>201307130928523_AddedGenSOA.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

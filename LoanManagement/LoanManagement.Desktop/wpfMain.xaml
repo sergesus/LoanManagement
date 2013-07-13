@@ -109,12 +109,13 @@
                                         <GradientStop Color="#FF9C9C9C" Offset="1"/>
                                     </LinearGradientBrush>
                                 </ListBox.Background>
-                                <ListBoxItem x:Name="itm6" Content="Loan Application" FontSize="25" Foreground="#FF32AFD4" MouseUp="itm6_MouseUp" Selected="itm6_Selected"/>
-                                <ListBoxItem x:Name="itm7_Copy" Content="Check Submitted Requirements" FontSize="25" Foreground="#FF32AFD4" Selected="itm6_Selected"/>
-                                <ListBoxItem x:Name="itm7_Copy1" Content="Loan Approval" FontSize="25" Foreground="#FF32AFD4" Selected="itm6_Selected"/>
-                                <ListBoxItem x:Name="itm7_Copy2" Content="Releasing" FontSize="25" Foreground="#FF32AFD4" Selected="itm6_Selected"/>
-                                <ListBoxItem x:Name="itm7_Copy3" Content="Payments(Cheque Clearing)" FontSize="25" Foreground="#FF32AFD4" Selected="itm6_Selected"/>
-                                <ListBoxItem x:Name="itm7_Copy4" Content="Loan Re-structure" FontSize="25" Foreground="#FF32AFD4" Selected="itm6_Selected"/>
+                                <ListBoxItem x:Name="itm6" Content="Loan Application" FontSize="25" Foreground="#FF32AFD4" MouseUp="itm6_MouseUp"/>
+                                <ListBoxItem x:Name="itm7" Content="Check Submitted Requirements" FontSize="25" Foreground="#FF32AFD4"/>
+                                <ListBoxItem x:Name="itm7_Copy" Content="Investigation Report" FontSize="25" Foreground="#FF32AFD4"/>
+                                <ListBoxItem x:Name="itm8" Content="Loan Approval" FontSize="25" Foreground="#FF32AFD4" MouseUp="itm8_MouseUp"/>
+                                <ListBoxItem x:Name="itm9" Content="Releasing" FontSize="25" Foreground="#FF32AFD4"/>
+                                <ListBoxItem x:Name="itm10" Content="Payments(Cheque Clearing)" FontSize="25" Foreground="#FF32AFD4"/>
+                                <ListBoxItem x:Name="itm11" Content="Loan Re-structure" FontSize="25" Foreground="#FF32AFD4"/>
                             </ListBox>
                         </Grid>
                     </TabItem>

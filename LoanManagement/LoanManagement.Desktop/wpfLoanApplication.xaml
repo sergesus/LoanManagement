@@ -55,7 +55,7 @@
             <TextBox x:Name="txtCat" HorizontalAlignment="Left" Height="25" Margin="158,45,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="249" FontSize="16" IsEnabled="False"/>
             <Label Content="Mode Of Payment:" HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="148" Margin="10,71,0,0" FontSize="16" Foreground="Red"/>
             <ComboBox x:Name="cmbMode" HorizontalAlignment="Left" Height="27" Margin="158,74,0,0" VerticalAlignment="Top" Width="249" FontSize="16"/>
-            <Label Content="Desired Ammount:" HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="143" Margin="10,99,0,0" FontSize="16" Foreground="Red"/>
+            <Label Content="Desired Amount:" HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="143" Margin="10,99,0,0" FontSize="16" Foreground="Red"/>
             <TextBox x:Name="txtAmt" HorizontalAlignment="Left" Height="25" Margin="158,106,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="249" FontSize="16" TextChanged="txtAmt_TextChanged" Foreground="Black" LostFocus="txtAmt_LostFocus"/>
             <Label x:Name="lblAmt" Content="" HorizontalAlignment="Left" Height="28" VerticalAlignment="Top" Width="313" Margin="111,131,-2,0"/>
             <Label Content="Desired Term:" HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="143" Margin="10,159,0,0" FontSize="16" Foreground="Red"/>
