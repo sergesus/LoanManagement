@@ -102,7 +102,7 @@
                                 <ColumnDefinition Width="46*"/>
                                 <ColumnDefinition Width="829*"/>
                             </Grid.ColumnDefinitions>
-                            <ListBox x:Name="lb1_Copy2" HorizontalAlignment="Left" Height="375" VerticalAlignment="Top" Width="361" OpacityMask="#FFA0A0A0" BorderBrush="#FFB4A1A1" SelectionChanged="ListBox_SelectionChanged_1" Margin="10,10,0,-57" Grid.ColumnSpan="2">
+                            <ListBox x:Name="lb1_Copy2" HorizontalAlignment="Left" Height="318" VerticalAlignment="Top" Width="361" OpacityMask="#FFA0A0A0" BorderBrush="#FFB4A1A1" SelectionChanged="ListBox_SelectionChanged_1" Margin="10,10,0,0" Grid.ColumnSpan="2">
                                 <ListBox.Background>
                                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                         <GradientStop Color="Black" Offset="0"/>
@@ -110,12 +110,11 @@
                                     </LinearGradientBrush>
                                 </ListBox.Background>
                                 <ListBoxItem x:Name="itm6" Content="Loan Application" FontSize="25" Foreground="#FF32AFD4" MouseUp="itm6_MouseUp"/>
-                                <ListBoxItem x:Name="itm7" Content="Check Submitted Requirements" FontSize="25" Foreground="#FF32AFD4"/>
-                                <ListBoxItem x:Name="itm7_Copy" Content="Investigation Report" FontSize="25" Foreground="#FF32AFD4"/>
-                                <ListBoxItem x:Name="itm8" Content="Loan Approval" FontSize="25" Foreground="#FF32AFD4" MouseUp="itm8_MouseUp"/>
-                                <ListBoxItem x:Name="itm9" Content="Releasing" FontSize="25" Foreground="#FF32AFD4"/>
-                                <ListBoxItem x:Name="itm10" Content="Payments(Cheque Clearing)" FontSize="25" Foreground="#FF32AFD4"/>
+                                <ListBoxItem x:Name="itm8" Content="Loan Approval" FontSize="25" Foreground="#FF32AFD4" MouseUp="itm8_MouseUp" Selected="itm8_Selected"/>
+                                <ListBoxItem x:Name="itm9" Content="Releasing" FontSize="25" Foreground="#FF32AFD4" Selected="itm9_Selected" MouseUp="itm9_MouseUp"/>
+                                <ListBoxItem x:Name="itm10" Content="Payments" FontSize="25" Foreground="#FF32AFD4" MouseUp="itm10_MouseUp"/>
                                 <ListBoxItem x:Name="itm11" Content="Loan Re-structure" FontSize="25" Foreground="#FF32AFD4"/>
+                                <ListBoxItem x:Name="itm11_Copy" Content="Payment Adjustment" FontSize="25" Foreground="#FF32AFD4"/>
                             </ListBox>
                         </Grid>
                     </TabItem>

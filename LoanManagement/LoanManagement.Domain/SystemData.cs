@@ -44,6 +44,10 @@ namespace LoanManagement.Domain
         public DbSet<Loan> Loans { get; set; }
         public DbSet<LoanApplication> LoanApplications { get; set; }
         public DbSet<GenSOA> GenSOA { get; set; }
+        public DbSet<DeclinedLoan> DeclinedLoans { get; set; }
+        public DbSet<ApprovedLoan> ApprovedLoans { get; set; }
+        public DbSet<ReleasedLoan> ReleasedLoans { get; set; }
+        public DbSet<FPaymentInfo> FPaymentInfo { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -103,6 +107,15 @@ namespace LoanManagement.Domain
                 .HasKey(x => x.ReferenceID);
             modelBuilder.Entity<LoanApplication>()
                 .HasKey(x=> x.LoanID)
+                .HasRequired(x => x.Loan);
+            modelBuilder.Entity<DeclinedLoan>()
+                .HasKey(x => x.LoanID)
+                .HasRequired(x => x.Loan);
+            modelBuilder.Entity<ApprovedLoan>()
+                .HasKey(x => x.LoanID)
+                .HasRequired(x => x.Loan);
+            modelBuilder.Entity<ReleasedLoan>()
+                .HasKey(x => x.LoanID)
                 .HasRequired(x => x.Loan);
 
                 
@@ -192,7 +205,9 @@ namespace LoanManagement.Domain
         public double MaxValue { get; set; }
         public double Interest {get;set;}
         public double AgentCommission { get; set; }
-        public double Penalty { get; set; }
+        public double Holding { get; set; }
+        public double DaifPenalty { get; set; }
+        public double ClosedAccountPenalty { get; set; }
         public bool Active { get; set; }
 
         public ICollection<Requirement> Requirement { get; set; }
@@ -506,23 +521,24 @@ namespace LoanManagement.Domain
     public class Loan
     {
         public int LoanID { get; set; }
-        public string TypeOfLoan { get; set; }
-        public string Type { get; set; }
-        public string Mode { get; set; }
-        public double Interest { get; set; }
-        public double Deduction { get; set; }
-        public double Penalty { get; set; }
-        public double Commission { get; set; }
         public int Term { get; set; }
-        public double Principal { get; set; }
         public int CoBorrower { get; set; }
+        public string Mode { get; set; }
         public string Status { get; set; }
         public int CI { get; set; }
 
+        public int ServiceID { get; set; }
         public int ClientID { get; set; }
         public int AgentID { get; set; }
+        public int BankID { get; set; }
         public virtual Client Client { get; set; }
+        public virtual Service Service { get; set; }
+        //public virtual Bank Bank { get; set; }
         public virtual LoanApplication LoanApplication { get; set; }
+        public virtual DeclinedLoan DeclinedLoan { get; set; }
+        public virtual ApprovedLoan ApprovedLoan { get; set; }
+        public virtual ReleasedLoan ReleasedLoan { get; set; }
+        public ICollection<FPaymentInfo> FPaymentInfo { get; set; }
     }
 
     public class LoanApplication
@@ -531,6 +547,53 @@ namespace LoanManagement.Domain
         public double AmountApplied { get; set; }
         public DateTime DateApplied { get; set; }
         
+        public virtual Loan Loan { get; set; }
+    }
+
+    public class DeclinedLoan
+    {
+        public int LoanID { get; set; }
+        public string Reason { get; set; }
+        public DateTime DateDeclined { get; set; }
+
+        public virtual Loan Loan { get; set; }
+    }
+
+    public class ApprovedLoan
+    {
+        public int LoanID { get; set; }
+        public double AmountApproved { get; set; }
+        public DateTime DateApproved { get; set; }
+        public DateTime ReleaseDate { get; set; }
+
+        public virtual Loan Loan { get; set; }
+    }
+
+    public class ReleasedLoan
+    {
+        public int LoanID { get; set; }
+        public DateTime DateReleased { get; set; }
+        public double Principal { get; set; }
+        public double NetProceed { get; set; }
+        public double TotalLoan { get; set; }
+        public double MonthlyPayment { get; set; }
+        public double AgentsCommission { get; set; }
+        
+        public virtual Loan Loan { get; set; }
+    }
+
+    public class FPaymentInfo
+    {
+        public int FPaymentInfoID { get; set; }
+        public int PaymentNumber { get; set; }
+        public string ChequeInfo { get; set; }
+        public double Amount { get; set; }
+        public DateTime ChequeDueDate { get; set; }
+        public DateTime PaymentDate { get; set; }
+        public double RemainingBalance { get; set; }
+        public string PaymentStatus { get; set; }
+
+        public int LoanID { get; set; }
         public virtual Loan Loan { get; set; }
     }
 

@@ -1,0 +1,31 @@
+﻿<Controls:MetroWindow x:Name="wdw1" x:Class="LoanManagement.Desktop.wpfLoanDeclining"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"              
+        Title="wpfLoanDeclining" Height="332.707" Width="447.745" Loaded="wdw1_Loaded" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedTabControl.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid>
+        <Label Content="Select Reason(s):" HorizontalAlignment="Left" Height="35" Margin="10,10,0,0" VerticalAlignment="Top" Width="181" FontSize="16"/>
+        <CheckBox x:Name="cb1" Content="Lack Of Requirements" HorizontalAlignment="Left" Height="20" Margin="55,50,0,0" VerticalAlignment="Top" Width="199" FontSize="16"/>
+        <CheckBox x:Name="cb2" Content="Poor Investigation Report" HorizontalAlignment="Left" Height="20" Margin="55,70,0,0" VerticalAlignment="Top" Width="199" FontSize="16"/>
+        <CheckBox x:Name="cb3" Content="Not Recommended" HorizontalAlignment="Left" Height="20" Margin="55,90,0,0" VerticalAlignment="Top" Width="199" FontSize="16"/>
+        <CheckBox x:Name="cbOthers" Content="Others:" HorizontalAlignment="Left" Height="20" Margin="55,110,0,0" VerticalAlignment="Top" Width="199" FontSize="16"/>
+        <TextBox x:Name="txtOthers" HorizontalAlignment="Left" Height="83" Margin="78,135,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="344" FontSize="16"/>
+        <CheckBox x:Name="cbSend" Content="Send Message to Client" HorizontalAlignment="Left" Height="20" Margin="55,223,0,0" VerticalAlignment="Top" Width="199" FontSize="16"/>
+        <Button x:Name="btnDecline" Content="Decline" HorizontalAlignment="Left" Height="30" Margin="302,258,0,0" VerticalAlignment="Top" Width="128" Click="btnDecline_Click" Background="#FFFF3030"/>
+
+    </Grid>
+</Controls:MetroWindow>

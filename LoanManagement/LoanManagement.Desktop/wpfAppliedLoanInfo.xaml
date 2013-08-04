@@ -17,7 +17,7 @@
         </ResourceDictionary>
     </Window.Resources>
 
-    <Grid Margin="0,0,0,-97">
+    <Grid Margin="0,0,0,-306">
         <Grid HorizontalAlignment="Left" Height="32" Margin="244,202,0,0" VerticalAlignment="Top" Width="530" Background="#FFDEDDDD"/>
         <Grid HorizontalAlignment="Left" Height="32" Margin="244,140,0,0" VerticalAlignment="Top" Width="530" Background="#FFDEDDDD"/>
 
@@ -27,7 +27,7 @@
             <Label x:Name="lblName" Content="(name)" HorizontalAlignment="Left" VerticalAlignment="Top" Height="36" Width="528" FontSize="20"/>
             <Button x:Name="btnFull" Content="View Full Info" HorizontalAlignment="Left" Width="128" Margin="648,0,0,0" Click="btnFull_Click"/>
             <Button x:Name="btnApprove" Content="Approve Application" HorizontalAlignment="Left" VerticalAlignment="Top" Width="128" Margin="498,314,0,-312" Height="34" Background="#FF32AFD4" Click="btnApprove_Click"/>
-            <Button x:Name="btnDecline" Content="Decline Application" HorizontalAlignment="Left" VerticalAlignment="Top" Width="128" Margin="631,314,0,-312" Height="34" Background="#FFFF3030"/>
+            <Button x:Name="btnDecline" Content="Decline Application" HorizontalAlignment="Left" VerticalAlignment="Top" Width="128" Margin="631,314,0,-312" Height="34" Background="#FFFF3030" Click="btnDecline_Click"/>
         </Grid>
         <Image x:Name="img" HorizontalAlignment="Left" Height="130" Margin="10,53,0,0" VerticalAlignment="Top" Width="130"/>
         <Label Content="Applied Loan Info:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="244,48,0,0" Width="150" FontSize="16" Foreground="#FF32AFD4" FontWeight="Bold"/>
@@ -36,7 +36,7 @@
         <Label Content="Mode Of Payment:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="244,202,0,0" Width="150" FontSize="16" Foreground="#FF32AFD4"/>
         <Label Content="Int. / Month:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="576,202,0,0" Width="104" FontSize="16" Foreground="#FF32AFD4"/>
         <Label Content="Deduction:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="576,172,0,0" Width="104" FontSize="16" Foreground="#FF32AFD4"/>
-        <Label Content="Penalty:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="576,78,0,0" Width="104" FontSize="16" Foreground="#FF32AFD4"/>
+        <Label Content="Holding Fee:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="576,78,0,0" Width="104" FontSize="16" Foreground="#FF32AFD4"/>
         <Label Content="Commision:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="576,110,0,0" Width="104" FontSize="16" Foreground="#FF32AFD4"/>
         <Label Content="Term:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="576,140,0,0" Width="104" FontSize="16" Foreground="#FF32AFD4"/>
         <Label Content="Desired Amount:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="244,140,0,0" Width="150" FontSize="16" Foreground="#FF32AFD4"/>
@@ -51,25 +51,29 @@
         <Label x:Name="lblDed" Content="(type)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="680,172,0,0" Width="66" FontSize="16" Foreground="Black"/>
         <Label Content="Date Applied:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="244,172,0,0" Width="150" FontSize="16" Foreground="#FF32AFD4"/>
         <Label x:Name="lblDt" Content="(type)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="394,172,0,0" Width="222" FontSize="16" Foreground="Black"/>
-        <TextBlock Margin="6,202,631,247" FontSize="16" MouseUp="TextBlock_MouseUp_1">           
+        <TextBlock Margin="6,202,631,472" FontSize="16" MouseUp="TextBlock_MouseUp_1">           
         <Hyperlink Click="Hyperlink_Click_1">
         View Agent's Info
         </Hyperlink>
         </TextBlock>
-        <TextBlock Margin="6,246,536,203" FontSize="16" MouseUp="TextBlock_MouseUp_1">           
+        <TextBlock Margin="6,246,536,427" FontSize="16" MouseUp="TextBlock_MouseUp_1">           
         <Hyperlink Click="Hyperlink_Click_1">
         View Submitted Requirements
         </Hyperlink>
         </TextBlock>
-        <TextBlock Margin="6,270,536,178" FontSize="16" MouseUp="TextBlock_MouseUp_1">           
+        <TextBlock Margin="6,270,536,402" FontSize="16" MouseUp="TextBlock_MouseUp_1">           
         <Hyperlink Click="Hyperlink_Click_1">
-        View Investigation Reports
+        View Investigation Report
         </Hyperlink>
         </TextBlock>
-        <TextBlock Margin="6,225,536,223" FontSize="16" MouseUp="TextBlock_MouseUp_1">           
+        <TextBlock Margin="6,225,536,451" FontSize="16" MouseUp="TextBlock_MouseUp_1">           
         <Hyperlink Click="Hyperlink_Click_1">
         View Co-Borrower's Info
         </Hyperlink>
         </TextBlock>
+        <Label Content="Status:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="244,233,0,0" Width="150" FontSize="16" Foreground="#FF32AFD4"/>
+        <Label x:Name="lblStatus" Content="(type)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="394,233,0,0" Width="182" FontSize="16" Foreground="Black"/>
+        <Label x:Name="lblR" Content="Reason(s):" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="244,264,0,0" Width="150" FontSize="16" Foreground="#FF32AFD4"/>
+        <Label x:Name="lblReason1" Content="(type)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="244,295,0,0" Width="252" FontSize="16" Foreground="Black" Height="88"/>
     </Grid>
 </Controls:MetroWindow>

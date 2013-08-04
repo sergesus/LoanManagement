@@ -1,0 +1,46 @@
+﻿<Controls:MetroWindow x:Name="wdw1" x:Class="LoanManagement.Desktop.wpfFReleasing"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"             
+        Title="wpfFReleasing" Height="594.195" Width="1141.564" Loaded="wdw1_Loaded" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedTabControl.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid>
+        <ComboBox x:Name="cmbBank" HorizontalAlignment="Left" Height="32" Margin="85,42,0,0" VerticalAlignment="Top" Width="264" SelectionChanged="cmbBank_SelectionChanged" FontSize="18"/>
+        <DataGrid x:Name="dgSOA" HorizontalAlignment="Left" Margin="414,116,0,200" Width="712" FontSize="16" GridLinesVisibility="Vertical"/>
+        <Label Content="Principal Amount:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="414,49,0,0" Width="177" FontSize="16" Foreground="#FF32AFD4" FontWeight="Bold" RenderTransformOrigin="1.107,0.71"/>
+        <TextBox x:Name="txtAmt" HorizontalAlignment="Left" Height="31" Margin="596,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="329"/>
+        <Label Content="Generated SOA:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="415,85,0,0" Width="177" FontSize="16" Foreground="#FF32AFD4" FontWeight="Bold"/>
+        <Label x:Name="lbl1" Content="Max. Loanable Amt.:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="418,367,0,0" Width="151" FontSize="16" Foreground="#FF32AFD4"/>
+        <Label x:Name="lbl2" Content="With Interest:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="418,403,0,0" Width="124" FontSize="16" Foreground="#FF32AFD4"/>
+        <Label x:Name="lbl3" Content="Net Proceed:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="418,439,0,0" Width="124" FontSize="16" Foreground="#FF32AFD4"/>
+        <Label x:Name="lbl4" Content="Monthly Payment:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="418,470,0,0" Width="148" FontSize="16" Foreground="#FF32AFD4"/>
+        <Label x:Name="lblPrincipal" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="574,367,0,0" Width="275" FontSize="16" Foreground="Black"/>
+        <Label x:Name="lblInt" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="574,403,0,0" Width="275" FontSize="16" Foreground="Black"/>
+        <Label x:Name="lblProceed" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="574,439,0,0" Width="275" FontSize="16" Foreground="Black"/>
+        <Label x:Name="lblMonthly" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="574,475,0,0" Width="275" FontSize="16" Foreground="Black"/>
+        <Button x:Name="btnRelease" Content="Release Loan" HorizontalAlignment="Left" Height="44" Margin="920,511,0,0" VerticalAlignment="Top" Width="206" Background="#FF32AFD4" Click="btnRelease_Click"/>
+        <Label Content="Mode Of Payment:" HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="148" Margin="418,506,0,0" FontSize="16" Foreground="Red"/>
+        <ComboBox x:Name="cmbMode" HorizontalAlignment="Left" Height="27" Margin="597,511,0,0" VerticalAlignment="Top" Width="249" FontSize="16" SelectionChanged="cmbMode_SelectionChanged" PreviewMouseUp="cmbMode_PreviewMouseUp" DropDownClosed="cmbMode_DropDownClosed"/>
+        <Label Content="Term:" HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="101" Margin="787,372,0,0" FontSize="16" Foreground="Red"/>
+        <TextBox x:Name="txtTerm" HorizontalAlignment="Left" Height="25" Margin="856,375,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="182" FontSize="16" LostFocus="txtTerm_LostFocus"/>
+        <Label Content="Months" HorizontalAlignment="Left" Height="27" VerticalAlignment="Top" Width="74" Margin="1043,372,0,0" FontSize="16"/>
+        <Button x:Name="btnRef" Content="Refresh" HorizontalAlignment="Left" Height="31" Margin="597,85,0,0" VerticalAlignment="Top" Width="93" Click="btnRef_Click"/>
+        <ScrollViewer HorizontalAlignment="Left" Height="398" Margin="10,111,0,0" VerticalAlignment="Top" Width="399" HorizontalScrollBarVisibility="Auto" CanContentScroll="True">
+            <StackPanel x:Name="stck" Orientation="Vertical" Height="394" Width="339"/>
+        </ScrollViewer>
+
+    </Grid>
+</Controls:MetroWindow>

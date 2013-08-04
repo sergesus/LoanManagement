@@ -1,0 +1,26 @@
+﻿<Controls:MetroWindow x:Name="wdw1" x:Class="LoanManagement.Desktop.wpfSelectPayment"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        Title="wpfSelectPayment" Height="183.062" Width="315.789" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Loaded="wdw1_Loaded">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedTabControl.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid>
+        <Button x:Name="btnHold" Content="Hold/Unhold Cheque(s)" HorizontalAlignment="Left" Height="40" Margin="10,10,-7,0" VerticalAlignment="Top" Width="289" Click="btnHold_Click"/>
+        <Button x:Name="btnClear" Content="Clear Cheque(s)" HorizontalAlignment="Left" Height="40" Margin="10,55,-7,0" VerticalAlignment="Top" Width="289"/>
+        <Button x:Name="btnVoid" Content="Void Payment(s)" HorizontalAlignment="Left" Height="40" Margin="10,100,0,0" VerticalAlignment="Top" Width="289"/>
+
+    </Grid>
+</Controls:MetroWindow>

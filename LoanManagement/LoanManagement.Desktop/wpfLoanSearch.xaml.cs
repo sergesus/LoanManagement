@@ -48,12 +48,60 @@ namespace LoanManagement.Desktop
 
         public void rg()
         {
-            using (var ctx = new SystemContext())
+            if (status == "UApproval")
             {
-                var lon = from ln in ctx.Loans
-                          select new { LoanID = ln.LoanID, TypeOfLoan = ln.TypeOfLoan, Type=ln.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName= ln.Client.LastName };
-                dgLoan.ItemsSource = lon.ToList();
+                using (var ctx = new SystemContext())
+                {
+                    var lon = from ln in ctx.Loans
+                              where ln.Status == "Approved" || ln.Status=="Declined"
+                              select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
+                    dgLoan.ItemsSource = lon.ToList();
 
+                }
+            }
+            else if(status=="Approval" || status=="Application")
+            {
+                using (var ctx = new SystemContext())
+                {
+                    var lon = from ln in ctx.Loans
+                              where ln.Status == "Applied"
+                              select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
+                    dgLoan.ItemsSource = lon.ToList();
+
+                }
+            }
+            else if (status == "Releasing")
+            {
+                using (var ctx = new SystemContext())
+                {
+                    var lon = from ln in ctx.Loans
+                              where ln.Status == "Approved"
+                              select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
+                    dgLoan.ItemsSource = lon.ToList();
+
+                }
+            }
+            else if (status == "UReleasing")
+            {
+                using (var ctx = new SystemContext())
+                {
+                    var lon = from ln in ctx.Loans
+                              where ln.Status == "Released"
+                              select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
+                    dgLoan.ItemsSource = lon.ToList();
+
+                }
+            }
+            else if (status == "Holding")
+            {
+                using (var ctx = new SystemContext())
+                {
+                    var lon = from ln in ctx.Loans
+                              where ln.Status == "Released" || ln.Status=="Active"
+                              select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
+                    dgLoan.ItemsSource = lon.ToList();
+
+                }
             }
         }
 
@@ -80,13 +128,37 @@ namespace LoanManagement.Desktop
                 frm.btnContinue.Content = "Update";
                 frm.ShowDialog();
             }
+            else if (status == "UReleasing")
+            {
+                wpfReleasedLoanInfo frm = new wpfReleasedLoanInfo();
+                int num = Convert.ToInt32(getRow(dgLoan, 0));
+                frm.lId = num;
+                frm.status = status;
+                frm.ShowDialog();
+            }
+            else if (status == "Holding")
+            {
+                wpfReleasedLoanInfo frm = new wpfReleasedLoanInfo();
+                int num = Convert.ToInt32(getRow(dgLoan, 0));
+                frm.lId = num;
+                frm.status = status;
+                frm.ShowDialog();
+            }
             else
             {
                 wpfAppliedLoanInfo frm = new wpfAppliedLoanInfo();
                 int num = Convert.ToInt32(getRow(dgLoan, 0));
                 frm.lId = num;
+                frm.status = status;
                 frm.ShowDialog();
             }
+            
+            
+        }
+
+        private void wdw1_Activated(object sender, EventArgs e)
+        {
+            rg();
         }
     }
 }

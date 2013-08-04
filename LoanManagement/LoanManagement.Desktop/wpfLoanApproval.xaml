@@ -30,9 +30,9 @@
         <DataGrid x:Name="dgSOA" HorizontalAlignment="Left" Margin="8,179,0,175" Width="674" Grid.RowSpan="2" FontSize="16" GridLinesVisibility="Vertical"/>
         <Button x:Name="btnApprove" Content="Approve Application" HorizontalAlignment="Left" Height="44" Margin="476,311,0,0" VerticalAlignment="Top" Width="206" Click="btnApprove_Click" Background="#FF32AFD4" Grid.Row="1"/>
         <Label Content="Amount Approved:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,68,0,0" Width="177" FontSize="16" Foreground="#FF32AFD4" FontWeight="Bold"/>
-        <TextBox x:Name="txtAmt" HorizontalAlignment="Left" Height="31" Margin="192,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="329" TextChanged="txtAmt_TextChanged"/>
+        <TextBox x:Name="txtAmt" HorizontalAlignment="Left" Height="31" Margin="192,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="329" TextChanged="txtAmt_TextChanged" LostFocus="txtAmt_LostFocus"/>
         <Label Content="Start Date of Release:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="11,104,0,0" Width="176" FontSize="16" Foreground="#FF32AFD4" FontWeight="Bold"/>
-        <DatePicker x:Name="dtDate" HorizontalAlignment="Left" Height="29" Margin="192,109,0,0" VerticalAlignment="Top" Width="329"/>
+        <DatePicker x:Name="dtDate" HorizontalAlignment="Left" Height="29" Margin="192,109,0,0" VerticalAlignment="Top" Width="329" MouseUp="dtDate_MouseUp" CalendarClosed="dtDate_CalendarClosed"/>
         <Label Content="Generated SOA:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="11,143,0,0" Width="177" FontSize="16" Foreground="#FF32AFD4" FontWeight="Bold"/>
         <Label Content="Principal Loan:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,189.5,0,0" Width="124" FontSize="16" Foreground="#FF32AFD4" Grid.Row="1"/>
         <Label Content="With Interest:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,220.5,0,0" Width="124" FontSize="16" Foreground="#FF32AFD4" Grid.Row="1"/>
@@ -46,6 +46,7 @@
         <Label x:Name="lblProfit" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="134,275.5,0,0" Width="275" FontSize="16" Foreground="Black" Grid.Row="1"/>
         <Label x:Name="lblDesAmt" Content="(lbl)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="563,189.5,0,0" Width="275" FontSize="16" Foreground="Black" Grid.Row="1"/>
         <Label x:Name="lblDesTerm" Content="(lbl)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="563,220.5,0,0" Width="275" FontSize="16" Foreground="Black" Grid.Row="1"/>
+        <Button x:Name="btnRef" Content="Refresh" HorizontalAlignment="Left" Height="31" Margin="192,143,0,0" VerticalAlignment="Top" Width="93" Click="btnRef_Click"/>
 
     </Grid>
 </Controls:MetroWindow>

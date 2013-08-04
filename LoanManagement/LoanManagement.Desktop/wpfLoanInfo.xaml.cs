@@ -22,7 +22,13 @@ using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 
 using MahApps.Metro.Controls;
-
+using System.IO;
+using LoanManagement.Domain;
+using System.Windows.Forms;
+using System.Data.Entity;
+using System.Drawing.Imaging;
+using System.Drawing;
+using System.ComponentModel.DataAnnotations;
 namespace LoanManagement.Desktop
 {
     /// <summary>

@@ -99,8 +99,8 @@ namespace LoanManagement.Desktop
                     var lon = ctx.Loans.Find(lId);
                     cId = lon.ClientID;
                     cmbServices.IsEnabled = !true;
-                    cmbServices.Text = lon.TypeOfLoan;
-                    txtCat.Text = lon.Type;
+                    cmbServices.Text = lon.Service.Name;
+                    txtCat.Text = lon.Service.Type;
                     cmbMode.Text = lon.Mode;
                     var la = ctx.LoanApplications.Where(x => x.LoanID == lId).First();
                     txtAmt.Text = la.AmountApplied.ToString();
@@ -123,7 +123,7 @@ namespace LoanManagement.Desktop
                         txtCI.Text = str;
                     }
 
-                    if (lon.Type=="Non Collateral")
+                    if (lon.Service.Type=="Non Collateral")
                     {
                         cbId = lon.CoBorrower;
                         var agt = ctx.Clients.Find(cbId);
@@ -233,6 +233,7 @@ namespace LoanManagement.Desktop
                 {
                     cmbMode.Items.Add(new ComboBoxItem { Content = "Monthly" });
                     cmbMode.Items.Add(new ComboBoxItem { Content = "Semi-Monthly" });
+                    cmbMode.Items.Add(new ComboBoxItem { Content = "One-Time Payment" });
                 }
                 else if (ser.Department == "Micro Business")
                 {
@@ -416,11 +417,11 @@ namespace LoanManagement.Desktop
                     LoanApplication la = new LoanApplication { AmountApplied = Convert.ToDouble(txtAmt.Text), DateApplied = DateTime.Now.Date };
                     if (cboxAgent.IsChecked == true)
                     {
-                        loan = new Loan {CI=ciId, AgentID = agentId, ClientID = cId, CoBorrower = cbId, Commission = ser.AgentCommission, Deduction = deduction, Interest = ser.Interest, Mode = cmbMode.Text, Penalty = ser.Penalty, Status = "Applied", Term = Convert.ToInt32(txtTerm.Text), Type = txtCat.Text, TypeOfLoan = cmbServices.Text, LoanApplication=la };
+                        loan = new Loan {CI=ciId, AgentID = agentId, ClientID = cId, CoBorrower = cbId, ServiceID=servId, Status = "Applied", Term = Convert.ToInt32(txtTerm.Text),  LoanApplication=la, Mode=cmbMode.Text };
                     }
                     else
                     {
-                        loan = new Loan {CI=ciId, AgentID=0, ClientID = cId, CoBorrower = cbId, Commission = ser.AgentCommission, Deduction = deduction, Interest = ser.Interest, Mode = cmbMode.Text, Penalty = ser.Penalty, Status = "Applied", Term = Convert.ToInt32(txtTerm.Text), Type = txtCat.Text, TypeOfLoan = cmbServices.Text, LoanApplication=la };
+                        loan = new Loan { CI = ciId, AgentID = 0, ClientID = cId, CoBorrower = cbId, ServiceID = servId, Status = "Applied", Term = Convert.ToInt32(txtTerm.Text), LoanApplication = la, Mode = cmbMode.Text };
                     }
 
                     
@@ -468,6 +469,11 @@ namespace LoanManagement.Desktop
             wpfClientSearch frm = new wpfClientSearch();
             frm.status = "CI";
             frm.ShowDialog();
+        }
+
+        private void wdw1_LocationChanged(object sender, EventArgs e)
+        {
+
         }
 
 

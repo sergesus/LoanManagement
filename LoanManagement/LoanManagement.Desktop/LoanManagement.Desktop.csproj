@@ -106,11 +106,17 @@
     <Compile Include="wpfEmployeeInfo.xaml.cs">
       <DependentUpon>wpfEmployeeInfo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="wpfFReleasing.xaml.cs">
+      <DependentUpon>wpfFReleasing.xaml</DependentUpon>
+    </Compile>
     <Compile Include="wpfLoanApplication.xaml.cs">
       <DependentUpon>wpfLoanApplication.xaml</DependentUpon>
     </Compile>
     <Compile Include="wpfLoanApproval.xaml.cs">
       <DependentUpon>wpfLoanApproval.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="wpfLoanDeclining.xaml.cs">
+      <DependentUpon>wpfLoanDeclining.xaml</DependentUpon>
     </Compile>
     <Compile Include="wpfLoanInfo.xaml.cs">
       <DependentUpon>wpfLoanInfo.xaml</DependentUpon>
@@ -128,11 +134,17 @@
     <Compile Include="wpfMain.xaml.cs">
       <DependentUpon>wpfMain.xaml</DependentUpon>
     </Compile>
+    <Compile Include="wpfReleasedLoanInfo.xaml.cs">
+      <DependentUpon>wpfReleasedLoanInfo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="wpfSelectApplication.xaml.cs">
       <DependentUpon>wpfSelectApplication.xaml</DependentUpon>
     </Compile>
     <Compile Include="wpfSelectClient.xaml.cs">
       <DependentUpon>wpfSelectClient.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="wpfSelectPayment.xaml.cs">
+      <DependentUpon>wpfSelectPayment.xaml</DependentUpon>
     </Compile>
     <Compile Include="wpfServiceInfo.xaml.cs">
       <DependentUpon>wpfServiceInfo.xaml</DependentUpon>
@@ -180,11 +192,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="wpfFReleasing.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="wpfLoanApplication.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="wpfLoanApproval.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="wpfLoanDeclining.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -204,11 +224,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="wpfReleasedLoanInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="wpfSelectApplication.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="wpfSelectClient.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="wpfSelectPayment.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

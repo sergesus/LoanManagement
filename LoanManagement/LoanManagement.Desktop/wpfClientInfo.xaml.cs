@@ -430,6 +430,7 @@ namespace LoanManagement.Desktop
                         ctx.SaveChanges();
 
                         var ads = from ad in ctx.HomeAddresses
+                                  where ad.ClientID==cId
                                   select new { AddressNumber = ad.AddressNumber, Street = ad.Street, Province = ad.Province, City = ad.City, OwnershipType = ad.OwnershipType, MonthlyFee = ad.MonthlyFee, LengthOfStay = ad.LengthOfStay };
                         dgAddress.ItemsSource = ads.ToList();
                     }
@@ -490,6 +491,7 @@ namespace LoanManagement.Desktop
                         tr.Street = txtHStreet.Text;
                         ctx.SaveChanges();
                         var ads = from ad in ctx.HomeAddresses
+                                  where ad.ClientID == cId
                                   select new { AddressNumber = ad.AddressNumber, Street = ad.Street, Province = ad.Province, City = ad.City, OwnershipType = ad.OwnershipType, MonthlyFee = ad.MonthlyFee, LengthOfStay = ad.LengthOfStay };
                         dgAddress.ItemsSource = ads.ToList();
                         reset();
@@ -642,6 +644,7 @@ namespace LoanManagement.Desktop
                         }
                         ctx.SaveChanges();
                         var ads = from ad in ctx.HomeAddresses
+                                  where ad.ClientID == cId
                                   select new { AddressNumber = ad.AddressNumber, Street = ad.Street, Province = ad.Province, City = ad.City, OwnershipType = ad.OwnershipType, MonthlyFee = ad.MonthlyFee, LengthOfStay = ad.LengthOfStay };
                         dgAddress.ItemsSource = ads.ToList();
                         return;
@@ -711,6 +714,7 @@ namespace LoanManagement.Desktop
                         ctx.SaveChanges();
 
                         var cts = from ct in ctx.ClientContacts
+                                  where ct.ClientID==cId
                                   select new { ContactNumber = ct.ContactNumber, Contact = ct.Contact, Primary = ct.Primary };
                         dgContact.ItemsSource = cts.ToList();
                         reset();
@@ -754,6 +758,7 @@ namespace LoanManagement.Desktop
                         tc.Contact = txtContact.Text;
                         ctx.SaveChanges();
                         var cts = from ct in ctx.ClientContacts
+                                  where ct.ClientID == cId
                                   select new { ContactNumber = ct.ContactNumber, Contact = ct.Contact, Primary = ct.Primary };
                         dgContact.ItemsSource = cts.ToList();
                         reset();
@@ -845,6 +850,7 @@ namespace LoanManagement.Desktop
                         }
                         ctx.SaveChanges();
                         var cts2 = from ct in ctx.ClientContacts
+                                   where ct.ClientID == cId
                                    select new { ContactNumber = ct.ContactNumber, Contact = ct.Contact, Primary = ct.Primary };
                         dgContact.ItemsSource = cts2.ToList();
                         reset();
@@ -910,6 +916,7 @@ namespace LoanManagement.Desktop
                         ctx.SaveChanges();
 
                         var dps = from td in ctx.Dependents
+                                  where td.ClientID == cId
                                   select new { DependentNumber = td.DependentNumber, LastName = td.LastName, FirstName = td.FirstName, MiddleName = td.MiddleName, Suffix = td.Suffix, Birthday = td.Birthday, School = td.School };
                         dgDependents.ItemsSource = dps.ToList();
                         reset();
@@ -953,6 +960,7 @@ namespace LoanManagement.Desktop
                         td.Suffix = txtDSuffix.Text;
                         ctx.SaveChanges();
                         var dps = from tdp in ctx.Dependents
+                                  where tdp.ClientID == cId
                                   select new { DependentNumber = tdp.DependentNumber, LastName = tdp.LastName, FirstName = tdp.FirstName, MiddleName = tdp.MiddleName, Suffix = tdp.Suffix, Birthday = tdp.Birthday, School = tdp.School };
                         dgDependents.ItemsSource = dps.ToList();
                         reset();
@@ -1059,6 +1067,7 @@ namespace LoanManagement.Desktop
                         }
                         ctx.SaveChanges();
                         var dps2 = from tdp in ctx.Dependents
+                                   where tdp.ClientID == cId
                                    select new { DependentNumber = tdp.DependentNumber, LastName = tdp.LastName, FirstName = tdp.FirstName, MiddleName = tdp.MiddleName, Suffix = tdp.Suffix, Birthday = tdp.Birthday, School = tdp.School };
                         dgDependents.ItemsSource = dps2.ToList();
                         reset();
@@ -1124,6 +1133,7 @@ namespace LoanManagement.Desktop
                         ctx.SaveChanges();
 
                         var wrk = from wr in ctx.Works
+                                  where wr.ClientID == cId
                                   select new { WorkNumber = wr.WorkNumber, BusinessName = wr.BusinessName, DTI = wr.DTI, Street = wr.Street, Province = wr.Province, City = wr.City, Employment = wr.Employment, LengthOfStay = wr.LengthOfStay, BusinessNumber = wr.BusinessNumber, Position = wr.Position, MonthlyIncome = wr.MonthlyIncome, PLNumber = wr.PLNumber, Status = wr.status };
                         dgWork.ItemsSource = wrk.ToList();
                         reset();
@@ -1173,6 +1183,7 @@ namespace LoanManagement.Desktop
                         tw.Street = txtWStreet.Text; 
                         ctx.SaveChanges();
                         var wrk = from wr in ctx.Works
+                                  where wr.ClientID == cId
                                   select new { WorkNumber=wr.WorkNumber, BusinessName = wr.BusinessName, DTI= wr.DTI, Street= wr.Street, Province= wr.Province, City=wr.City, Employment= wr.Employment, LengthOfStay=wr.LengthOfStay, BusinessNumber=wr.BusinessNumber, Position= wr.Position, MonthlyIncome=wr.MonthlyIncome, PLNumber=wr.PLNumber, Status=wr.status };
                         dgWork.ItemsSource = wrk.ToList();
                         reset();
@@ -1298,6 +1309,7 @@ namespace LoanManagement.Desktop
                         ctx.SaveChanges();
 
                         var wrk2 = from wr in ctx.Works
+                                   where wr.ClientID == cId
                                    select new { WorkNumber = wr.WorkNumber, BusinessName = wr.BusinessName, DTI = wr.DTI, Street = wr.Street, Province = wr.Province, City = wr.City, Employment = wr.Employment, LengthOfStay = wr.LengthOfStay, BusinessNumber = wr.BusinessNumber, Position = wr.Position, MonthlyIncome = wr.MonthlyIncome, PLNumber = wr.PLNumber, Status = wr.status };
                         dgWork.ItemsSource = wrk2.ToList();
 
@@ -1366,6 +1378,7 @@ namespace LoanManagement.Desktop
                         ctx.SaveChanges();
 
                         var rfs = from rf in ctx.References
+                                  where rf.ClientID == cId
                                   select new { ReferenceNumber = rf.ReferenceNumber, LastName = rf.LastName, FirstName = rf.FirstName, MI = rf.MiddleName, Suffix = rf.Suffix, Street = rf.Street, Province = rf.Province, City = rf.City, Contact = rf.Contact };
                         dgReference.ItemsSource = rfs.ToList();
                         reset();
@@ -1412,6 +1425,7 @@ namespace LoanManagement.Desktop
                         tr.Suffix = txtRSuffix.Text;
                         ctx.SaveChanges();
                         var rfs = from rf in ctx.References
+                                  where rf.ClientID == cId
                                   select new { ReferenceNumber= rf.ReferenceNumber, LastName = rf.LastName, FirstName=rf.FirstName, MI=rf.MiddleName, Suffix=rf.Suffix, Street = rf.Street, Province = rf.Province, City = rf.City, Contact = rf.Contact };
                         dgReference.ItemsSource = rfs.ToList();
                         reset();
@@ -1524,7 +1538,8 @@ namespace LoanManagement.Desktop
                         }
                         ctx.SaveChanges();
 
-                        var rfs3 = from rf in ctx.TempReferences
+                        var rfs3 = from rf in ctx.References
+                                   where rf.ClientID == cId
                                    select new { ReferenceNumber = rf.ReferenceNumber, LastName = rf.LastName, FirstName = rf.FirstName, MI = rf.MiddleName, Suffix = rf.Suffix, Street = rf.Street, Province = rf.Province, City = rf.City, Contact = rf.Contact };
                         dgReference.ItemsSource = rfs3.ToList();
 

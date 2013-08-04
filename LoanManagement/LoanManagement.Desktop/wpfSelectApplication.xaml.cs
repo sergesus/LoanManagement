@@ -36,25 +36,59 @@ namespace LoanManagement.Desktop
             myBrush.ImageSource = image.Source;
             //Grid grid = new Grid();
             wdw1.Background = myBrush;
+            if (status == "Approval")
+            {
+                btnNew.Content = "View all Applied Loans";
+                btnView.Content = "View/Update Approved and Declined Loans";
+            }
+            else if (status == "Releasing")
+            {
+                btnNew.Content = "View all Approved Loans";
+                btnView.Content = "View/Update Released Loans";
+            }
         }
 
         private void btnNew_Click(object sender, RoutedEventArgs e)
         {
-
+            if (status == "Application")
+            {
                 this.Close();
                 wpfSelectClient frm = new wpfSelectClient();
                 frm.ShowDialog();
+            }
+            else
+            {
+                this.Close();
+                wpfLoanSearch frm = new wpfLoanSearch();
+                frm.status = status;
+                frm.ShowDialog();
+            }
 
         }
 
         private void btnView_Click(object sender, RoutedEventArgs e)
         {
-
+            if (status == "Application")
+            {
                 this.Close();
                 wpfLoanSearch frm = new wpfLoanSearch();
                 frm.status = "Application";
                 frm.ShowDialog();
-            
+            }
+            else if (status == "Approval")
+            {
+                this.Close();
+                wpfLoanSearch frm = new wpfLoanSearch();
+                frm.status = "UApproval";
+                frm.ShowDialog();
+            }
+            else if (status == "Releasing")
+            {
+                this.Close();
+                wpfLoanSearch frm = new wpfLoanSearch();
+                frm.status = "UReleasing";
+                frm.ShowDialog();
+            }
         }
     }
 }

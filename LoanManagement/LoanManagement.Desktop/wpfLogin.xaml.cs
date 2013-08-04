@@ -40,6 +40,20 @@ namespace LoanManagement.Desktop
             
         }
 
+        private void checkDue()
+        {
+            using (var ctx = new SystemContext())
+            {
+                var lon = from lo in ctx.FPaymentInfo
+                          where lo.PaymentDate >= DateTime.Today.Date && lo.PaymentStatus == "Pending"
+                          select lo;
+                foreach(var item in lon)
+                {
+                    item.PaymentStatus = "Due";
+                }
+                ctx.SaveChanges();
+            }
+        }
 
 
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
@@ -80,8 +94,7 @@ namespace LoanManagement.Desktop
         {
             //MessageBox.Show("Hi");
             //pr1.IsActive = true;
-            try
-            {
+
                 if (txtUsername.Text == "")
                 {
                     //MessageBox.Show("Please enter your username", "Error",MessageBoxButton.OK,MessageBoxImage.Error);
@@ -114,11 +127,7 @@ namespace LoanManagement.Desktop
                         pr1.IsActive = !true;
                     }
                 }
-            }
-            catch (Exception ex)
-            {
-                //MessageBox.Show(ex.Message.ToString());
-            }
+
         }
 
         private void txtUsername_LostFocus(object sender, RoutedEventArgs e)
