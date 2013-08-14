@@ -27,7 +27,7 @@
             <ColumnDefinition Width="509*"/>
         </Grid.ColumnDefinitions>
         <DockPanel HorizontalAlignment="Left" Height="26" LastChildFill="False" VerticalAlignment="Top" Width="769" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Margin="-2,0,0,0" Grid.ColumnSpan="3">
-            <Button x:Name="btnAdd" Content="Add" Height="26" VerticalAlignment="Top" Width="115" Click="btnAdd_Click" BorderThickness="0"/>
+            <Button x:Name="btnAdd" Content="Add" Width="115" Click="btnAdd_Click" BorderThickness="0"/>
             <Button x:Name="btnView" Content="View/Edit Info" Width="115" Click="btnView_Click" BorderThickness="0" Height="26" VerticalAlignment="Top"/>
 
         </DockPanel>

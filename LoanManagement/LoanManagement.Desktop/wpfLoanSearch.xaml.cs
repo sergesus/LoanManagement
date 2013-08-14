@@ -50,7 +50,7 @@ namespace LoanManagement.Desktop
         {
             if (status == "UApproval")
             {
-                using (var ctx = new SystemContext())
+                using (var ctx = new MyContext())
                 {
                     var lon = from ln in ctx.Loans
                               where ln.Status == "Approved" || ln.Status=="Declined"
@@ -61,7 +61,7 @@ namespace LoanManagement.Desktop
             }
             else if(status=="Approval" || status=="Application")
             {
-                using (var ctx = new SystemContext())
+                using (var ctx = new MyContext())
                 {
                     var lon = from ln in ctx.Loans
                               where ln.Status == "Applied"
@@ -72,7 +72,7 @@ namespace LoanManagement.Desktop
             }
             else if (status == "Releasing")
             {
-                using (var ctx = new SystemContext())
+                using (var ctx = new MyContext())
                 {
                     var lon = from ln in ctx.Loans
                               where ln.Status == "Approved"
@@ -83,7 +83,7 @@ namespace LoanManagement.Desktop
             }
             else if (status == "UReleasing")
             {
-                using (var ctx = new SystemContext())
+                using (var ctx = new MyContext())
                 {
                     var lon = from ln in ctx.Loans
                               where ln.Status == "Released"
@@ -94,7 +94,7 @@ namespace LoanManagement.Desktop
             }
             else if (status == "Holding")
             {
-                using (var ctx = new SystemContext())
+                using (var ctx = new MyContext())
                 {
                     var lon = from ln in ctx.Loans
                               where ln.Status == "Released" || ln.Status=="Active"

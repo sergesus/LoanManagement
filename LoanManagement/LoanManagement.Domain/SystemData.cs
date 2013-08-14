@@ -9,7 +9,7 @@ using System.Data.Entity;
 namespace LoanManagement.Domain
 {
 
-    public class SystemContext : DbContext
+    public class MyContext : DbContext
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Employee> Employees { get; set; }
@@ -48,6 +48,9 @@ namespace LoanManagement.Domain
         public DbSet<ApprovedLoan> ApprovedLoans { get; set; }
         public DbSet<ReleasedLoan> ReleasedLoans { get; set; }
         public DbSet<FPaymentInfo> FPaymentInfo { get; set; }
+        public DbSet<HeldCheque> HeldCheques { get; set; }
+        public DbSet<DepositedCheque> DepositedCheques { get; set; }
+        public DbSet<TempClearing> TempClearings { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -117,6 +120,9 @@ namespace LoanManagement.Domain
             modelBuilder.Entity<ReleasedLoan>()
                 .HasKey(x => x.LoanID)
                 .HasRequired(x => x.Loan);
+            modelBuilder.Entity<DepositedCheque>()
+                .HasKey(x => x.FPaymentInfoID)
+                .HasRequired(x => x.FPaymentInfo);
 
                 
                 
@@ -595,6 +601,34 @@ namespace LoanManagement.Domain
 
         public int LoanID { get; set; }
         public virtual Loan Loan { get; set; }
+        public virtual DepositedCheque DepositedCheque { get; set; }
+    }
+
+    public class HeldCheque
+    {
+        public int HeldChequeID { get; set; }
+        public int LoanID { get; set; }
+        public int PaymentNumber { get; set; }
+        public DateTime OriginalPaymentDate { get; set; }
+        public DateTime NewPaymentDate { get; set; }
+        public DateTime DateHeld { get; set; }
+        public double HoldingFee { get; set; }
+    }
+
+    public class DepositedCheque
+    {
+        public int FPaymentInfoID { get; set; }
+        public DateTime DepositDate { get; set; }
+
+        public virtual FPaymentInfo FPaymentInfo { get; set; }
+    }
+
+    public class TempClearing
+    {
+        public int TempClearingID { get; set; }
+        public int FPaymentInfoID { get; set; }
+
+        public virtual FPaymentInfo FPaymentInfo { get; set; }
     }
 
     public class GenSOA

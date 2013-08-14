@@ -44,5 +44,19 @@ namespace LoanManagement.Desktop
             this.Close();
             frm.ShowDialog();
         }
+
+        private void btnDeposit_Click(object sender, RoutedEventArgs e)
+        {
+            wpfDepositCheques frm = new wpfDepositCheques();
+            this.Close();
+            frm.ShowDialog();
+        }
+
+        private void btnClear_Click(object sender, RoutedEventArgs e)
+        {
+            wpfChequeClearing frm = new wpfChequeClearing();
+            this.Close();
+            frm.ShowDialog();
+        }
     }
 }

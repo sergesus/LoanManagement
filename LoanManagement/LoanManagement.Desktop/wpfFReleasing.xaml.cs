@@ -37,7 +37,7 @@ namespace LoanManagement.Desktop
         {
             if (status == "UReleasing")
             {
-                using (var ctx = new SystemContext())
+                using (var ctx = new MyContext())
                 {
                     var lons = from ge in ctx.FPaymentInfo
                                where ge.LoanID == lId
@@ -78,7 +78,7 @@ namespace LoanManagement.Desktop
             {
                 if (status == "Releasing")
                 {
-                    using (var ctx = new SystemContext())
+                    using (var ctx = new MyContext())
                     {
                         myNum = 0;
                         ctx.Database.ExecuteSqlCommand("delete from dbo.GenSOAs");
@@ -169,7 +169,7 @@ namespace LoanManagement.Desktop
                 }
                 else if (status == "UReleasing")
                 {
-                    using (var ctx = new SystemContext())
+                    using (var ctx = new MyContext())
                     {
                         var lon = ctx.Loans.Find(lId);
                         var lons = from ge in ctx.FPaymentInfo
@@ -205,7 +205,7 @@ namespace LoanManagement.Desktop
             //num = 0;
             if (status == "Releasing")
             {
-                using (var ctx = new SystemContext())
+                using (var ctx = new MyContext())
                 {
                     var lon = ctx.Loans.Find(lId);
                     var ser = ctx.Services.Find(lon.ServiceID);
@@ -258,7 +258,7 @@ namespace LoanManagement.Desktop
                 refresh();
                 refr();
                 int myCtr = 0;
-                using (var ctx = new SystemContext())
+                using (var ctx = new MyContext())
                 {
                     var lon = ctx.Loans.Find(lId);
                     var bnk = ctx.Banks.Find(lon.BankID);
@@ -295,7 +295,7 @@ namespace LoanManagement.Desktop
 
         private void cmbBank_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            /*using (var ctx = new SystemContext())
+            /*using (var ctx = new MyContext())
             { 
                 ComboBoxItem typeItem = (ComboBoxItem)cmbBank.SelectedItem;
                 string value = typeItem.Content.ToString();
@@ -337,7 +337,7 @@ namespace LoanManagement.Desktop
                 MessageBoxResult mr = MessageBox.Show("Are you sure?","Question",MessageBoxButton.YesNo,MessageBoxImage.Question);
                 if (mr == MessageBoxResult.Yes)
                 {
-                    using (var ctx = new SystemContext())
+                    using (var ctx = new MyContext())
                     {
                         var bk = ctx.Banks.Where(x => x.BankName == cmbBank.Text).First();
                         int bId = bk.BankID;
@@ -370,7 +370,7 @@ namespace LoanManagement.Desktop
             else if (status == "UReleasing")
             {
                 int myCtr = 0;
-                using (var ctx = new SystemContext())
+                using (var ctx = new MyContext())
                 {
                     var lons = from lo in ctx.FPaymentInfo
                                where lo.LoanID == lId

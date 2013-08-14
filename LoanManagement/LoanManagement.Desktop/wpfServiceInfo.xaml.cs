@@ -68,7 +68,7 @@ namespace LoanManagement.Desktop
             int num2 = 0;
             if (status == "Add")
             {
-                using (var ctx = new SystemContext())
+                using (var ctx = new MyContext())
                 {
                     num1 = ctx.TempoRequirements.Count();
                     num2 = ctx.TempoDeductions.Count();
@@ -76,7 +76,7 @@ namespace LoanManagement.Desktop
             }
             else
             {
-                using (var ctx = new SystemContext())
+                using (var ctx = new MyContext())
                 {
                     num1 = ctx.Requirements.Where(x => x.ServiceID==sId).Count();
                     num2 = ctx.Deductions.Where(x => x.ServiceID == sId).Count();
@@ -115,7 +115,7 @@ namespace LoanManagement.Desktop
             {
 
 
-                using (var ctx = new SystemContext())
+                using (var ctx = new MyContext())
                 {
                     Service ser = new Service { Name = txtName.Text, Department = cmbDept.Text, Description = txtDesc.Text, Type = cmbType.Text, Active = true, Interest = Convert.ToDouble(txtInterest.Text), MinTerm = Convert.ToInt32(txtMinTerm.Text), MaxTerm = Convert.ToInt32(txtMaxTerm.Text), MinValue = Convert.ToDouble(txtMinVal.Text), MaxValue = Convert.ToDouble(txtMaxVal.Text), AgentCommission=Convert.ToDouble(txtCom.Text), Holding=Convert.ToDouble(txtHolding.Text), ClosedAccountPenalty=Convert.ToDouble(txtClosed.Text), DaifPenalty= Convert.ToDouble(txtDaif.Text) };
 
@@ -145,7 +145,7 @@ namespace LoanManagement.Desktop
             }
             else
             {
-                using (var ctx = new SystemContext())
+                using (var ctx = new MyContext())
                 {
                     var ser=ctx.Services.Find(sId);
                     ser.Name = txtName.Text;
@@ -188,7 +188,7 @@ namespace LoanManagement.Desktop
             wdw1.Background = myBrush;
             if (status == "Add")
             {
-                using (var ctx = new SystemContext())
+                using (var ctx = new MyContext())
                 {
                     ctx.Database.ExecuteSqlCommand("delete from dbo.TempoRequirements");
                     ctx.Database.ExecuteSqlCommand("delete from dbo.TempoDeductions");
@@ -196,7 +196,7 @@ namespace LoanManagement.Desktop
             }
             else 
             {
-                using (var ctx = new SystemContext())
+                using (var ctx = new MyContext())
                 {
                     var ser=ctx.Services.Find(sId);
                     txtDesc.Text = ser.Description;
@@ -249,7 +249,7 @@ namespace LoanManagement.Desktop
                 //for view
                 if (status == "View")
                 {
-                    using (var ctx = new SystemContext())
+                    using (var ctx = new MyContext())
                     {
                         var ctr = ctx.Deductions.Where(x => x.ServiceID == sId).Count() + 1;
                         Deduction td = new Deduction {ServiceID=sId, DeductionNum = ctr, Name = txtDedName.Text, Percentage = Convert.ToDouble(txtDedPerc.Text) };
@@ -265,7 +265,7 @@ namespace LoanManagement.Desktop
                     return;
                 }
 
-                using (var ctx = new SystemContext())
+                using (var ctx = new MyContext())
                 {
                     var ctr = ctx.TempoDeductions.Count() + 1;
                     TempoDeduction td = new TempoDeduction { DeductionNum = ctr, Name = txtDedName.Text, Percentage = Convert.ToDouble(txtDedPerc.Text) };
@@ -286,7 +286,7 @@ namespace LoanManagement.Desktop
                 //for view
                 if (status == "View")
                 {
-                    using (var ctx = new SystemContext())
+                    using (var ctx = new MyContext())
                     {
                         int num = Convert.ToInt32(getRow(dgDed, 0));
                         var td = ctx.Deductions.Where(x => x.DeductionNum == num && x.ServiceID == sId).First();
@@ -304,7 +304,7 @@ namespace LoanManagement.Desktop
                 }
 
 
-                using (var ctx = new SystemContext())
+                using (var ctx = new MyContext())
                 {
                     int num = Convert.ToInt32(getRow(dgDed, 0));
                     var td = ctx.TempoDeductions.Where(x => x.DeductionNum == num).First();
@@ -341,7 +341,7 @@ namespace LoanManagement.Desktop
                 //for view
                 if (status == "View")
                 {
-                    using (var ctx = new SystemContext())
+                    using (var ctx = new MyContext())
                     {
                         var ctr = ctx.Requirements.Where(x => x.ServiceID == sId).Count() + 1;
                         Requirement tr = new Requirement {ServiceID=sId, RequirementNum = ctr, Name = txtReqName.Text, Description = txtReqDesc.Text };
@@ -356,7 +356,7 @@ namespace LoanManagement.Desktop
                     return;
                 }
 
-                using (var ctx = new SystemContext())
+                using (var ctx = new MyContext())
                 {
                     var ctr = ctx.TempoRequirements.Count() + 1;
                     TempoRequirement tr = new TempoRequirement { RequirementNum = ctr, Name = txtReqName.Text, Description = txtReqDesc.Text };
@@ -377,7 +377,7 @@ namespace LoanManagement.Desktop
                 //for view
                 if (status == "View")
                 {
-                    using (var ctx = new SystemContext())
+                    using (var ctx = new MyContext())
                     {
                         int num = Convert.ToInt32(getRow(dgReq, 0));
                         var tr = ctx.Requirements.Where(x => x.RequirementNum == num && x.ServiceID==sId).First();
@@ -395,7 +395,7 @@ namespace LoanManagement.Desktop
                 }
 
 
-                using (var ctx = new SystemContext())
+                using (var ctx = new MyContext())
                 {
                     int num = Convert.ToInt32(getRow(dgReq, 0));
                     var tr  = ctx.TempoRequirements.Where(x=> x.RequirementNum==num).First();
@@ -425,7 +425,7 @@ namespace LoanManagement.Desktop
                     //for view
                     if (status == "View")
                     {
-                        using (var ctx = new SystemContext())
+                        using (var ctx = new MyContext())
                         {
                             int num = Convert.ToInt32(getRow(dgReq, 0));
                             var tr = ctx.Requirements.Where(x => x.RequirementNum == num && x.ServiceID == sId).First();
@@ -436,7 +436,7 @@ namespace LoanManagement.Desktop
                         return;
                     }
 
-                    using (var ctx = new SystemContext())
+                    using (var ctx = new MyContext())
                     {
                         int num = Convert.ToInt32(getRow(dgReq, 0));
                         var tr = ctx.TempoRequirements.Where(x => x.RequirementNum == num).First();
@@ -457,7 +457,7 @@ namespace LoanManagement.Desktop
 
         private void btnDelReq_Click(object sender, RoutedEventArgs e)
         {
-            using (var ctx = new SystemContext())
+            using (var ctx = new MyContext())
             {
                 try
                 {
@@ -527,7 +527,7 @@ namespace LoanManagement.Desktop
                     //for view
                     if (status == "View")
                     {
-                        using (var ctx = new SystemContext())
+                        using (var ctx = new MyContext())
                         {
                             int num = Convert.ToInt32(getRow(dgDed, 0));
                             var td = ctx.Deductions.Where(x => x.DeductionNum == num && x.ServiceID==sId).First();
@@ -538,7 +538,7 @@ namespace LoanManagement.Desktop
                         return;
                     }
 
-                    using (var ctx = new SystemContext())
+                    using (var ctx = new MyContext())
                     {
                         int num = Convert.ToInt32(getRow(dgDed, 0));
                         var td = ctx.TempoDeductions.Where(x => x.DeductionNum == num).First();
@@ -559,7 +559,7 @@ namespace LoanManagement.Desktop
 
         private void btnDelDed_Click(object sender, RoutedEventArgs e)
         {
-            using (var ctx = new SystemContext())
+            using (var ctx = new MyContext())
             {
                 try
                 {

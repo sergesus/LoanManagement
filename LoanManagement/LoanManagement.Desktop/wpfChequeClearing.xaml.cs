@@ -1,0 +1,148 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
+
+using LoanManagement.Domain;
+using MahApps.Metro.Controls;
+using System.Data.Entity;
+
+namespace LoanManagement.Desktop
+{
+    /// <summary>
+    /// Interaction logic for wpfChequeClearing.xaml
+    /// </summary>
+    public partial class wpfChequeClearing : MetroWindow
+    {
+        public wpfChequeClearing()
+        {
+            InitializeComponent();
+        }
+
+        public string getRow(System.Windows.Controls.DataGrid dg, int row)
+        {
+            try
+            {
+                object item = dg.SelectedItem;
+                string str = (dg.SelectedCells[row].Column.GetCellContent(item) as TextBlock).Text;
+                return str;
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Please select a row", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return "";
+            }
+        }
+
+        public void rg()
+        {
+            using (var ctx = new MyContext())
+            {
+                var chq = from ch in ctx.FPaymentInfo
+                          where ch.PaymentStatus == "Deposited"
+                          && !(from o in ctx.TempClearings select o.FPaymentInfoID).Contains(ch.FPaymentInfoID)
+                          select new { PaymentID = ch.FPaymentInfoID, ChequeID = ch.ChequeInfo, ClientName = ch.Loan.Client.FirstName + " " + ch.Loan.Client.LastName, TypeOfLoan = ch.Loan.Service.Name};
+                dg1.ItemsSource = chq.ToList();
+
+                var chq1 = from ch in ctx.TempClearings
+                           select new { PaymentID = ch.FPaymentInfoID, ChequeID = ch.FPaymentInfo.ChequeInfo, ClientName = ch.FPaymentInfo.Loan.Client.FirstName + " " + ch.FPaymentInfo.Loan.Client.LastName, TypeOfLoan = ch.FPaymentInfo.Loan.Service.Name };
+                dg2.ItemsSource = chq1.ToList();
+            }
+        }
+
+        private void wdw1_Loaded(object sender, RoutedEventArgs e)
+        {
+            ImageBrush myBrush = new ImageBrush();
+            System.Windows.Controls.Image image = new System.Windows.Controls.Image();
+            image.Source = new BitmapImage(
+                new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
+            myBrush.ImageSource = image.Source;
+            //Grid grid = new Grid();
+            wdw1.Background = myBrush;
+
+            using (var ctx = new MyContext())
+            {
+                ctx.Database.ExecuteSqlCommand("delete  from dbo.TempClearings");
+            }
+            rg();
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                using (var ctx = new MyContext())
+                {
+                    int n = Convert.ToInt32(getRow(dg1,0));
+                    TempClearing tc = new TempClearing { FPaymentInfoID = n };
+                    ctx.TempClearings.Add(tc);
+                    ctx.SaveChanges();
+                    rg();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Runtime Error: " + ex.Message);
+                return;
+            }
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                using (var ctx = new MyContext())
+                {
+                    int n = Convert.ToInt32(getRow(dg2, 0));
+                    TempClearing tc = ctx.TempClearings.Where(x => x.FPaymentInfoID == n).First();
+                    ctx.TempClearings.Remove(tc);
+                    ctx.SaveChanges();
+                    rg();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Runtime Error: " + ex.Message);
+                return;
+            }
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            using (var ctx = new MyContext())
+            {
+                ctx.Database.ExecuteSqlCommand("delete  from dbo.TempClearings");
+            }
+            rg();
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            using (var ctx = new MyContext())
+            {
+                //ctx.Database.ExecuteSqlCommand("delete  from dbo.TempClearings");
+                var chq = from ch in ctx.FPaymentInfo
+                          where ch.PaymentStatus == "Deposited"
+                          && !(from o in ctx.TempClearings select o.FPaymentInfoID).Contains(ch.FPaymentInfoID)
+                          select ch;
+                foreach (var item in chq)
+                {
+                    TempClearing tc = new TempClearing { FPaymentInfoID = item.FPaymentInfoID };
+                    ctx.TempClearings.Add(tc);
+                }
+                ctx.SaveChanges();
+                rg();
+            }
+            
+        }
+    }
+}

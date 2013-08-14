@@ -91,6 +91,9 @@
     <Compile Include="wpfBankInfo.xaml.cs">
       <DependentUpon>wpfBankInfo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="wpfChequeClearing.xaml.cs">
+      <DependentUpon>wpfChequeClearing.xaml</DependentUpon>
+    </Compile>
     <Compile Include="wpfClient.xaml.cs">
       <DependentUpon>wpfClient.xaml</DependentUpon>
     </Compile>
@@ -99,6 +102,9 @@
     </Compile>
     <Compile Include="wpfClientSearch.xaml.cs">
       <DependentUpon>wpfClientSearch.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="wpfDepositCheques.xaml.cs">
+      <DependentUpon>wpfDepositCheques.xaml</DependentUpon>
     </Compile>
     <Compile Include="wpfEmployee.xaml.cs">
       <DependentUpon>wpfEmployee.xaml</DependentUpon>
@@ -172,6 +178,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="wpfChequeClearing.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="wpfClient.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -181,6 +191,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="wpfClientSearch.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="wpfDepositCheques.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

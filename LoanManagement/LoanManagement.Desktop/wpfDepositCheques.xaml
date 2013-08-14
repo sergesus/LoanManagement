@@ -1,0 +1,30 @@
+﻿<Controls:MetroWindow x:Name="wdw1" x:Class="LoanManagement.Desktop.wpfDepositCheques"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"             
+        Title="wpfDepositCheques" Height="462.997" Width="733.474" Loaded="wdw1_Loaded" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedTabControl.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid>
+        <DataGrid x:Name="dg" HorizontalAlignment="Left" Height="281" Margin="10,101,0,0" VerticalAlignment="Top" Width="705" FontSize="18" GridLinesVisibility="None"/>
+        <Button x:Name="btnDep" Content="Deposit All Due Cheques" HorizontalAlignment="Left" Height="32" Margin="563,387,0,0" VerticalAlignment="Top" Width="152" Click="btnDep_Click"/>
+        <TextBox x:Name="txtSearch" HorizontalAlignment="Left" Height="38" Margin="114,15,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="601" FontSize="18"/>
+        <RadioButton x:Name="rdDue" Content="Due" HorizontalAlignment="Left" Height="28" Margin="10,68,0,0" VerticalAlignment="Top" Width="133" FontSize="18" IsChecked="True" Checked="rdDue_Checked"/>
+        <RadioButton x:Name="rdDeposited" Content="Deposited" HorizontalAlignment="Left" Height="28" Margin="148,68,0,0" VerticalAlignment="Top" Width="132" FontSize="18" Checked="rdDeposited_Checked"/>
+        <Label Content="Search:" HorizontalAlignment="Left" Height="38" Margin="11,15,0,0" VerticalAlignment="Top" Width="132" FontSize="18"/>
+        <TextBlock x:Name="lblTOL" HorizontalAlignment="Left" Height="31" Margin="360,65,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="278" FontSize="18"/>
+
+    </Grid>
+</Controls:MetroWindow>

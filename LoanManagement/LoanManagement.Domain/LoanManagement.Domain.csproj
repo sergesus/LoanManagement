@@ -45,117 +45,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\201305060714214_InitialCreate.cs" />
-    <Compile Include="Migrations\201305060714214_InitialCreate.Designer.cs">
-      <DependentUpon>201305060714214_InitialCreate.cs</DependentUpon>
+    <Compile Include="Migrations\201310120117283_AddedDepCheques.cs" />
+    <Compile Include="Migrations\201310120117283_AddedDepCheques.Designer.cs">
+      <DependentUpon>201310120117283_AddedDepCheques.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201305080608116_RemovedPrimary.cs" />
-    <Compile Include="Migrations\201305080608116_RemovedPrimary.Designer.cs">
-      <DependentUpon>201305080608116_RemovedPrimary.cs</DependentUpon>
+    <Compile Include="Migrations\201310140114451_AddedTempClearing.cs" />
+    <Compile Include="Migrations\201310140114451_AddedTempClearing.Designer.cs">
+      <DependentUpon>201310140114451_AddedTempClearing.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201306030625083_UpdatedDb.cs" />
-    <Compile Include="Migrations\201306030625083_UpdatedDb.Designer.cs">
-      <DependentUpon>201306030625083_UpdatedDb.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201306070600124_updatedBankAdd.cs" />
-    <Compile Include="Migrations\201306070600124_updatedBankAdd.Designer.cs">
-      <DependentUpon>201306070600124_updatedBankAdd.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201306100705341_AddedTempServs.cs" />
-    <Compile Include="Migrations\201306100705341_AddedTempServs.Designer.cs">
-      <DependentUpon>201306100705341_AddedTempServs.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201306100752266_UpdatedTempReqs.cs" />
-    <Compile Include="Migrations\201306100752266_UpdatedTempReqs.Designer.cs">
-      <DependentUpon>201306100752266_UpdatedTempReqs.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201306100817444_UpdatedTempReqs2.cs" />
-    <Compile Include="Migrations\201306100817444_UpdatedTempReqs2.Designer.cs">
-      <DependentUpon>201306100817444_UpdatedTempReqs2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201306100833007_UpdatedContext.cs" />
-    <Compile Include="Migrations\201306100833007_UpdatedContext.Designer.cs">
-      <DependentUpon>201306100833007_UpdatedContext.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201306110850330_AddedClient.cs" />
-    <Compile Include="Migrations\201306110850330_AddedClient.Designer.cs">
-      <DependentUpon>201306110850330_AddedClient.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201306120143282_AddedPhotoOnClient.cs" />
-    <Compile Include="Migrations\201306120143282_AddedPhotoOnClient.Designer.cs">
-      <DependentUpon>201306120143282_AddedPhotoOnClient.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201307010050490_AddedAgents.cs" />
-    <Compile Include="Migrations\201307010050490_AddedAgents.Designer.cs">
-      <DependentUpon>201307010050490_AddedAgents.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201307020037268_AddedPenaltyAndCommision.cs" />
-    <Compile Include="Migrations\201307020037268_AddedPenaltyAndCommision.Designer.cs">
-      <DependentUpon>201307020037268_AddedPenaltyAndCommision.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201307080128458_AddedLoanAndLoanApplication.cs" />
-    <Compile Include="Migrations\201307080128458_AddedLoanAndLoanApplication.Designer.cs">
-      <DependentUpon>201307080128458_AddedLoanAndLoanApplication.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201307110110149_RemovedAgent.cs" />
-    <Compile Include="Migrations\201307110110149_RemovedAgent.Designer.cs">
-      <DependentUpon>201307110110149_RemovedAgent.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201307110134572_AddedCI.cs" />
-    <Compile Include="Migrations\201307110134572_AddedCI.Designer.cs">
-      <DependentUpon>201307110134572_AddedCI.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201307130843102_AddedOneToOne.cs" />
-    <Compile Include="Migrations\201307130843102_AddedOneToOne.Designer.cs">
-      <DependentUpon>201307130843102_AddedOneToOne.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201307130856458_UpdatedToAmount.cs" />
-    <Compile Include="Migrations\201307130856458_UpdatedToAmount.Designer.cs">
-      <DependentUpon>201307130856458_UpdatedToAmount.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201307130928523_AddedGenSOA.cs" />
-    <Compile Include="Migrations\201307130928523_AddedGenSOA.Designer.cs">
-      <DependentUpon>201307130928523_AddedGenSOA.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201307140413269_UpdatedLoans.cs" />
-    <Compile Include="Migrations\201307140413269_UpdatedLoans.Designer.cs">
-      <DependentUpon>201307140413269_UpdatedLoans.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201307140503343_AddedDLoans.cs" />
-    <Compile Include="Migrations\201307140503343_AddedDLoans.Designer.cs">
-      <DependentUpon>201307140503343_AddedDLoans.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201307140541576_AddedALoans.cs" />
-    <Compile Include="Migrations\201307140541576_AddedALoans.Designer.cs">
-      <DependentUpon>201307140541576_AddedALoans.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201307210800393_AddedFPaymentInfo.cs" />
-    <Compile Include="Migrations\201307210800393_AddedFPaymentInfo.Designer.cs">
-      <DependentUpon>201307210800393_AddedFPaymentInfo.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201307210811553_UpdatedPaymentInfo.cs" />
-    <Compile Include="Migrations\201307210811553_UpdatedPaymentInfo.Designer.cs">
-      <DependentUpon>201307210811553_UpdatedPaymentInfo.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201307240041444_RemovedAmount.cs" />
-    <Compile Include="Migrations\201307240041444_RemovedAmount.Designer.cs">
-      <DependentUpon>201307240041444_RemovedAmount.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201307240105245_UpdatedRemaining.cs" />
-    <Compile Include="Migrations\201307240105245_UpdatedRemaining.Designer.cs">
-      <DependentUpon>201307240105245_UpdatedRemaining.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201307240115576_UpdatedBank.cs" />
-    <Compile Include="Migrations\201307240115576_UpdatedBank.Designer.cs">
-      <DependentUpon>201307240115576_UpdatedBank.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201308040036263_UpdatedServices.cs" />
-    <Compile Include="Migrations\201308040036263_UpdatedServices.Designer.cs">
-      <DependentUpon>201308040036263_UpdatedServices.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201308041020139_AddedChequeDueDate.cs" />
-    <Compile Include="Migrations\201308041020139_AddedChequeDueDate.Designer.cs">
-      <DependentUpon>201308041020139_AddedChequeDueDate.cs</DependentUpon>
+    <Compile Include="Migrations\201310140125411_UpdatedTempClearing.cs" />
+    <Compile Include="Migrations\201310140125411_UpdatedTempClearing.Designer.cs">
+      <DependentUpon>201310140125411_UpdatedTempClearing.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -166,89 +66,14 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201305060714214_InitialCreate.resx">
-      <DependentUpon>201305060714214_InitialCreate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201310120117283_AddedDepCheques.resx">
+      <DependentUpon>201310120117283_AddedDepCheques.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201305080608116_RemovedPrimary.resx">
-      <DependentUpon>201305080608116_RemovedPrimary.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201310140114451_AddedTempClearing.resx">
+      <DependentUpon>201310140114451_AddedTempClearing.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201306030625083_UpdatedDb.resx">
-      <DependentUpon>201306030625083_UpdatedDb.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201306070600124_updatedBankAdd.resx">
-      <DependentUpon>201306070600124_updatedBankAdd.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201306100705341_AddedTempServs.resx">
-      <DependentUpon>201306100705341_AddedTempServs.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201306100752266_UpdatedTempReqs.resx">
-      <DependentUpon>201306100752266_UpdatedTempReqs.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201306100817444_UpdatedTempReqs2.resx">
-      <DependentUpon>201306100817444_UpdatedTempReqs2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201306100833007_UpdatedContext.resx">
-      <DependentUpon>201306100833007_UpdatedContext.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201306110850330_AddedClient.resx">
-      <DependentUpon>201306110850330_AddedClient.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201306120143282_AddedPhotoOnClient.resx">
-      <DependentUpon>201306120143282_AddedPhotoOnClient.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201307010050490_AddedAgents.resx">
-      <DependentUpon>201307010050490_AddedAgents.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201307020037268_AddedPenaltyAndCommision.resx">
-      <DependentUpon>201307020037268_AddedPenaltyAndCommision.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201307080128458_AddedLoanAndLoanApplication.resx">
-      <DependentUpon>201307080128458_AddedLoanAndLoanApplication.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201307110110149_RemovedAgent.resx">
-      <DependentUpon>201307110110149_RemovedAgent.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201307110134572_AddedCI.resx">
-      <DependentUpon>201307110134572_AddedCI.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201307130843102_AddedOneToOne.resx">
-      <DependentUpon>201307130843102_AddedOneToOne.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201307130856458_UpdatedToAmount.resx">
-      <DependentUpon>201307130856458_UpdatedToAmount.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201307130928523_AddedGenSOA.resx">
-      <DependentUpon>201307130928523_AddedGenSOA.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201307140413269_UpdatedLoans.resx">
-      <DependentUpon>201307140413269_UpdatedLoans.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201307140503343_AddedDLoans.resx">
-      <DependentUpon>201307140503343_AddedDLoans.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201307140541576_AddedALoans.resx">
-      <DependentUpon>201307140541576_AddedALoans.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201307210800393_AddedFPaymentInfo.resx">
-      <DependentUpon>201307210800393_AddedFPaymentInfo.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201307210811553_UpdatedPaymentInfo.resx">
-      <DependentUpon>201307210811553_UpdatedPaymentInfo.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201307240041444_RemovedAmount.resx">
-      <DependentUpon>201307240041444_RemovedAmount.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201307240105245_UpdatedRemaining.resx">
-      <DependentUpon>201307240105245_UpdatedRemaining.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201307240115576_UpdatedBank.resx">
-      <DependentUpon>201307240115576_UpdatedBank.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201308040036263_UpdatedServices.resx">
-      <DependentUpon>201308040036263_UpdatedServices.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201308041020139_AddedChequeDueDate.resx">
-      <DependentUpon>201308041020139_AddedChequeDueDate.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201310140125411_UpdatedTempClearing.resx">
+      <DependentUpon>201310140125411_UpdatedTempClearing.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
