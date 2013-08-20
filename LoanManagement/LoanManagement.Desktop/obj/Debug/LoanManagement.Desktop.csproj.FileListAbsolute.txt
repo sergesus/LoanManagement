@@ -16,6 +16,8 @@ C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManageme
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\wpfAppliedLoanInfo.baml
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\wpfBank.baml
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\wpfBankInfo.baml
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\wpfChequeClearing.baml
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\wpfChequeReturning.baml
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\wpfClient.baml
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\wpfClientInfo.baml
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\wpfClientSearch.baml
@@ -41,6 +43,8 @@ C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManageme
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\wpfAppliedLoanInfo.g.cs
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\wpfBank.g.cs
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\wpfBankInfo.g.cs
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\wpfChequeClearing.g.cs
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\wpfChequeReturning.g.cs
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\wpfClient.g.cs
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\wpfClientInfo.g.cs
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\wpfClientSearch.g.cs
@@ -68,5 +72,3 @@ C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManageme
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\LoanManagement.Desktop.csproj.GenerateResource.Cache
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\LoanManagement.Desktop.exe
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\LoanManagement.Desktop.pdb
-C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\wpfChequeClearing.baml
-C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\wpfChequeClearing.g.cs

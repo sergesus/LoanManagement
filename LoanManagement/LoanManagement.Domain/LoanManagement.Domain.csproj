@@ -45,17 +45,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\201310120117283_AddedDepCheques.cs" />
-    <Compile Include="Migrations\201310120117283_AddedDepCheques.Designer.cs">
-      <DependentUpon>201310120117283_AddedDepCheques.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201310140114451_AddedTempClearing.cs" />
-    <Compile Include="Migrations\201310140114451_AddedTempClearing.Designer.cs">
-      <DependentUpon>201310140114451_AddedTempClearing.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201310140125411_UpdatedTempClearing.cs" />
-    <Compile Include="Migrations\201310140125411_UpdatedTempClearing.Designer.cs">
-      <DependentUpon>201310140125411_UpdatedTempClearing.cs</DependentUpon>
+    <Compile Include="Migrations\201308201100227_Moved.cs" />
+    <Compile Include="Migrations\201308201100227_Moved.Designer.cs">
+      <DependentUpon>201308201100227_Moved.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -66,14 +58,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201310120117283_AddedDepCheques.resx">
-      <DependentUpon>201310120117283_AddedDepCheques.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201310140114451_AddedTempClearing.resx">
-      <DependentUpon>201310140114451_AddedTempClearing.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201310140125411_UpdatedTempClearing.resx">
-      <DependentUpon>201310140125411_UpdatedTempClearing.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201308201100227_Moved.resx">
+      <DependentUpon>201308201100227_Moved.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

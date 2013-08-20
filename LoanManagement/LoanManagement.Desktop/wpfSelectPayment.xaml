@@ -20,9 +20,9 @@
     <Grid>
         <Button x:Name="btnHold" Content="Hold/Unhold Cheque(s)" HorizontalAlignment="Left" Height="40" Margin="10,54,0,0" VerticalAlignment="Top" Width="289" Click="btnHold_Click"/>
         <Button x:Name="btnClear" Content="Clear Cheque(s)" HorizontalAlignment="Left" Height="40" Margin="10,99,0,0" VerticalAlignment="Top" Width="289" Click="btnClear_Click"/>
-        <Button x:Name="btnVoid" Content="Void Payment(s)" HorizontalAlignment="Left" Height="40" Margin="10,189,0,0" VerticalAlignment="Top" Width="289"/>
+        <Button x:Name="btnVoid" Content="Void Payment(s)" HorizontalAlignment="Left" Height="40" Margin="10,189,0,0" VerticalAlignment="Top" Width="289" Click="btnVoid_Click"/>
         <Button x:Name="btnDeposit" Content="Deposit Cheque(s)" HorizontalAlignment="Left" Height="40" Margin="10,10,0,0" VerticalAlignment="Top" Width="289" Click="btnDeposit_Click"/>
-        <Button x:Name="btnReturn" Content="Return Cheque(s)" HorizontalAlignment="Left" Height="40" Margin="10,144,0,0" VerticalAlignment="Top" Width="289"/>
+        <Button x:Name="btnReturn" Content="Return Cheque(s)" HorizontalAlignment="Left" Height="40" Margin="10,144,0,0" VerticalAlignment="Top" Width="289" Click="btnReturn_Click"/>
 
     </Grid>
 </Controls:MetroWindow>

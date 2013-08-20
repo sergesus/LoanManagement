@@ -63,7 +63,7 @@ namespace LoanManagement.Desktop
 
         public void resetGrid()
         {
-            using (var ctx = new MyContext())
+            using (var ctx = new MyLoanContext())
             {
                 var emp = from em in ctx.Agents where em.Active == true select new { em.AgentID, em.FirstName, em.MI, em.LastName, em.Suffix };
                 dgEmp.ItemsSource = emp.ToList();
@@ -85,7 +85,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new MyContext())
+                using (var ctx = new MyLoanContext())
                 {
                     img.Visibility = Visibility.Visible;
                     var emp = ctx.Agents.Find(Convert.ToInt32(getRow(dgEmp, 0)));

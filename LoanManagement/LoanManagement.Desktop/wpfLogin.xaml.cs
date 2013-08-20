@@ -42,7 +42,7 @@ namespace LoanManagement.Desktop
 
         private void checkDue()
         {
-            using (var ctx = new MyContext())
+            using (var ctx = new MyLoanContext())
             {
                 var lon = from lo in ctx.FPaymentInfo
                           where lo.PaymentDate >= DateTime.Today.Date && (lo.PaymentStatus == "Pending" || lo.PaymentStatus=="On Hold")
@@ -66,11 +66,12 @@ namespace LoanManagement.Desktop
 
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
         {
-            using (var ctx = new MyContext())
+            //System.Windows.MessageBox.Show("Okay");
+            using (var ctx = new MyLoanContext())
             {
-                /*Employee emp = new Employee { FirstName = "Aldrin", MI = "A", LastName = "Arciga",  Email = "aldrinarciga@gmail.com" };
+                /*Employee emp = new Employee { FirstName = "Aldrin", MI = "A", LastName = "Arciga",  Email = "aldrinarciga@gmail.com", Active=true };
                 User usr = new User();
-                usr.Username = "admin";
+                usr.Username = "aldrin";
                 usr.Password="123";
                 ctx.Users.Add(usr);
                 ctx.Employees.Add(emp);
@@ -119,7 +120,7 @@ namespace LoanManagement.Desktop
 
                 
                 
-                using (var ctx = new MyContext())
+                using (var ctx = new MyLoanContext())
                 {
                     var count = ctx.Users.Where(x => x.Username == txtUsername.Text && x.Password == txtPassword.Password).Count();
                     if (count > 0)
@@ -142,7 +143,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new MyContext())
+                using (var ctx = new MyLoanContext())
                 {
                     var ctr = ctx.Users.Where(x => x.Username == txtUsername.Text).Count();
                     if (ctr > 0)

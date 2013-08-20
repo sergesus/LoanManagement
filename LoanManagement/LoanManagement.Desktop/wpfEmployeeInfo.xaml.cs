@@ -95,7 +95,7 @@ namespace LoanManagement.Desktop
             int num2 = 0;
             if (status == "Add")
             {
-                using (var ctx = new MyContext())
+                using (var ctx = new MyLoanContext())
                 {
                     num1 = ctx.TempAdresses.Count();
                     num2 = ctx.TempContacts.Count();
@@ -103,7 +103,7 @@ namespace LoanManagement.Desktop
             }
             else
             { 
-                using (var ctx = new MyContext())
+                using (var ctx = new MyLoanContext())
                 {
                     num1 = ctx.EmployeeAddresses.Where(x=> x.EmployeeID==uId).Count();
                     num2 = ctx.EmployeeContacts.Where(x=> x.EmployeeID==uId).Count();
@@ -160,81 +160,87 @@ namespace LoanManagement.Desktop
         {
             //grpAddress.Visibility = Visibility.Hidden;
             //grpContact.Visibility = Visibility.Hidden;
-
-            ImageBrush myBrush = new ImageBrush();
-            System.Windows.Controls.Image image = new System.Windows.Controls.Image();
-            image.Source = new BitmapImage(
-                new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
-            myBrush.ImageSource = image.Source;
-            wdw1.Background = myBrush;
-
-            selectedFileName = AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\myImg.gif";
-
-            reset();
-            if (status == "Add")
+            try
             {
-                BitmapImage bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.UriSource = new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\myImg.gif");
-                bitmap.EndInit();
-                img.Source = bitmap;
+                ImageBrush myBrush = new ImageBrush();
+                System.Windows.Controls.Image image = new System.Windows.Controls.Image();
+                image.Source = new BitmapImage(
+                    new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
+                myBrush.ImageSource = image.Source;
+                wdw1.Background = myBrush;
 
-                using (var ctx = new MyContext())
-                {
-                    ctx.Database.ExecuteSqlCommand("delete from dbo.TempAddresses");
-                    ctx.Database.ExecuteSqlCommand("delete from dbo.TempContacts");
-                }
+                selectedFileName = AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\myImg.gif";
+
                 reset();
-                btnDel.Visibility = Visibility.Hidden;
-            }
-            else
-            {
-                btnSave.Content = "Update";
-                btnClear.Visibility = Visibility.Hidden;
-                if (uId != 1)
+                if (status == "Add")
                 {
-                    btnDel.Visibility = Visibility.Visible;
+                    BitmapImage bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.UriSource = new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\myImg.gif");
+                    bitmap.EndInit();
+                    img.Source = bitmap;
+
+                    using (var ctx = new MyLoanContext())
+                    {
+                        ctx.Database.ExecuteSqlCommand("delete from dbo.TempAddresses");
+                        ctx.Database.ExecuteSqlCommand("delete from dbo.TempContacts");
+                    }
+                    reset();
+                    btnDel.Visibility = Visibility.Hidden;
                 }
                 else
                 {
-                    btnDel.Visibility = Visibility.Hidden;
+                    btnSave.Content = "Update";
+                    btnClear.Visibility = Visibility.Hidden;
+                    if (uId != 1)
+                    {
+                        btnDel.Visibility = Visibility.Visible;
+                    }
+                    else
+                    {
+                        btnDel.Visibility = Visibility.Hidden;
+                    }
+
+
+                    using (var ctx = new MyLoanContext())
+                    {
+                        var emp = ctx.Employees.Find(uId);
+                        txtFName.Text = emp.FirstName;
+                        txtLName.Text = emp.LastName;
+                        txtEmail.Text = emp.Email;
+                        txtMI.Text = emp.MI;
+                        txtSuffix.Text = emp.Suffix;
+                        cmbDept.Text = emp.Department;
+                        cmbPosition.Text = emp.Position;
+
+                        byte[] imageArr;
+                        imageArr = emp.Photo;
+                        BitmapImage bi = new BitmapImage();
+                        bi.BeginInit();
+                        bi.CreateOptions = BitmapCreateOptions.None;
+                        bi.CacheOption = BitmapCacheOption.Default;
+                        bi.StreamSource = new MemoryStream(imageArr);
+                        bi.EndInit();
+                        img.Source = bi;
+
+                        var add = from cn in ctx.EmployeeAddresses
+                                  where cn.EmployeeID == uId
+                                  select new { cn.EmpAddID, cn.Street, cn.Province, cn.City };
+                        dgAddress.ItemsSource = add.ToList();
+
+                        var cont = from cn in ctx.EmployeeContacts
+                                   where cn.EmployeeID == uId
+                                   select new { cn.EmpContactID, cn.Contact };
+                        dgContact.ItemsSource = cont.ToList();
+
+                        grpAddress.Visibility = Visibility.Hidden;
+                        grpContact.Visibility = Visibility.Hidden;
+                    }
                 }
-                
-
-                using (var ctx = new MyContext())
-                {
-                    var emp = ctx.Employees.Find(uId);
-                    txtFName.Text = emp.FirstName;
-                    txtLName.Text = emp.LastName;
-                    txtEmail.Text = emp.Email;
-                    txtMI.Text = emp.MI;
-                    txtSuffix.Text = emp.Suffix;
-                    cmbDept.Text = emp.Department;
-                    cmbPosition.Text = emp.Position;
-
-                    byte[] imageArr;
-                    imageArr = emp.Photo;
-                    BitmapImage bi = new BitmapImage();
-                    bi.BeginInit();
-                    bi.CreateOptions = BitmapCreateOptions.None;
-                    bi.CacheOption = BitmapCacheOption.Default;
-                    bi.StreamSource = new MemoryStream(imageArr);
-                    bi.EndInit();
-                    img.Source = bi;
-
-                    var add = from cn in ctx.EmployeeAddresses
-                              where cn.EmployeeID == uId
-                              select new { cn.EmpAddID, cn.Street, cn.Province, cn.City};
-                    dgAddress.ItemsSource = add.ToList();
-
-                    var cont = from cn in ctx.EmployeeContacts
-                               where cn.EmployeeID == uId
-                               select new { cn.EmpContactID, cn.Contact};
-                    dgContact.ItemsSource = cont.ToList();
-
-                    grpAddress.Visibility = Visibility.Hidden;
-                    grpContact.Visibility = Visibility.Hidden;
-                }
+            }
+            catch (Exception ex)
+            {
+                return;
             }
         }
 
@@ -261,7 +267,7 @@ namespace LoanManagement.Desktop
                 //for view
                 if (status == "View")
                 {
-                    using (var ctx = new MyContext())
+                    using (var ctx = new MyLoanContext())
                     {
                         EmployeeAddress empAdd= new EmployeeAddress { Street = txtStreet.Text, Province = txtProvince.Text, City = txtCity.Text, EmployeeID = uId };
                         ctx.EmployeeAddresses.Add(empAdd);
@@ -275,7 +281,7 @@ namespace LoanManagement.Desktop
                     return;
                 }
 
-                using (var ctx = new MyContext())
+                using (var ctx = new MyLoanContext())
                 {
                     TempAddress add = new TempAddress { Street = txtStreet.Text, Province = txtProvince.Text, City = txtCity.Text };
                     ctx.TempAdresses.Add(add);
@@ -290,7 +296,7 @@ namespace LoanManagement.Desktop
                 //for view
                 if (status == "View")
                 {
-                    using (var ctx = new MyContext())
+                    using (var ctx = new MyLoanContext())
                     {
                         var adds = ctx.EmployeeAddresses.Find(Convert.ToInt32(getRow(dgAddress, 0)));
                         adds.City = txtCity.Text;
@@ -307,7 +313,7 @@ namespace LoanManagement.Desktop
                 }
                 
 
-                using (var ctx = new MyContext())
+                using (var ctx = new MyLoanContext())
                 {
                     var add = ctx.TempAdresses.Find(Convert.ToInt32(getRow(dgAddress, 0)));
                     add.City=txtCity.Text;
@@ -336,7 +342,7 @@ namespace LoanManagement.Desktop
                     //for view
                     if (status == "View")
                     {
-                        using (var ctx = new MyContext())
+                        using (var ctx = new MyLoanContext())
                         {
                             var add = ctx.EmployeeAddresses.Find(Convert.ToInt32(getRow(dgAddress, 0)));
                             txtCity.Text = add.City;
@@ -347,7 +353,7 @@ namespace LoanManagement.Desktop
                         return;
                     }
 
-                    using (var ctx = new MyContext())
+                    using (var ctx = new MyLoanContext())
                     {
                         var add=ctx.TempAdresses.Find(Convert.ToInt32(getRow(dgAddress, 0)));
                         txtCity.Text = add.City;
@@ -388,7 +394,7 @@ namespace LoanManagement.Desktop
                 //for view
                 if (status == "View")
                 {
-                    using (var ctx = new MyContext())
+                    using (var ctx = new MyLoanContext())
                     {
                         EmployeeContact empCont = new EmployeeContact { Contact=txtContact.Text, EmployeeID = uId };
                         ctx.EmployeeContacts.Add(empCont);
@@ -402,7 +408,7 @@ namespace LoanManagement.Desktop
                     return;
                 }
 
-                using (var ctx = new MyContext())
+                using (var ctx = new MyLoanContext())
                 {
                     TempContact con = new TempContact { Contact = txtContact.Text };
                     ctx.TempContacts.Add(con);
@@ -417,7 +423,7 @@ namespace LoanManagement.Desktop
                 //for view
                 if (status == "View")
                 {
-                    using (var ctx = new MyContext())
+                    using (var ctx = new MyLoanContext())
                     {
                         var conts = ctx.EmployeeContacts.Find(Convert.ToInt32(getRow(dgAddress, 0)));
                         conts.Contact = txtContact.Text;
@@ -431,7 +437,7 @@ namespace LoanManagement.Desktop
                     return;
                 }
 
-                using (var ctx = new MyContext())
+                using (var ctx = new MyLoanContext())
                 {
                     var con = ctx.TempContacts.Find(Convert.ToInt32(getRow(dgContact, 0)));
                     con.Contact = txtContact.Text;
@@ -456,7 +462,7 @@ namespace LoanManagement.Desktop
                 //for view
                 if (status == "View")
                 {
-                    using (var ctx = new MyContext())
+                    using (var ctx = new MyLoanContext())
                     {
                         var cont= ctx.EmployeeContacts.Find(Convert.ToInt32(getRow(dgAddress, 0)));
                         txtContact.Text = cont.Contact;
@@ -465,7 +471,7 @@ namespace LoanManagement.Desktop
                     return;
                 }
 
-                using (var ctx = new MyContext())
+                using (var ctx = new MyLoanContext())
                 {
                     var add = ctx.TempContacts.Find(Convert.ToInt32(getRow(dgContact, 0)));
                     txtContact.Text = add.Contact;
@@ -479,7 +485,7 @@ namespace LoanManagement.Desktop
 
         private void btnDelAddress_Click(object sender, RoutedEventArgs e)
         {
-            using (var ctx = new MyContext())
+            using (var ctx = new MyLoanContext())
             {
                 try
                 {
@@ -511,7 +517,7 @@ namespace LoanManagement.Desktop
 
         private void btnDelContact_Click(object sender, RoutedEventArgs e)
         {
-            using (var ctx = new MyContext())
+            using (var ctx = new MyLoanContext())
             {
                 try
                 {
@@ -584,7 +590,7 @@ namespace LoanManagement.Desktop
                     }
                     
 
-                    using (var ctx = new MyContext())
+                    using (var ctx = new MyLoanContext())
                     {
                         Employee emp = new Employee { FirstName = txtFName.Text, LastName = txtLName.Text, Position = cmbPosition.Text, Suffix = txtSuffix.Text, MI = txtMI.Text, Active = true, Department = cmbDept.Text, Email = txtEmail.Text, Photo = ConvertImageToByteArray(selectedFileName) };
 
@@ -619,7 +625,7 @@ namespace LoanManagement.Desktop
                     {
                         return;
                     }
-                    using (var ctx = new MyContext())
+                    using (var ctx = new MyLoanContext())
                     {
                         var emp = ctx.Employees.Find(uId);
                         emp.FirstName = txtFName.Text;
@@ -647,7 +653,7 @@ namespace LoanManagement.Desktop
 
         private void btnDel_Click(object sender, RoutedEventArgs e)
         {
-            using (var ctx = new MyContext())
+            using (var ctx = new MyLoanContext())
             {
                 DialogResult dr = System.Windows.Forms.MessageBox.Show("Are you sure you want to delete this record?","Question",MessageBoxButtons.YesNo,MessageBoxIcon.Question);
                 if (dr == System.Windows.Forms.DialogResult.Yes)

@@ -5,13 +5,13 @@ namespace LoanManagement.Domain.Migrations
     using System.Data.Entity.Migrations.Infrastructure;
     using System.Resources;
     
-    public sealed partial class UpdatedTempClearing : IMigrationMetadata
+    public sealed partial class Moved : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(UpdatedTempClearing));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(Moved));
         
         string IMigrationMetadata.Id
         {
-            get { return "201310140125411_UpdatedTempClearing"; }
+            get { return "201308201100227_Moved"; }
         }
         
         string IMigrationMetadata.Source

@@ -30,10 +30,11 @@ namespace LoanManagement.Desktop
         }
 
         public string state;
+        public string status;
 
         private void checkDue()
         {
-            using (var ctx = new MyContext())
+            using (var ctx = new MyLoanContext())
             {
                 var lon = from lo in ctx.FPaymentInfo
                           where lo.PaymentDate <= DateTime.Today.Date && (lo.PaymentStatus == "Pending" || lo.PaymentStatus == "On Hold")
@@ -71,36 +72,54 @@ namespace LoanManagement.Desktop
 
         private void rg()
         {
-            if (rdDue.IsChecked == true)
-            {
-                using (var ctx = new MyContext())
+                if (rdDue.IsChecked == true)
                 {
-                    var chq = from ch in ctx.FPaymentInfo
-                              where ch.PaymentStatus == "Due"
-                              select new { LoanID = ch.LoanID, ChequeID = ch.ChequeInfo, ClientName = ch.Loan.Client.FirstName + " " + ch.Loan.Client.LastName, PaymentDate = ch.PaymentDate };
-                    dg.ItemsSource=chq.ToList();
-                    var ctr = ctx.FPaymentInfo.Where(x => x.PaymentStatus == "Due").Count();
-                    String str = "Number of cheques to Deposit : " + ctr.ToString();
-                    
-                    //lblTOL.Text = str.ToString();
-                    //MessageBox.Show(str);
-                    state="Dep";
-                    btnDep.Content = "Deposit all cheques";
-                }
-            }
-            else
-            {
-                using (var ctx = new MyContext())
-                { 
-                    var chq = from ch in ctx.FPaymentInfo
-                              where ch.PaymentStatus=="Deposited"
-                              select new { LoanID = ch.LoanID, ChecqueNumber = ch.PaymentNumber, ChequeID = ch.ChequeInfo, ClientName = ch.Loan.Client.FirstName + " " + ch.Loan.Client.LastName, PaymentDate = ch.PaymentDate, DateDeposited = ch.DepositedCheque.DepositDate };
-                    dg.ItemsSource=chq.ToList();
-                    btnDep.Content = "Void";
-                    state="Undep";
-                }
-            }
+                    using (var ctx = new MyLoanContext())
+                    {
+                        var chq = from ch in ctx.FPaymentInfo
+                                  where ch.PaymentStatus == "Due"
+                                  select new { LoanID = ch.LoanID, ChequeID = ch.ChequeInfo, ClientName = ch.Loan.Client.FirstName + " " + ch.Loan.Client.LastName, PaymentDate = ch.PaymentDate };
+                        dg.ItemsSource = chq.ToList();
+                        var ctr = ctx.FPaymentInfo.Where(x => x.PaymentStatus == "Due").Count();
+                        String str = "Number of cheques to Deposit : " + ctr.ToString();
 
+                        //lblTOL.Text = str.ToString();
+                        //MessageBox.Show(str);
+                        state = "Dep";
+                        btnDep.Content = "Deposit all cheques";
+                    }
+                }
+                else if (rdDeposited.IsChecked == true)
+                {
+                    using (var ctx = new MyLoanContext())
+                    {
+                        var chq = from ch in ctx.FPaymentInfo
+                                  where ch.PaymentStatus == "Deposited"
+                                  select new { LoanID = ch.LoanID, No = ch.PaymentNumber, ChequeID = ch.ChequeInfo, ClientName = ch.Loan.Client.FirstName + " " + ch.Loan.Client.LastName, PaymentDate = ch.PaymentDate, DateDeposited = ch.DepositedCheque.DepositDate };
+                        dg.ItemsSource = chq.ToList();
+                        if(status=="Deposit")
+                            btnDep.Content = "Void";
+                        else if(status=="Returning")
+                            btnDep.Content = "Mark as Returned";
+                        state = "Undep";
+                    }
+                }
+                else
+                {
+                    using (var ctx = new MyLoanContext())
+                    {
+                        var chq = from ch in ctx.FPaymentInfo
+                                  where ch.PaymentStatus == "Returned"
+                                  select new { LoanID = ch.LoanID, No = ch.PaymentNumber, ChequeID = ch.ChequeInfo, ClientName = ch.Loan.Client.FirstName + " " + ch.Loan.Client.LastName, PaymentDate = ch.PaymentDate, DateDeposited = ch.DepositedCheque.DepositDate };
+                        dg.ItemsSource = chq.ToList();
+                        if (status == "Deposit")
+                            btnDep.Content = "Re-deposit";
+                        else if (status == "Returning")
+                            btnDep.Content = "Void Returning";
+                        state = "Redep";
+                    }
+                }
+            
         }
 
         private void wdw1_Loaded(object sender, RoutedEventArgs e)
@@ -112,6 +131,12 @@ namespace LoanManagement.Desktop
             myBrush.ImageSource = image.Source;
             //Grid grid = new Grid();
             wdw1.Background = myBrush;
+            rdDue.IsChecked = true;
+            if (status == "Returning")
+            {
+                rdDue.Visibility = Visibility.Hidden;
+                rdDeposited.IsChecked = true;
+            }
             rg();
         }
 
@@ -119,60 +144,122 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                if (state == "Dep")
+                if (status == "Deposit")
                 {
-                    MessageBoxResult mr = MessageBox.Show("You sure?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                    if (mr == MessageBoxResult.Yes)
+                    if (state == "Dep")
                     {
-                        using (var ctx = new MyContext())
-                        {
-                            var chq = from ch in ctx.FPaymentInfo
-                                      where ch.PaymentStatus == "Due"
-                                      select ch;
-                            foreach (var item in chq)
-                            {
-                                /*var ctr = ctx.FPaymentInfo.Where(x => x.LoanID == item.LoanID && x.PaymentStatus == "Due/Pending").Count();
-                                if (ctr != 0)
-                                {
-                                    var hq = ctx.FPaymentInfo.Where(x => x.LoanID == item.LoanID && x.PaymentStatus == "Due/Pending").First();
-                                    hq.PaymentStatus = "Due";
-                                }*/
-                                var ch = ctx.DepositedCheques.Where(x => x.FPaymentInfoID == item.FPaymentInfoID).Count();
-                                if (ch > 0)
-                                {
-                                    item.DepositedCheque.DepositDate = DateTime.Today.Date;
-                                }
-                                else
-                                {
-                                    item.PaymentStatus = "Deposited";
-                                    DepositedCheque dc = new DepositedCheque { DepositDate = DateTime.Today.Date, FPaymentInfoID = item.FPaymentInfoID };
-                                    ctx.DepositedCheques.Add(dc);
-                                }
-                            }
-                            ctx.SaveChanges();
-                            MessageBox.Show("Okay");
-                            rg();
-                        }
-                    }
-                }
-                else
-                {
-                    using (var ctx = new MyContext())
-                    {
-                        int id = Convert.ToInt32(getRow(dg, 0));
-                        int num = Convert.ToInt32(getRow(dg, 1));
-                        FPaymentInfo fp = ctx.FPaymentInfo.Where(x => x.LoanID == id && x.PaymentNumber == num).First();
-                        DepositedCheque dp = ctx.DepositedCheques.Find(fp.FPaymentInfoID);
                         MessageBoxResult mr = MessageBox.Show("You sure?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
                         if (mr == MessageBoxResult.Yes)
                         {
-                            fp.PaymentStatus = "Due";
-                            ctx.DepositedCheques.Remove(dp);
+                            using (var ctx = new MyLoanContext())
+                            {
+                                var chq = from ch in ctx.FPaymentInfo
+                                          where ch.PaymentStatus == "Due"
+                                          select ch;
+                                foreach (var item in chq)
+                                {
+                                    /*var ctr = ctx.FPaymentInfo.Where(x => x.LoanID == item.LoanID && x.PaymentStatus == "Due/Pending").Count();
+                                    if (ctr != 0)
+                                    {
+                                        var hq = ctx.FPaymentInfo.Where(x => x.LoanID == item.LoanID && x.PaymentStatus == "Due/Pending").First();
+                                        hq.PaymentStatus = "Due";
+                                    }*/
+                                    var ch = ctx.DepositedCheques.Where(x => x.FPaymentInfoID == item.FPaymentInfoID).Count();
+                                    if (ch > 0)
+                                    {
+                                        item.DepositedCheque.DepositDate = DateTime.Today.Date;
+                                    }
+                                    else
+                                    {
+                                        item.PaymentStatus = "Deposited";
+                                        DepositedCheque dc = new DepositedCheque { DepositDate = DateTime.Today.Date, FPaymentInfoID = item.FPaymentInfoID };
+                                        ctx.DepositedCheques.Add(dc);
+                                    }
+                                }
+                                ctx.SaveChanges();
+                                MessageBox.Show("Okay");
+                                rg();
+                            }
+                        }
+                    }
+                    else if (state == "Undep")
+                    {
+                        using (var ctx = new MyLoanContext())
+                        {
+                            int id = Convert.ToInt32(getRow(dg, 0));
+                            int num = Convert.ToInt32(getRow(dg, 1));
+                            FPaymentInfo fp = ctx.FPaymentInfo.Where(x => x.LoanID == id && x.PaymentNumber == num).First();
+                            DepositedCheque dp = ctx.DepositedCheques.Find(fp.FPaymentInfoID);
+                            MessageBoxResult mr = MessageBox.Show("You sure?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                            if (mr == MessageBoxResult.Yes)
+                            {
+                                fp.PaymentStatus = "Due";
+                                ctx.DepositedCheques.Remove(dp);
+                                ctx.SaveChanges();
+                                MessageBox.Show("Okay");
+                                checkDue();
+                                rg();
+                                rdDue.IsChecked = true;
+                            }
+                        }
+                    }
+                    else if (state == "Redep")
+                    {
+                        using (var ctx = new MyLoanContext())
+                        {
+                            int id = Convert.ToInt32(getRow(dg, 0));
+                            int num = Convert.ToInt32(getRow(dg, 1));
+                            FPaymentInfo fp = ctx.FPaymentInfo.Where(x => x.LoanID == id && x.PaymentNumber == num).First();
+                            DepositedCheque dp = ctx.DepositedCheques.Find(fp.FPaymentInfoID);
+                            MessageBoxResult mr = MessageBox.Show("You sure?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                            if (mr == MessageBoxResult.Yes)
+                            {
+                                fp.PaymentStatus = "Deposited";
+                                dp.DepositDate = DateTime.Today.Date;
+                                ctx.SaveChanges();
+                                MessageBox.Show("Okay");
+                                checkDue();
+                                rg();
+                                //rdDue.IsChecked = true;
+                            }
+                        }
+                    }
+                }
+                else if(status == "Returning")
+                {
+                    if (state == "Undep")//for returning
+                    {
+                        int id = Convert.ToInt32(getRow(dg, 0));
+                        int num = Convert.ToInt32(getRow(dg, 1));
+                        using (var ctx = new MyLoanContext())
+                        {
+                            FPaymentInfo fp = ctx.FPaymentInfo.Where(x => x.LoanID == id && x.PaymentNumber == num).First();
+
+                            var ctr = ctx.ReturnedCheques.Where(x => x.FPaymentInfoID==fp.FPaymentInfoID).Count();
+
+                            if (ctr > 0)
+                            {
+                                MessageBox.Show("Cheque has already been returned once");
+                                return;
+                            }
+
+                            wpfChequeReturning frm = new wpfChequeReturning();
+                            frm.fId = fp.FPaymentInfoID;
+                            frm.ShowDialog();
+                        }
+                    }
+                    else if (state == "Redep")//for voiding
+                    {
+                        int id = Convert.ToInt32(getRow(dg, 0));
+                        int num = Convert.ToInt32(getRow(dg, 1));
+                        using (var ctx = new MyLoanContext())
+                        {
+                            FPaymentInfo fp = ctx.FPaymentInfo.Where(x => x.LoanID == id && x.PaymentNumber == num).First();
+                            ReturnedCheque rc = ctx.ReturnedCheques.Find(fp.FPaymentInfoID);
+                            fp.PaymentStatus = "Deposited";
+                            ctx.ReturnedCheques.Remove(rc);
                             ctx.SaveChanges();
                             MessageBox.Show("Okay");
-                            checkDue();
-                            rg();
-                            rdDue.IsChecked = true;
                         }
                     }
                 }
@@ -189,6 +276,11 @@ namespace LoanManagement.Desktop
         }
 
         private void rdDeposited_Checked(object sender, RoutedEventArgs e)
+        {
+            rg();
+        }
+
+        private void wdw1_Activated(object sender, EventArgs e)
         {
             rg();
         }

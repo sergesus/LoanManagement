@@ -50,7 +50,7 @@ namespace LoanManagement.Desktop
         {
             if (status == "UApproval")
             {
-                using (var ctx = new MyContext())
+                using (var ctx = new MyLoanContext())
                 {
                     var lon = from ln in ctx.Loans
                               where ln.Status == "Approved" || ln.Status=="Declined"
@@ -61,7 +61,7 @@ namespace LoanManagement.Desktop
             }
             else if(status=="Approval" || status=="Application")
             {
-                using (var ctx = new MyContext())
+                using (var ctx = new MyLoanContext())
                 {
                     var lon = from ln in ctx.Loans
                               where ln.Status == "Applied"
@@ -72,7 +72,7 @@ namespace LoanManagement.Desktop
             }
             else if (status == "Releasing")
             {
-                using (var ctx = new MyContext())
+                using (var ctx = new MyLoanContext())
                 {
                     var lon = from ln in ctx.Loans
                               where ln.Status == "Approved"
@@ -83,7 +83,7 @@ namespace LoanManagement.Desktop
             }
             else if (status == "UReleasing")
             {
-                using (var ctx = new MyContext())
+                using (var ctx = new MyLoanContext())
                 {
                     var lon = from ln in ctx.Loans
                               where ln.Status == "Released"
@@ -94,7 +94,7 @@ namespace LoanManagement.Desktop
             }
             else if (status == "Holding")
             {
-                using (var ctx = new MyContext())
+                using (var ctx = new MyLoanContext())
                 {
                     var lon = from ln in ctx.Loans
                               where ln.Status == "Released" || ln.Status=="Active"
@@ -103,6 +103,18 @@ namespace LoanManagement.Desktop
 
                 }
             }
+            else if (status == "Voiding")
+            {
+                using (var ctx = new MyLoanContext())
+                {
+                    var lon = from ln in ctx.Loans
+                              where ln.Status == "Released" || ln.Status == "Active"
+                              select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
+                    dgLoan.ItemsSource = lon.ToList();
+                    btnView.Content = "Void last payment";
+                }
+            }
+            
         }
 
         private void wdw1_Loaded(object sender, RoutedEventArgs e)
@@ -143,6 +155,51 @@ namespace LoanManagement.Desktop
                 frm.lId = num;
                 frm.status = status;
                 frm.ShowDialog();
+            }
+            else if (status == "Voiding")
+            {
+                using (var ctx = new MyLoanContext())
+                {
+                    int n = Convert.ToInt32(getRow(dgLoan,0));
+                    int num = ctx.FPaymentInfo.Where(x => x.LoanID == n && x.PaymentStatus == "Deposited").Count();
+                    if (num > 0)
+                    {
+                        MessageBox.Show("Unable to void payment due to deposited cheque");
+                        return;
+                    }
+                    num = ctx.FPaymentInfo.Where(x => x.LoanID == n && x.PaymentStatus == "Cleared").Count();
+                    if (num > 0)
+                    {
+                        var fp1 = from f in ctx.FPaymentInfo
+                                  where f.LoanID == n && f.PaymentStatus == "Cleared"
+                                  select f;
+                        int x = 0;
+                        FPaymentInfo fp = null;
+                        foreach (var item in fp1)
+                        {
+                            if (x == num-1)
+                            {
+                                fp = item;
+                            }
+                            x++;
+                        }
+                        //var fp = ctx.FPaymentInfo.Where(x => x.LoanID == n && x.PaymentStatus == "Cleared").Last();
+                        MessageBox.Show("The last payment has the following info: \n No :" + fp.PaymentNumber + " \n ChequeNumber: " + fp.ChequeInfo + " \n Amount: " + fp.Amount.ToString("N2") + "");
+                        MessageBoxResult mr = MessageBox.Show("You sure?","Question",MessageBoxButton.YesNo);
+                        if (mr == MessageBoxResult.Yes)
+                        {
+                            fp.PaymentStatus = "Deposited";
+                            ClearedCheque cc = ctx.ClearedCheques.Find(fp.ClearCheque.FPaymentInfoID);
+                            ctx.ClearedCheques.Remove(cc);
+                            ctx.SaveChanges();
+                            MessageBox.Show("Okay");
+                        }
+                    }
+                    else
+                    {
+                        MessageBox.Show("No payments to void");
+                    }
+                }
             }
             else
             {

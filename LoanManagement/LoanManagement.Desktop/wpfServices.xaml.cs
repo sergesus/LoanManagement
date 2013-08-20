@@ -90,7 +90,7 @@ namespace LoanManagement.Desktop
 
         private void resetGrid()
         {
-            using (var ctx = new MyContext())
+            using (var ctx = new MyLoanContext())
             {
                 var servs = from sr in ctx.Services
                             select new { ServiceNumber = sr.ServiceID, Name = sr.Name , Description=sr.Description};

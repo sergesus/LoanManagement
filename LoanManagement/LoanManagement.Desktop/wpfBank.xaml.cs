@@ -56,7 +56,7 @@ namespace LoanManagement.Desktop
 
         public void resetGrid()
         {
-            using (var ctx = new MyContext())
+            using (var ctx = new MyLoanContext())
             {
                 var bank = from bn in ctx.Banks
                            where bn.Active == true

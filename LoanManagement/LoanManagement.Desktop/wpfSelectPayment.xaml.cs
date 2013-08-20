@@ -48,6 +48,7 @@ namespace LoanManagement.Desktop
         private void btnDeposit_Click(object sender, RoutedEventArgs e)
         {
             wpfDepositCheques frm = new wpfDepositCheques();
+            frm.status = "Deposit";
             this.Close();
             frm.ShowDialog();
         }
@@ -55,6 +56,22 @@ namespace LoanManagement.Desktop
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
             wpfChequeClearing frm = new wpfChequeClearing();
+            this.Close();
+            frm.ShowDialog();
+        }
+
+        private void btnReturn_Click(object sender, RoutedEventArgs e)
+        {
+            wpfDepositCheques frm = new wpfDepositCheques();
+            frm.status = "Returning";
+            this.Close();
+            frm.ShowDialog();
+        }
+
+        private void btnVoid_Click(object sender, RoutedEventArgs e)
+        {
+            wpfLoanSearch frm = new wpfLoanSearch();
+            frm.status = "Voiding";
             this.Close();
             frm.ShowDialog();
         }

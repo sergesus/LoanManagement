@@ -95,7 +95,7 @@ namespace LoanManagement.Desktop
 
         private void resetGrid()
         {
-            using (var ctx = new MyContext())
+            using (var ctx = new MyLoanContext())
             {
                 var clt = from cl in ctx.Clients
                           where cl.Active == true
@@ -115,7 +115,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new MyContext())
+                using (var ctx = new MyLoanContext())
                 {
                     img.Visibility = Visibility.Visible;
                     var clt = ctx.Clients.Find(Convert.ToInt32(getRow(dgClient, 0)));

@@ -9,7 +9,7 @@ using System.Data.Entity;
 namespace LoanManagement.Domain
 {
 
-    public class MyContext : DbContext
+    public class MyLoanContext : DbContext
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Employee> Employees { get; set; }
@@ -51,6 +51,9 @@ namespace LoanManagement.Domain
         public DbSet<HeldCheque> HeldCheques { get; set; }
         public DbSet<DepositedCheque> DepositedCheques { get; set; }
         public DbSet<TempClearing> TempClearings { get; set; }
+        public DbSet<ClearedCheque> ClearedCheques { get; set; }
+        public DbSet<ReturnedCheque> ReturnedCheques { get; set; }
+        public DbSet<ClosedAccount> ClosedAccounts { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -121,6 +124,12 @@ namespace LoanManagement.Domain
                 .HasKey(x => x.LoanID)
                 .HasRequired(x => x.Loan);
             modelBuilder.Entity<DepositedCheque>()
+                .HasKey(x => x.FPaymentInfoID)
+                .HasRequired(x => x.FPaymentInfo);
+            modelBuilder.Entity<ClearedCheque>()
+                .HasKey(x => x.FPaymentInfoID)
+                .HasRequired(x => x.FPaymentInfo);
+            modelBuilder.Entity<ReturnedCheque>()
                 .HasKey(x => x.FPaymentInfoID)
                 .HasRequired(x => x.FPaymentInfo);
 
@@ -545,6 +554,7 @@ namespace LoanManagement.Domain
         public virtual ApprovedLoan ApprovedLoan { get; set; }
         public virtual ReleasedLoan ReleasedLoan { get; set; }
         public ICollection<FPaymentInfo> FPaymentInfo { get; set; }
+        public ICollection<ClosedAccount> ClosedAccount { get; set; }
     }
 
     public class LoanApplication
@@ -602,6 +612,8 @@ namespace LoanManagement.Domain
         public int LoanID { get; set; }
         public virtual Loan Loan { get; set; }
         public virtual DepositedCheque DepositedCheque { get; set; }
+        public virtual ClearedCheque ClearCheque { get; set; }
+        public virtual ReturnedCheque ReturnedCheque { get; set; }
     }
 
     public class HeldCheque
@@ -619,6 +631,37 @@ namespace LoanManagement.Domain
     {
         public int FPaymentInfoID { get; set; }
         public DateTime DepositDate { get; set; }
+
+        public virtual FPaymentInfo FPaymentInfo { get; set; }
+    }
+
+    public class ClearedCheque
+    {
+        public int FPaymentInfoID { get; set; }
+        public DateTime DateCleared { get; set; }
+
+        public virtual FPaymentInfo FPaymentInfo { get; set; }
+    }
+
+    public class ClosedAccount
+    {
+        public int ClosedAccountID { get; set; }
+        public int LoanID { get; set; }
+        public DateTime DateClosed { get; set; }
+        public double Fee { get; set; }
+        public bool isPaid { get; set; }
+        public string Remarks { get; set; }
+
+        public virtual Loan Loan { get; set; }
+    }
+
+    public class ReturnedCheque
+    {
+        public int FPaymentInfoID { get; set; }
+        public DateTime DateReturned { get; set; }
+        public string Remarks { get; set; }
+        public double Fee { get; set; }
+        public bool isPaid { get; set; }
 
         public virtual FPaymentInfo FPaymentInfo { get; set; }
     }

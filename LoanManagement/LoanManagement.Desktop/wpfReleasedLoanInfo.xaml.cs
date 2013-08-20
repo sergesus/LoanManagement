@@ -39,7 +39,7 @@ namespace LoanManagement.Desktop
 
         private void checkDue()
         {
-            using (var ctx = new MyContext())
+            using (var ctx = new MyLoanContext())
             {
                 var lon = from lo in ctx.FPaymentInfo
                           where lo.PaymentDate <= DateTime.Today.Date && (lo.PaymentStatus == "Pending" || lo.PaymentStatus == "On Hold")
@@ -56,6 +56,19 @@ namespace LoanManagement.Desktop
                         item.PaymentStatus = "Due/Pending";
                     }
                 }
+
+                var dep = from d in ctx.FPaymentInfo
+                          where d.PaymentStatus == "Due"
+                          select d;
+                foreach (var item in dep)
+                {
+                    var ctr = ctx.FPaymentInfo.Where(x => x.LoanID == item.LoanID && x.PaymentStatus == "Deposited").Count();
+                    if (ctr != 0)
+                    {
+                        item.PaymentStatus = "Due/Pending";
+                    }
+                }
+
                 ctx.SaveChanges();
             }
         }
@@ -64,7 +77,7 @@ namespace LoanManagement.Desktop
         {
             wpfAgentInfo frm = new wpfAgentInfo();
             frm.status = "View";
-            using (var ctx = new MyContext())
+            using (var ctx = new MyLoanContext())
             {
                 var lon = ctx.Loans.Find(lId);
                 frm.aId = lon.AgentID;
@@ -74,7 +87,7 @@ namespace LoanManagement.Desktop
 
         public void reset()
         {
-            using (var ctx = new MyContext())
+            using (var ctx = new MyLoanContext())
             {
                 var lon = ctx.Loans.Find(lId);
 
@@ -91,11 +104,45 @@ namespace LoanManagement.Desktop
                 lblAmt.Content = lon.ReleasedLoan.Principal.ToString("N2");
                 lblDt.Content = lon.ReleasedLoan.DateReleased;
                 lblMode.Content = lon.Mode;
-                var l = ctx.FPaymentInfo.Where(x => x.LoanID == lId && x.PaymentStatus == "Pending").First();
-                lblNextP.Content = l.PaymentDate.ToString();
-                lblPayment.Content = lon.ReleasedLoan.MonthlyPayment.ToString("N2");
                 lblTOL.Content = lon.Service.Name;
                 lblType.Content = lon.Service.Type;
+                var ctr = ctx.FPaymentInfo.Where(x => x.LoanID == lId && (x.PaymentStatus == "Pending" || x.PaymentStatus == "Due/Pending")).Count();
+                if (ctr > 0)
+                {
+                    var l = ctx.FPaymentInfo.Where(x => x.LoanID == lId && (x.PaymentStatus == "Pending" || x.PaymentStatus == "Due/Pending")).First();
+                    lblNextP.Content = l.PaymentDate.ToString();
+                    lblPayment.Content = lon.ReleasedLoan.MonthlyPayment.ToString("N2");
+                    double hf = lon.ReleasedLoan.MonthlyPayment * (lon.Service.Holding / 100);
+                    lblHF.Content = hf.ToString("N2");
+                    if (status == "Holding")
+                    {
+                        btnUpdate.Content = "Hold next cheque";
+                        btnVoid.Content = "Unhold held cheque";
+                        var dts = ctx.FPaymentInfo.Where(x => x.LoanID == lId && (x.PaymentStatus == "Pending" || x.PaymentStatus == "On Hold")).First();
+                        var dt = dts.PaymentDate.AddDays(-14);
+                        var dt1 = dt.AddDays(11);
+                        if (dts.PaymentStatus == "On Hold")
+                        {
+                            dt = dts.PaymentDate.AddDays(-5);
+                            dt1 = dt.AddDays(4);
+                        }
+                        lblSDt.Content = dt.ToString();
+                        lblEDt.Content = dt1.ToString(); ;
+                    }
+                    else
+                    {
+                        lblS.Visibility = Visibility.Hidden;
+                        lblE.Visibility = Visibility.Hidden;
+                        lblSDt.Content = "";
+                        lblEDt.Content = "";
+                    }
+                }
+                else
+                {
+                    lblNextP.Content = "-";
+                    lblPayment.Content = "-";
+                    lblHF.Content = "-";
+                }
 
                 var rmn = from rm in ctx.FPaymentInfo
                           where rm.LoanID == lId && rm.PaymentStatus == "Cleared"
@@ -108,30 +155,15 @@ namespace LoanManagement.Desktop
                 double remain = lon.ReleasedLoan.TotalLoan - r;
                 lblRemaining.Content = remain.ToString("N2");
 
-                
+                if(status!="Holding")
+                {
+                        lblS.Visibility = Visibility.Hidden;
+                        lblE.Visibility = Visibility.Hidden;
+                        lblSDt.Content = "";
+                        lblEDt.Content = "";
+                }
 
-                if (status == "Holding")
-                {
-                    btnUpdate.Content = "Hold next cheque";
-                    btnVoid.Content = "Unhold held cheque";
-                    var dts = ctx.FPaymentInfo.Where(x => x.LoanID == lId && (x.PaymentStatus == "Pending" || x.PaymentStatus == "On Hold")).First();
-                    var dt = dts.PaymentDate.AddDays(-14);
-                    var dt1 = dt.AddDays(11);
-                    if (dts.PaymentStatus == "On Hold")
-                    {
-                        dt = dts.PaymentDate.AddDays(-5);
-                        dt1 = dt.AddDays(4);
-                    }
-                    lblSDt.Content = dt.ToString();
-                    lblEDt.Content = dt1.ToString(); ;
-                }
-                else
-                {
-                    lblS.Visibility = Visibility.Hidden;
-                    lblE.Visibility = Visibility.Hidden;
-                    lblSDt.Content = "";
-                    lblEDt.Content = "";
-                }
+                
                 checkDue();
                 var chqs = from ge in ctx.FPaymentInfo
                            where ge.LoanID == lId
@@ -167,7 +199,7 @@ namespace LoanManagement.Desktop
             }
             else if (status == "Holding")
             {
-                using (var ctx = new MyContext())
+                using (var ctx = new MyLoanContext())
                 {
                     //var dts = ctx.FPaymentInfo.Where(x => x.LoanID == lId && x.PaymentStatus == "Pending").First();
                     if (DateTime.Today.Date > Convert.ToDateTime(lblEDt.Content) || DateTime.Today.Date < Convert.ToDateTime(lblSDt.Content))
@@ -204,7 +236,7 @@ namespace LoanManagement.Desktop
                 MessageBoxResult mr = System.Windows.MessageBox.Show("You sure?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (mr == MessageBoxResult.Yes)
                 {
-                    using (var ctx = new MyContext())
+                    using (var ctx = new MyLoanContext())
                     {
                         var lon = ctx.Loans.Find(lId);
                         lon.Status = "Approved";
@@ -224,7 +256,7 @@ namespace LoanManagement.Desktop
             }
             else if (status == "Holding")
             {
-                using (var ctx = new MyContext())
+                using (var ctx = new MyLoanContext())
                 {
                     var ctrs = ctx.FPaymentInfo.Where(x => x.LoanID == lId && x.PaymentStatus == "On Hold").Count();
                     if (ctrs < 1)

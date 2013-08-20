@@ -45,7 +45,7 @@ namespace LoanManagement.Desktop
 
         public void rg()
         {
-            using (var ctx = new MyContext())
+            using (var ctx = new MyLoanContext())
             {
                 var chq = from ch in ctx.FPaymentInfo
                           where ch.PaymentStatus == "Deposited"
@@ -69,7 +69,7 @@ namespace LoanManagement.Desktop
             //Grid grid = new Grid();
             wdw1.Background = myBrush;
 
-            using (var ctx = new MyContext())
+            using (var ctx = new MyLoanContext())
             {
                 ctx.Database.ExecuteSqlCommand("delete  from dbo.TempClearings");
             }
@@ -80,7 +80,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new MyContext())
+                using (var ctx = new MyLoanContext())
                 {
                     int n = Convert.ToInt32(getRow(dg1,0));
                     TempClearing tc = new TempClearing { FPaymentInfoID = n };
@@ -100,7 +100,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new MyContext())
+                using (var ctx = new MyLoanContext())
                 {
                     int n = Convert.ToInt32(getRow(dg2, 0));
                     TempClearing tc = ctx.TempClearings.Where(x => x.FPaymentInfoID == n).First();
@@ -118,7 +118,7 @@ namespace LoanManagement.Desktop
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            using (var ctx = new MyContext())
+            using (var ctx = new MyLoanContext())
             {
                 ctx.Database.ExecuteSqlCommand("delete  from dbo.TempClearings");
             }
@@ -127,7 +127,7 @@ namespace LoanManagement.Desktop
 
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
-            using (var ctx = new MyContext())
+            using (var ctx = new MyLoanContext())
             {
                 //ctx.Database.ExecuteSqlCommand("delete  from dbo.TempClearings");
                 var chq = from ch in ctx.FPaymentInfo
@@ -143,6 +143,42 @@ namespace LoanManagement.Desktop
                 rg();
             }
             
+        }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+            MessageBoxResult mr = MessageBox.Show("You sure?","Question",MessageBoxButton.YesNo);
+            if (mr == MessageBoxResult.Yes)
+            {
+                using (var ctx = new MyLoanContext())
+                {
+                    var chq = from ch in ctx.TempClearings
+                              select ch;
+                    foreach (var item in chq)
+                    {
+                        var ch = ctx.FPaymentInfo.Find(item.FPaymentInfoID);
+                        ch.PaymentStatus = "Cleared";
+                        var ctr = ctx.FPaymentInfo.Where(x=> x.LoanID==item.FPaymentInfo.LoanID && x.PaymentStatus=="Due/Pending").Count();
+                        if (ctr > 0)
+                        {
+                            var ch2 = ctx.FPaymentInfo.Where(x => x.LoanID == item.FPaymentInfo.LoanID && x.PaymentStatus == "Due/Pending").First();
+                            ch2.PaymentStatus = "Due";
+                        }
+                        ClearedCheque cc = new ClearedCheque { FPaymentInfoID = item.FPaymentInfoID, DateCleared = DateTime.Today.Date };
+                        ctx.ClearedCheques.Add(cc);
+                    }
+                    ctx.SaveChanges();
+                    MessageBox.Show("Okay");
+                    this.Close();
+                }
+            }
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show("Runtime Error: " + ex.Message);
+            }
         }
     }
 }

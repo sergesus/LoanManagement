@@ -45,7 +45,7 @@
         <Label x:Name="lblType" Content="(type)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="223,110,0,0" Width="222" FontSize="16" Foreground="Black" Grid.Column="1"/>
         <Label x:Name="lblAmt" Content="(type)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="223,140,0,0" Width="222" FontSize="16" Foreground="Black" Grid.Column="1"/>
         <Label x:Name="lblMode" Content="(type)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="223,202,0,0" Width="222" FontSize="16" Foreground="Black" Grid.Column="1"/>
-        <Label x:Name="lblNextP" Content="(type)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="549,77,0,0" Width="86" FontSize="16" Foreground="Black" RenderTransformOrigin="0.5,0.5" Grid.Column="1">
+        <Label x:Name="lblNextP" Content="(type)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="549,77,0,0" Width="92" FontSize="16" Foreground="Black" RenderTransformOrigin="0.5,0.5" Grid.Column="1">
             <Label.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -59,8 +59,8 @@
         <Label x:Name="lblRemaining" Content="(type)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="549,141,0,0" Width="164" FontSize="16" Foreground="Black" Grid.Column="1"/>
         <Label Content="Date Released:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="73,172,0,0" Width="150" FontSize="16" Foreground="#FF32AFD4" Grid.Column="1"/>
         <Label x:Name="lblDt" Content="(type)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="223,172,0,0" Width="222" FontSize="16" Foreground="Black" Grid.Column="1"/>
-        <Label Content="Status:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="73,233,0,0" Width="150" FontSize="16" Foreground="#FF32AFD4" Grid.Column="1"/>
-        <Label x:Name="lblStatus" Content="(type)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="223,233,0,0" Width="182" FontSize="16" Foreground="Black" Grid.Column="1"/>
+        <Label Content="Holding Fee:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="73,233,0,0" Width="150" FontSize="16" Foreground="#FF32AFD4" Grid.Column="1"/>
+        <Label x:Name="lblHF" Content="(type)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="223,233,0,0" Width="182" FontSize="16" Foreground="Black" Grid.Column="1"/>
         <Button x:Name="btnUpdate" Content="Update Loan Info" HorizontalAlignment="Left" VerticalAlignment="Top" Width="128" Margin="450,566,0,0" Height="34" Background="#FF32AFD4" Click="btnUpdate_Click" Grid.Column="1"/>
         <Button x:Name="btnVoid" Content="Void Releasing" HorizontalAlignment="Left" VerticalAlignment="Top" Width="128" Margin="583,566,0,0" Height="34" Background="#FFFF3030" Click="btnVoid_Click" Grid.Column="1"/>
         <Label Content="Payment Info:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="16,269,0,0" Width="150" FontSize="16" Foreground="#FF32AFD4" Grid.ColumnSpan="2"/>
@@ -70,7 +70,7 @@
         <TextBlock Margin="410,253,129,335" FontSize="16" Grid.Column="1"><Hyperlink Click="Hyperlink_Click_1"><Run Text="View Investigation Report"/></Hyperlink></TextBlock>
         <TextBlock Margin="410,208,129,384" FontSize="16" Grid.Column="1"><Hyperlink Click="Hyperlink_Click_1"><Run Text="View Co-Borrower's Info"/></Hyperlink></TextBlock>
         <Label x:Name="lblS" Content="Start(Holding):" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,520,0,0" Width="120" FontSize="16" Foreground="#FF32AFD4" Grid.ColumnSpan="2"/>
-        <Label x:Name="lblSDt" Content="(type)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="73,520,0,0" Width="86" FontSize="16" Foreground="Black" RenderTransformOrigin="0.5,0.5" Grid.Column="1">
+        <Label x:Name="lblSDt" Content="(type)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="73,520,0,0" Width="90" FontSize="16" Foreground="Black" RenderTransformOrigin="0.5,0.5" Grid.Column="1">
             <Label.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>
@@ -81,7 +81,7 @@
             </Label.RenderTransform>
         </Label>
         <Label x:Name="lblE" Content="End(Holding):" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,556,0,0" Width="120" FontSize="16" Foreground="#FF32AFD4" Grid.ColumnSpan="2"/>
-        <Label x:Name="lblEDt" Content="(type)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="73,556,0,0" Width="86" FontSize="16" Foreground="Black" RenderTransformOrigin="0.5,0.5" Grid.Column="1">
+        <Label x:Name="lblEDt" Content="(type)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="73,556,0,0" Width="91" FontSize="16" Foreground="Black" RenderTransformOrigin="0.5,0.5" Grid.Column="1">
             <Label.RenderTransform>
                 <TransformGroup>
                     <ScaleTransform/>

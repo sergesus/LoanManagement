@@ -25,7 +25,7 @@
         <DataGrid x:Name="dg2" HorizontalAlignment="Left" Height="228" Margin="522,88,0,0" VerticalAlignment="Top" Width="507" Grid.ColumnSpan="2" FontSize="18" GridLinesVisibility="Horizontal"/>
         <TextBox HorizontalAlignment="Left" Height="32" Margin="109,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="408"/>
         <Label Grid.ColumnSpan="2" Content="Cheque(s) to be cleared:" HorizontalAlignment="Left" Height="40" Margin="522,48,0,0" VerticalAlignment="Top" Width="209" FontSize="18"/>
-        <Button Content="Continue" HorizontalAlignment="Left" Height="38" Margin="429,367,0,0" VerticalAlignment="Top" Width="201"/>
+        <Button Content="Continue" HorizontalAlignment="Left" Height="38" Margin="429,367,0,0" VerticalAlignment="Top" Width="201" Click="Button_Click_4"/>
         <Button Content="&gt;&gt;" HorizontalAlignment="Left" Height="41" Margin="429,321,0,0" VerticalAlignment="Top" Width="88" FontSize="16" Click="Button_Click_3"/>
         <Button Content="&gt;" HorizontalAlignment="Left" Height="41" Margin="336,321,0,0" VerticalAlignment="Top" Width="88" FontSize="16" Click="Button_Click"/>
         <Label Content="Deposited Cheque(s):" HorizontalAlignment="Left" Height="40" Margin="10,48,0,0" VerticalAlignment="Top" Width="209" FontSize="18"/>
