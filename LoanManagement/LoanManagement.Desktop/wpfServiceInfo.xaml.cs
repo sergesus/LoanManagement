@@ -117,7 +117,7 @@ namespace LoanManagement.Desktop
 
                 using (var ctx = new MyLoanContext())
                 {
-                    Service ser = new Service { Name = txtName.Text, Department = cmbDept.Text, Description = txtDesc.Text, Type = cmbType.Text, Active = true, Interest = Convert.ToDouble(txtInterest.Text), MinTerm = Convert.ToInt32(txtMinTerm.Text), MaxTerm = Convert.ToInt32(txtMaxTerm.Text), MinValue = Convert.ToDouble(txtMinVal.Text), MaxValue = Convert.ToDouble(txtMaxVal.Text), AgentCommission=Convert.ToDouble(txtCom.Text), Holding=Convert.ToDouble(txtHolding.Text), ClosedAccountPenalty=Convert.ToDouble(txtClosed.Text), DaifPenalty= Convert.ToDouble(txtDaif.Text) };
+                    Service ser = new Service { Name = txtName.Text, Department = cmbDept.Text, Description = txtDesc.Text, Type = cmbType.Text, Active = true, Interest = Convert.ToDouble(txtInterest.Text), MinTerm = Convert.ToInt32(txtMinTerm.Text), MaxTerm = Convert.ToInt32(txtMaxTerm.Text), MinValue = Convert.ToDouble(txtMinVal.Text), MaxValue = Convert.ToDouble(txtMaxVal.Text), AgentCommission=Convert.ToDouble(txtCom.Text), Holding=Convert.ToDouble(txtHolding.Text), ClosedAccountPenalty=Convert.ToDouble(txtClosed.Text), DaifPenalty= Convert.ToDouble(txtDaif.Text), RestructureFee=Convert.ToDouble(txtResFee.Text), RestructureInterest=Convert.ToDouble(txtResInt.Text), AdjustmentFee= Convert.ToDouble(txtAdjust.Text) };
 
 
                     var deds = from dd in ctx.TempoDeductions
@@ -161,6 +161,9 @@ namespace LoanManagement.Desktop
                     ser.DaifPenalty = Convert.ToDouble(txtDaif.Text);
                     ser.ClosedAccountPenalty = Convert.ToDouble(txtClosed.Text);
                     ser.AgentCommission = Convert.ToDouble(txtCom.Text);
+                    ser.RestructureFee = Convert.ToDouble(txtResFee.Text);
+                    ser.RestructureInterest = Convert.ToDouble(txtResInt.Text);
+                    ser.AdjustmentFee = Convert.ToDouble(txtAdjust.Text);
                     ctx.SaveChanges();
                     MessageBox.Show("Service updated");
                     this.Close();
@@ -212,6 +215,9 @@ namespace LoanManagement.Desktop
                     txtDaif.Text = ser.DaifPenalty.ToString();
                     txtClosed.Text = ser.ClosedAccountPenalty.ToString();
                     txtCom.Text = ser.AgentCommission.ToString();
+                    txtResFee.Text = ser.RestructureFee.ToString();
+                    txtResInt.Text = ser.RestructureInterest.ToString();
+                    txtAdjust.Text = ser.AdjustmentFee.ToString();
 
                     var reqs = from rq in ctx.Requirements
                                where rq.ServiceID == sId

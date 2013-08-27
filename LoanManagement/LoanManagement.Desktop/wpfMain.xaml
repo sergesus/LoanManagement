@@ -20,7 +20,7 @@
         <Controls:WindowCommands x:Name="S">
             <Button Content="Settings" Click="btnSettings_Click"/>
         </Controls:WindowCommands>
-        
+
     </Controls:MetroWindow.WindowCommands>
     <Grid HorizontalAlignment="Left" Height="518" VerticalAlignment="Top" Width="1104">
         <Grid.ColumnDefinitions>
@@ -113,8 +113,9 @@
                                 <ListBoxItem x:Name="itm8" Content="Loan Approval" FontSize="25" Foreground="#FF32AFD4" MouseUp="itm8_MouseUp" Selected="itm8_Selected"/>
                                 <ListBoxItem x:Name="itm9" Content="Releasing" FontSize="25" Foreground="#FF32AFD4" Selected="itm9_Selected" MouseUp="itm9_MouseUp"/>
                                 <ListBoxItem x:Name="itm10" Content="Payments" FontSize="25" Foreground="#FF32AFD4" MouseUp="itm10_MouseUp"/>
+                                <ListBoxItem x:Name="itm12" Content="Manage Closed Accounts" FontSize="25" Foreground="#FF32AFD4" MouseUp="itm12_MouseUp"/>
                                 <ListBoxItem x:Name="itm11" Content="Loan Re-structure" FontSize="25" Foreground="#FF32AFD4"/>
-                                <ListBoxItem x:Name="itm11_Copy" Content="Payment Adjustment" FontSize="25" Foreground="#FF32AFD4"/>
+                                <ListBoxItem x:Name="itm13" Content="Payment Adjustment" FontSize="25" Foreground="#FF32AFD4"/>
                             </ListBox>
                         </Grid>
                     </TabItem>

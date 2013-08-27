@@ -114,6 +114,28 @@ namespace LoanManagement.Desktop
                     btnView.Content = "Void last payment";
                 }
             }
+            else if (status == "VoidClosed")
+            {
+                using (var ctx = new MyLoanContext())
+                {
+                    var lon = from ln in ctx.Loans
+                              where ln.Status == "Closed Account"
+                              select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
+                    dgLoan.ItemsSource = lon.ToList();
+                    btnView.Content = "Void Closed Account";
+                }
+            }
+            else if (status == "Renewal")
+            {
+                using (var ctx = new MyLoanContext())
+                {
+                    var lon = from ln in ctx.Loans
+                              where ln.Status == "Closed Account"
+                              select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
+                    dgLoan.ItemsSource = lon.ToList();
+                    btnView.Content = "Renew Closed Account";
+                }
+            }
             
         }
 
@@ -200,6 +222,53 @@ namespace LoanManagement.Desktop
                         MessageBox.Show("No payments to void");
                     }
                 }
+            }
+            else if (status == "VoidClosed")
+            {
+                int n = Convert.ToInt32(getRow(dgLoan, 0));
+                MessageBoxResult mr = MessageBox.Show("You sure?","Question",MessageBoxButton.YesNo);
+                if (mr == MessageBoxResult.Yes)
+                {
+                    
+                    using (var ctx = new MyLoanContext())
+                    {
+                        var lon = ctx.Loans.Find(n);
+                        lon.Status = "Released";//active
+                        int num = ctx.ClosedAccounts.Where(x => x.LoanID == n).Count();
+                        var fp1 = from f in ctx.ClosedAccounts
+                                  where f.LoanID == n
+                                  select f;
+                        int y = 0;
+                        ClosedAccount fp = null;
+                        foreach (var item in fp1)
+                        {
+                            if (y == num - 1)
+                            {
+                                fp = item;
+                            }
+                            y++;
+                        }
+                        ctx.ClosedAccounts.Remove(fp);
+                        var fp2 = from f in ctx.FPaymentInfo
+                                 where f.LoanID == n && f.PaymentStatus != "Cleared"
+                                 select f;
+                        foreach (var item in fp2)
+                        {
+                            item.PaymentStatus = "Pending";
+                        }
+                        ctx.SaveChanges();
+                        MessageBox.Show("Okay");
+                        return;
+                    }
+                }
+            }
+            else if (status == "Renewal")
+            {
+                int n = Convert.ToInt32(getRow(dgLoan, 0));
+                wpfRenewClosed frm = new wpfRenewClosed();
+                frm.lId = n;
+                this.Close();
+                frm.ShowDialog();
             }
             else
             {

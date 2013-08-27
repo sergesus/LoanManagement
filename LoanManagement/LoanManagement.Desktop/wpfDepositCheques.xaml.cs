@@ -168,6 +168,7 @@ namespace LoanManagement.Desktop
                                     if (ch > 0)
                                     {
                                         item.DepositedCheque.DepositDate = DateTime.Today.Date;
+                                        item.PaymentStatus = "Deposited";
                                     }
                                     else
                                     {

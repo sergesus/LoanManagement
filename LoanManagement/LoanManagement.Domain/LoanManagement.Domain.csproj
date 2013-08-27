@@ -45,9 +45,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\201308201100227_Moved.cs" />
-    <Compile Include="Migrations\201308201100227_Moved.Designer.cs">
-      <DependentUpon>201308201100227_Moved.cs</DependentUpon>
+    <Compile Include="Migrations\201308261012196_UpdatedServices.cs" />
+    <Compile Include="Migrations\201308261012196_UpdatedServices.Designer.cs">
+      <DependentUpon>201308261012196_UpdatedServices.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201308261021085_UpdatedServices2.cs" />
+    <Compile Include="Migrations\201308261021085_UpdatedServices2.Designer.cs">
+      <DependentUpon>201308261021085_UpdatedServices2.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -58,8 +62,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201308201100227_Moved.resx">
-      <DependentUpon>201308201100227_Moved.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201308261012196_UpdatedServices.resx">
+      <DependentUpon>201308261012196_UpdatedServices.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201308261021085_UpdatedServices2.resx">
+      <DependentUpon>201308261021085_UpdatedServices2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

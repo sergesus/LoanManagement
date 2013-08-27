@@ -17,7 +17,7 @@
 
     <Grid HorizontalAlignment="Left" Height="28" Margin="0,1,-25,0" VerticalAlignment="Top" Width="505">
         <DockPanel HorizontalAlignment="Left" Height="29" LastChildFill="False" VerticalAlignment="Top" Width="756" Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Margin="-2,-1,-249,0">
-            <Button x:Name="btnSave" Content="Save" Width="98" BorderThickness="0" Click="btnSave_Click" FontFamily="Segoe UI, Lucida Sans Unicode, Verdana"/>
+            <Button x:Name="btnSave" Content="Save" Width="98" BorderThickness="0" Click="btnSave_Click" FontFamily="Segoe UI, Lucida Sans Unicode, Verdana" Height="29" VerticalAlignment="Bottom"/>
             <Button x:Name="btnClear" Content="Clear" Height="29" VerticalAlignment="Top" Width="98" BorderThickness="0" Click="btnClear_Click" FontFamily="Segoe UI, Lucida Sans Unicode, Verdana"/>
             <Button x:Name="btnDel" Content="Delete" Height="29" VerticalAlignment="Top" Width="98" BorderThickness="0" Click="btnDel_Click" FontFamily="Segoe UI, Lucida Sans Unicode, Verdana"/>
         </DockPanel>
@@ -105,15 +105,47 @@
                         <ColumnDefinition Width="18*"/>
                         <ColumnDefinition Width="277*"/>
                     </Grid.ColumnDefinitions>
-                    <TextBox x:Name="txtDaif" HorizontalAlignment="Left" Height="24" Margin="125,48,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" FontSize="18" Grid.Column="2"/>
-                    <Label Content="Holding Fee:" HorizontalAlignment="Left" Height="31" Margin="3,10,0,0" VerticalAlignment="Top" Width="122" Foreground="Red" FontSize="18" RenderTransformOrigin="0.683,-1.051" Grid.ColumnSpan="2" Grid.Column="1"/>
-                    <Label Content="%" HorizontalAlignment="Left" Height="31" Margin="180,10,0,0" VerticalAlignment="Top" Width="29" Foreground="Black" FontSize="18" RenderTransformOrigin="0.683,-1.051" Grid.Column="2"/>
-                    <Label Content="Daif:" HorizontalAlignment="Left" Height="31" Margin="3,41,0,0" VerticalAlignment="Top" Width="122" Foreground="Red" FontSize="18" RenderTransformOrigin="0.683,-1.051" Grid.ColumnSpan="2" Grid.Column="1"/>
-                    <TextBox x:Name="txtHolding" HorizontalAlignment="Left" Height="24" Margin="125,17,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" FontSize="18" Grid.Column="2"/>
-                    <Label Content="%" HorizontalAlignment="Left" Height="31" Margin="180,41,0,0" VerticalAlignment="Top" Width="29" Foreground="Black" FontSize="18" RenderTransformOrigin="0.683,-1.051" Grid.Column="2"/>
-                    <Label Content="Closed Account:" HorizontalAlignment="Left" Height="31" Margin="3,72,0,0" VerticalAlignment="Top" Width="143" Foreground="Red" FontSize="18" RenderTransformOrigin="0.683,-1.051" Grid.ColumnSpan="2" Grid.Column="1"/>
-                    <TextBox x:Name="txtClosed" HorizontalAlignment="Left" Height="24" Margin="125,79,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" FontSize="18" Grid.Column="2"/>
-                    <Label Content="%" HorizontalAlignment="Left" Height="31" Margin="180,72,0,0" VerticalAlignment="Top" Width="29" Foreground="Black" FontSize="18" RenderTransformOrigin="0.683,-1.051" Grid.Column="2"/>
+                    <GroupBox Grid.ColumnSpan="2" Grid.Column="1" Header="Restructure" HorizontalAlignment="Left" Height="102" Margin="0,230,0,0" VerticalAlignment="Top" Width="321">
+                        <Grid HorizontalAlignment="Left" Height="110" VerticalAlignment="Top" Width="299">
+                            <TextBox x:Name="txtResFee" HorizontalAlignment="Left" Height="24" Margin="152,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" FontSize="18"/>
+                            <Label Content="Restructure fee:" HorizontalAlignment="Left" Height="30" Margin="8,4,0,0" VerticalAlignment="Top" Width="139" Foreground="Red" FontSize="18" RenderTransformOrigin="0.683,-1.051"/>
+                            <Label Content="%" HorizontalAlignment="Left" Height="30" Margin="206,4,0,0" VerticalAlignment="Top" Width="30" Foreground="Black" FontSize="18" RenderTransformOrigin="0.683,-1.051"/>
+                            <TextBox x:Name="txtResInt" HorizontalAlignment="Left" Height="24" Margin="152,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" FontSize="18"/>
+                            <Label Content="Interest::" HorizontalAlignment="Left" Height="30" Margin="8,34,0,0" VerticalAlignment="Top" Width="139" Foreground="Red" FontSize="18" RenderTransformOrigin="0.683,-1.051"/>
+                            <Label Content="%" HorizontalAlignment="Left" Height="30" Margin="206,34,0,0" VerticalAlignment="Top" Width="30" Foreground="Black" FontSize="18" RenderTransformOrigin="0.683,-1.051"/>
+                        </Grid>
+                    </GroupBox>
+                    <GroupBox Grid.ColumnSpan="2" Grid.Column="1" Header="Penalties" HorizontalAlignment="Left" Height="102" Margin="3,122,0,0" VerticalAlignment="Top" Width="321">
+                        <Grid HorizontalAlignment="Left" Height="74" VerticalAlignment="Top" Width="309">
+                            <Grid Margin="10,4,72,8">
+                                <TextBox x:Name="txtDaif" HorizontalAlignment="Left" Height="24" Margin="143,7,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" FontSize="18"/>
+                                <Label Content="Daif:" HorizontalAlignment="Left" Height="31" VerticalAlignment="Top" Width="122" Foreground="Red" FontSize="18" RenderTransformOrigin="0.683,-1.051"/>
+                                <Label Content="%" HorizontalAlignment="Left" Height="31" Margin="198,0,0,0" VerticalAlignment="Top" Width="29" Foreground="Black" FontSize="18" RenderTransformOrigin="0.683,-1.051"/>
+                                <Label Content="Closed Account:" HorizontalAlignment="Left" Height="31" Margin="0,31,0,0" VerticalAlignment="Top" Width="143" Foreground="Red" FontSize="18" RenderTransformOrigin="0.683,-1.051"/>
+                                <TextBox x:Name="txtClosed" HorizontalAlignment="Left" Height="24" Margin="143,38,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" FontSize="18"/>
+                                <Label Content="%" HorizontalAlignment="Left" Height="31" Margin="198,31,0,0" VerticalAlignment="Top" Width="29" Foreground="Black" FontSize="18" RenderTransformOrigin="0.683,-1.051"/>
+                            </Grid>
+                        </Grid>
+
+                    </GroupBox>
+                    <GroupBox Grid.ColumnSpan="2" Header="Fees" HorizontalAlignment="Left" Height="102" Margin="3,15,0,0" VerticalAlignment="Top" Width="321" Grid.Column="1">
+                        <Grid HorizontalAlignment="Left" Height="74" VerticalAlignment="Top" Width="309">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="262*"/>
+                                <ColumnDefinition Width="47*"/>
+                            </Grid.ColumnDefinitions>
+                        </Grid>
+
+
+                    </GroupBox>
+                    <Grid Grid.Column="2" Margin="0,35,95,322">
+                        <Label Content="Holding Fee:" HorizontalAlignment="Left" Height="31" VerticalAlignment="Top" Width="122" Foreground="Red" FontSize="18" RenderTransformOrigin="0.683,-1.051"/>
+                        <Label Content="%" HorizontalAlignment="Left" Height="31" Margin="198,0,0,0" VerticalAlignment="Top" Width="29" Foreground="Black" FontSize="18" RenderTransformOrigin="0.683,-1.051"/>
+                        <TextBox x:Name="txtHolding" HorizontalAlignment="Left" Height="24" Margin="143,7,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" FontSize="18"/>
+                        <Label Content="Adjustment Fee:" HorizontalAlignment="Left" Height="31" Margin="0,29,0,0" VerticalAlignment="Top" Width="138" Foreground="Red" FontSize="18" RenderTransformOrigin="0.683,-1.051"/>
+                        <Label Content="%" HorizontalAlignment="Left" Height="31" Margin="198,29,0,0" VerticalAlignment="Top" Width="29" Foreground="Black" FontSize="18" RenderTransformOrigin="0.683,-1.051"/>
+                        <TextBox x:Name="txtAdjust" HorizontalAlignment="Left" Height="24" Margin="143,36,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" FontSize="18"/>
+                    </Grid>
                 </Grid>
             </TabItem>
         </TabControl>

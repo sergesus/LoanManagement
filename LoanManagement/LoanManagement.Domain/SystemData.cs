@@ -223,6 +223,9 @@ namespace LoanManagement.Domain
         public double Holding { get; set; }
         public double DaifPenalty { get; set; }
         public double ClosedAccountPenalty { get; set; }
+        public double RestructureFee { get; set; }
+        public double RestructureInterest { get; set; }
+        public double AdjustmentFee { get; set; }
         public bool Active { get; set; }
 
         public ICollection<Requirement> Requirement { get; set; }

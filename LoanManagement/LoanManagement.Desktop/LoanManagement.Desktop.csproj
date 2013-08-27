@@ -146,11 +146,17 @@
     <Compile Include="wpfReleasedLoanInfo.xaml.cs">
       <DependentUpon>wpfReleasedLoanInfo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="wpfRenewClosed.xaml.cs">
+      <DependentUpon>wpfRenewClosed.xaml</DependentUpon>
+    </Compile>
     <Compile Include="wpfSelectApplication.xaml.cs">
       <DependentUpon>wpfSelectApplication.xaml</DependentUpon>
     </Compile>
     <Compile Include="wpfSelectClient.xaml.cs">
       <DependentUpon>wpfSelectClient.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="wpfSelectClosed.xaml.cs">
+      <DependentUpon>wpfSelectClosed.xaml</DependentUpon>
     </Compile>
     <Compile Include="wpfSelectPayment.xaml.cs">
       <DependentUpon>wpfSelectPayment.xaml</DependentUpon>
@@ -249,11 +255,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="wpfRenewClosed.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="wpfSelectApplication.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="wpfSelectClient.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="wpfSelectClosed.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
