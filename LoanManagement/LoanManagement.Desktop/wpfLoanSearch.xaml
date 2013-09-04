@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        Title="wpfLoanSearch" Height="358.564" Width="626.053" Loaded="wdw1_Loaded" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Activated="wdw1_Activated">
+        Title="wpfLoanSearch" Height="484.564" Width="705.553" Loaded="wdw1_Loaded" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Activated="wdw1_Activated">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -10,7 +10,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Green.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedTabControl.xaml" />
             </ResourceDictionary.MergedDictionaries>
@@ -22,8 +22,22 @@
             <ColumnDefinition Width="371*"/>
             <ColumnDefinition Width="144*"/>
         </Grid.ColumnDefinitions>
-        <DataGrid x:Name="dgLoan" HorizontalAlignment="Left" Height="272" Margin="10,10,0,0" VerticalAlignment="Top" Width="600" Grid.ColumnSpan="2" FontSize="18" GridLinesVisibility="None"/>
-        <Button x:Name="btnView" Content="View" Grid.Column="1" HorizontalAlignment="Left" Height="33" Margin="10,287,0,0" VerticalAlignment="Top" Width="153" Click="btnView_Click"/>
+        <Grid HorizontalAlignment="Left" Height="74" VerticalAlignment="Top" Width="863" Background="#7F48CB00" Grid.ColumnSpan="2" Margin="0,0,-163,0">
+            <Image HorizontalAlignment="Left" Height="74" VerticalAlignment="Top" Width="97" Source="Images/Search.ico"/>
+            <Label Content="Loan Search" HorizontalAlignment="Left" Height="54" Margin="87,10,0,0" VerticalAlignment="Top" Width="285" FontSize="30"/>
+        </Grid>
+        <DataGrid x:Name="dgLoan" HorizontalAlignment="Left" Height="323" Margin="10,79,-66,-72" VerticalAlignment="Top" Width="682" CanUserAddRows="False" CanUserDeleteRows="False" FontSize="18" GridLinesVisibility="None" Grid.ColumnSpan="2" BorderBrush="#CC48CB00" BorderThickness="2" Background="#7FF0F0F0">
+            <DataGrid.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" 
+        			Color="#CC48CB00"/>
+            </DataGrid.Resources>
+        </DataGrid>
+        <Button x:Name="btnView" HorizontalAlignment="Left" Height="39" Margin="22,407,0,0" VerticalAlignment="Top" Width="164" BorderBrush="#CC48CB00" BorderThickness="2" Background="#7F48CB00" Grid.Column="1" Click="btnView_Click">
+            <DockPanel LastChildFill="True">
+                <Label HorizontalContentAlignment="Center" DockPanel.Dock="Right" Foreground="#FF343434" Height="28" FontSize="16" Content="Select"/>
+                <Image Source="Images/View.ico" />
+            </DockPanel>
+        </Button>
 
     </Grid>
 </Controls:MetroWindow>

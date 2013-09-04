@@ -2,14 +2,14 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        Title="wpfMain" Height="560" Width="1114" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Activated="MetroWindow_Activated_1" Loaded="wdw1_Loaded" WindowState="Maximized">
+        Title="wpfMain" Height="707" Width="1435" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" Activated="MetroWindow_Activated_1" Loaded="wdw1_Loaded" WindowState="Maximized">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Green.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedTabControl.xaml" />
             </ResourceDictionary.MergedDictionaries>
@@ -43,21 +43,21 @@
             <ListBoxItem Content="File" FontSize="25"/>
             <ListBoxItem Content="Transaction" FontSize="25" MouseUp="ListBoxItem_MouseUp_5"/>
         </ListBox>
-        <TabControl HorizontalAlignment="Left" Height="498" Margin="187,10,0,0" VerticalAlignment="Top" Width="907" Grid.RowSpan="2" Grid.ColumnSpan="2">
+        <TabControl HorizontalAlignment="Left" Height="525" Margin="187,10,-272,-17" VerticalAlignment="Top" Width="1189" Grid.RowSpan="2" Grid.ColumnSpan="2">
             <TabItem x:Name="tb0" Header="">
                 <Grid/>
             </TabItem>
             <TabItem x:Name="tb1" Header="">
                 <Grid>
 
-                    <TabControl HorizontalAlignment="Left" Height="381" VerticalAlignment="Top" Width="901" Margin="-2,0,0,0">
+                    <TabControl HorizontalAlignment="Left" Height="435" VerticalAlignment="Top" Width="901" Margin="-2,0,0,0">
                         <TabItem Header="Maintenance" BorderBrush="{x:Null}" Background="Black" Foreground="Black" MouseUp="TabItem_MouseUp_2">
-                            <Grid x:Name="grdM">
+                            <Grid x:Name="grdM" Margin="0,0,-318,0">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="46*"/>
                                     <ColumnDefinition Width="829*"/>
                                 </Grid.ColumnDefinitions>
-                                <ListBox x:Name="lb1_Copy1" HorizontalAlignment="Left" Height="375" VerticalAlignment="Top" Width="182" OpacityMask="#FFA0A0A0" BorderBrush="#FFB4A1A1" SelectionChanged="ListBox_SelectionChanged_1" Margin="10,10,0,-57" Grid.ColumnSpan="2">
+                                <ListBox x:Name="lb1_Copy1" HorizontalAlignment="Left" Height="172" VerticalAlignment="Top" Width="182" OpacityMask="#FFA0A0A0" BorderBrush="#FFB4A1A1" SelectionChanged="ListBox_SelectionChanged_1" Margin="656,200,0,0" Grid.Column="1" Visibility="Hidden">
                                     <ListBox.Background>
                                         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                             <GradientStop Color="Black" Offset="0"/>
@@ -70,6 +70,36 @@
                                     <ListBoxItem x:Name="itm4" Content="Employee" FontSize="25" Foreground="#FF32AFD4" MouseUp="ListBoxItem_MouseUp_4"/>
                                     <ListBoxItem x:Name="itm5" Content="Agents" FontSize="25" Foreground="#FF32AFD4" MouseUp="itm5_MouseUp"/>
                                 </ListBox>
+                                <Button HorizontalAlignment="Left" Height="118" Margin="345,10,0,0" VerticalAlignment="Top" Width="128" BorderBrush="#FF4AEE0D" BorderThickness="4" Grid.Column="1" Click="Button_Click_2">
+                                    <DockPanel LastChildFill="True">
+                                        <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom" Foreground="#FF343434">Employee</Label>
+                                        <Image Source="Images/employee.ico" />
+                                    </DockPanel>
+                                </Button>
+                                <Button x:Name="btnBank" HorizontalAlignment="Left" Height="118" Margin="212,10,0,0" VerticalAlignment="Top" Width="128" BorderBrush="#FF4AEE0D" BorderThickness="4" Grid.Column="1" Click="btnBank_Click">
+                                    <DockPanel LastChildFill="True">
+                                        <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom" Foreground="#FF343434" Content="Bank Info"/>
+                                        <Image Source="Images/Clients.ico" />
+                                    </DockPanel>
+                                </Button>
+                                <Button x:Name="btnClients" HorizontalAlignment="Left" Height="118" Margin="10,10,0,0" VerticalAlignment="Top" Width="128" BorderBrush="#FF4AEE0D" BorderThickness="4" Grid.ColumnSpan="2" Click="btnClients_Click">
+                                    <DockPanel LastChildFill="True">
+                                        <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom" Foreground="#FF343434" Content="Clients"/>
+                                        <Image Source="Images/Bank.ico" />
+                                    </DockPanel>
+                                </Button>
+                                <Button HorizontalAlignment="Left" Height="118" Margin="79,10,0,0" VerticalAlignment="Top" Width="128" BorderBrush="#FF4AEE0D" BorderThickness="4" Grid.Column="1" Click="Button_Click_1">
+                                    <DockPanel LastChildFill="True">
+                                        <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom" Foreground="#FF343434" Content="Services"/>
+                                        <Image Source="Images/Services.ico" />
+                                    </DockPanel>
+                                </Button>
+                                <Button x:Name="btnAgents" HorizontalAlignment="Left" Height="118" Margin="478,10,0,0" VerticalAlignment="Top" Width="128" BorderBrush="#FF4AEE0D" BorderThickness="4" Grid.Column="1" Click="btnAgents_Click">
+                                    <DockPanel LastChildFill="True">
+                                        <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom" Foreground="#FF343434" Content="Agents"/>
+                                        <Image Source="Images/Bank.ico" />
+                                    </DockPanel>
+                                </Button>
                             </Grid>
                         </TabItem>
                         <TabItem Header="Log Out" MouseUp="TabItem_MouseUp_1">
@@ -95,14 +125,14 @@
                 </Grid>
             </TabItem>
             <TabItem x:Name="tb2" Header="">
-                <TabControl HorizontalAlignment="Left" Height="381" VerticalAlignment="Top" Width="901" Margin="0,2,0,0">
+                <TabControl HorizontalAlignment="Left" Height="461" VerticalAlignment="Top" Width="1231" Margin="0,2,-48,0">
                     <TabItem Header="Financing Department" BorderBrush="{x:Null}" Background="Black" Foreground="Black" MouseUp="TabItem_MouseUp_2">
-                        <Grid x:Name="grdM1">
+                        <Grid x:Name="grdM1" Margin="0,0,0,-12">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="46*"/>
                                 <ColumnDefinition Width="829*"/>
                             </Grid.ColumnDefinitions>
-                            <ListBox x:Name="lb1_Copy2" HorizontalAlignment="Left" Height="318" VerticalAlignment="Top" Width="361" OpacityMask="#FFA0A0A0" BorderBrush="#FFB4A1A1" SelectionChanged="ListBox_SelectionChanged_1" Margin="10,10,0,0" Grid.ColumnSpan="2">
+                            <ListBox x:Name="lb1_Copy2" HorizontalAlignment="Left" Height="318" VerticalAlignment="Top" Width="361" OpacityMask="#FFA0A0A0" BorderBrush="#FFB4A1A1" SelectionChanged="ListBox_SelectionChanged_1" Margin="477,162,0,-60" Grid.Column="1" Visibility="Hidden">
                                 <ListBox.Background>
                                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                         <GradientStop Color="Black" Offset="0"/>
@@ -117,27 +147,93 @@
                                 <ListBoxItem x:Name="itm11" Content="Loan Re-structure" FontSize="25" Foreground="#FF32AFD4" MouseUp="itm11_MouseUp"/>
                                 <ListBoxItem x:Name="itm13" Content="Payment Adjustment" FontSize="25" Foreground="#FF32AFD4" MouseUp="itm13_MouseUp"/>
                             </ListBox>
+                            <Button x:Name="btnLoanAppllication" HorizontalAlignment="Left" Height="118" Margin="10,10,0,0" VerticalAlignment="Top" Width="128" BorderBrush="#FF4AEE0D" BorderThickness="4" Grid.ColumnSpan="2" Click="btnLoanAppllication_Click">
+                                <DockPanel LastChildFill="True">
+                                    <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom" Foreground="#FF343434" Content="Loan Application"/>
+                                    <Image Source="Images/Application.ico" />
+                                </DockPanel>
+                            </Button>
+                            <Button x:Name="btnClients_Copy1" HorizontalAlignment="Left" Height="118" Margin="79,10,0,0" VerticalAlignment="Top" Width="128" BorderBrush="#FF4AEE0D" BorderThickness="4" Click="btnClients_Copy1_Click" Grid.Column="1">
+                                <DockPanel LastChildFill="True">
+                                    <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom" Foreground="#FF343434" Content="Loan Approval"/>
+                                    <Image Source="Images/Approval.ico" />
+                                </DockPanel>
+                            </Button>
+                            <Button x:Name="btnClients_Copy2" HorizontalAlignment="Left" Height="118" Margin="212,10,0,0" VerticalAlignment="Top" Width="128" BorderBrush="#FF4AEE0D" BorderThickness="4" Grid.Column="1" Click="btnClients_Copy2_Click">
+                                <DockPanel LastChildFill="True">
+                                    <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom" Foreground="#FF343434" Content="Releasing"/>
+                                    <Image Source="Images/Releasing.ico" />
+                                </DockPanel>
+                            </Button>
+                            <Button x:Name="btnClients_Copy3" HorizontalAlignment="Left" Height="118" Margin="345,10,0,0" VerticalAlignment="Top" Width="128" BorderBrush="#FF4AEE0D" BorderThickness="4" Click="btnClients_Copy3_Click" Grid.Column="1">
+                                <DockPanel LastChildFill="True">
+                                    <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom" Foreground="#FF343434" Content="Payments"/>
+                                    <Image Source="Images/Payment.ico" />
+                                </DockPanel>
+                            </Button>
+                            <Button x:Name="btnClients_Copy4" HorizontalAlignment="Left" Height="118" Margin="478,10,0,0" VerticalAlignment="Top" Width="128" BorderBrush="#FF4AEE0D" BorderThickness="4" Click="btnClients_Copy4_Click" Grid.Column="1">
+                                <DockPanel LastChildFill="True">
+                                    <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom" Foreground="#FF343434" Content="Manage Closed Acc."/>
+                                    <Image Source="Images/Manage.ico" />
+                                </DockPanel>
+                            </Button>
+                            <Button x:Name="btnClients_Copy5" HorizontalAlignment="Left" Height="118" Margin="611,10,0,0" VerticalAlignment="Top" Width="128" BorderBrush="#FF4AEE0D" BorderThickness="4" Click="btnClients_Copy5_Click" Grid.Column="1">
+                                <DockPanel LastChildFill="True">
+                                    <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom" Foreground="#FF343434" Content="Loan Restructure"/>
+                                    <Image Source="Images/Restructure.ico" />
+                                </DockPanel>
+                            </Button>
+                            <Button x:Name="btnClients_Copy6" HorizontalAlignment="Left" Height="118" Margin="744,10,0,0" VerticalAlignment="Top" Width="128" BorderBrush="#FF4AEE0D" BorderThickness="4" Click="btnClients_Copy6_Click" Grid.Column="1">
+                                <DockPanel LastChildFill="True">
+                                    <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom" Foreground="#FF343434" Content="Payment Adjustment"/>
+                                    <Image Source="Images/Adjustment.ico" />
+                                </DockPanel>
+                            </Button>
                         </Grid>
                     </TabItem>
                     <TabItem Header="Micro-Business" MouseUp="TabItem_MouseUp_1">
-                        <Grid x:Name="grdLo1">
+                        <Grid x:Name="grdLo1" Margin="0,0,0,-84">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="91*"/>
                                 <ColumnDefinition Width="93*"/>
                                 <ColumnDefinition Width="712*"/>
                             </Grid.ColumnDefinitions>
-                            <ListBox x:Name="lb1_Copy3" HorizontalAlignment="Left" Height="318" VerticalAlignment="Top" Width="361" OpacityMask="#FFA0A0A0" BorderBrush="#FFB4A1A1" SelectionChanged="ListBox_SelectionChanged_1" Margin="10,10,0,0" Grid.ColumnSpan="3">
+                            <ListBox x:Name="lb1_Copy3" HorizontalAlignment="Left" Height="318" VerticalAlignment="Top" Width="361" OpacityMask="#FFA0A0A0" BorderBrush="#FFB4A1A1" SelectionChanged="ListBox_SelectionChanged_1" Margin="544,202,0,-28" Grid.Column="2" Visibility="Hidden">
                                 <ListBox.Background>
                                     <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                                         <GradientStop Color="Black" Offset="0"/>
                                         <GradientStop Color="#FF9C9C9C" Offset="1"/>
                                     </LinearGradientBrush>
                                 </ListBox.Background>
-                                <ListBoxItem x:Name="itm7" Content="Loan Application" FontSize="25" Foreground="#FF32AFD4" MouseUp="itm6_MouseUp"/>
-                                <ListBoxItem x:Name="itm14" Content="Loan Approval" FontSize="25" Foreground="#FF32AFD4" MouseUp="itm8_MouseUp" Selected="itm8_Selected"/>
+                                <ListBoxItem x:Name="itm7" Content="Loan Application" FontSize="25" Foreground="#FF32AFD4" MouseUp="itm7_MouseUp"/>
+                                <ListBoxItem x:Name="itm14" Content="Loan Approval" FontSize="25" Foreground="#FF32AFD4" MouseUp="itm14_MouseUp" Selected="itm8_Selected"/>
                                 <ListBoxItem x:Name="itm15" Content="Releasing" FontSize="25" Foreground="#FF32AFD4" Selected="itm9_Selected"/>
                                 <ListBoxItem x:Name="itm16" Content="Payments" FontSize="25" Foreground="#FF32AFD4"/>
                             </ListBox>
+                            <Button x:Name="btnLoanAppllication_Copy" HorizontalAlignment="Left" Height="118" Margin="10,10,0,0" VerticalAlignment="Top" Width="128" BorderBrush="#FF4AEE0D" BorderThickness="4" Grid.ColumnSpan="2" Click="btnLoanAppllication_Copy_Click">
+                                <DockPanel LastChildFill="True">
+                                    <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom" Foreground="#FF343434" Content="Loan Application"/>
+                                    <Image Source="Images/Application.ico" />
+                                </DockPanel>
+                            </Button>
+                            <Button x:Name="btnClients_Copy" HorizontalAlignment="Left" Height="118" Margin="18,10,0,0" VerticalAlignment="Top" Width="128" BorderBrush="#FF4AEE0D" BorderThickness="4" Click="btnClients_Copy_Click" Grid.Column="1" Grid.ColumnSpan="2">
+                                <DockPanel LastChildFill="True">
+                                    <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom" Foreground="#FF343434" Content="Loan Approval"/>
+                                    <Image Source="Images/Approval.ico" />
+                                </DockPanel>
+                            </Button>
+                            <Button x:Name="btnClients_Copy7" HorizontalAlignment="Left" Height="118" Margin="24,10,0,0" VerticalAlignment="Top" Width="128" BorderBrush="#FF4AEE0D" BorderThickness="4" Grid.Column="2" Click="btnClients_Copy2_Click">
+                                <DockPanel LastChildFill="True">
+                                    <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom" Foreground="#FF343434" Content="Releasing"/>
+                                    <Image Source="Images/Releasing.ico" />
+                                </DockPanel>
+                            </Button>
+                            <Button x:Name="btnClients_Copy8" HorizontalAlignment="Left" Height="118" Margin="157,10,0,0" VerticalAlignment="Top" Width="128" BorderBrush="#FF4AEE0D" BorderThickness="4" Click="btnClients_Copy3_Click" Grid.Column="2">
+                                <DockPanel LastChildFill="True">
+                                    <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom" Foreground="#FF343434" Content="Payments"/>
+                                    <Image Source="Images/Payment.ico" />
+                                </DockPanel>
+                            </Button>
 
                         </Grid>
                     </TabItem>

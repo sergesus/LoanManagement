@@ -51,6 +51,7 @@ namespace LoanManagement.Desktop
             {
                 wpfLoanSearch frm = new wpfLoanSearch();
                 frm.status = "VoidClosed";
+                frm.iDept = "Financing";
                 this.Close();
                 frm.ShowDialog();
             }
@@ -67,6 +68,7 @@ namespace LoanManagement.Desktop
             {
                 wpfLoanSearch frm = new wpfLoanSearch();
                 frm.status = "Renewal";
+                frm.iDept = "Financing";
                 this.Close();
                 frm.ShowDialog();
             }
@@ -75,6 +77,16 @@ namespace LoanManagement.Desktop
                 System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
+        }
+
+        private void btnPass_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnClear_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

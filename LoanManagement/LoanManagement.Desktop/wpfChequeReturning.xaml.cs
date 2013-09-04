@@ -94,7 +94,7 @@ namespace LoanManagement.Desktop
                             ctx.ClosedAccounts.Add(cc);
 
                             var chq = from c in ctx.FPaymentInfo
-                                      where c.PaymentStatus != "Cleared"
+                                      where c.PaymentStatus != "Cleared" && c.LoanID==fp.LoanID
                                       select c;
 
                             foreach (var item in chq)

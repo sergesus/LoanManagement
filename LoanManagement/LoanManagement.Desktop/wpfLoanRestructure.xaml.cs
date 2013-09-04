@@ -28,6 +28,7 @@ namespace LoanManagement.Desktop
         public int lId;
         public int myNum;
         public TextBox[] textarray;
+        public bool cont = false;
         public wpfLoanRestructure()
         {
             InitializeComponent();
@@ -286,6 +287,21 @@ namespace LoanManagement.Desktop
                 {
                     using (var ctx = new MyLoanContext())
                     {
+                        wpfCheckout frm = new wpfCheckout();
+                        var lon = ctx.Loans.Find(lId);
+                        frm.lId = lId;
+                        frm.status = "Restructure";
+                        frm.lbl2.Content = (Convert.ToDouble(txtAmt.Text) * (lon.Service.RestructureFee / 100)).ToString("N2");
+                        frm.ShowDialog();
+                    }
+                    if (cont != true)
+                    {
+                        MessageBox.Show("Please pay restructure fee first");
+                        return;
+                    }
+
+                    using (var ctx = new MyLoanContext())
+                    {
                         var bk = ctx.Banks.Where(x => x.BankName == cmbBank.Text).First();
                         int bId = bk.BankID;
                         var lon = ctx.Loans.Find(lId);
@@ -320,12 +336,24 @@ namespace LoanManagement.Desktop
                         this.Close();
                     }
                 }
+                
+
             }
             catch (Exception ex)
             {
                 System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
+        }
+
+        private void btnRelease_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void cmbMode_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            refresh();
         }
     }
 }

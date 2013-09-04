@@ -43,7 +43,7 @@ namespace LoanManagement.Desktop
                               select lo;
                     foreach (var item in lon)
                     {
-                        var ctr = ctx.FPaymentInfo.Where(x => (x.PaymentDate <= DateTime.Today.Date && x.LoanID == item.LoanID) && (x.PaymentStatus == "Due" || x.PaymentStatus == "Returned")).Count();
+                        var ctr = ctx.FPaymentInfo.Where(x => (x.PaymentDate <= DateTime.Today.Date && x.LoanID == item.LoanID) && (x.PaymentStatus == "Due" || x.PaymentStatus == "Returned" || x.PaymentStatus == "Due/Pending" || x.PaymentStatus == "Deposited")).Count();
                         if (ctr == 0)
                         {
                             item.PaymentStatus = "Due";
@@ -53,12 +53,25 @@ namespace LoanManagement.Desktop
                             item.PaymentStatus = "Due/Pending";
                         }
                     }
+
+                    var dep = from d in ctx.FPaymentInfo
+                              where d.PaymentStatus == "Due"
+                              select d;
+                    foreach (var item in dep)
+                    {
+                        var ctr = ctx.FPaymentInfo.Where(x => x.LoanID == item.LoanID && x.PaymentStatus == "Deposited").Count();
+                        if (ctr != 0)
+                        {
+                            item.PaymentStatus = "Due/Pending";
+                        }
+                    }
+
                     ctx.SaveChanges();
                 }
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                //System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
         }
@@ -86,6 +99,7 @@ namespace LoanManagement.Desktop
                 {
                     using (var ctx = new MyLoanContext())
                     {
+                        lblDep.Content = "Deposit";
                         var chq = from ch in ctx.FPaymentInfo
                                   where ch.PaymentStatus == "Due"
                                   select new { LoanID = ch.LoanID, ChequeID = ch.ChequeInfo, ClientName = ch.Loan.Client.FirstName + " " + ch.Loan.Client.LastName, PaymentDate = ch.PaymentDate };
@@ -96,8 +110,10 @@ namespace LoanManagement.Desktop
                         //lblTOL.Text = str.ToString();
                         //MessageBox.Show(str);
                         state = "Dep";
-                        btnDep.Content = "Deposit all cheques";
+                        //lblDep.Content = "Deposit all cheques";
                     }
+                    btnCash.Visibility = Visibility.Hidden;
+                    btnNew.Visibility = Visibility.Hidden;
                 }
                 else if (rdDeposited.IsChecked == true)
                 {
@@ -107,12 +123,14 @@ namespace LoanManagement.Desktop
                                   where ch.PaymentStatus == "Deposited"
                                   select new { LoanID = ch.LoanID, No = ch.PaymentNumber, ChequeID = ch.ChequeInfo, ClientName = ch.Loan.Client.FirstName + " " + ch.Loan.Client.LastName, PaymentDate = ch.PaymentDate, DateDeposited = ch.DepositedCheque.DepositDate };
                         dg.ItemsSource = chq.ToList();
-                        if (status == "Deposit")
-                            btnDep.Content = "Void";
+                        if (status == "Deposit"){
+                            lblDep.Content = "Void";}
                         else if (status == "Returning")
-                            btnDep.Content = "Mark as Returned";
+                            lblDep.Content = "Mark as Returned";
                         state = "Undep";
                     }
+                    btnCash.Visibility = Visibility.Hidden;
+                    btnNew.Visibility = Visibility.Hidden;
                 }
                 else
                 {
@@ -123,16 +141,18 @@ namespace LoanManagement.Desktop
                                   select new { LoanID = ch.LoanID, No = ch.PaymentNumber, ChequeID = ch.ChequeInfo, ClientName = ch.Loan.Client.FirstName + " " + ch.Loan.Client.LastName, PaymentDate = ch.PaymentDate, DateDeposited = ch.DepositedCheque.DepositDate };
                         dg.ItemsSource = chq.ToList();
                         if (status == "Deposit")
-                            btnDep.Content = "Re-deposit";
+                            lblDep.Content = "Re-deposit";
                         else if (status == "Returning")
-                            btnDep.Content = "Void Returning";
+                            lblDep.Content = "Void Returning";
                         state = "Redep";
+                        btnCash.Visibility = Visibility.Visible;
+                        btnNew.Visibility = Visibility.Visible;
                     }
                 }
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                //System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
         }
@@ -326,6 +346,51 @@ namespace LoanManagement.Desktop
             try
             {
                 rg();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void btnNew_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                using (var ctx = new MyLoanContext())
+                {
+                    int id = Convert.ToInt32(getRow(dg, 0));
+                    int num = Convert.ToInt32(getRow(dg, 1));
+                    FPaymentInfo fp = ctx.FPaymentInfo.Where(x => x.LoanID == id && x.PaymentNumber == num).First();
+                    DepositedCheque dp = ctx.DepositedCheques.Find(fp.FPaymentInfoID);
+                    wpfNewCheque frm = new wpfNewCheque();
+                    frm.fId = fp.FPaymentInfoID;
+                    frm.ShowDialog();
+                    //frm.dId = dp.FPaymentInfoID;
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void btnCash_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                using (var ctx = new MyLoanContext())
+                {
+                    int id = Convert.ToInt32(getRow(dg, 0));
+                    int num = Convert.ToInt32(getRow(dg, 1));
+                    FPaymentInfo fp = ctx.FPaymentInfo.Where(x => x.LoanID == id && x.PaymentNumber == num).First();
+                    DepositedCheque dp = ctx.DepositedCheques.Find(fp.FPaymentInfoID);
+                    wpfCheckout frm = new wpfCheckout();
+                    frm.status = "PBC";//pay by cash
+                    frm.fId = fp.FPaymentInfoID;
+                }
             }
             catch (Exception ex)
             {

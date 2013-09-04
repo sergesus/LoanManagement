@@ -51,6 +51,7 @@ namespace LoanManagement.Desktop
             {
                 wpfLoanSearch frm = new wpfLoanSearch();
                 frm.status = "Holding";
+                frm.iDept = "Financing";
                 this.Close();
                 frm.ShowDialog();
             }
@@ -114,6 +115,7 @@ namespace LoanManagement.Desktop
             {
                 wpfLoanSearch frm = new wpfLoanSearch();
                 frm.status = "Voiding";
+                frm.iDept = "Financing";
                 this.Close();
                 frm.ShowDialog();
             }
@@ -123,5 +125,7 @@ namespace LoanManagement.Desktop
                 return;
             }
         }
+
+
     }
 }

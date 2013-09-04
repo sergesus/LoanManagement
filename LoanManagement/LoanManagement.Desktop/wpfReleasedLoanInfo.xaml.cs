@@ -134,8 +134,8 @@ namespace LoanManagement.Desktop
                         lblHF.Content = hf.ToString("N2");
                         if (status == "Holding")
                         {
-                            btnUpdate.Content = "Hold next cheque";
-                            btnVoid.Content = "Unhold held cheque";
+                            lbl1.Content = "Hold next cheque";
+                            lbl2.Content = "Unhold held cheque";
                             var dts = ctx.FPaymentInfo.Where(x => x.LoanID == lId && (x.PaymentStatus == "Pending" || x.PaymentStatus == "On Hold")).First();
                             var dt = dts.PaymentDate.AddDays(-14);
                             var dt1 = dt.AddDays(11);
@@ -149,8 +149,8 @@ namespace LoanManagement.Desktop
                         }
                         else if (status == "Adjustment")
                         {
-                            btnUpdate.Content = "Adjust Payment";
-                            btnVoid.Content = "Void Adjustment";
+                            lbl1.Content = "Adjust Payment";
+                            lbl2.Content = "Void Adjustment";
                             var ctr1 = ctx.AdjustedLoans.Where(x => x.LoanID == lId).Count();
                             if (ctr1 > 0)
                             {
@@ -280,7 +280,7 @@ namespace LoanManagement.Desktop
                             System.Windows.MessageBox.Show("Unable to hold next cheque", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                             return;
                         }
-                        MessageBoxResult mr = System.Windows.MessageBox.Show("You sure?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                        /*MessageBoxResult mr = System.Windows.MessageBox.Show("You sure?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
                         if (mr == MessageBoxResult.Yes)
                         {
                             var dts = ctx.FPaymentInfo.Where(x => x.LoanID == lId && (x.PaymentStatus == "Pending" || x.PaymentStatus == "On Hold")).First();
@@ -296,7 +296,11 @@ namespace LoanManagement.Desktop
                             System.Windows.MessageBox.Show("Okay");
 
 
-                        }
+                        }*/
+                        wpfCheckout frm = new wpfCheckout();
+                        frm.lId = lId;
+                        frm.status = "Holding";
+                        frm.ShowDialog();
 
                     }
                 }
@@ -419,6 +423,11 @@ namespace LoanManagement.Desktop
                 frm.cId = lon.ClientID;
             }
             frm.ShowDialog();
+        }
+
+        private void wdw1_Activated(object sender, EventArgs e)
+        {
+            reset();
         }
     }
 }

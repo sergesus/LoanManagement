@@ -41,7 +41,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                MessageBoxResult mr = MessageBox.Show("Sure?", "Question", MessageBoxButton.YesNo);
+                /*MessageBoxResult mr = MessageBox.Show("Sure?", "Question", MessageBoxButton.YesNo);
                 if (mr == MessageBoxResult.Yes)
                 {
                     using (var ctx = new MyLoanContext())
@@ -56,10 +56,23 @@ namespace LoanManagement.Desktop
                         }
                         ctx.AdjustedLoans.Add(al);
                         ctx.SaveChanges();
-                        MessageBox.Show("Okay");
                         this.Close();
                     }
                 }
+                 * */
+
+                if (Convert.ToInt32(txtDays.Text) > 14)
+                {
+                    MessageBox.Show("Maximum of 14 days only");
+                    return;
+                }
+                wpfCheckout frm = new wpfCheckout();
+                frm.status = "Adjustment";
+                frm.days = Convert.ToDouble(txtDays.Text);
+                frm.lId = lId;
+                frm.lbl2.Content = lblFee.Content;
+                frm.ShowDialog();
+                this.Close();
             }
             catch (Exception ex)
             {

@@ -21,6 +21,7 @@ namespace LoanManagement.Desktop
     public partial class wpfSelectApplication : MetroWindow
     {
         public string status;
+        public string iDept;
 
         public wpfSelectApplication()
         {
@@ -40,13 +41,13 @@ namespace LoanManagement.Desktop
                 wdw1.Background = myBrush;
                 if (status == "Approval")
                 {
-                    btnNew.Content = "View all Applied Loans";
-                    btnView.Content = "View/Update Approved and Declined Loans";
+                    lbl1.Content = "View all Applied Loans";
+                    lbl2.Content = "Update Loans";
                 }
                 else if (status == "Releasing")
                 {
-                    btnNew.Content = "View all Approved Loans";
-                    btnView.Content = "View/Update Released Loans";
+                    lbl1.Content = "View all Approved Loans";
+                    lbl2.Content = "Update Released Loans";
                 }
             }
             catch (Exception ex)
@@ -64,6 +65,7 @@ namespace LoanManagement.Desktop
                 {
                     this.Close();
                     wpfSelectClient frm = new wpfSelectClient();
+                    frm.iDept = iDept;
                     frm.ShowDialog();
                 }
                 else
@@ -71,6 +73,7 @@ namespace LoanManagement.Desktop
                     this.Close();
                     wpfLoanSearch frm = new wpfLoanSearch();
                     frm.status = status;
+                    frm.iDept = iDept;
                     frm.ShowDialog();
                 }
             }
@@ -91,6 +94,7 @@ namespace LoanManagement.Desktop
                     this.Close();
                     wpfLoanSearch frm = new wpfLoanSearch();
                     frm.status = "Application";
+                    frm.iDept = iDept;
                     frm.ShowDialog();
                 }
                 else if (status == "Approval")
@@ -98,6 +102,7 @@ namespace LoanManagement.Desktop
                     this.Close();
                     wpfLoanSearch frm = new wpfLoanSearch();
                     frm.status = "UApproval";
+                    frm.iDept = iDept;
                     frm.ShowDialog();
                 }
                 else if (status == "Releasing")
@@ -105,6 +110,7 @@ namespace LoanManagement.Desktop
                     this.Close();
                     wpfLoanSearch frm = new wpfLoanSearch();
                     frm.status = "UReleasing";
+                    frm.iDept = iDept;
                     frm.ShowDialog();
                 }
             }

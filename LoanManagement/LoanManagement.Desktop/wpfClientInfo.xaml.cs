@@ -1826,6 +1826,7 @@ namespace LoanManagement.Desktop
                         }
                         ctx.SaveChanges();
                         var cts1 = from ct in ctx.ClientContacts
+                                   where ct.ClientID==cId
                                    select new { ContactNumber = ct.ContactNumber, Contact = ct.Contact, Primary = ct.Primary };
                         dgContact.ItemsSource = cts1.ToList();
                     }

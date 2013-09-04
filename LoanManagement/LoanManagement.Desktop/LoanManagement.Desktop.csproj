@@ -91,6 +91,9 @@
     <Compile Include="wpfBankInfo.xaml.cs">
       <DependentUpon>wpfBankInfo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="wpfCheckout.xaml.cs">
+      <DependentUpon>wpfCheckout.xaml</DependentUpon>
+    </Compile>
     <Compile Include="wpfChequeClearing.xaml.cs">
       <DependentUpon>wpfChequeClearing.xaml</DependentUpon>
     </Compile>
@@ -146,6 +149,9 @@
     <Compile Include="wpfMain.xaml.cs">
       <DependentUpon>wpfMain.xaml</DependentUpon>
     </Compile>
+    <Compile Include="wpfNewCheque.xaml.cs">
+      <DependentUpon>wpfNewCheque.xaml</DependentUpon>
+    </Compile>
     <Compile Include="wpfPaymentAdjustment.xaml.cs">
       <DependentUpon>wpfPaymentAdjustment.xaml</DependentUpon>
     </Compile>
@@ -190,6 +196,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="wpfBankInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="wpfCheckout.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -258,6 +268,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="wpfMain.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="wpfNewCheque.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -334,6 +348,73 @@
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Services.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Bank.ico" />
+    <Resource Include="Images\Clients.ico" />
+    <Resource Include="Images\Employee.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Bulb.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Add.ico" />
+    <Resource Include="Images\View.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Adjustment.ico" />
+    <Resource Include="Images\Application.ico" />
+    <Resource Include="Images\Approval.ico" />
+    <Resource Include="Images\Manage.ico" />
+    <Resource Include="Images\Payment.ico" />
+    <Resource Include="Images\Releasing.ico" />
+    <Resource Include="Images\Restructure.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Clear.ico" />
+    <Resource Include="Images\Deposit.ico" />
+    <Resource Include="Images\Hold.ico" />
+    <Resource Include="Images\Return.ico" />
+    <Resource Include="Images\Void.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Renew.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Collectors.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Cont.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Search.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Information.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Decline.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Refresh.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Save.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Login.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Continue.ico" />
+    <Resource Include="Images\Lock.ico" />
+    <Resource Include="Images\Machine.ico" />
+    <Resource Include="Images\PULL1.ico" />
+    <Resource Include="Images\PULL2.ico" />
+    <Resource Include="Images\PUSH1.ico" />
+    <Resource Include="Images\PUSH2.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

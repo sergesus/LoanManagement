@@ -97,8 +97,8 @@ namespace LoanManagement.Desktop
 
                     if (status == "UApproval")
                     {
-                        btnApprove.Content = "Update Approval";
-                        btnDecline.Content = "Revert Approval";
+                        lbl1.Content = "Update Approval";
+                        lbl2.Content = "Revert Approval";
                         if (lon.Status == "Declined")
                         {
                             btnApprove.Visibility = Visibility.Hidden;
@@ -106,7 +106,7 @@ namespace LoanManagement.Desktop
                     }
                     else if (status == "Releasing")
                     {
-                        btnApprove.Content = "Release Loan";
+                        lbl1.Content = "Release Loan";
                         btnDecline.Visibility = Visibility.Hidden;
                         lblR.Visibility = Visibility.Visible;
                         lblReason1.Visibility = Visibility.Visible;
@@ -261,6 +261,11 @@ namespace LoanManagement.Desktop
                 System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
+        }
+
+        private void wdw1_Activated(object sender, EventArgs e)
+        {
+
         }
 
     }

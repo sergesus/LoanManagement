@@ -168,5 +168,10 @@ namespace LoanManagement.Desktop
             }
         }
 
+        private void btnAdd_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
     }
 }

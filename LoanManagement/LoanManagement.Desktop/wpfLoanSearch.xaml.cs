@@ -24,6 +24,7 @@ namespace LoanManagement.Desktop
     public partial class wpfLoanSearch : MetroWindow
     {
         public string status;
+        public string iDept;
 
         public wpfLoanSearch()
         {
@@ -55,7 +56,7 @@ namespace LoanManagement.Desktop
                     using (var ctx = new MyLoanContext())
                     {
                         var lon = from ln in ctx.Loans
-                                  where ln.Status == "Approved" || ln.Status == "Declined"
+                                  where (ln.Status == "Approved" || ln.Status == "Declined") && ln.Service.Department == iDept
                                   select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
                         dgLoan.ItemsSource = lon.ToList();
 
@@ -66,7 +67,7 @@ namespace LoanManagement.Desktop
                     using (var ctx = new MyLoanContext())
                     {
                         var lon = from ln in ctx.Loans
-                                  where ln.Status == "Applied"
+                                  where ln.Status == "Applied" && ln.Service.Department == iDept
                                   select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
                         dgLoan.ItemsSource = lon.ToList();
 
@@ -77,7 +78,7 @@ namespace LoanManagement.Desktop
                     using (var ctx = new MyLoanContext())
                     {
                         var lon = from ln in ctx.Loans
-                                  where ln.Status == "Approved"
+                                  where ln.Status == "Approved" && ln.Service.Department == iDept
                                   select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
                         dgLoan.ItemsSource = lon.ToList();
 
@@ -88,7 +89,7 @@ namespace LoanManagement.Desktop
                     using (var ctx = new MyLoanContext())
                     {
                         var lon = from ln in ctx.Loans
-                                  where ln.Status == "Released"
+                                  where ln.Status == "Released" && ln.Service.Department == iDept
                                   select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
                         dgLoan.ItemsSource = lon.ToList();
 
@@ -99,7 +100,7 @@ namespace LoanManagement.Desktop
                     using (var ctx = new MyLoanContext())
                     {
                         var lon = from ln in ctx.Loans
-                                  where ln.Status == "Released" || ln.Status == "Active"
+                                  where (ln.Status == "Released" || ln.Status == "Active") && ln.Service.Department == iDept
                                   select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
                         dgLoan.ItemsSource = lon.ToList();
 
@@ -110,7 +111,7 @@ namespace LoanManagement.Desktop
                     using (var ctx = new MyLoanContext())
                     {
                         var lon = from ln in ctx.Loans
-                                  where ln.Status == "Released" || ln.Status == "Active"
+                                  where (ln.Status == "Released" || ln.Status == "Active") && ln.Service.Department == iDept
                                   select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
                         dgLoan.ItemsSource = lon.ToList();
                         btnView.Content = "Void last payment";
@@ -121,7 +122,7 @@ namespace LoanManagement.Desktop
                     using (var ctx = new MyLoanContext())
                     {
                         var lon = from ln in ctx.Loans
-                                  where ln.Status == "Closed Account"
+                                  where ln.Status == "Closed Account" && ln.Service.Department == iDept
                                   select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
                         dgLoan.ItemsSource = lon.ToList();
                         btnView.Content = "Void Closed Account";
@@ -132,7 +133,7 @@ namespace LoanManagement.Desktop
                     using (var ctx = new MyLoanContext())
                     {
                         var lon = from ln in ctx.Loans
-                                  where ln.Status == "Closed Account"
+                                  where ln.Status == "Closed Account" && ln.Service.Department == iDept
                                   select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
                         dgLoan.ItemsSource = lon.ToList();
                         btnView.Content = "Renew Closed Account";
@@ -143,7 +144,7 @@ namespace LoanManagement.Desktop
                     using (var ctx = new MyLoanContext())
                     {
                         var lon = from ln in ctx.Loans
-                                  where ln.Status == "Released" || ln.Status == "Active"
+                                  where (ln.Status == "Released" || ln.Status == "Active") && (ln.FPaymentInfo.Where(x => x.PaymentStatus == "Due" || x.PaymentStatus == "On Hold" || x.PaymentStatus == "Due" || x.PaymentStatus == "Due/Pending").Count() < 1) && ln.Service.Department == iDept
                                   select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
                         dgLoan.ItemsSource = lon.ToList();
                         btnView.Content = "Adjust Payment Date";
@@ -154,7 +155,7 @@ namespace LoanManagement.Desktop
                     using (var ctx = new MyLoanContext())
                     {
                         var lon = from ln in ctx.Loans
-                                  where (ln.Status == "Released" || ln.Status == "Active") && ln.FPaymentInfo.Where(x => x.PaymentStatus == "Cleared").Count() >= 3
+                                  where (ln.Status == "Released" || ln.Status == "Active") && (ln.FPaymentInfo.Where(x => x.PaymentStatus == "Cleared").Count() >= 3) && ln.Service.Department == iDept
                                   select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
                         dgLoan.ItemsSource = lon.ToList();
                         btnView.Content = "View";
@@ -291,9 +292,18 @@ namespace LoanManagement.Desktop
                             var fp2 = from f in ctx.FPaymentInfo
                                       where f.LoanID == n && f.PaymentStatus != "Cleared"
                                       select f;
+                            int myC = 0;
                             foreach (var item in fp2)
                             {
-                                item.PaymentStatus = "Pending";
+                                if (myC == 0)
+                                {
+                                    item.PaymentStatus = "Deposited";
+                                }
+                                else
+                                {
+                                    item.PaymentStatus = "Pending";
+                                }
+                                myC++;
                             }
                             ctx.SaveChanges();
                             MessageBox.Show("Okay");

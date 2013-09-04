@@ -250,6 +250,7 @@ namespace LoanManagement.Desktop
             {
                 wpfSelectApplication frm = new wpfSelectApplication();
                 frm.status = "Application";
+                frm.iDept = "Financing";
                 frm.ShowDialog();
             }
             catch (Exception ex)
@@ -265,6 +266,7 @@ namespace LoanManagement.Desktop
             {
                 wpfSelectApplication frm = new wpfSelectApplication();
                 frm.status = "Approval";
+                frm.iDept = "Financing";
                 frm.ShowDialog();
             }
             catch (Exception ex)
@@ -290,6 +292,7 @@ namespace LoanManagement.Desktop
             {
                 wpfSelectApplication frm = new wpfSelectApplication();
                 frm.status = "Releasing";
+                frm.iDept = "Financing";
                 frm.ShowDialog();
             }
             catch (Exception ex)
@@ -337,6 +340,7 @@ namespace LoanManagement.Desktop
             try
             {
                 wpfLoanSearch frm = new wpfLoanSearch();
+                frm.iDept = "Financing";
                 frm.status = "Adjustment";
                 frm.ShowDialog();
             }
@@ -353,6 +357,249 @@ namespace LoanManagement.Desktop
             {
                 wpfLoanSearch frm = new wpfLoanSearch();
                 frm.status = "Restructure";
+                frm.iDept = "Financing";
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void itm7_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                wpfSelectApplication frm = new wpfSelectApplication();
+                frm.status = "Application";
+                frm.iDept = "Micro Business";
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void itm14_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                wpfSelectApplication frm = new wpfSelectApplication();
+                frm.status = "Approval";
+                frm.iDept = "Micro Business";
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void btnClients_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                wpfClient frm = new wpfClient();
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                wpfServices frm = new wpfServices();
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void btnBank_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                wpfBranch frm = new wpfBranch();
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void Button_Click_2(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                wpfEmployee frm = new wpfEmployee();
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void btnAgents_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                wpfAgent frm = new wpfAgent();
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void btnLoanAppllication_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                wpfSelectApplication frm = new wpfSelectApplication();
+                frm.status = "Application";
+                frm.iDept = "Financing";
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void btnClients_Copy1_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                wpfSelectApplication frm = new wpfSelectApplication();
+                frm.status = "Approval";
+                frm.iDept = "Financing";
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void btnClients_Copy2_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                wpfSelectApplication frm = new wpfSelectApplication();
+                frm.status = "Releasing";
+                frm.iDept = "Financing";
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void btnClients_Copy3_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                wpfSelectPayment frm = new wpfSelectPayment();
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void btnClients_Copy4_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                wpfSelectClosed frm = new wpfSelectClosed();
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void btnClients_Copy5_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                wpfLoanSearch frm = new wpfLoanSearch();
+                frm.status = "Restructure";
+                frm.iDept = "Financing";
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void btnClients_Copy6_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                wpfLoanSearch frm = new wpfLoanSearch();
+                frm.iDept = "Financing";
+                frm.status = "Adjustment";
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void btnLoanAppllication_Copy_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                wpfSelectApplication frm = new wpfSelectApplication();
+                frm.status = "Application";
+                frm.iDept = "Micro Business";
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void btnClients_Copy_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                wpfSelectApplication frm = new wpfSelectApplication();
+                frm.status = "Approval";
+                frm.iDept = "Micro Business";
                 frm.ShowDialog();
             }
             catch (Exception ex)

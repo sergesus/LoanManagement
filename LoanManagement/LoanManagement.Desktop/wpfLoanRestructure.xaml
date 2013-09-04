@@ -23,27 +23,49 @@
             <ColumnDefinition Width="226*"/>
             <ColumnDefinition Width="417*"/>
         </Grid.ColumnDefinitions>
-        <ComboBox x:Name="cmbBank" HorizontalAlignment="Left" Height="32" Margin="85,42,0,0" VerticalAlignment="Top" Width="264" FontSize="18"/>
-        <DataGrid x:Name="dgSOA" HorizontalAlignment="Left" Margin="414,116,0,213" Width="712" FontSize="16" GridLinesVisibility="Vertical" Grid.ColumnSpan="3"/>
-        <Label Content="Remaining Amount:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="414,49,0,0" Width="177" FontSize="16" Foreground="#FF32AFD4" FontWeight="Bold" RenderTransformOrigin="1.107,0.71" Grid.ColumnSpan="2"/>
-        <TextBox x:Name="txtAmt" HorizontalAlignment="Left" Height="31" Margin="99,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="329" Grid.ColumnSpan="2" Grid.Column="1" IsEnabled="False"/>
-        <Label Content="Generated SOA:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="415,85,0,0" Width="177" FontSize="16" Foreground="#FF32AFD4" FontWeight="Bold" Grid.ColumnSpan="2"/>
-        <Label x:Name="lbl2" Content="With Interest:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="415,436,0,0" Width="124" FontSize="16" Foreground="#FF32AFD4" Grid.ColumnSpan="2"/>
-        <Label x:Name="lbl4" Content="Monthly Payment:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="415,467,0,0" Width="148" FontSize="16" Foreground="#FF32AFD4" Grid.ColumnSpan="2"/>
-        <Label x:Name="lblInt" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="42,436,0,0" Width="275" FontSize="16" Foreground="Black" Grid.ColumnSpan="2" Grid.Column="1" LostFocus="lblInt_LostFocus"/>
-        <Label x:Name="lblMonthly" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="77,467,0,0" Width="275" FontSize="16" Foreground="Black" Grid.ColumnSpan="2" Grid.Column="1"/>
-        <Button x:Name="btnRestructure" Content="Restructure Loan" HorizontalAlignment="Left" Height="44" Margin="198,511,0,0" VerticalAlignment="Top" Width="206" Background="#FF32AFD4" Grid.Column="2" Click="btnRestructure_Click"/>
-        <Label Content="Mode Of Payment:" HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="148" Margin="415,498,0,0" FontSize="16" Foreground="Red" Grid.ColumnSpan="2"/>
-        <ComboBox x:Name="cmbMode" HorizontalAlignment="Left" Height="27" Margin="77,503,0,0" VerticalAlignment="Top" Width="249" FontSize="16" Grid.ColumnSpan="2" Grid.Column="1"/>
-        <Label Content="Term:" HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="102" Margin="415,374,0,0" FontSize="16" Foreground="Red" Grid.ColumnSpan="2"/>
-        <TextBox x:Name="txtTerm" HorizontalAlignment="Left" Height="25" Margin="490,374,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="182" FontSize="16" LostFocus="txtTerm_LostFocus" Grid.ColumnSpan="2"/>
-        <Label Content="Months" HorizontalAlignment="Left" Height="27" VerticalAlignment="Top" Width="74" Margin="179,371,0,0" FontSize="16" Grid.ColumnSpan="2" Grid.Column="1"/>
-        <Button x:Name="btnRef" Content="Refresh" HorizontalAlignment="Left" Height="31" Margin="100,85,0,0" VerticalAlignment="Top" Width="93" Click="btnRef_Click" Grid.Column="1"/>
-        <ScrollViewer HorizontalAlignment="Left" Height="398" Margin="10,111,0,0" VerticalAlignment="Top" Width="399" HorizontalScrollBarVisibility="Auto" CanContentScroll="True">
+        <ComboBox x:Name="cmbBank" HorizontalAlignment="Left" Height="32" Margin="83,80,0,0" VerticalAlignment="Top" Width="266" FontSize="18"/>
+        <DataGrid x:Name="dgSOA" HorizontalAlignment="Left" Margin="414,153,0,192" Width="712" FontSize="16" GridLinesVisibility="Vertical" Grid.ColumnSpan="3">
+            <DataGrid.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" 
+    					Color="#CC48CB00"/>
+            </DataGrid.Resources>
+        </DataGrid>
+        <Label Content="Principal Amount:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="414,80,0,0" Width="177" FontSize="16" Foreground="#CC48CB00" FontWeight="Bold" RenderTransformOrigin="1.107,0.71" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="txtAmt" HorizontalAlignment="Left" Height="31" Margin="99,80,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="329" Grid.ColumnSpan="2" Grid.Column="1"/>
+        <Label Content="Generated SOA:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="415,116,0,0" Width="177" FontSize="16" Foreground="#CC48CB00" FontWeight="Bold" Grid.ColumnSpan="2"/>
+        <Label x:Name="lbl1" Content="Total Amt.:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="418,398,0,0" Width="96" FontSize="16" Foreground="#CC48CB00" FontWeight="Bold" Grid.ColumnSpan="2"/>
+        <Label x:Name="lbl2" Content="Total Payment:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="418,467,0,0" Width="124" FontSize="16" Foreground="#CC48CB00" FontWeight="Bold" Grid.ColumnSpan="2"/>
+        <Label x:Name="lbl4" Content="Monthly Payment:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="65,440,0,0" Width="148" FontSize="16" Foreground="#CC48CB00" FontWeight="Bold" Grid.Column="2"/>
+        <Label x:Name="lblPrincipal" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="22,398,0,0" Width="275" FontSize="16" Foreground="Black" Grid.ColumnSpan="2" Grid.Column="1"/>
+        <Label x:Name="lblInt" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="50,471,0,0" Width="236" FontSize="16" Foreground="Black" Grid.ColumnSpan="2" Grid.Column="1"/>
+        <Label x:Name="lblMonthly" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="221,445,0,0" Width="182" FontSize="16" Foreground="Black" Grid.Column="2"/>
+        <Label Content="Mode Of Payment:" HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="148" Margin="65,476,0,0" FontSize="16" Foreground="Red" FontWeight="Bold" Grid.Column="2"/>
+        <ComboBox x:Name="cmbMode" HorizontalAlignment="Left" Height="27" Margin="221,481,0,0" VerticalAlignment="Top" Width="182" FontSize="16" SelectionChanged="cmbMode_SelectionChanged" Grid.Column="2"/>
+        <Label Content="Term:" HorizontalAlignment="Left" Height="40" VerticalAlignment="Top" Width="101" Margin="64,403,0,0" FontSize="16" Foreground="Red" FontWeight="Bold" Grid.Column="2"/>
+        <TextBox x:Name="txtTerm" HorizontalAlignment="Left" Height="25" Margin="133,406,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="182" FontSize="16" LostFocus="txtTerm_LostFocus" Grid.Column="2"/>
+        <Label Content="Months" HorizontalAlignment="Left" Height="27" VerticalAlignment="Top" Width="74" Margin="320,403,0,0" FontSize="16" Grid.Column="2"/>
+        <ScrollViewer HorizontalAlignment="Left" Height="359" Margin="10,142,0,0" VerticalAlignment="Top" Width="399" HorizontalScrollBarVisibility="Auto" CanContentScroll="True">
             <StackPanel x:Name="stck" Orientation="Vertical" Height="394" Width="339"/>
         </ScrollViewer>
-        <Label Content="Int:" HorizontalAlignment="Left" Height="29" VerticalAlignment="Top" Width="101" Margin="415,402,0,0" FontSize="16" Foreground="Red" Grid.ColumnSpan="2"/>
-        <TextBox x:Name="txtInt" HorizontalAlignment="Left" Height="25" Margin="490,405,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="68" FontSize="16" LostFocus="txtTerm_LostFocus" Grid.ColumnSpan="2"/>
+        <Label Content="Bank:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,80,0,0" Width="137" FontSize="16" Foreground="#CC48CB00" FontWeight="Bold" RenderTransformOrigin="1.107,0.71"/>
+        <Grid HorizontalAlignment="Left" Height="74" VerticalAlignment="Top" Width="1157" Background="#7F48CB00" Margin="0,0,-17,0" Grid.ColumnSpan="3">
+            <Image HorizontalAlignment="Left" Height="74" VerticalAlignment="Top" Width="97" Source="Images/Restructure.ico"/>
+            <Label Content="Loan Restructure" HorizontalAlignment="Left" Height="54" Margin="87,10,0,0" VerticalAlignment="Top" Width="285" FontSize="30"/>
+        </Grid>
+        <Button x:Name="btnRestructure" HorizontalAlignment="Left" Height="40" Margin="239,535,0,0" VerticalAlignment="Top" Width="164" BorderBrush="#CC48CB00" BorderThickness="2" Background="#7F48CB00" Grid.Column="2" Click="btnRestructure_Click">
+            <DockPanel LastChildFill="True">
+                <Label HorizontalContentAlignment="Center" DockPanel.Dock="Right" Foreground="#FF343434" Height="31" FontSize="16" Content="Restructure"/>
+                <Image Source="Images/Restructure.ico" />
+            </DockPanel>
+        </Button>
+        <Button x:Name="btnRef" HorizontalAlignment="Left" Height="29" Margin="99,118,0,0" VerticalAlignment="Top" Width="142" BorderBrush="#CC48CB00" BorderThickness="2" Background="#7F48CB00" Click="btnRef_Click" Grid.ColumnSpan="2" Grid.Column="1">
+            <DockPanel LastChildFill="True">
+                <Label HorizontalContentAlignment="Center" DockPanel.Dock="Right" Foreground="#FF343434" Height="24" FontSize="10" Content="Refresh"/>
+                <Image Source="Images/Refresh.ico" />
+            </DockPanel>
+        </Button>
+        <Label Content="Int:" HorizontalAlignment="Left" Height="29" VerticalAlignment="Top" Width="101" Margin="418,429,0,0" FontSize="16" Foreground="Red" Grid.ColumnSpan="2" FontWeight="Bold"/>
+        <TextBox x:Name="txtInt" HorizontalAlignment="Left" Height="25" Margin="22,434,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="68" FontSize="16" LostFocus="txtTerm_LostFocus" Grid.Column="1"/>
 
     </Grid>
 </Controls:MetroWindow>

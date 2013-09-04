@@ -24,6 +24,7 @@ namespace LoanManagement.Desktop
     public partial class wpfSelectClient : MetroWindow
     {
         public string status;
+        public string iDept;
 
         public wpfSelectClient()
         {
@@ -98,6 +99,7 @@ namespace LoanManagement.Desktop
                     frm.cId = Convert.ToInt32(txtID.Text);
                     frm.status = "Add";
                     frm.btnContinue.Content = "Continue";
+                    frm.iDept = iDept;
                     this.Close();
                     frm.ShowDialog();
                     //this.Close();

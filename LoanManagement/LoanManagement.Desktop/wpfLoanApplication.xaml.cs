@@ -37,6 +37,7 @@ namespace LoanManagement.Desktop
         public string status;
         public int lId;
         public int ciId;
+        public string iDept;
 
         public wpfLoanApplication()
         {
@@ -84,9 +85,12 @@ namespace LoanManagement.Desktop
                               select sv;
                     foreach (var item in svc)
                     {
-                        ComboBoxItem itm = new ComboBoxItem();
-                        itm.Content = item.Name;
-                        cmbServices.Items.Add(itm);
+                        if (item.Department == iDept)
+                        {
+                            ComboBoxItem itm = new ComboBoxItem();
+                            itm.Content = item.Name;
+                            cmbServices.Items.Add(itm);
+                        }
                     }
                 }
                 cmbServices.IsEnabled = true;

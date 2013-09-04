@@ -183,5 +183,10 @@ namespace LoanManagement.Desktop
                 return;
             }
         }
+
+        private void btnApprove_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

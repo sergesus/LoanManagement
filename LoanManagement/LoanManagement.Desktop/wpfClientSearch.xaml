@@ -2,7 +2,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"              
-        Title="wpfClientSearch" Height="415.319" Width="625.703" Loaded="Window_Loaded_1" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+        Title="wpfClientSearch" Height="492.419" Width="706.703" Loaded="Window_Loaded_1" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
 
     <Window.Resources>
         <ResourceDictionary>
@@ -10,7 +10,7 @@
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
-                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Blue.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Green.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedTabControl.xaml" />
             </ResourceDictionary.MergedDictionaries>
@@ -22,8 +22,22 @@
             <ColumnDefinition/>
             <ColumnDefinition Width="0*"/>
         </Grid.ColumnDefinitions>
-        <DataGrid x:Name="dgClient" HorizontalAlignment="Left" Height="279" Margin="10,55,0,0" VerticalAlignment="Top" Width="598" GridLinesVisibility="None" FontSize="22"/>
-        <Button x:Name="btnSelect" Content="Select" HorizontalAlignment="Left" Height="37" Margin="471,339,0,0" VerticalAlignment="Top" Width="137" Click="btnSelect_Click" RenderTransformOrigin="0.327,0.46"/>
+        <Grid HorizontalAlignment="Left" Height="74" VerticalAlignment="Top" Width="720" Background="#7F48CB00" Grid.ColumnSpan="2" Margin="0,0,-19,0">
+            <Image HorizontalAlignment="Left" Height="74" VerticalAlignment="Top" Width="97" Source="Images/Search.ico"/>
+            <Label Content="Client Search" HorizontalAlignment="Left" Height="54" Margin="87,10,0,0" VerticalAlignment="Top" Width="285" FontSize="30"/>
+        </Grid>
+        <DataGrid x:Name="dgClient" HorizontalAlignment="Left" Height="323" Margin="10,79,-72,-16" VerticalAlignment="Top" Width="682" CanUserAddRows="False" CanUserDeleteRows="False" FontSize="18" GridLinesVisibility="None" Grid.ColumnSpan="2" BorderBrush="#CC48CB00" BorderThickness="2" Background="#7FF0F0F0">
+            <DataGrid.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" 
+        			Color="#CC48CB00"/>
+            </DataGrid.Resources>
+        </DataGrid>
+        <Button x:Name="btnSelect" HorizontalAlignment="Left" Height="39" Margin="527,407,0,0" VerticalAlignment="Top" Width="164" BorderBrush="#CC48CB00" BorderThickness="2" Background="#7F48CB00" Click="btnSelect_Click">
+            <DockPanel LastChildFill="True">
+                <Label HorizontalContentAlignment="Center" DockPanel.Dock="Right" Foreground="#FF343434" Height="28" FontSize="16" Content="Select"/>
+                <Image Source="Images/Employee.ico" />
+            </DockPanel>
+        </Button>
 
     </Grid>
 </Controls:MetroWindow>
