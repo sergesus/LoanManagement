@@ -92,7 +92,7 @@ namespace LoanManagement.Desktop
                 int num2 = 0;
                 if (status == "Add")
                 {
-                    using (var ctx = new MyLoanContext())
+                    using (var ctx = new SystemContext())
                     {
                         num1 = ctx.TempAgentAddresses.Count();
                         num2 = ctx.TempAgentContact.Count();
@@ -100,7 +100,7 @@ namespace LoanManagement.Desktop
                 }
                 else
                 {
-                    using (var ctx = new MyLoanContext())
+                    using (var ctx = new SystemContext())
                     {
                         num1 = ctx.AgentAddresses.Where(x => x.AgentID == aId).Count();
                         num2 = ctx.AgentContacts.Where(x => x.AgentID == aId).Count();
@@ -159,7 +159,7 @@ namespace LoanManagement.Desktop
                     }
 
 
-                    using (var ctx = new MyLoanContext())
+                    using (var ctx = new SystemContext())
                     {
                         Agent agt = new Agent { FirstName = txtFName.Text, LastName = txtLName.Text,  Suffix = txtSuffix.Text, MI = txtMI.Text, Active = true,  Email = txtEmail.Text, Photo = ConvertImageToByteArray(selectedFileName) };
 
@@ -194,7 +194,7 @@ namespace LoanManagement.Desktop
                     {
                         return;
                     }
-                    using (var ctx = new MyLoanContext())
+                    using (var ctx = new SystemContext())
                     {
                         var agt = ctx.Agents.Find(aId);
                         agt.FirstName = txtFName.Text;
@@ -227,7 +227,26 @@ namespace LoanManagement.Desktop
 
         private void btnDel_Click(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure?", "Question", MessageBoxButton.YesNo);
+                if (mr == MessageBoxResult.Yes)
+                {
+                    using (var ctx = new SystemContext())
+                    {
+                        var agt = ctx.Agents.Find(aId);
+                        agt.Active = false;
+                        ctx.SaveChanges();
+                        System.Windows.MessageBox.Show("Deleted");
+                        this.Close();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         private void btnBrowse_Click(object sender, RoutedEventArgs e)
@@ -284,7 +303,7 @@ namespace LoanManagement.Desktop
                     bitmap.EndInit();
                     img.Source = bitmap;
 
-                    using (var ctx = new MyLoanContext())
+                    using (var ctx = new SystemContext())
                     {
                         ctx.Database.ExecuteSqlCommand("delete from dbo.TempAgentAddresses");
                         ctx.Database.ExecuteSqlCommand("delete from dbo.TempAgentContacts");
@@ -297,7 +316,7 @@ namespace LoanManagement.Desktop
                     btnSave.Content = "Update";
                     btnClear.Visibility = Visibility.Hidden;
 
-                    using (var ctx = new MyLoanContext())
+                    using (var ctx = new SystemContext())
                     {
                         var agt = ctx.Agents.Find(aId);
                         txtFName.Text = agt.FirstName;
@@ -363,7 +382,7 @@ namespace LoanManagement.Desktop
                     //for view
                     if (status == "View")
                     {
-                        using (var ctx = new MyLoanContext())
+                        using (var ctx = new SystemContext())
                         {
                             int ctr = ctx.AgentAddresses.Count() + 1;
                             AgentAddress add = new AgentAddress { AgentID = aId, AddressNumber = ctr, Street = txtStreet.Text, Province = txtProvince.Text, City = txtCity.Text };
@@ -380,7 +399,7 @@ namespace LoanManagement.Desktop
 
                     }
 
-                    using (var ctx = new MyLoanContext())
+                    using (var ctx = new SystemContext())
                     {
                         int ctr = ctx.TempAgentAddresses.Count() + 1;
                         TempAgentAddress add = new TempAgentAddress { AddressNumber = ctr, Street = txtStreet.Text, Province = txtProvince.Text, City = txtCity.Text };
@@ -398,7 +417,7 @@ namespace LoanManagement.Desktop
                     //for view
                     if (status == "View")
                     {
-                        using (var ctx = new MyLoanContext())
+                        using (var ctx = new SystemContext())
                         {
                             int num = Convert.ToInt32(getRow(dgAddress, 0));
                             var add = ctx.AgentAddresses.Where(x => x.AddressNumber == num && x.AgentID == aId).First();
@@ -417,7 +436,7 @@ namespace LoanManagement.Desktop
                     }
 
 
-                    using (var ctx = new MyLoanContext())
+                    using (var ctx = new SystemContext())
                     {
                         int num = Convert.ToInt32(getRow(dgAddress, 0));
                         var add = ctx.TempAgentAddresses.Where(x => x.AddressNumber == num).First();
@@ -455,7 +474,7 @@ namespace LoanManagement.Desktop
                     //for view
                     if (status == "View")
                     {
-                        using (var ctx = new MyLoanContext())
+                        using (var ctx = new SystemContext())
                         {
                             int num = Convert.ToInt32(getRow(dgAddress, 0));
                             var add = ctx.AgentAddresses.Where(x => x.AddressNumber == num && x.AgentID==aId).First();
@@ -467,7 +486,7 @@ namespace LoanManagement.Desktop
                         return;
                     }
 
-                    using (var ctx = new MyLoanContext())
+                    using (var ctx = new SystemContext())
                     {
                         int num = Convert.ToInt32(getRow(dgAddress, 0));
                         var add = ctx.TempAgentAddresses.Where(x => x.AddressNumber == num).First();
@@ -490,7 +509,7 @@ namespace LoanManagement.Desktop
 
         private void btnDelAddress_Click(object sender, RoutedEventArgs e)
         {
-            using (var ctx = new MyLoanContext())
+            using (var ctx = new SystemContext())
             {
                 try
                 {
@@ -568,7 +587,7 @@ namespace LoanManagement.Desktop
                     //for view
                     if (status == "View")
                     {
-                        using (var ctx = new MyLoanContext())
+                        using (var ctx = new SystemContext())
                         {
                             int ctr = ctx.AgentContacts.Count() + 1;
                             AgentContact con = new AgentContact { AgentID = aId, CNumber = ctr, Contact = txtContact.Text };
@@ -585,7 +604,7 @@ namespace LoanManagement.Desktop
 
                     }
 
-                    using (var ctx = new MyLoanContext())
+                    using (var ctx = new SystemContext())
                     {
                         int ctr = ctx.TempAgentContact.Count() + 1;
                         TempAgentContact con = new TempAgentContact { CNumber = ctr, Contact = txtContact.Text };
@@ -603,7 +622,7 @@ namespace LoanManagement.Desktop
                     //for view
                     if (status == "View")
                     {
-                        using (var ctx = new MyLoanContext())
+                        using (var ctx = new SystemContext())
                         {
 
                             int num = Convert.ToInt32(getRow(dgContact, 0));
@@ -621,7 +640,7 @@ namespace LoanManagement.Desktop
                     }
 
 
-                    using (var ctx = new MyLoanContext())
+                    using (var ctx = new SystemContext())
                     {
                         int num = Convert.ToInt32(getRow(dgContact, 0));
                         var con = ctx.TempAgentContact.Where(x => x.CNumber == num).First();
@@ -657,7 +676,7 @@ namespace LoanManagement.Desktop
                     //for view
                     if (status == "View")
                     {
-                        using (var ctx = new MyLoanContext())
+                        using (var ctx = new SystemContext())
                         {
                             int num = Convert.ToInt32(getRow(dgContact, 0));
                             var con = ctx.AgentContacts.Where(x => x.CNumber == num && x.AgentID==aId).First();
@@ -667,7 +686,7 @@ namespace LoanManagement.Desktop
                         return;
                     }
 
-                    using (var ctx = new MyLoanContext())
+                    using (var ctx = new SystemContext())
                     {
                         int num = Convert.ToInt32(getRow(dgContact, 0));
                         var con = ctx.TempAgentContact.Where(x => x.CNumber == num).First();
@@ -688,7 +707,7 @@ namespace LoanManagement.Desktop
 
         private void btnDelContact_Click(object sender, RoutedEventArgs e)
         {
-            using (var ctx = new MyLoanContext())
+            using (var ctx = new SystemContext())
             {
                 try
                 {

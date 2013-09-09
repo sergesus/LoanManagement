@@ -44,7 +44,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new MyLoanContext())
+                using (var ctx = new SystemContext())
                 {
                     var lon = from lo in ctx.FPaymentInfo
                               where lo.PaymentDate <= DateTime.Today.Date && (lo.PaymentStatus == "Pending" || lo.PaymentStatus == "On Hold")
@@ -91,7 +91,7 @@ namespace LoanManagement.Desktop
             {
                 //System.Windows.MessageBox.Show("Okay");
                 checkDue();
-                using (var ctx = new MyLoanContext())
+                using (var ctx = new SystemContext())
                 {
                     /*Employee emp = new Employee { FirstName = "Aldrin", MI = "A", LastName = "Arciga",  Email = "aldrinarciga@gmail.com", Active=true };
                     User usr = new User();
@@ -152,15 +152,67 @@ namespace LoanManagement.Desktop
 
 
 
-                using (var ctx = new MyLoanContext())
+                using (var ctx = new SystemContext())
                 {
                     var count = ctx.Users.Where(x => x.Username == txtUsername.Text && x.Password == txtPassword.Password).Count();
                     if (count > 0)
                     {
+                        var em = ctx.Users.Where(x => x.Username == txtUsername.Text && x.Password == txtPassword.Password).First();
                         System.Windows.MessageBox.Show("Login Successful", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                         wpfMain wnd = new wpfMain();
-                        wnd.Show();
+                        wnd.UserID = em.EmployeeID;
+
+                        if (em.Employee.Department == "Financing")
+                        {
+                            //wnd.tbFinancing.IsEnabled = true;
+                            wnd.grdM1.IsEnabled = true;
+                            //wnd.tbMicro.IsEnabled = !true;
+                            wnd.grdLo1.IsEnabled = !true;
+                        }
+                        else if (em.Employee.Department == "Micro Business")
+                        {
+                            //wnd.tbFinancing.IsEnabled = !true;
+                            wnd.grdM1.IsEnabled = !true;
+                            //wnd.tbMicro.IsEnabled = true;
+                            wnd.grdLo1.IsEnabled = true;
+                        }
+                        else
+                        {
+                            //wnd.tbFinancing.IsEnabled = true;
+                            wnd.grdM1.IsEnabled = true;
+                            //wnd.tbMicro.IsEnabled = true;
+                            wnd.grdLo1.IsEnabled = true;
+                        }
+
+
+                        var sc = ctx.Scopes.Find(em.EmployeeID);
+                        wnd.btnMClients.IsEnabled = sc.ClientM;
+                        wnd.btnMAgents.IsEnabled = sc.AgentM;
+                        wnd.btnMServ.IsEnabled = sc.ServiceM;
+                        wnd.btnMBank.IsEnabled = sc.BankM;
+                        wnd.btnMEmployee.IsEnabled = sc.EmployeeM;
+                        wnd.btnFApplication.IsEnabled = sc.Application;
+                        wnd.btnMLoanApplication.IsEnabled = sc.Application;
+                        wnd.btnFApproval.IsEnabled = sc.Approval;
+                        wnd.btnMApproval.IsEnabled = sc.Approval;
+                        wnd.btnFReleasing.IsEnabled = sc.Releasing;
+                        wnd.btnMReleasing.IsEnabled = sc.Releasing;
+                        wnd.btnFPayments.IsEnabled = sc.Payments;
+                        wnd.btnMPayments.IsEnabled = sc.Payments;
+                        wnd.btnFManage.IsEnabled = sc.ManageCLosed ;
+                        wnd.btnFRestructure.IsEnabled = sc.Resturcture;
+                        wnd.btnFAdjustment.IsEnabled = sc.PaymentAdjustment;
+
+                        wnd.grdArchive.IsEnabled=sc.Archive;
+                        wnd.btnUBackUp.IsEnabled=sc.BackUp;
+                        wnd.btnUUser.IsEnabled = sc.UserAccounts;
+                        //sc.Reports = Convert.ToBoolean(cReports.IsChecked);
+                        wnd.grdStatistic.IsEnabled = sc.Statistics;
+                        //sc.Scopes = Convert.ToBoolean(cUserScopes.IsChecked);
+                        
                         this.Close();
+                        wnd.Show();
+                        
                     }
                     else
                     {
@@ -180,7 +232,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new MyLoanContext())
+                using (var ctx = new SystemContext())
                 {
                     var ctr = ctx.Users.Where(x => x.Username == txtUsername.Text).Count();
                     if (ctr > 0)

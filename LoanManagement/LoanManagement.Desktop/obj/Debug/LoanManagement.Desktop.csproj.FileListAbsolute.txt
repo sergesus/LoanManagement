@@ -84,3 +84,13 @@ C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManageme
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\LoanManagement.Desktop.csproj.GenerateResource.Cache
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\LoanManagement.Desktop.exe
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\LoanManagement.Desktop.pdb
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\wpfBackUp.baml
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\wpfBackUp.g.cs
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\wpfUsers.baml
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\wpfUsers.g.cs
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\wpfUserInfo.baml
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\wpfUserInfo.g.cs
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\wpfUserScopes.baml
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\wpfUserScopes.g.cs
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\wpfPassword.baml
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\wpfPassword.g.cs

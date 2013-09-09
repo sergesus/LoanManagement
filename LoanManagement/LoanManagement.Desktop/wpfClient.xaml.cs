@@ -28,6 +28,8 @@ namespace LoanManagement.Desktop
     /// </summary>
     public partial class wpfClient : MetroWindow
     {
+        public bool status;
+
         public wpfClient()
         {
             InitializeComponent();
@@ -55,7 +57,7 @@ namespace LoanManagement.Desktop
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show("Please select a row", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                //System.Windows.MessageBox.Show("Please select a row", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return "";
             }
         }
@@ -101,6 +103,14 @@ namespace LoanManagement.Desktop
                     new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
                 myBrush.ImageSource = image.Source;
                 wdw1.Background = myBrush;
+
+                 if (status == false)//archive
+                {
+                    btnView.Visibility = Visibility.Hidden;
+                    btnAdd.Visibility = Visibility.Hidden;
+                    btnRet.Visibility = Visibility.Visible;
+                    myLbL.Content = "Client Retreival";
+                }
             }
             catch (Exception ex)
             {
@@ -113,10 +123,10 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new MyLoanContext())
+                using (var ctx = new SystemContext())
                 {
                     var clt = from cl in ctx.Clients
-                              where cl.Active == true
+                              where cl.Active == status
                               select new { ClientID = cl.ClientID, FirstName = cl.FirstName, MiddleName = cl.MiddleName, LastName = cl.LastName, Suffix = cl.Suffix, Birthday = cl.Birthday };
                     dgClient.ItemsSource = clt.ToList();
                 }
@@ -147,7 +157,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new MyLoanContext())
+                using (var ctx = new SystemContext())
                 {
                     img.Visibility = Visibility.Visible;
                     var clt = ctx.Clients.Find(Convert.ToInt32(getRow(dgClient, 0)));
@@ -161,6 +171,31 @@ namespace LoanManagement.Desktop
                     bi.EndInit();
                     img.Source = bi;
                     lblName.Content = clt.FirstName + " " + clt.MiddleName + " " + clt.LastName + " " + clt.Suffix;
+                }
+            }
+            catch (Exception ex)
+            {
+                //System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void btnRet_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                int n = Convert.ToInt32(getRow(dgClient, 0));
+                MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure?", "Question", MessageBoxButton.YesNo);
+                if (mr == MessageBoxResult.Yes)
+                {
+                    using (var ctx = new SystemContext())
+                    {
+                        var agt = ctx.Clients.Find(n);
+                        agt.Active = true;
+                        ctx.SaveChanges();
+                        System.Windows.MessageBox.Show("Retreived");
+                        resetGrid();
+                    }
                 }
             }
             catch (Exception ex)

@@ -72,7 +72,7 @@ namespace LoanManagement.Desktop
             {
                 if (status == "Client")
                 {
-                    using (var ctx = new MyLoanContext())
+                    using (var ctx = new SystemContext())
                     {
                         var clt = from cl in ctx.Clients
                                   where cl.Active == true && cl.ClientID != cId
@@ -82,7 +82,7 @@ namespace LoanManagement.Desktop
                 }
                 else if (status == "Agent")
                 {
-                    using (var ctx = new MyLoanContext())
+                    using (var ctx = new SystemContext())
                     {
                         var agt = from ag in ctx.Agents
                                   where ag.Active == true
@@ -92,11 +92,21 @@ namespace LoanManagement.Desktop
                 }
                 else if (status == "CI")
                 {
-                    using (var ctx = new MyLoanContext())
+                    using (var ctx = new SystemContext())
                     {
                         var agt = from ag in ctx.Employees
                                   where ag.Active == true
                                   select new { AgentID = ag.EmployeeID, FirstName = ag.FirstName, MI = ag.MI, LastName = ag.LastName, Suffix = ag.Suffix };
+                        dgClient.ItemsSource = agt.ToList();
+                    }
+                }
+                else if (status == "Employee")
+                {
+                    using (var ctx = new SystemContext())
+                    {
+                        var agt = from ag in ctx.Employees
+                                  where ag.Active == true && (from a in ctx.Users where a.EmployeeID==ag.EmployeeID select a).Count()==0
+                                  select new { EmployeeID = ag.EmployeeID, FirstName = ag.FirstName, MI = ag.MI, LastName = ag.LastName, Suffix = ag.Suffix };
                         dgClient.ItemsSource = agt.ToList();
                     }
                 }
@@ -120,7 +130,7 @@ namespace LoanManagement.Desktop
                         var frm = Application.Current.Windows[ctr - 2] as wpfLoanApplication;
                         int cbId = Convert.ToInt32(getRow(dgClient, 0));
                         frm.cbId = Convert.ToInt32(getRow(dgClient, 0));
-                        using (var ctx = new MyLoanContext())
+                        using (var ctx = new SystemContext())
                         {
                             var agt = ctx.Clients.Find(cbId);
                             String str = "(" + cbId + ")" + agt.FirstName + " " + agt.MiddleName + " " + agt.LastName;
@@ -152,13 +162,21 @@ namespace LoanManagement.Desktop
                     var frm = Application.Current.Windows[ctr - 2] as wpfLoanApplication;
                     int num = Convert.ToInt32(getRow(dgClient, 0));
                     frm.ciId = num;
-                    using (var ctx = new MyLoanContext())
+                    using (var ctx = new SystemContext())
                     {
                         var agt = ctx.Employees.Find(num);
                         String str = "(" + num + ")" + agt.FirstName + " " + agt.MI + " " + agt.LastName;
                         frm.txtCI.Text = str;
                     }
                     this.Close();
+                }
+                else if (status == "Employee")
+                {
+                    int num = Convert.ToInt32(getRow(dgClient, 0));
+                    wpfUserInfo frm = new wpfUserInfo();
+                    frm.eId = num;
+                    this.Close();
+                    frm.ShowDialog();
                 }
             }
             catch (Exception ex)

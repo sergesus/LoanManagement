@@ -45,21 +45,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\201308261012196_UpdatedServices.cs" />
-    <Compile Include="Migrations\201308261012196_UpdatedServices.Designer.cs">
-      <DependentUpon>201308261012196_UpdatedServices.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201308261021085_UpdatedServices2.cs" />
-    <Compile Include="Migrations\201308261021085_UpdatedServices2.Designer.cs">
-      <DependentUpon>201308261021085_UpdatedServices2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201308272337452_AddedPaymentAdjustment.cs" />
-    <Compile Include="Migrations\201308272337452_AddedPaymentAdjustment.Designer.cs">
-      <DependentUpon>201308272337452_AddedPaymentAdjustment.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201311290128235_AddedRestructred.cs" />
-    <Compile Include="Migrations\201311290128235_AddedRestructred.Designer.cs">
-      <DependentUpon>201311290128235_AddedRestructred.cs</DependentUpon>
+    <Compile Include="Migrations\201309082348580_AddedScopes.cs" />
+    <Compile Include="Migrations\201309082348580_AddedScopes.Designer.cs">
+      <DependentUpon>201309082348580_AddedScopes.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -70,17 +58,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201308261012196_UpdatedServices.resx">
-      <DependentUpon>201308261012196_UpdatedServices.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201308261021085_UpdatedServices2.resx">
-      <DependentUpon>201308261021085_UpdatedServices2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201308272337452_AddedPaymentAdjustment.resx">
-      <DependentUpon>201308272337452_AddedPaymentAdjustment.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201311290128235_AddedRestructred.resx">
-      <DependentUpon>201311290128235_AddedRestructred.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201309082348580_AddedScopes.resx">
+      <DependentUpon>201309082348580_AddedScopes.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

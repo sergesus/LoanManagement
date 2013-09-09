@@ -38,7 +38,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new MyLoanContext())
+                using (var ctx = new SystemContext())
                 {
                     var lon = ctx.Loans.Find(lId);
                     var rmn = from rm in ctx.FPaymentInfo
@@ -68,7 +68,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new MyLoanContext())
+                using (var ctx = new SystemContext())
                 {
                     myNum = 0;
                     ctx.Database.ExecuteSqlCommand("delete from dbo.GenSOAs");
@@ -198,7 +198,7 @@ namespace LoanManagement.Desktop
                 myBrush.ImageSource = image.Source;
                 //Grid grid = new Grid();
                 wdw1.Background = myBrush;
-                using (var ctx = new MyLoanContext())
+                using (var ctx = new SystemContext())
                 {
                     var lon = ctx.Loans.Find(lId);
                     if (lon.Service.Department == "Financing")
@@ -285,7 +285,7 @@ namespace LoanManagement.Desktop
                 MessageBoxResult mr = MessageBox.Show("Sure?", "Question", MessageBoxButton.YesNo);
                 if (mr == MessageBoxResult.Yes)
                 {
-                    using (var ctx = new MyLoanContext())
+                    using (var ctx = new SystemContext())
                     {
                         wpfCheckout frm = new wpfCheckout();
                         var lon = ctx.Loans.Find(lId);
@@ -300,7 +300,7 @@ namespace LoanManagement.Desktop
                         return;
                     }
 
-                    using (var ctx = new MyLoanContext())
+                    using (var ctx = new SystemContext())
                     {
                         var bk = ctx.Banks.Where(x => x.BankName == cmbBank.Text).First();
                         int bId = bk.BankID;
@@ -308,7 +308,7 @@ namespace LoanManagement.Desktop
                         lon.Status = "Resturctured";
                         Loan l = new Loan { AgentID = lon.AgentID, CI = 0, Term = Convert.ToInt32(txtTerm.Text), Status = "Released", ServiceID = lon.ServiceID, Mode = cmbMode.Text, CoBorrower = lon.CoBorrower, ClientID = lon.ClientID, BankID = bId };
                         ReleasedLoan rl = new ReleasedLoan { LoanID = l.LoanID, AgentsCommission = 0, DateReleased = DateTime.Today.Date, MonthlyPayment = Convert.ToDouble(lblMonthly.Content), NetProceed = 0, Principal = 0, TotalLoan = Convert.ToDouble(lblInt.Content) };
-                        RestructuredLoan rln = new RestructuredLoan { LoanID = lId, NewLoanID = l.LoanID, DateRestructured = DateTime.Today, Fee = Convert.ToDouble(txtAmt.Text) * (lon.Service.RestructureFee / 100) };
+                        //RestructuredLoan rln = new RestructuredLoan { LoanID = lId, NewLoanID = l.LoanID, DateRestructured = DateTime.Today, Fee = Convert.ToDouble(txtAmt.Text) * (lon.Service.RestructureFee / 100) };
                         var fp = from f in ctx.FPaymentInfo
                                  where f.PaymentStatus != "Cleared" && f.LoanID == lId
                                  select f;
@@ -329,8 +329,9 @@ namespace LoanManagement.Desktop
 
                         ctx.Loans.Add(l);
                         ctx.ReleasedLoans.Add(rl);
+                        ctx.SaveChanges();
+                        RestructuredLoan rln = new RestructuredLoan { LoanID = lId, NewLoanID = l.LoanID, DateRestructured = DateTime.Today, Fee = Convert.ToDouble(txtAmt.Text) * (lon.Service.RestructureFee / 100) };
                         ctx.RestructuredLoans.Add(rln);
-
                         ctx.SaveChanges();
                         MessageBox.Show("Okay");
                         this.Close();

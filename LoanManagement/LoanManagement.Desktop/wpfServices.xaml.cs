@@ -30,6 +30,8 @@ namespace LoanManagement.Desktop
     /// </summary>
     public partial class wpfServices : MetroWindow
     {
+        public bool status;
+
         public wpfServices()
         {
             InitializeComponent();
@@ -45,7 +47,7 @@ namespace LoanManagement.Desktop
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show("Please select a row", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                //System.Windows.MessageBox.Show("Please select a row", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 
                 return "";
             }
@@ -92,6 +94,14 @@ namespace LoanManagement.Desktop
                     new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
                 myBrush.ImageSource = image.Source;
                 wdw1.Background = myBrush;
+
+                if (status == false)//maintenance
+                {
+                    btnView.Visibility = Visibility.Hidden;
+                    btnAdd.Visibility = Visibility.Hidden;
+                    btnRet.Visibility = Visibility.Visible;
+                    myLbL.Content = "Service Retreival";
+                }
             }
             catch (Exception ex)
             {
@@ -113,13 +123,39 @@ namespace LoanManagement.Desktop
             }
         }
 
+        private void btnRet_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                int n = Convert.ToInt32(getRow(dgServ, 0));
+                MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure?", "Question", MessageBoxButton.YesNo);
+                if (mr == MessageBoxResult.Yes)
+                {
+                    using (var ctx = new SystemContext())
+                    {
+                        var agt = ctx.Services.Find(n);
+                        agt.Active = true;
+                        ctx.SaveChanges();
+                        System.Windows.MessageBox.Show("Retreived");
+                        resetGrid();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
         private void resetGrid()
         {
             try
             {
-                using (var ctx = new MyLoanContext())
+                using (var ctx = new SystemContext())
                 {
                     var servs = from sr in ctx.Services
+                                where sr.Active==status
                                 select new { ServiceNumber = sr.ServiceID, Name = sr.Name, Description = sr.Description };
                     dgServ.ItemsSource = servs.ToList();
                 }

@@ -9,9 +9,10 @@ using System.Data.Entity;
 namespace LoanManagement.Domain
 {
 
-    public class MyLoanContext : DbContext
+    public class SystemContext : DbContext
     {
         public DbSet<User> Users { get; set; }
+        public DbSet<Scope> Scopes { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<EmployeeAddress> EmployeeAddresses { get; set; }
         public DbSet<EmployeeContact> EmployeeContacts { get; set; }
@@ -61,7 +62,10 @@ namespace LoanManagement.Domain
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.Entity<User>()
-                .HasKey(x => x.Username)
+                .HasKey(x => x.EmployeeID)
+                .HasRequired(x => x.Employee);
+            modelBuilder.Entity<Scope>()
+                .HasKey(x => x.EmployeeID)
                 .HasRequired(x => x.Employee);
             modelBuilder.Entity<EmployeeAddress>()
                 .HasKey(x => x.EmpAddID)
@@ -70,8 +74,7 @@ namespace LoanManagement.Domain
                 .HasKey(x => x.EmpContactID)
                 .HasRequired(x => x.Employee);
             modelBuilder.Entity<Employee>()
-                .HasKey(x => x.EmployeeID)
-                .HasMany(x => x.User);
+                .HasKey(x => x.EmployeeID);
             modelBuilder.Entity<TempContact>()
                 .HasKey(x => x.TempContactID);
             modelBuilder.Entity<Bank>()
@@ -154,6 +157,33 @@ namespace LoanManagement.Domain
         public virtual Employee Employee { get; set; }
     }
 
+    public class Scope
+    {
+        public int EmployeeID { get; set; }
+        public bool ClientM { get; set; }
+        public bool ServiceM { get; set; }
+        public bool AgentM { get; set; }
+        public bool BankM { get; set; }
+        public bool EmployeeM { get; set; }
+
+        public bool Application { get; set; }
+        public bool Approval { get; set; }
+        public bool Releasing { get; set; }
+        public bool Payments { get; set; }
+        public bool ManageCLosed { get; set; }
+        public bool Resturcture { get; set; }
+        public bool PaymentAdjustment { get; set; }
+
+        public bool Archive { get; set; }
+        public bool BackUp { get; set; }
+        public bool UserAccounts { get; set; }
+        public bool Reports { get; set; }
+        public bool Statistics { get; set; }
+        public bool Scopes { get; set; }
+
+        public virtual Employee Employee { get; set; }
+    }
+
     public class Employee
     {
         public int EmployeeID { get; set; }
@@ -167,7 +197,8 @@ namespace LoanManagement.Domain
         public byte[] Photo { get; set; }
         public bool Active { get; set; }
 
-        public ICollection<User> User { get; set; }
+        public virtual User User { get; set; }
+        public virtual Scope Scope { get; set; }
         public ICollection<EmployeeAddress> EmployeeAddress { get; set; }
         public ICollection<EmployeeContact> EmployeeContact { get; set; }
     }

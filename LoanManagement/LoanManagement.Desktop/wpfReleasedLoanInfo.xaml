@@ -35,7 +35,7 @@
         <Label Content="Next Payment:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="405,78,0,0" Width="121" FontSize="16" Foreground="#CC48CB00" Grid.Column="1" FontWeight="Bold"/>
         <Label Content="Monthly Payment:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="405,110,0,0" Width="144" FontSize="16" Foreground="#CC48CB00" Grid.Column="1" FontWeight="Bold"/>
         <Label Content="Remaining:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="405,140,0,0" Width="104" FontSize="16" Foreground="#CC48CB00" Grid.Column="1" FontWeight="Bold"/>
-        <Label Content="Amount Released:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="73,140,0,0" Width="150" FontSize="16" Foreground="#CC48CB00" Grid.Column="1" FontWeight="Bold"/>
+        <Label x:Name="lblRes2" Content="Amount Released:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="73,140,0,0" Width="150" FontSize="16" Foreground="#CC48CB00" Grid.Column="1" FontWeight="Bold"/>
         <Label x:Name="lblTOL" Content="(type)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="223,78,0,0" Width="222" FontSize="16" Foreground="Black" Grid.Column="1"/>
         <Label x:Name="lblType" Content="(type)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="223,110,0,0" Width="222" FontSize="16" Foreground="Black" Grid.Column="1"/>
         <Label x:Name="lblAmt" Content="(type)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="223,140,0,0" Width="222" FontSize="16" Foreground="Black" Grid.Column="1"/>

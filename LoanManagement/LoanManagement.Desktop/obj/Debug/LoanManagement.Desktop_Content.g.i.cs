@@ -8,12 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/continue.ico")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/lock.ico")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/machine.ico")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/pull1.ico")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/pull2.ico")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/push1.ico")]
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/push2.ico")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/retreive.png")]
 
 

@@ -53,7 +53,7 @@ namespace LoanManagement.Desktop
                 //Grid grid = new Grid();
                 wdw1.Background = myBrush;
 
-                using (var ctx = new MyLoanContext())
+                using (var ctx = new SystemContext())
                 {
                     var lon = ctx.Loans.Find(lId);
                     lblDesAmt.Content = "Php " + lon.LoanApplication.AmountApplied.ToString("N2");
@@ -83,7 +83,7 @@ namespace LoanManagement.Desktop
                 System.Windows.MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (mr == System.Windows.MessageBoxResult.Yes)
                 {
-                    using (var ctx = new MyLoanContext())
+                    using (var ctx = new SystemContext())
                     {
                         var lon = ctx.Loans.Find(lId);
                         if (status == "Approval")
@@ -143,7 +143,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new MyLoanContext())
+                using (var ctx = new SystemContext())
                 {
                     
 
@@ -193,7 +193,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new MyLoanContext())
+                using (var ctx = new SystemContext())
                 {
                     ctx.Database.ExecuteSqlCommand("delete from dbo.GenSOAs");
                     ctx.SaveChanges();
@@ -345,7 +345,7 @@ namespace LoanManagement.Desktop
         {
             wpfClientInfo frm = new wpfClientInfo();
             frm.status = "View";
-            using (var ctx = new MyLoanContext())
+            using (var ctx = new SystemContext())
             {
                 var lon = ctx.Loans.Find(lId);
                 frm.cId = lon.ClientID;

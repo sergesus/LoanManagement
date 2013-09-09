@@ -41,7 +41,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new MyLoanContext())
+                using (var ctx = new SystemContext())
                 {
                     var lon = from lo in ctx.FPaymentInfo
                               where lo.PaymentDate <= DateTime.Today.Date && (lo.PaymentStatus == "Pending" || lo.PaymentStatus == "On Hold")
@@ -87,7 +87,7 @@ namespace LoanManagement.Desktop
             {
                 wpfAgentInfo frm = new wpfAgentInfo();
                 frm.status = "View";
-                using (var ctx = new MyLoanContext())
+                using (var ctx = new SystemContext())
                 {
                     var lon = ctx.Loans.Find(lId);
                     frm.aId = lon.AgentID;
@@ -105,7 +105,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new MyLoanContext())
+                using (var ctx = new SystemContext())
                 {
                     var lon = ctx.Loans.Find(lId);
 
@@ -216,6 +216,14 @@ namespace LoanManagement.Desktop
                         lblEDt.Content = "";
                     }
 
+                    var c2 = ctx.RestructuredLoans.Where(x => x.NewLoanID == lon.LoanID).Count();
+                    if (c2 > 0)
+                    {
+                        var lon2 = ctx.RestructuredLoans.Where(x => x.NewLoanID == lon.LoanID).First();
+                        lblRes2.Content = "Amount Restructured: ";
+                        lblAmt.Content = lon2.Loan.ReleasedLoan.TotalLoan;
+                    }
+
 
                     checkDue();
                     var chqs = from ge in ctx.FPaymentInfo
@@ -244,7 +252,7 @@ namespace LoanManagement.Desktop
                 myBrush.ImageSource = image.Source;
                 //Grid grid = new Grid();
                 wdw1.Background = myBrush;
-                using (var ctx = new MyLoanContext())
+                using (var ctx = new SystemContext())
                 {
                     var lon = ctx.Loans.Find(lId);
                     lblName.Content = lon.Client.LastName + ", " + lon.Client.FirstName + " " + lon.Client.MiddleName;
@@ -272,7 +280,7 @@ namespace LoanManagement.Desktop
                 }
                 else if (status == "Holding")
                 {
-                    using (var ctx = new MyLoanContext())
+                    using (var ctx = new SystemContext())
                     {
                         //var dts = ctx.FPaymentInfo.Where(x => x.LoanID == lId && x.PaymentStatus == "Pending").First();
                         if (DateTime.Today.Date > Convert.ToDateTime(lblEDt.Content) || DateTime.Today.Date < Convert.ToDateTime(lblSDt.Content))
@@ -335,7 +343,7 @@ namespace LoanManagement.Desktop
                     MessageBoxResult mr = System.Windows.MessageBox.Show("You sure?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
                     if (mr == MessageBoxResult.Yes)
                     {
-                        using (var ctx = new MyLoanContext())
+                        using (var ctx = new SystemContext())
                         {
                             var lon = ctx.Loans.Find(lId);
                             lon.Status = "Approved";
@@ -355,7 +363,7 @@ namespace LoanManagement.Desktop
                 }
                 else if (status == "Holding")
                 {
-                    using (var ctx = new MyLoanContext())
+                    using (var ctx = new SystemContext())
                     {
                         var ctrs = ctx.FPaymentInfo.Where(x => x.LoanID == lId && x.PaymentStatus == "On Hold").Count();
                         if (ctrs < 1)
@@ -387,7 +395,7 @@ namespace LoanManagement.Desktop
                     MessageBoxResult mr = System.Windows.MessageBox.Show("Sure?", "Question", MessageBoxButton.YesNo);
                     if (mr == MessageBoxResult.Yes)
                     {
-                        using (var ctx = new MyLoanContext())
+                        using (var ctx = new SystemContext())
                         {
                             AdjustedLoan al = ctx.AdjustedLoans.Find(lId);
                             var py = from p in ctx.FPaymentInfo
@@ -417,7 +425,7 @@ namespace LoanManagement.Desktop
         {
             wpfClientInfo frm = new wpfClientInfo();
             frm.status = "View";
-            using (var ctx = new MyLoanContext())
+            using (var ctx = new SystemContext())
             {
                 var lon = ctx.Loans.Find(lId);
                 frm.cId = lon.ClientID;

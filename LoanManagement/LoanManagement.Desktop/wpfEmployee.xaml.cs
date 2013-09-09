@@ -28,6 +28,9 @@ namespace LoanManagement.Desktop
     /// </summary>
     public partial class wpfEmployee : MetroWindow
     {
+
+        public bool status;
+
         public wpfEmployee()
         {
             InitializeComponent();
@@ -55,7 +58,7 @@ namespace LoanManagement.Desktop
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show("Please select a row", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                //System.Windows.MessageBox.Show("Please select a row", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 
                 return "";
             }
@@ -65,9 +68,9 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new MyLoanContext())
+                using (var ctx = new SystemContext())
                 {
-                    var emp = from em in ctx.Employees where em.Active == true select new { em.EmployeeID, em.FirstName, em.MI, em.LastName, em.Suffix, em.Position };
+                    var emp = from em in ctx.Employees where em.Active == status select new { em.EmployeeID, em.FirstName, em.MI, em.LastName, em.Suffix, em.Position };
                     dgEmp.ItemsSource = emp.ToList();
                 }
             }
@@ -91,6 +94,14 @@ namespace LoanManagement.Desktop
                 myBrush.ImageSource = image.Source;
                 EmpWindow.Background = myBrush;
                 resetGrid();
+
+                if (status == false)//maintenance
+                {
+                    btnView.Visibility = Visibility.Hidden;
+                    btnAdd.Visibility = Visibility.Hidden;
+                    btnRet.Visibility = Visibility.Visible;
+                    myLbL.Content = "Employee Retreival";
+                }
             }
             catch (Exception ex)
             {
@@ -104,7 +115,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new MyLoanContext())
+                using (var ctx = new SystemContext())
                 {
                     img.Visibility = Visibility.Visible;
                     var emp = ctx.Employees.Find(Convert.ToInt32(getRow(dgEmp, 0)));
@@ -183,11 +194,36 @@ namespace LoanManagement.Desktop
             }
         }
 
+        private void btnRet_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                int n = Convert.ToInt32(getRow(dgEmp, 0));
+                MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure?", "Question", MessageBoxButton.YesNo);
+                if (mr == MessageBoxResult.Yes)
+                {
+                    using (var ctx = new SystemContext())
+                    {
+                        var agt = ctx.Employees.Find(n);
+                        agt.Active = true;
+                        ctx.SaveChanges();
+                        System.Windows.MessageBox.Show("Retreived");
+                        resetGrid();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
         private void dgEmp_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
             {
-                using (var ctx = new MyLoanContext())
+                using (var ctx = new SystemContext())
                 {
                     img.Visibility = Visibility.Visible;
                     var emp = ctx.Employees.Find(Convert.ToInt32(getRow(dgEmp, 0)));

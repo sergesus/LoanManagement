@@ -21,7 +21,7 @@ namespace LoanManagement.Desktop
     /// </summary>
     public partial class wpfMain : MetroWindow
     {
-
+        public int UserID;
 
         public wpfMain()
         {
@@ -45,6 +45,10 @@ namespace LoanManagement.Desktop
                 else if (lb1.SelectedIndex == 1)
                 {
                     tb2.IsSelected = true;
+                }
+                else if (lb1.SelectedIndex == 2)
+                {
+                    tb3.IsSelected = true;
                 }
             }
             catch (Exception ex)
@@ -404,6 +408,7 @@ namespace LoanManagement.Desktop
             try
             {
                 wpfClient frm = new wpfClient();
+                frm.status = true;
                 frm.ShowDialog();
             }
             catch (Exception ex)
@@ -418,6 +423,7 @@ namespace LoanManagement.Desktop
             try
             {
                 wpfServices frm = new wpfServices();
+                frm.status = true;
                 frm.ShowDialog();
             }
             catch (Exception ex)
@@ -432,6 +438,7 @@ namespace LoanManagement.Desktop
             try
             {
                 wpfBranch frm = new wpfBranch();
+                frm.status = true;
                 frm.ShowDialog();
             }
             catch (Exception ex)
@@ -446,6 +453,7 @@ namespace LoanManagement.Desktop
             try
             {
                 wpfEmployee frm = new wpfEmployee();
+                frm.status = true;
                 frm.ShowDialog();
             }
             catch (Exception ex)
@@ -460,6 +468,7 @@ namespace LoanManagement.Desktop
             try
             {
                 wpfAgent frm = new wpfAgent();
+                frm.status = true;
                 frm.ShowDialog();
             }
             catch (Exception ex)
@@ -607,6 +616,93 @@ namespace LoanManagement.Desktop
                 System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
+        }
+
+        private void ListBoxItem_Selected_1(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void btnClients_Copy10_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                wpfClient frm = new wpfClient();
+                frm.status = false;
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void Button_Click_3(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                wpfServices frm = new wpfServices();
+                frm.status = false;
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void btnBank_Copy_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                wpfBranch frm = new wpfBranch();
+                frm.status = false;
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                wpfEmployee frm = new wpfEmployee();
+                frm.status = false;
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void btnAgents_Copy_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                wpfAgent frm = new wpfAgent();
+                frm.status = false;
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void btnClients_Copy11_Click(object sender, RoutedEventArgs e)
+        {
+            wpfUsers frm = new wpfUsers();
+            frm.UserID = UserID;
+            frm.ShowDialog();
         }
 
 

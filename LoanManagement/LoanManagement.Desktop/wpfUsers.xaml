@@ -1,0 +1,66 @@
+﻿<Controls:MetroWindow x:Name="wdw1" x:Class="LoanManagement.Desktop.wpfUsers"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"              
+        Title="wpfUsers" Height="422.722" Width="837.308" Activated="MetroWindow_Activated_1" Loaded="wdw1_Loaded" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Green.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedTabControl.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <Grid Height="516" Margin="0,74,-561,-332" VerticalAlignment="Top" RenderTransformOrigin="0.321,0.525">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="136*"/>
+                <ColumnDefinition Width="146*"/>
+                <ColumnDefinition Width="83*"/>
+            </Grid.ColumnDefinitions>
+            <DataGrid x:Name="dgEmp" HorizontalAlignment="Left" Height="237" Margin="347,10,0,0" VerticalAlignment="Top" Width="478" FontSize="18" GridLinesVisibility="None" SelectionChanged="dgEmp_SelectionChanged" Grid.ColumnSpan="2" BorderBrush="#CC48CB00" BorderThickness="2">
+                <DataGrid.Resources>
+                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" 
+    					Color="#CC48CB00"/>
+                </DataGrid.Resources>
+            </DataGrid>
+            <GroupBox Header="Basic Information" Height="281" Margin="10,10,176,0" VerticalAlignment="Top" BorderThickness="3">
+                <Grid HorizontalAlignment="Left" Height="234" VerticalAlignment="Top" Width="287" Margin="0,0,-142,0">
+                    <Image x:Name="img" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100" Margin="10,7,0,0" RenderTransformOrigin="0.698,1.038"/>
+                    <Label x:Name="lblName" Content="" HorizontalAlignment="Left" Height="32" Margin="9,117,0,0" VerticalAlignment="Top" Width="244" RenderTransformOrigin="0.547,-0.275" FontFamily="Cambria" FontSize="18"/>
+                    <Label x:Name="lblPosition" Content="" HorizontalAlignment="Left" Height="32" Margin="9,145,0,0" VerticalAlignment="Top" Width="244" RenderTransformOrigin="0.547,-0.275" FontFamily="Cambria" FontSize="18"/>
+                    <Label x:Name="lblDept" Content="" HorizontalAlignment="Left" Height="32" Margin="8,177,0,-9" VerticalAlignment="Top" Width="244" RenderTransformOrigin="0.547,-0.275" FontFamily="Cambria" FontSize="18"/>
+                </Grid>
+
+            </GroupBox>
+            <Button x:Name="btnAdd" HorizontalAlignment="Left" Height="39" Margin="347,252,0,0" VerticalAlignment="Top" Width="134" BorderBrush="#CC48CB00" BorderThickness="2" Background="#7F48CB00" Click="btnAdd_Click">
+                <DockPanel LastChildFill="True">
+                    <Label HorizontalContentAlignment="Center" DockPanel.Dock="Right" Foreground="#FF343434" Height="28" FontSize="16" Content="ADD"/>
+                    <Image Source="Images/Add.ico" />
+                </DockPanel>
+            </Button>
+            <Button x:Name="btnView" HorizontalAlignment="Left" Height="39" Margin="486,252,0,0" VerticalAlignment="Top" Width="134" BorderBrush="#CC48CB00" BorderThickness="2" Background="#7F48CB00" Click="btnView_Click" Grid.ColumnSpan="2">
+                <DockPanel LastChildFill="True">
+                    <Label HorizontalContentAlignment="Center" DockPanel.Dock="Right" Foreground="#FF343434" Height="28" FontSize="16" Content="UPDATE"/>
+                    <Image Source="Images/View.ico" />
+                </DockPanel>
+            </Button>
+            <Button x:Name="btnScope" HorizontalAlignment="Left" Height="39" Margin="106,252,0,0" VerticalAlignment="Top" Width="164" Grid.Column="1" BorderBrush="#CC48CB00" BorderThickness="2" Background="#7F48CB00" Click="btnScope_Click">
+                <DockPanel LastChildFill="True">
+                    <Label HorizontalContentAlignment="Center" DockPanel.Dock="Right" Foreground="#FF343434" Height="28" FontSize="16" Content="ACCESS LEVEL"/>
+                    <Image Source="Images/View.ico" />
+                </DockPanel>
+            </Button>
+        </Grid>
+        <Grid HorizontalAlignment="Left" Height="74" VerticalAlignment="Top" Width="1076" Background="#7F48CB00" Margin="0,0,-561,0">
+            <Image HorizontalAlignment="Left" Height="74" VerticalAlignment="Top" Width="97" Source="Images/Lock.ico"/>
+            <Label x:Name="myLbL" Content="User Accounts" HorizontalAlignment="Left" Height="54" Margin="87,10,0,0" VerticalAlignment="Top" Width="331" FontSize="30"/>
+        </Grid>
+
+    </Grid>
+</Controls:MetroWindow>

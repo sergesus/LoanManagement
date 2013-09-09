@@ -44,6 +44,22 @@
     <Reference Include="MahApps.Metro">
       <HintPath>..\packages\MahApps.Metro.0.10.1.1\lib\net45\MahApps.Metro.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.SqlServer.ConnectionInfo, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.ConnectionInfo.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Management.Sdk.Sfc, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.Management.Sdk.Sfc.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.Smo, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.Smo.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.SqlServer.SmoExtended, Version=10.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\..\..\..\..\Program Files (x86)\Microsoft SQL Server\100\SDK\Assemblies\Microsoft.SqlServer.SmoExtended.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Microsoft.Windows.Shell">
       <HintPath>..\Extensions\net40\Microsoft.Windows.Shell.dll</HintPath>
@@ -84,6 +100,9 @@
     </Compile>
     <Compile Include="wpfAppliedLoanInfo.xaml.cs">
       <DependentUpon>wpfAppliedLoanInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="wpfBackUp.xaml.cs">
+      <DependentUpon>wpfBackUp.xaml</DependentUpon>
     </Compile>
     <Compile Include="wpfBank.xaml.cs">
       <DependentUpon>wpfBank.xaml</DependentUpon>
@@ -152,6 +171,9 @@
     <Compile Include="wpfNewCheque.xaml.cs">
       <DependentUpon>wpfNewCheque.xaml</DependentUpon>
     </Compile>
+    <Compile Include="wpfPassword.xaml.cs">
+      <DependentUpon>wpfPassword.xaml</DependentUpon>
+    </Compile>
     <Compile Include="wpfPaymentAdjustment.xaml.cs">
       <DependentUpon>wpfPaymentAdjustment.xaml</DependentUpon>
     </Compile>
@@ -179,6 +201,15 @@
     <Compile Include="wpfServices.xaml.cs">
       <DependentUpon>wpfServices.xaml</DependentUpon>
     </Compile>
+    <Compile Include="wpfUserInfo.xaml.cs">
+      <DependentUpon>wpfUserInfo.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="wpfUsers.xaml.cs">
+      <DependentUpon>wpfUsers.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="wpfUserScopes.xaml.cs">
+      <DependentUpon>wpfUserScopes.xaml</DependentUpon>
+    </Compile>
     <Page Include="wpfAgent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -188,6 +219,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="wpfAppliedLoanInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="wpfBackUp.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -275,6 +310,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="wpfPassword.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="wpfPaymentAdjustment.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -308,6 +347,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="wpfServices.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="wpfUserInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="wpfUsers.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="wpfUserScopes.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -415,6 +466,12 @@
     <Resource Include="Images\PULL2.ico" />
     <Resource Include="Images\PUSH1.ico" />
     <Resource Include="Images\PUSH2.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Audit.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\Retreive.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

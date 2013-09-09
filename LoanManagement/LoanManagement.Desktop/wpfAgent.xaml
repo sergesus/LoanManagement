@@ -38,7 +38,7 @@
             </GroupBox>
             <Button x:Name="btnAdd" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="39" Margin="344,338,0,0" VerticalAlignment="Top" Width="164" BorderBrush="#CC48CB00" BorderThickness="2" Background="#7F48CB00" Click="btnAdd_Click">
                 <DockPanel LastChildFill="True">
-                    <Label HorizontalContentAlignment="Center" DockPanel.Dock="Right" Foreground="#FF343434" Height="28" FontSize="16" Content="ADD"/>
+                    <Label x:Name="lblAdd" HorizontalContentAlignment="Center" DockPanel.Dock="Right" Foreground="#FF343434" Height="28" FontSize="16" Content="ADD"/>
                     <Image Source="Images/Add.ico" />
                 </DockPanel>
             </Button>
@@ -48,10 +48,16 @@
                     <Image Source="Images/View.ico" />
                 </DockPanel>
             </Button>
+            <Button x:Name="btnRet" HorizontalAlignment="Left" Height="39" Margin="349,338,0,0" VerticalAlignment="Top" Width="164" BorderBrush="#CC48CB00" BorderThickness="2" Background="#7F48CB00" Click="btnRet_Click" Grid.ColumnSpan="2" Visibility="Hidden">
+                <DockPanel LastChildFill="True">
+                    <Label x:Name="lblAdd1" HorizontalContentAlignment="Center" DockPanel.Dock="Right" Foreground="#FF343434" Height="28" FontSize="16" Content="Retreive"/>
+                    <Image Source="Images/Retreive.png" />
+                </DockPanel>
+            </Button>
         </Grid>
         <Grid HorizontalAlignment="Left" Height="74" VerticalAlignment="Top" Width="1076" Background="#7F48CB00" Margin="0,0,-351,0">
             <Image HorizontalAlignment="Left" Height="74" VerticalAlignment="Top" Width="97" Source="Images/Bank.ico"/>
-            <Label Content="Agent Maintenance" HorizontalAlignment="Left" Height="54" Margin="87,10,0,0" VerticalAlignment="Top" Width="285" FontSize="30"/>
+            <Label x:Name="myLbL" Content="Agent Maintenance" HorizontalAlignment="Left" Height="54" Margin="87,10,0,0" VerticalAlignment="Top" Width="285" FontSize="30"/>
         </Grid>
     </Grid>
 </Controls:MetroWindow>

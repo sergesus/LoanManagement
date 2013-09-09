@@ -5,14 +5,14 @@ namespace LoanManagement.Domain.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<LoanManagement.Domain.MyLoanContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<LoanManagement.Domain.SystemContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(LoanManagement.Domain.MyLoanContext context)
+        protected override void Seed(LoanManagement.Domain.SystemContext context)
         {
             //  This method will be called after migrating to the latest version.
 

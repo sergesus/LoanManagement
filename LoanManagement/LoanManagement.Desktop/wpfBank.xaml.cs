@@ -23,6 +23,8 @@ namespace LoanManagement.Desktop
     /// </summary>
     public partial class wpfBranch : MetroWindow
     {
+        public bool status;
+
         public wpfBranch()
         {
             InitializeComponent();
@@ -38,7 +40,7 @@ namespace LoanManagement.Desktop
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show("Please select a row", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                //System.Windows.MessageBox.Show("Please select a row", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return "";
             }
         }
@@ -54,6 +56,14 @@ namespace LoanManagement.Desktop
                 myBrush.ImageSource = image.Source;
                 wdw1.Background = myBrush;
                 resetGrid();
+
+                if (status == false)//maintenance
+                {
+                    btnView.Visibility = Visibility.Hidden;
+                    btnAdd.Visibility = Visibility.Hidden;
+                    btnRet.Visibility = Visibility.Visible;
+                    myLbL.Content = "Bank Retreival";
+                }
             }
             catch (Exception ex)
             {
@@ -66,10 +76,10 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new MyLoanContext())
+                using (var ctx = new SystemContext())
                 {
                     var bank = from bn in ctx.Banks
-                               where bn.Active == true
+                               where bn.Active == status
                                select new { BankID = bn.BankID, BankName = bn.BankName, Description = bn.Description };
                     dgBank.ItemsSource = bank.ToList();
 
@@ -77,7 +87,7 @@ namespace LoanManagement.Desktop
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                //System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
         }
@@ -121,6 +131,31 @@ namespace LoanManagement.Desktop
             try
             {
                 resetGrid();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void btnRet_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                int n = Convert.ToInt32(getRow(dgBank, 0));
+                MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure?", "Question", MessageBoxButton.YesNo);
+                if (mr == MessageBoxResult.Yes)
+                {
+                    using (var ctx = new SystemContext())
+                    {
+                        var agt = ctx.Banks.Find(n);
+                        agt.Active = true;
+                        ctx.SaveChanges();
+                        System.Windows.MessageBox.Show("Retreived");
+                        resetGrid();
+                    }
+                }
             }
             catch (Exception ex)
             {
