@@ -40,7 +40,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new SystemContext())
+                using (var ctx = new iContext())
                 {
                     var lon = ctx.Loans.Find(lId);
 
@@ -159,7 +159,7 @@ namespace LoanManagement.Desktop
         {
             wpfClientInfo frm = new wpfClientInfo();
             frm.status = "View";
-            using (var ctx = new SystemContext())
+            using (var ctx = new iContext())
             {
                 var lon = ctx.Loans.Find(lId);
                 frm.cId = lon.ClientID;
@@ -178,7 +178,7 @@ namespace LoanManagement.Desktop
             {
                 wpfAgentInfo frm = new wpfAgentInfo();
                 frm.status = "View";
-                using (var ctx = new SystemContext())
+                using (var ctx = new iContext())
                 {
                     var lon = ctx.Loans.Find(lId);
                     frm.aId = lon.AgentID;
@@ -237,7 +237,7 @@ namespace LoanManagement.Desktop
                     System.Windows.MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure?", "Question", MessageBoxButton.YesNo);
                     if (mr == System.Windows.MessageBoxResult.Yes)
                     {
-                        using (var ctx = new SystemContext())
+                        using (var ctx = new iContext())
                         {
                             var lon = ctx.Loans.Find(lId);
                             if (lon.Status == "Approved")

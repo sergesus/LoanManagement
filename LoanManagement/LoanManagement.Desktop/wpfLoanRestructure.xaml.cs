@@ -38,7 +38,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new SystemContext())
+                using (var ctx = new iContext())
                 {
                     var lon = ctx.Loans.Find(lId);
                     var rmn = from rm in ctx.FPaymentInfo
@@ -68,7 +68,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new SystemContext())
+                using (var ctx = new iContext())
                 {
                     myNum = 0;
                     ctx.Database.ExecuteSqlCommand("delete from dbo.GenSOAs");
@@ -198,7 +198,7 @@ namespace LoanManagement.Desktop
                 myBrush.ImageSource = image.Source;
                 //Grid grid = new Grid();
                 wdw1.Background = myBrush;
-                using (var ctx = new SystemContext())
+                using (var ctx = new iContext())
                 {
                     var lon = ctx.Loans.Find(lId);
                     if (lon.Service.Department == "Financing")
@@ -285,7 +285,7 @@ namespace LoanManagement.Desktop
                 MessageBoxResult mr = MessageBox.Show("Sure?", "Question", MessageBoxButton.YesNo);
                 if (mr == MessageBoxResult.Yes)
                 {
-                    using (var ctx = new SystemContext())
+                    using (var ctx = new iContext())
                     {
                         wpfCheckout frm = new wpfCheckout();
                         var lon = ctx.Loans.Find(lId);
@@ -300,7 +300,7 @@ namespace LoanManagement.Desktop
                         return;
                     }
 
-                    using (var ctx = new SystemContext())
+                    using (var ctx = new iContext())
                     {
                         var bk = ctx.Banks.Where(x => x.BankName == cmbBank.Text).First();
                         int bId = bk.BankID;

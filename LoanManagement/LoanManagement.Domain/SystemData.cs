@@ -9,10 +9,11 @@ using System.Data.Entity;
 namespace LoanManagement.Domain
 {
 
-    public class SystemContext : DbContext
+    public class iContext : DbContext
     {
         public DbSet<User> Users { get; set; }
         public DbSet<Scope> Scopes { get; set; }
+        public DbSet<Position> Positions { get; set; }
         public DbSet<Employee> Employees { get; set; }
         public DbSet<EmployeeAddress> EmployeeAddresses { get; set; }
         public DbSet<EmployeeContact> EmployeeContacts { get; set; }
@@ -191,16 +192,24 @@ namespace LoanManagement.Domain
         public string MI { get; set; }
         public string LastName { get; set; }
         public string Suffix { get; set; }
-        public string Position { get; set; }
+        public int PositionID { get; set; }
         public string Department { get; set; }
         public string Email { get; set; }
         public byte[] Photo { get; set; }
         public bool Active { get; set; }
 
+        public virtual Position Position { get; set; }
         public virtual User User { get; set; }
         public virtual Scope Scope { get; set; }
         public ICollection<EmployeeAddress> EmployeeAddress { get; set; }
         public ICollection<EmployeeContact> EmployeeContact { get; set; }
+    }
+
+    public class Position
+    {
+        public int PositionID { get; set; }
+        public string PositionName { get; set; }
+        public string Description { get; set; }
     }
 
     public class EmployeeAddress

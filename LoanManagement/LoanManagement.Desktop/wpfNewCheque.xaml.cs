@@ -52,7 +52,7 @@ namespace LoanManagement.Desktop
 
         private void btnNew_Click(object sender, RoutedEventArgs e)
         {
-            using (var ctx = new SystemContext())
+            using (var ctx = new iContext())
             {
                 FPaymentInfo fp = ctx.FPaymentInfo.Find(fId);
                 DepositedCheque dp = ctx.DepositedCheques.Find(fId);

@@ -58,7 +58,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new SystemContext())
+                using (var ctx = new iContext())
                 {
                     var emp = from em in ctx.Users where em.Employee.Active == true select new { EmployeeID= em.EmployeeID, Name = em.Employee.FirstName + " " + em.Employee.MI + " " + em.Employee.LastName, Username = em.Username };
                     dgEmp.ItemsSource = emp.ToList();
@@ -75,7 +75,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new SystemContext())
+                using (var ctx = new iContext())
                 {
                     img.Visibility = Visibility.Visible;
                     var emp = ctx.Employees.Find(Convert.ToInt32(getRow(dgEmp, 0)));
@@ -141,11 +141,11 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new SystemContext())
+                using (var ctx = new iContext())
                 { 
                     int n = Convert.ToInt32(getRow(dgEmp,0));
                     var emp = ctx.Employees.Find(n);
-                    if (emp.Position == "Administrator")
+                    if (emp.Position.PositionName == "Administrator")
                     {
                         System.Windows.MessageBox.Show("Unable to edit Administrator");
                         return;
@@ -177,11 +177,11 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new SystemContext())
+                using (var ctx = new iContext())
                 {
                     int n = Convert.ToInt32(getRow(dgEmp, 0));
                     var emp = ctx.Employees.Find(n);
-                    if (emp.Position == "Administrator")
+                    if (emp.Position.PositionName == "Administrator")
                     {
                         System.Windows.MessageBox.Show("Unable to edit Administrator");
                         return;

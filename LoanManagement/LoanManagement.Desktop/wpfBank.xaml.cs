@@ -76,7 +76,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new SystemContext())
+                using (var ctx = new iContext())
                 {
                     var bank = from bn in ctx.Banks
                                where bn.Active == status
@@ -147,7 +147,7 @@ namespace LoanManagement.Desktop
                 MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure?", "Question", MessageBoxButton.YesNo);
                 if (mr == MessageBoxResult.Yes)
                 {
-                    using (var ctx = new SystemContext())
+                    using (var ctx = new iContext())
                     {
                         var agt = ctx.Banks.Find(n);
                         agt.Active = true;

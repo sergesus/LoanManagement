@@ -83,7 +83,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new SystemContext())
+                using (var ctx = new iContext())
                 {
                     var emp = from em in ctx.Agents where em.Active == status select new { em.AgentID, em.FirstName, em.MI, em.LastName, em.Suffix };
                     dgEmp.ItemsSource = emp.ToList();
@@ -126,7 +126,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new SystemContext())
+                using (var ctx = new iContext())
                 {
                     img.Visibility = Visibility.Visible;
                     var emp = ctx.Agents.Find(Convert.ToInt32(getRow(dgEmp, 0)));
@@ -201,7 +201,7 @@ namespace LoanManagement.Desktop
                 MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure?","Question",MessageBoxButton.YesNo);
                 if (mr == MessageBoxResult.Yes)
                 {
-                    using (var ctx = new SystemContext())
+                    using (var ctx = new iContext())
                     {
                         var agt = ctx.Agents.Find(n);
                         agt.Active = true;

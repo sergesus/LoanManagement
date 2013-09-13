@@ -44,7 +44,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new SystemContext())
+                using (var ctx = new iContext())
                 {
                     var lon = from lo in ctx.FPaymentInfo
                               where lo.PaymentDate <= DateTime.Today.Date && (lo.PaymentStatus == "Pending" || lo.PaymentStatus == "On Hold")
@@ -91,12 +91,15 @@ namespace LoanManagement.Desktop
             {
                 //System.Windows.MessageBox.Show("Okay");
                 checkDue();
-                using (var ctx = new SystemContext())
+                /*
+                using (var ctx = new iContext())
                 {
-                    /*Employee emp = new Employee { FirstName = "Aldrin", MI = "A", LastName = "Arciga",  Email = "aldrinarciga@gmail.com", Active=true };
+                    Domain.Position pos = new Domain.Position { PositionName = "Administrator", Description = "ForAdmins" };
+                    ctx.SaveChanges();
+                    Employee emp = new Employee { FirstName = "Aldrin", MI = "A", LastName = "Arciga", Email = "aldrinarciga@gmail.com", Active = true,PositionID = pos.PositionID };
                     User usr = new User();
                     usr.Username = "aldrin";
-                    usr.Password="123";
+                    usr.Password = "123";
                     ctx.Users.Add(usr);
                     ctx.Employees.Add(emp);
                     ctx.SaveChanges();
@@ -104,8 +107,8 @@ namespace LoanManagement.Desktop
                     if (ctr < 1)
                     { 
                         //
-                    }*/
-                }
+                    }
+                }*/
                 String selectedFileName = AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\myImg.gif";
                 BitmapImage bitmap = new BitmapImage();
                 bitmap.BeginInit();
@@ -121,6 +124,7 @@ namespace LoanManagement.Desktop
                 myBrush.ImageSource = image.Source;
                 //Grid grid = new Grid();
                 wdw1.Background = myBrush;
+
             }
             catch (Exception ex)
             {
@@ -152,7 +156,7 @@ namespace LoanManagement.Desktop
 
 
 
-                using (var ctx = new SystemContext())
+                using (var ctx = new iContext())
                 {
                     var count = ctx.Users.Where(x => x.Username == txtUsername.Text && x.Password == txtPassword.Password).Count();
                     if (count > 0)
@@ -160,6 +164,7 @@ namespace LoanManagement.Desktop
                         var em = ctx.Users.Where(x => x.Username == txtUsername.Text && x.Password == txtPassword.Password).First();
                         System.Windows.MessageBox.Show("Login Successful", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                         wpfMain wnd = new wpfMain();
+
                         wnd.UserID = em.EmployeeID;
 
                         if (em.Employee.Department == "Financing")
@@ -223,8 +228,8 @@ namespace LoanManagement.Desktop
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
+                //System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                //return;
             }
         }
 
@@ -232,7 +237,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new SystemContext())
+                using (var ctx = new iContext())
                 {
                     var ctr = ctx.Users.Where(x => x.Username == txtUsername.Text).Count();
                     if (ctr > 0)

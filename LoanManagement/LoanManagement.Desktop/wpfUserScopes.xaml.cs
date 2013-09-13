@@ -41,7 +41,7 @@ namespace LoanManagement.Desktop
                 myBrush.ImageSource = image.Source;
                 wdw1.Background = myBrush;
 
-                using (var ctx = new SystemContext())
+                using (var ctx = new iContext())
                 {
                     var sc = ctx.Scopes.Find(ID);
                     cClient.IsChecked = sc.ClientM;
@@ -78,7 +78,7 @@ namespace LoanManagement.Desktop
             MessageBoxResult mr = MessageBox.Show("Sure?", "Q", MessageBoxButton.YesNo);
             if (mr == MessageBoxResult.Yes)
             {
-                using (var ctx = new SystemContext())
+                using (var ctx = new iContext())
                 {
                     var sc = ctx.Scopes.Find(ID);
                     sc.ClientM = Convert.ToBoolean(cClient.IsChecked);

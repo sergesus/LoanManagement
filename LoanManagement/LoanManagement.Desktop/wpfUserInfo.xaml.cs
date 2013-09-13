@@ -44,7 +44,7 @@ namespace LoanManagement.Desktop
 
                 if (status == "view")
                 {
-                    using (var ctx = new SystemContext())
+                    using (var ctx = new iContext())
                     {
                         var u = ctx.Users.Find(eId);
                         txtUserName.Text = u.Username;
@@ -72,7 +72,7 @@ namespace LoanManagement.Desktop
                 }
                 if (status != "view")
                 {
-                    using (var ctx = new SystemContext())
+                    using (var ctx = new iContext())
                     {
                         var u = ctx.Users.Where(x => x.Username == txtUserName.Text).Count();
                         if (u > 0)
@@ -93,7 +93,7 @@ namespace LoanManagement.Desktop
                 }
                 else
                 {
-                    using (var ctx = new SystemContext())
+                    using (var ctx = new iContext())
                     {
                         var u = ctx.Users.Find(eId);
                         u.Password = txtPassword.Password;

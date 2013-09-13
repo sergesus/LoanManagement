@@ -60,7 +60,7 @@ namespace LoanManagement.Desktop
             {
                 if (status == "view")
                 {
-                    using (var ctx = new SystemContext())
+                    using (var ctx = new iContext())
                     {
                         var ctr = ctx.Users.Where(x => x.EmployeeID == ID && x.Password == txtPassword.Password).Count();
                         if (ctr > 0)
@@ -81,7 +81,7 @@ namespace LoanManagement.Desktop
                 }
                 else if (status == "scope")
                 {
-                    using (var ctx = new SystemContext())
+                    using (var ctx = new iContext())
                     {
                         var ctr = ctx.Users.Where(x => x.EmployeeID == ID && x.Password == txtPassword.Password).Count();
                         if (ctr > 0)

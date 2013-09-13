@@ -1,0 +1,56 @@
+﻿<Controls:MetroWindow x:Name="wdw1" x:Class="LoanManagement.Desktop.wpfPosition"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"              
+        Title="wpfPosition" Height="486" Width="726" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Loaded="wdw1_Loaded" Activated="wdw1_Activated">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Green.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedTabControl.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="85*"/>
+            <ColumnDefinition Width="274*"/>
+        </Grid.ColumnDefinitions>
+        <Grid Height="397" Margin="10,79,-922,-21" VerticalAlignment="Top" RenderTransformOrigin="0.321,0.525" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="386*"/>
+                <ColumnDefinition Width="629*"/>
+                <ColumnDefinition Width="21*"/>
+            </Grid.ColumnDefinitions>
+            <DataGrid x:Name="dgBank" HorizontalAlignment="Left" Height="323" VerticalAlignment="Top" Width="704" CanUserAddRows="False" CanUserDeleteRows="False" FontSize="18" GridLinesVisibility="None" Grid.ColumnSpan="2" BorderBrush="#CC48CB00" BorderThickness="2" Background="#7FF0F0F0">
+                <DataGrid.Resources>
+                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" 
+    					Color="#CC48CB00"/>
+                </DataGrid.Resources>
+            </DataGrid>
+            <Button x:Name="btnAdd" HorizontalAlignment="Left" Height="39" Margin="2,328,0,0" VerticalAlignment="Top" Width="164" BorderBrush="#CC48CB00" BorderThickness="2" Background="#7F48CB00" Click="btnAdd_Click">
+                <DockPanel LastChildFill="True">
+                    <Label HorizontalContentAlignment="Center" DockPanel.Dock="Right" Foreground="#FF343434" Height="28" FontSize="16" Content="ADD"/>
+                    <Image Source="Images/Add.ico" />
+                </DockPanel>
+            </Button>
+            <Button x:Name="btnView" HorizontalAlignment="Left" Height="39" Margin="172,328,0,0" VerticalAlignment="Top" Width="164" BorderBrush="#CC48CB00" BorderThickness="2" Background="#7F48CB00" Click="btnView_Click">
+                <DockPanel LastChildFill="True">
+                    <Label HorizontalContentAlignment="Center" DockPanel.Dock="Right" Foreground="#FF343434" Height="28" FontSize="16" Content="VIEW/UPDATE"/>
+                    <Image Source="Images/View.ico" />
+                </DockPanel>
+            </Button>
+        </Grid>
+        <Grid HorizontalAlignment="Left" Height="74" VerticalAlignment="Top" Width="749" Background="#7F48CB00" Margin="0,0,-31,0" Grid.ColumnSpan="2">
+            <Image HorizontalAlignment="Left" Height="74" VerticalAlignment="Top" Width="97" Source="Images/Manage.ico"/>
+            <Label x:Name="myLbL" Content="PositionMaintenance" HorizontalAlignment="Left" Height="54" Margin="87,10,0,0" VerticalAlignment="Top" Width="285" FontSize="30"/>
+        </Grid>
+
+    </Grid>
+</Controls:MetroWindow>

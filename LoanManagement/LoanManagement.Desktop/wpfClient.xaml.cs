@@ -123,7 +123,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new SystemContext())
+                using (var ctx = new iContext())
                 {
                     var clt = from cl in ctx.Clients
                               where cl.Active == status
@@ -157,7 +157,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new SystemContext())
+                using (var ctx = new iContext())
                 {
                     img.Visibility = Visibility.Visible;
                     var clt = ctx.Clients.Find(Convert.ToInt32(getRow(dgClient, 0)));
@@ -188,7 +188,7 @@ namespace LoanManagement.Desktop
                 MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure?", "Question", MessageBoxButton.YesNo);
                 if (mr == MessageBoxResult.Yes)
                 {
-                    using (var ctx = new SystemContext())
+                    using (var ctx = new iContext())
                     {
                         var agt = ctx.Clients.Find(n);
                         agt.Active = true;

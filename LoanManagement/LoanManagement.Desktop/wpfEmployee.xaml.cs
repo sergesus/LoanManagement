@@ -68,9 +68,9 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new SystemContext())
+                using (var ctx = new iContext())
                 {
-                    var emp = from em in ctx.Employees where em.Active == status select new { em.EmployeeID, em.FirstName, em.MI, em.LastName, em.Suffix, em.Position };
+                    var emp = from em in ctx.Employees where em.Active == status select new { em.EmployeeID, em.FirstName, em.MI, em.LastName, em.Suffix, em.Position.PositionName };
                     dgEmp.ItemsSource = emp.ToList();
                 }
             }
@@ -115,7 +115,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new SystemContext())
+                using (var ctx = new iContext())
                 {
                     img.Visibility = Visibility.Visible;
                     var emp = ctx.Employees.Find(Convert.ToInt32(getRow(dgEmp, 0)));
@@ -129,7 +129,7 @@ namespace LoanManagement.Desktop
                     bi.EndInit();
                     img.Source = bi;
                     lblName.Content = emp.FirstName + " " + emp.MI + ". " + emp.LastName + " " + emp.Suffix;
-                    lblPosition.Content = "Position: " + emp.Position;
+                    lblPosition.Content = "Position: " + emp.Position.PositionName;
                     lblDept.Content = "Department: " + emp.Department;
                 }
             }
@@ -202,7 +202,7 @@ namespace LoanManagement.Desktop
                 MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure?", "Question", MessageBoxButton.YesNo);
                 if (mr == MessageBoxResult.Yes)
                 {
-                    using (var ctx = new SystemContext())
+                    using (var ctx = new iContext())
                     {
                         var agt = ctx.Employees.Find(n);
                         agt.Active = true;
@@ -223,7 +223,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new SystemContext())
+                using (var ctx = new iContext())
                 {
                     img.Visibility = Visibility.Visible;
                     var emp = ctx.Employees.Find(Convert.ToInt32(getRow(dgEmp, 0)));
