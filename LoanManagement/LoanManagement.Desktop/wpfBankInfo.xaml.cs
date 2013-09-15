@@ -32,6 +32,150 @@ namespace LoanManagement.Desktop
             InitializeComponent();
         }
 
+        public void checkNumeric(System.Windows.Controls.TextBox txt, System.Windows.Controls.Label lbl, bool isRequired)
+        {
+            try
+            {
+                bool err = false;
+                int res;
+                String str = txt.Text;
+                err = int.TryParse(str, out res);
+
+                if (isRequired == true)
+                {
+                    if (String.IsNullOrWhiteSpace(str))
+                        err = true;
+                }
+
+                if (err == true)
+                    lbl.Content = "**";
+                else
+                    lbl.Content = "✔";
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        public void checkDouble(System.Windows.Controls.TextBox txt, System.Windows.Controls.Label lbl, bool isRequired)
+        {
+            try
+            {
+                bool err = false;
+                double res;
+                String str = txt.Text;
+                err = double.TryParse(str, out res);
+
+                if (isRequired == true)
+                {
+                    if (String.IsNullOrWhiteSpace(str))
+                        err = true;
+                }
+
+                if (err == true)
+                    lbl.Content = "**";
+                else
+                    lbl.Content = "✔";
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        public void checkEmail(System.Windows.Controls.TextBox txt, System.Windows.Controls.Label lbl, bool isRequired)
+        {
+            try
+            {
+                bool err = false;
+                String str = txt.Text;
+                str = str.Replace(" ", "");
+                str = str.Trim();
+                str = str.ToLower();
+                txt.Text = str;
+                if (!Regex.IsMatch(str, @"^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$"))
+                    err = true;
+
+                if (isRequired == true)
+                {
+                    if (String.IsNullOrWhiteSpace(str))
+                        err = true;
+                }
+
+                if (err == true)
+                    lbl.Content = "**";
+                else
+                    lbl.Content = "✔";
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        public void checkName(System.Windows.Controls.TextBox txt, System.Windows.Controls.Label lbl, bool isRequired)
+        {
+            try
+            {
+                bool err = false;
+                String str = txt.Text;
+                str = System.Text.RegularExpressions.Regex.Replace(str, @"\s+", " ");
+                str = str.Trim();
+                str = str.ToLower();
+                str = Regex.Replace(str, "(?:^|\\s)\\w", new MatchEvaluator(delegate(Match m) { return m.Value.ToUpper(); }));
+                txt.Text = str;
+                if (!Regex.IsMatch(str, @"^[a-zA-Z ]*$") || str.Length > 25)
+                    err = true;
+
+                if (isRequired == true)
+                {
+                    if (String.IsNullOrWhiteSpace(str))
+                        err = true;
+                }
+
+                if (err == true)
+                    lbl.Content = "**";
+                else
+                    lbl.Content = "✔";
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        public void checkString(System.Windows.Controls.TextBox txt, System.Windows.Controls.Label lbl, bool isRequired)
+        {
+            try
+            {
+                bool err = false;
+                String str = txt.Text;
+                str = System.Text.RegularExpressions.Regex.Replace(str, @"\s+", " ");
+                str = str.Trim();
+                //str = str.ToLower();
+                str = Regex.Replace(str, "(?:^|\\s)\\w", new MatchEvaluator(delegate(Match m) { return m.Value.ToUpper(); }));
+                txt.Text = str;
+                if (!Regex.IsMatch(str, @"^[a-zA-Z0-9 @.]*$") || str.Length > 25)
+                    err = true;
+
+                if (isRequired == true)
+                {
+                    if (String.IsNullOrWhiteSpace(str))
+                        err = true;
+                }
+
+                if (err == true)
+                    lbl.Content = "**";
+                else
+                    lbl.Content = "✔";
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
         public void reset()
         {
             try
@@ -99,6 +243,16 @@ namespace LoanManagement.Desktop
         {
             try
             {
+                if (btnAddAddress.Content.ToString() != "Add")
+                {
+                    if (lblStreet.Content == "**" || lblProvince.Content == "**" || lblCity.Content == "**"
+                    || String.IsNullOrWhiteSpace(txtStreet.Text) || String.IsNullOrWhiteSpace(txtProvince.Text) || String.IsNullOrWhiteSpace(txtCity.Text))
+                    {
+                        System.Windows.MessageBox.Show("Please input correct format and/or fill all required fields");
+                        return;
+                    }
+                }
+
                 if (btnAddAddress.Content.ToString() == "Add")
                 {
                     grpAddress.Visibility = Visibility.Visible;
@@ -285,8 +439,10 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                if (txtName.Text == "")
+                if (lblName.Content == "**" || lblDesc.Content == "**"
+                    || String.IsNullOrWhiteSpace(txtName.Text))
                 {
+                    System.Windows.MessageBox.Show("Please input correct format and/or fill all required fields");
                     return;
                 }
 
@@ -381,7 +537,7 @@ namespace LoanManagement.Desktop
                     new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
                 myBrush.ImageSource = image.Source;
                 wdw1.Background = myBrush;
-
+                tbInfo.IsSelected = true;
                 if (status == "Add")
                 {
                     using (var ctx = new iContext())
@@ -409,6 +565,31 @@ namespace LoanManagement.Desktop
                 System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
+        }
+
+        private void txtName_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkName(txtName, lblName, true);
+        }
+
+        private void txtDesc_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkString(txtDesc, lblDesc, true);
+        }
+
+        private void txtStreet_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkString(txtStreet, lblStreet, true);
+        }
+
+        private void txtProvince_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkName(txtProvince, lblProvince, true);
+        }
+
+        private void txtCity_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkName(txtProvince, lblProvince, true);
         }
     }
 }

@@ -35,10 +35,163 @@ namespace LoanManagement.Desktop
         public int cId;
         string selectedFileName;
         public bool isChanged = false;
+        public bool error;
 
         public wpfClientInfo()
         {
             InitializeComponent();
+        }
+
+        public void checkError()
+        {
+            error = false;
+            this.Focus();
+            if (lblFName.Content == "**" || lblMName.Content == "**" || lblLName.Content == "**" || lblSuff.Content == "**" || lblEmail.Content == "**" || lblSSS.Content == "**" || lblTIN.Content == "**" || String.IsNullOrWhiteSpace(cmbSex.Text) || String.IsNullOrWhiteSpace(cmbStatus.Text))
+                error = true;
+        }
+
+        public void checkNumeric(System.Windows.Controls.TextBox txt, System.Windows.Controls.Label lbl, bool isRequired)
+        {
+            try
+            {
+                bool err = false;
+                int res;
+                String str = txt.Text;
+                err = int.TryParse(str, out res);
+
+                if (isRequired == true)
+                {
+                    if (String.IsNullOrWhiteSpace(str))
+                        err = true;
+                }
+
+                if (err == true)
+                    lbl.Content = "**";
+                else
+                    lbl.Content = "✔";
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        public void checkDouble(System.Windows.Controls.TextBox txt, System.Windows.Controls.Label lbl, bool isRequired)
+        {
+            try
+            {
+                bool err = false;
+                double res;
+                String str = txt.Text;
+                err = double.TryParse(str,out res);
+
+                if (isRequired == true)
+                {
+                    if (String.IsNullOrWhiteSpace(str))
+                        err = true;
+                }
+
+                if (err == true)
+                    lbl.Content = "**";
+                else
+                    lbl.Content = "✔";
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        public void checkEmail(System.Windows.Controls.TextBox txt, System.Windows.Controls.Label lbl, bool isRequired)
+        {
+            try
+            {
+                bool err = false;
+                String str = txt.Text;
+                str = str.Replace(" ", "");
+                str = str.Trim();
+                str = str.ToLower();
+                txt.Text = str;
+                if (!Regex.IsMatch(str, @"^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$"))
+                    err = true;
+
+                if (isRequired == true)
+                {
+                    if (String.IsNullOrWhiteSpace(str))
+                        err = true;
+                }
+
+                if (err == true)
+                    lbl.Content = "**";
+                else
+                    lbl.Content = "✔";
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        public void checkName(System.Windows.Controls.TextBox txt, System.Windows.Controls.Label lbl, bool isRequired)
+        {
+            try
+            {
+                bool err = false;
+                String str = txt.Text;
+                str = System.Text.RegularExpressions.Regex.Replace(str, @"\s+", " ");
+                str = str.Trim();
+                str = str.ToLower();
+                str = Regex.Replace(str, "(?:^|\\s)\\w", new MatchEvaluator(delegate(Match m) { return m.Value.ToUpper(); }));
+                txt.Text = str;
+                if (!Regex.IsMatch(str, @"^[a-zA-Z ]*$") || str.Length > 25)
+                    err = true;
+
+                if (isRequired == true)
+                {
+                    if (String.IsNullOrWhiteSpace(str))
+                        err = true;
+                }
+
+                if (err == true)
+                    lbl.Content = "**";
+                else
+                    lbl.Content = "✔";
+            }
+            catch(Exception ex)
+            {
+                
+            }
+        }
+
+        public void checkString(System.Windows.Controls.TextBox txt, System.Windows.Controls.Label lbl, bool isRequired)
+        {
+            try
+            {
+                bool err = false;
+                String str = txt.Text;
+                str = System.Text.RegularExpressions.Regex.Replace(str, @"\s+", " ");
+                str = str.Trim();
+                //str = str.ToLower();
+                str = Regex.Replace(str, "(?:^|\\s)\\w", new MatchEvaluator(delegate(Match m) { return m.Value.ToUpper(); }));
+                txt.Text = str;
+                if (!Regex.IsMatch(str, @"^[a-zA-Z0-9 @.]*$") || str.Length > 25)
+                    err = true;
+
+                if (isRequired == true)
+                {
+                    if (String.IsNullOrWhiteSpace(str))
+                        err = true;
+                }
+
+                if (err == true)
+                    lbl.Content = "**";
+                else
+                    lbl.Content = "✔";
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         public void reset()
@@ -295,7 +448,10 @@ namespace LoanManagement.Desktop
                     new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
                 myBrush.ImageSource = image.Source;
                 wdw1.Background = myBrush;
+
+                txtLName.Focus();
                 //System.Windows.MessageBox.Show(cmbStatus.Text);
+                tbInfo.IsSelected = true;
                 if (cmbStatus.Text == "Married")
                 {
                     tbSps.Visibility = Visibility.Visible;
@@ -417,17 +573,30 @@ namespace LoanManagement.Desktop
         {
             try
             {
+                if (btnAddAddress.Content.ToString() != "Add")
+                {
+                    if (lblHCity.Content == "**" || lblHLength.Content == "**" || lblHProvince.Content == "**" || lblHStreet.Content == "**"
+                        || String.IsNullOrWhiteSpace(txtHCity.Text) || String.IsNullOrWhiteSpace(txtHLength.Text) || String.IsNullOrWhiteSpace(txtHProvince.Text) || String.IsNullOrWhiteSpace(txtHStreet.Text))
+                    {
+                        System.Windows.MessageBox.Show("Please input correct format and/or fill all required fields");
+                        return;
+                    }
+                }
+
+                lblHStreet.Focus();
+
                 String ownership = "";
                 double val = 0;
 
                 if (btnAddAddress.Content.ToString() == "Add")
                 {
                     grpAddress.Visibility = Visibility.Visible;
+                    lblHStreet.Focus();
                     btnAddAddress.Content = "Save";
                     btnEdtAddress.Content = "Cancel";
                     btnEdtAddress.IsEnabled = true;
                     btnDelAddress.Visibility = Visibility.Hidden;
-
+                    lblHStreet.Focus();
                 }
                 else if (btnAddAddress.Content.ToString() == "Save")
                 {
@@ -725,6 +894,14 @@ namespace LoanManagement.Desktop
         {
             try
             {
+                if (btnAddContact.Content.ToString() != "Add")
+                {
+                    if (lblContact.Content == "**" || String.IsNullOrWhiteSpace(txtContact.Text))
+                    {
+                        System.Windows.MessageBox.Show("Please input correct format and/or fill all required fields");
+                        return;
+                    }
+                }
                 if (btnAddContact.Content.ToString() == "Add")
                 {
                     grpContact.Visibility = Visibility.Visible;
@@ -942,6 +1119,16 @@ namespace LoanManagement.Desktop
         {
             try
             {
+                if (btnAddDep.Content.ToString() != "Add")
+                {
+                    if (lblDFName.Content == "**" || lblDLName.Content == "**" || lblDMI.Content == "**" || lblDSchool.Content == "**" || lblDSuffix.Content == "**"
+                        || String.IsNullOrWhiteSpace(txtDFName.Text) || String.IsNullOrWhiteSpace(txtDLName.Text) || String.IsNullOrWhiteSpace(txtDSchool.Text))
+                    {
+                        System.Windows.MessageBox.Show("Please input correct format and/or fill all required fields");
+                        return;
+                    }
+                }
+
                 if (btnAddDep.Content.ToString() == "Add")
                 {
                     grpDependents.Visibility = Visibility.Visible;
@@ -1169,6 +1356,16 @@ namespace LoanManagement.Desktop
         {
             try
             {
+                if (btnAddWork.Content.ToString() != "Add")
+                {
+                    if (lblWBsNumber.Content == "**" || lblWCity.Content == "**" || lblWDTI.Content == "**" || lblWIncome.Content == "**" || lblWLength.Content == "**" || lblWName.Content == "**" || lblWPLNumber.Content == "**" || lblWPosition.Content == "**" || lblWProvince.Content == "**" || lblWStreet.Content == "**"
+                        || String.IsNullOrWhiteSpace(txtWBsNumber.Text) || String.IsNullOrWhiteSpace(txtWCity.Text) || String.IsNullOrWhiteSpace(txtWDTI.Text) || String.IsNullOrWhiteSpace(txtWIncome.Text) || String.IsNullOrWhiteSpace(txtWLength.Text) || String.IsNullOrWhiteSpace(txtWName.Text) || String.IsNullOrWhiteSpace(txtWPLNumber.Text)
+                        || String.IsNullOrWhiteSpace(txtWPosition.Text) || String.IsNullOrWhiteSpace(txtWProvince.Text) || String.IsNullOrWhiteSpace(txtWStreet.Text))
+                    {
+                        System.Windows.MessageBox.Show("Please input correct format and/or fill all required fields");
+                        return;
+                    }
+                }
                 if (btnAddWork.Content.ToString() == "Add")
                 {
                     grpWork.Visibility = Visibility.Visible;
@@ -1425,6 +1622,16 @@ namespace LoanManagement.Desktop
         {
             try
             {
+                if (btnAddRef.Content.ToString() != "Add")
+                {
+                    if (lblRCity.Content == "**" || lblRContact.Content == "**" || lblRFName.Content == "**" || lblRLName.Content == "**" || lblRMI.Content == "**" || lblRProvince.Content == "**" || lblRStreet.Content == "**" || lblRSuffix.Content == "**"
+                        || String.IsNullOrWhiteSpace(txtRCity.Text) || String.IsNullOrWhiteSpace(txtRLName.Text) || String.IsNullOrWhiteSpace(txtFName.Text) || String.IsNullOrWhiteSpace(txtRStreet.Text) || String.IsNullOrWhiteSpace(txtRProvince.Text) || String.IsNullOrWhiteSpace(txtRContact.Text))
+                    {
+                        System.Windows.MessageBox.Show("Please input correct format and/or fill all required fields");
+                        return;
+                    }
+                }
+
                 if (btnAddRef.Content.ToString() == "Add")
                 {
                     grpReference.Visibility = Visibility.Visible;
@@ -1664,6 +1871,19 @@ namespace LoanManagement.Desktop
         {
             try
             {
+                checkError();
+
+                /*if (String.IsNullOrWhiteSpace(txtFName.Text) || String.IsNullOrWhiteSpace(txtLName.Text) || String.IsNullOrWhiteSpace(cmbSex.Text) || String.IsNullOrWhiteSpace(cmbStatus.Text))
+                {
+                    System.Windows.MessageBox.Show("Please input correct format and/or fill all required fields");
+                    return;
+                }*/
+                if(error == true)
+                {
+                    System.Windows.MessageBox.Show("Please input correct format and/or fill all required fields");
+                    return;
+                }
+
                 if (status == "Add")
                 {
                     DialogResult dr = System.Windows.Forms.MessageBox.Show("Are you sure you want to add this record?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
@@ -1854,6 +2074,183 @@ namespace LoanManagement.Desktop
                 }
             }
         }
+
+        private void txtLName_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkName(txtLName, lblLName, true);
+        }
+
+        private void txtFName_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkName(txtFName, lblFName, true);
+        }
+
+        private void txtMName_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkName(txtMName, lblMName, !true);
+        }
+
+        private void txtSuffix_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkName(txtSuffix, lblSuff, !true);
+        }
+
+        private void txtEmail_Copy_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkEmail(txtEmail_Copy, lblEmail, !true);
+        }
+
+        private void txtSSS_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkNumeric(txtSSS, lblSSS, false);
+        }
+
+        private void txtTIN_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkNumeric(txtTIN, lblTIN, false);
+        }
+
+        private void txtHStreet_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkString(txtHStreet, lblHStreet, true);
+        }
+
+        private void txtHProvince_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkString(txtHProvince, lblHProvince, true);
+        }
+
+        private void txtHCity_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkString(txtHCity, lblHCity, true);
+        }
+
+        private void txtHLength_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkString(txtHLength, lblHLength, true);
+        }
+
+        private void txtContact_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkNumeric(txtContact, lblContact, true);
+        }
+
+        private void txtDLName_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkName(txtDLName, lblDLName, true);
+        }
+
+        private void txtDFName_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkName(txtDFName, lblDFName, true);
+        }
+
+        private void txtDMName_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkName(txtDMName, lblDMI, !true);
+        }
+
+        private void txtDSuffix_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkName(txtDSuffix, lblDSuffix, !true);
+        }
+
+        private void txtDSchool_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkString(txtDSchool, lblDSchool, true);
+        }
+
+        private void txtWPLNumber_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkNumeric(txtWPLNumber, lblWPLNumber, true);
+        }
+
+        private void txtWBsNumber_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkNumeric(txtWBsNumber, lblWBsNumber, true);
+        }
+
+        private void txtWName_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkString(txtWName, lblWName, true);
+        }
+
+        private void txtWDTI_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkNumeric(txtWDTI, lblWDTI, true);
+        }
+
+        private void txtWStreet_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkString(txtWStreet, lblWStreet, false);
+        }
+
+        private void txtWProvince_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkString(txtWProvince, lblWProvince, false);
+        }
+
+        private void txtWCity_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkString(txtWCity, lblWCity, true);
+        }
+
+        private void txtWPosition_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkName(txtWPosition, lblWPosition, true);
+        }
+
+        private void txtWIncome_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkDouble(txtWIncome, lblWIncome, true);
+        }
+
+        private void txtWLength_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkString(txtWLength, lblWLength, true);
+        }
+
+        private void txtRLName_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkName(txtRLName, lblRLName, true);
+        }
+
+        private void txtRMI_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkName(txtRMI, lblRMI, !true);
+        }
+
+        private void txtRFName_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkName(txtRFName, lblRFName, true);
+        }
+
+        private void txtRSuffix_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkName(txtRSuffix, lblRSuffix, false);
+        }
+
+        private void txtRStreet_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkString(txtRStreet, lblRStreet, true);
+        }
+
+        private void txtRProvince_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkName(txtRProvince, lblRProvince, true);
+        }
+
+        private void txtRCity_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkName(txtRCity, lblRCity, true);
+        }
+
+        private void txtRContact_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkNumeric(txtRContact, lblRContact, true);
+        }
+
+
 
     }
 }

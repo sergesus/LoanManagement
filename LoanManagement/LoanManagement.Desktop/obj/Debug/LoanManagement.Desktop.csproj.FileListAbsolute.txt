@@ -1,3 +1,7 @@
+J:\LoanManagement\LoanManagement.Desktop\bin\Debug\LoanManagement.Desktop.exe.config
+J:\LoanManagement\LoanManagement.Desktop\obj\Debug\LoanManagement.Desktop.csproj.ResolveComReference.cache
+J:\LoanManagement\LoanManagement.Desktop\obj\Debug\LoanManagement.Desktop.exe
+J:\LoanManagement\LoanManagement.Desktop\obj\Debug\LoanManagement.Desktop.pdb
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\bin\Debug\LoanManagement.Desktop.exe.config
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\bin\Debug\LoanManagement.Desktop.exe
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\bin\Debug\LoanManagement.Desktop.pdb
@@ -109,7 +113,3 @@ C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManageme
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\LoanManagement.Desktop.csproj.GenerateResource.Cache
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\LoanManagement.Desktop.exe
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\LoanManagement.Desktop.pdb
-J:\LoanManagement\LoanManagement.Desktop\bin\Debug\LoanManagement.Desktop.exe.config
-J:\LoanManagement\LoanManagement.Desktop\obj\Debug\LoanManagement.Desktop.csproj.ResolveComReference.cache
-J:\LoanManagement\LoanManagement.Desktop\obj\Debug\LoanManagement.Desktop.exe
-J:\LoanManagement\LoanManagement.Desktop\obj\Debug\LoanManagement.Desktop.pdb

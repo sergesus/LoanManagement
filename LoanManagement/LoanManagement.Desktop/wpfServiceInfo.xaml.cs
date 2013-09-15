@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using System.Data.Entity;
 using LoanManagement.Domain;
 using MahApps.Metro.Controls;
+using System.Text.RegularExpressions;
 
 namespace LoanManagement.Desktop
 {
@@ -29,6 +30,150 @@ namespace LoanManagement.Desktop
         public wpfServiceInfo()
         {
             InitializeComponent();
+        }
+
+        public void checkNumeric(System.Windows.Controls.TextBox txt, System.Windows.Controls.Label lbl, bool isRequired)
+        {
+            try
+            {
+                bool err = false;
+                int res;
+                String str = txt.Text;
+                err = int.TryParse(str, out res);
+
+                if (isRequired == true)
+                {
+                    if (String.IsNullOrWhiteSpace(str))
+                        err = true;
+                }
+
+                if (err == true)
+                    lbl.Content = "**";
+                else
+                    lbl.Content = "✔";
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        public void checkDouble(System.Windows.Controls.TextBox txt, System.Windows.Controls.Label lbl, bool isRequired)
+        {
+            try
+            {
+                bool err = false;
+                double res;
+                String str = txt.Text;
+                err = double.TryParse(str, out res);
+
+                if (isRequired == true)
+                {
+                    if (String.IsNullOrWhiteSpace(str))
+                        err = true;
+                }
+
+                if (err == true)
+                    lbl.Content = "**";
+                else
+                    lbl.Content = "✔";
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        public void checkEmail(System.Windows.Controls.TextBox txt, System.Windows.Controls.Label lbl, bool isRequired)
+        {
+            try
+            {
+                bool err = false;
+                String str = txt.Text;
+                str = str.Replace(" ", "");
+                str = str.Trim();
+                str = str.ToLower();
+                txt.Text = str;
+                if (!Regex.IsMatch(str, @"^[a-zA-Z][\w\.-]*[a-zA-Z0-9]@[a-zA-Z0-9][\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]$"))
+                    err = true;
+
+                if (isRequired == true)
+                {
+                    if (String.IsNullOrWhiteSpace(str))
+                        err = true;
+                }
+
+                if (err == true)
+                    lbl.Content = "**";
+                else
+                    lbl.Content = "✔";
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        public void checkName(System.Windows.Controls.TextBox txt, System.Windows.Controls.Label lbl, bool isRequired)
+        {
+            try
+            {
+                bool err = false;
+                String str = txt.Text;
+                str = System.Text.RegularExpressions.Regex.Replace(str, @"\s+", " ");
+                str = str.Trim();
+                str = str.ToLower();
+                str = Regex.Replace(str, "(?:^|\\s)\\w", new MatchEvaluator(delegate(Match m) { return m.Value.ToUpper(); }));
+                txt.Text = str;
+                if (!Regex.IsMatch(str, @"^[a-zA-Z ]*$") || str.Length > 25)
+                    err = true;
+
+                if (isRequired == true)
+                {
+                    if (String.IsNullOrWhiteSpace(str))
+                        err = true;
+                }
+
+                if (err == true)
+                    lbl.Content = "**";
+                else
+                    lbl.Content = "✔";
+            }
+            catch (Exception ex)
+            {
+
+            }
+        }
+
+        public void checkString(System.Windows.Controls.TextBox txt, System.Windows.Controls.Label lbl, bool isRequired)
+        {
+            try
+            {
+                bool err = false;
+                String str = txt.Text;
+                str = System.Text.RegularExpressions.Regex.Replace(str, @"\s+", " ");
+                str = str.Trim();
+                //str = str.ToLower();
+                str = Regex.Replace(str, "(?:^|\\s)\\w", new MatchEvaluator(delegate(Match m) { return m.Value.ToUpper(); }));
+                txt.Text = str;
+                if (!Regex.IsMatch(str, @"^[a-zA-Z0-9 @.]*$") || str.Length > 25)
+                    err = true;
+
+                if (isRequired == true)
+                {
+                    if (String.IsNullOrWhiteSpace(str))
+                        err = true;
+                }
+
+                if (err == true)
+                    lbl.Content = "**";
+                else
+                    lbl.Content = "✔";
+            }
+            catch (Exception ex)
+            {
+
+            }
         }
 
         public string getRow(System.Windows.Controls.DataGrid dg, int row)
@@ -116,6 +261,13 @@ namespace LoanManagement.Desktop
         {
             try
             {
+                if (lblName.Content == "**" || lblMinTerm.Content == "**" || lblMaxTerm.Content == "**" || lblMinVal.Content == "**" || lblMaxVal.Content == "**" || lblInterest.Content == "**" || lblDesc.Content == "**"
+                    || String.IsNullOrWhiteSpace(txtName.Text) || String.IsNullOrWhiteSpace(txtMinTerm.Text) || String.IsNullOrWhiteSpace(txtMaxTerm.Text) || String.IsNullOrWhiteSpace(txtMinVal.Text) || String.IsNullOrWhiteSpace(txtMaxVal.Text) || String.IsNullOrWhiteSpace(txtInterest.Text) || String.IsNullOrWhiteSpace(txtDesc.Text))
+                {
+                    System.Windows.MessageBox.Show("Please input correct format and/or fill all required fields");
+                    return;
+                }
+
                 if (txtName.Text == "" || txtDesc.Text == "" || txtInterest.Text == "" || txtMaxTerm.Text == "" || txtMinVal.Text == "" || txtMinTerm.Text == "" || cmbDept.Text == "" || cmbType.Text == "")
                 {
                     return;
@@ -226,6 +378,7 @@ namespace LoanManagement.Desktop
                     new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
                 myBrush.ImageSource = image.Source;
                 wdw1.Background = myBrush;
+                tbInfo.IsSelected = true;
                 if (status == "Add")
                 {
                     using (var ctx = new iContext())
@@ -380,6 +533,15 @@ namespace LoanManagement.Desktop
         {
             try
             {
+                if (btnAddReq.Content.ToString() != "Add")
+                {
+                    if (lblReqName.Content == "**" || lblReqDesc.Content == "**" || String.IsNullOrWhiteSpace(txtReqName.Text) || String.IsNullOrWhiteSpace(txtReqDesc.Text))
+                    {
+                        System.Windows.MessageBox.Show("Please input correct format and/or fill all required fields");
+                        return;
+                    }
+                }
+
                 if (btnAddReq.Content.ToString() == "Add")
                 {
                     grpReq.Visibility = Visibility.Visible;
@@ -683,5 +845,51 @@ namespace LoanManagement.Desktop
                 }
             }
         }
+
+        private void txtName_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkName(txtName, lblName, true);
+        }
+
+        private void txtMinTerm_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkNumeric(txtMinTerm, lblMinTerm, true);
+        }
+
+        private void txtMaxTerm_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkNumeric(txtMaxTerm, lblMaxTerm, true);
+        }
+
+        private void txtMinVal_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkDouble(txtMinVal, lblMinVal, true);
+        }
+
+        private void txtMaxVal_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkDouble(txtMaxVal, lblMaxVal, true);
+        }
+
+        private void txtInterest_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkDouble(txtInterest, lblInterest, true);
+        }
+
+        private void txtDesc_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkString(txtDesc, lblDesc, true);
+        }
+
+        private void txtReqName_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkName(txtReqName, lblReqName, true);
+        }
+
+        private void txtReqDesc_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkString(txtReqDesc, lblReqDesc, true);
+        }
+
     }
 }
