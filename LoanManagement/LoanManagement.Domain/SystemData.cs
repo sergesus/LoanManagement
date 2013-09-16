@@ -58,6 +58,8 @@ namespace LoanManagement.Domain
         public DbSet<ClosedAccount> ClosedAccounts { get; set; }
         public DbSet<AdjustedLoan> AdjustedLoans { get; set; }
         public DbSet<RestructuredLoan> RestructuredLoans { get; set; }
+        public DbSet<PaidLoan> PaidLoans { get; set; }
+        public DbSet<ViewLoan> ViewLoans { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -143,6 +145,9 @@ namespace LoanManagement.Domain
                 .HasKey(x => x.LoanID)
                 .HasRequired(x => x.Loan);
             modelBuilder.Entity<RestructuredLoan>()
+                .HasKey(x => x.LoanID)
+                .HasRequired(x => x.Loan);
+            modelBuilder.Entity<PaidLoan>()
                 .HasKey(x => x.LoanID)
                 .HasRequired(x => x.Loan);
                 
@@ -604,6 +609,7 @@ namespace LoanManagement.Domain
         public virtual ApprovedLoan ApprovedLoan { get; set; }
         public virtual ReleasedLoan ReleasedLoan { get; set; }
         public virtual AdjustedLoan AdjustedLoan { get; set; }
+        public virtual PaidLoan PaidLoan { get; set; }
         public virtual RestructuredLoan RestructuredLoan { get; set; }
         public ICollection<FPaymentInfo> FPaymentInfo { get; set; }
         public ICollection<ClosedAccount> ClosedAccount { get; set; }
@@ -690,7 +696,7 @@ namespace LoanManagement.Domain
     public class ClearedCheque
     {
         public int FPaymentInfoID { get; set; }
-        public DateTime DateCleared { get; set; }
+        public DateTime? DateCleared { get; set; }
 
         public virtual FPaymentInfo FPaymentInfo { get; set; }
     }
@@ -744,6 +750,26 @@ namespace LoanManagement.Domain
         public DateTime DateRestructured { get; set; }
 
         public virtual Loan Loan { get; set; }
+    }
+
+    public class PaidLoan
+    {
+        public int LoanID { get; set; }
+        public DateTime DateFinished { get; set; }
+
+        public virtual Loan Loan { get; set; }
+    }
+
+    public class ViewLoan
+    {
+        public int ViewLoanID { get; set; }
+        public int PaymentNumber { get; set; }
+        public string PaymentInfo { get; set; }
+        public string TotalPayment { get; set; }
+        public string DueDate { get; set; }
+        public string PaymentDate { get; set; }
+        public string Status { get; set; }
+        public string DateCleared { get; set; }
     }
 
     public class GenSOA

@@ -1,0 +1,74 @@
+﻿<Controls:MetroWindow x:Name="wdw1" x:Class="LoanManagement.Desktop.wpfViewClientInfo"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"              
+        Title="wpfViewClientInfo" Height="646.5" Width="852" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Loaded="wdw1_Loaded">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Green.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedTabControl.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid>
+        <Grid HorizontalAlignment="Left" Height="32" Margin="246,274,-6,0" VerticalAlignment="Top" Width="606" Background="#FFDEDDDD"/>
+        <Grid HorizontalAlignment="Left" Height="32" Margin="246,212,0,0" VerticalAlignment="Top" Width="600" Background="#FFDEDDDD"/>
+
+        <Grid HorizontalAlignment="Left" Height="32" Margin="246,150,0,0" VerticalAlignment="Top" Width="600" Background="#FFDEDDDD"/>
+
+        <Grid HorizontalAlignment="Left" Height="36" VerticalAlignment="Top" Width="875" Background="#7F48CB00" Margin="2,72,-31,0">
+            <Label x:Name="lblName" Content="(name)" HorizontalAlignment="Left" VerticalAlignment="Top" Height="36" Width="582" FontSize="20"/>
+        </Grid>
+        <Image x:Name="img" HorizontalAlignment="Left" Height="180" Margin="12,125,0,0" VerticalAlignment="Top" Width="180"/>
+        <Label Content="CLIENT INFO:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="246,120,0,0" Width="150" FontSize="16" Foreground="#CC48CB00" FontWeight="Bold"/>
+        <Label Content="Email:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="246,150,0,0" Width="115" FontSize="16" Foreground="#CC48CB00" FontWeight="Bold"/>
+        <Label Content="Gender:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="246,182,0,0" Width="126" FontSize="16" Foreground="#CC48CB00" FontWeight="Bold"/>
+        <Label Content="Primary Contact:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="246,274,0,0" Width="150" FontSize="16" Foreground="#CC48CB00" FontWeight="Bold"/>
+        <Label Content="Status:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="578,182,0,0" Width="104" FontSize="16" Foreground="#CC48CB00" FontWeight="Bold"/>
+        <Label Content="SSS:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="246,212,0,0" Width="150" FontSize="16" Foreground="#CC48CB00" FontWeight="Bold"/>
+        <Label x:Name="lblEmail" Content="(type)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="396,150,-3,0" Width="453" FontSize="16" Foreground="Black" RenderTransformOrigin="0.5,0.5">
+            <Label.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="0.095"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Label.RenderTransform>
+        </Label>
+        <Label x:Name="lblGender" Content="(type)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="396,182,0,0" Width="222" FontSize="16" Foreground="Black"/>
+        <Label x:Name="lblSSS" Content="(type)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="396,212,0,0" Width="440" FontSize="16" Foreground="Black"/>
+        <Label x:Name="lblContact" Content="(type)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="396,274,0,0" Width="182" FontSize="16" Foreground="Black"/>
+        <Label x:Name="lblStatus" Content="(type)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="682,182,0,0" Width="154" FontSize="16" Foreground="Black"/>
+        <Label Content="TIN:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="246,244,0,0" Width="150" FontSize="16" Foreground="#CC48CB00" FontWeight="Bold"/>
+        <Label x:Name="lblTIN" Content="(type)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="396,244,0,0" Width="440" FontSize="16" Foreground="Black"/>
+        <Label Content="Birthdate:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="578,212,0,0" Width="87" FontSize="16" Foreground="#CC48CB00" FontWeight="Bold"/>
+        <Label x:Name="lblBday" Content="(type)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="682,213,-18,0" Width="182" FontSize="16" Foreground="Black"/>
+        <Grid HorizontalAlignment="Left" Height="74" VerticalAlignment="Top" Width="863" Background="#7F48CB00" Margin="2,-1,-85,0">
+            <Image HorizontalAlignment="Left" Height="74" VerticalAlignment="Top" Width="97" Source="Images/Employee.ico"/>
+            <Label Content="Client Information" HorizontalAlignment="Left" Height="54" Margin="87,10,0,0" VerticalAlignment="Top" Width="285" FontSize="30"/>
+        </Grid>
+        <RadioButton x:Name="rdCon" Content="Contact(s)" HorizontalAlignment="Left" Margin="128,322,0,0" VerticalAlignment="Top" Width="118" FontSize="16" IsChecked="True" Checked="rdCon_Checked"/>
+        <RadioButton x:Name="rdAdd" Content="Address(es)" HorizontalAlignment="Left" Margin="12,322,0,0" VerticalAlignment="Top" Width="101" FontSize="16" IsChecked="True" Checked="rdAdd_Checked"/>
+        <DataGrid x:Name="dgAddCon" HorizontalAlignment="Left" Height="196" Margin="12,371,0,0" VerticalAlignment="Top" Width="384" GridLinesVisibility="Horizontal" FontSize="18"/>
+        <DataGrid x:Name="dgLoans" HorizontalAlignment="Left" Height="196" Margin="401,371,0,0" VerticalAlignment="Top" Width="435" GridLinesVisibility="Horizontal" FontSize="18"/>
+        <Label Content="Loans:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="401,335,0,0" Width="150" FontSize="16" Foreground="#CC48CB00" FontWeight="Bold"/>
+        <RadioButton x:Name="rdRef" Content="Reference(s)" HorizontalAlignment="Left" Margin="12,349,0,0" VerticalAlignment="Top" Width="118" FontSize="16" IsChecked="True" Checked="rdCon_Checked"/>
+        <RadioButton x:Name="rdWorks" Content="Work(s)" HorizontalAlignment="Left" Margin="128,349,0,0" VerticalAlignment="Top" Width="118" FontSize="16" IsChecked="True" Checked="rdCon_Checked"/>
+        <RadioButton x:Name="rdDep" Content="Dependents" HorizontalAlignment="Left" Margin="254,322,0,0" VerticalAlignment="Top" Width="118" FontSize="16" Checked="rdCon_Checked"/>
+        <Button x:Name="btnView" HorizontalAlignment="Left" Height="39" Margin="672,572,0,0" VerticalAlignment="Top" Width="164" BorderBrush="#CC48CB00" BorderThickness="2" Background="#7F48CB00" Click="btnView_Click">
+            <DockPanel LastChildFill="True">
+                <Label HorizontalContentAlignment="Center" DockPanel.Dock="Right" Foreground="#FF343434" Height="28" FontSize="16" Content="View Loan"/>
+                <Image Source="Images/View.ico" />
+            </DockPanel>
+        </Button>
+
+    </Grid>
+</Controls:MetroWindow>

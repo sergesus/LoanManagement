@@ -45,6 +45,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Migrations\201309152347506_AddedPaidLoan.cs" />
+    <Compile Include="Migrations\201309152347506_AddedPaidLoan.Designer.cs">
+      <DependentUpon>201309152347506_AddedPaidLoan.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201309152358267_AddedNullable.cs" />
+    <Compile Include="Migrations\201309152358267_AddedNullable.Designer.cs">
+      <DependentUpon>201309152358267_AddedNullable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201309160011588_AddedViewLoans.cs" />
+    <Compile Include="Migrations\201309160011588_AddedViewLoans.Designer.cs">
+      <DependentUpon>201309160011588_AddedViewLoans.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemData.cs" />
@@ -52,6 +64,17 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201309152347506_AddedPaidLoan.resx">
+      <DependentUpon>201309152347506_AddedPaidLoan.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201309152358267_AddedNullable.resx">
+      <DependentUpon>201309152358267_AddedNullable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201309160011588_AddedViewLoans.resx">
+      <DependentUpon>201309160011588_AddedViewLoans.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

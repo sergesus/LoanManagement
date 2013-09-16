@@ -64,6 +64,7 @@ namespace LoanManagement.Desktop
                     dp.DepositDate = DateTime.Today.Date;
                     ctx.SaveChanges();
                     MessageBox.Show("Okay");
+                    this.Close();
                 }
             }
 

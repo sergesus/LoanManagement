@@ -137,6 +137,15 @@ namespace LoanManagement.Desktop
                             frm.txtID.Text = str;
                         }
                     }
+                    else if (status2 == "View1")
+                    {
+                        wpfViewClientInfo frm = new wpfViewClientInfo();
+                        frm.status = status2;
+                        int myCID = Convert.ToInt32(getRow(dgClient, 0));
+                        frm.cID = myCID;
+                        this.Close();
+                        frm.ShowDialog();
+                    }
                     else
                     {
                         var frm = Application.Current.Windows[ctr - 2] as wpfSelectClient;

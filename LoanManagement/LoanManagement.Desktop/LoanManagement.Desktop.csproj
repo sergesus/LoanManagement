@@ -231,6 +231,9 @@
     <Compile Include="wpfUserScopes.xaml.cs">
       <DependentUpon>wpfUserScopes.xaml</DependentUpon>
     </Compile>
+    <Compile Include="wpfViewClientInfo.xaml.cs">
+      <DependentUpon>wpfViewClientInfo.xaml</DependentUpon>
+    </Compile>
     <Page Include="wpfAgent.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -388,6 +391,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="wpfUserScopes.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="wpfViewClientInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

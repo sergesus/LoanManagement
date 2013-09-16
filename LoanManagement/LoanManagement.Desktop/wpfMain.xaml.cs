@@ -53,6 +53,66 @@ namespace LoanManagement.Desktop
             //MessageBox.Show("asd");
         }
 
+        private void checkDue()
+        {
+            try
+            {
+                using (var ctx = new iContext())
+                {
+                    var lon = from lo in ctx.FPaymentInfo
+                              where lo.PaymentDate <= DateTime.Today.Date && (lo.PaymentStatus == "Pending" || lo.PaymentStatus == "On Hold")
+                              select lo;
+                    foreach (var item in lon)
+                    {
+                        var ctr = ctx.FPaymentInfo.Where(x => (x.PaymentDate <= DateTime.Today.Date && x.LoanID == item.LoanID) && (x.PaymentStatus == "Due" || x.PaymentStatus == "Returned" || x.PaymentStatus == "Due/Pending" || x.PaymentStatus == "Deposited")).Count();
+                        if (ctr == 0)
+                        {
+                            item.PaymentStatus = "Due";
+                        }
+                        else
+                        {
+                            item.PaymentStatus = "Due/Pending";
+                        }
+                    }
+
+                    var dep = from d in ctx.FPaymentInfo
+                              where d.PaymentStatus == "Due"
+                              select d;
+                    foreach (var item in dep)
+                    {
+                        var ctr = ctx.FPaymentInfo.Where(x => x.LoanID == item.LoanID && x.PaymentStatus == "Deposited").Count();
+                        if (ctr != 0)
+                        {
+                            item.PaymentStatus = "Due/Pending";
+                        }
+                    }
+
+                    var lons = from lo in ctx.Loans
+                               select lo;
+
+                    foreach (var item in lons)
+                    {
+                        var ctr1 = ctx.FPaymentInfo.Where(x => x.LoanID == item.LoanID && x.PaymentStatus == "Cleared").Count();
+                        var ctr2 = ctx.FPaymentInfo.Where(x => x.LoanID == item.LoanID).Count();
+                        if (ctr1 == ctr2)
+                        {
+                            item.Status = "Paid";
+                            PaidLoan pl = new PaidLoan { LoanID = item.LoanID, DateFinished = DateTime.Today.Date };
+                            ctx.PaidLoans.Add(pl);
+                        }
+                    }
+
+
+                    ctx.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
         private void ListBox_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -74,6 +134,10 @@ namespace LoanManagement.Desktop
                 {
                     tb4.IsSelected = true;
                 }
+                else if (lb1.SelectedIndex == 4)
+                {
+                    tb5.IsSelected = true;
+                }
             }
             catch (Exception ex)
             {
@@ -88,6 +152,7 @@ namespace LoanManagement.Desktop
             {
                 //lbM.UnselectAll();
                 reset();
+                checkDue();
             }
             catch (Exception ex)
             {
@@ -1088,6 +1153,21 @@ namespace LoanManagement.Desktop
         private void btnPosition_Click(object sender, RoutedEventArgs e)
         {
             wpfPosition frm = new wpfPosition();
+            frm.ShowDialog();
+        }
+
+        private void btnVLoan_Click(object sender, RoutedEventArgs e)
+        {
+            wpfLoanSearch frm = new wpfLoanSearch();
+            frm.status = "View";
+            frm.ShowDialog();
+        }
+
+        private void btnVClient_Click(object sender, RoutedEventArgs e)
+        {
+            wpfClientSearch frm = new wpfClientSearch();
+            frm.status = "Client";
+            frm.status2 = "View1";
             frm.ShowDialog();
         }
 

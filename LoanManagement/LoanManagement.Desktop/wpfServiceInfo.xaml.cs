@@ -39,7 +39,7 @@ namespace LoanManagement.Desktop
                 bool err = false;
                 int res;
                 String str = txt.Text;
-                err = int.TryParse(str, out res);
+                err = !int.TryParse(str, out res);
 
                 if (isRequired == true)
                 {
@@ -48,9 +48,15 @@ namespace LoanManagement.Desktop
                 }
 
                 if (err == true)
+                {
                     lbl.Content = "**";
+                    lbl.Foreground = Brushes.Red;
+                }
                 else
+                {
                     lbl.Content = "✔";
+                    lbl.Foreground = Brushes.Green;
+                }
             }
             catch (Exception ex)
             {
@@ -65,7 +71,7 @@ namespace LoanManagement.Desktop
                 bool err = false;
                 double res;
                 String str = txt.Text;
-                err = double.TryParse(str, out res);
+                err = !double.TryParse(str, out res);
 
                 if (isRequired == true)
                 {
@@ -74,9 +80,15 @@ namespace LoanManagement.Desktop
                 }
 
                 if (err == true)
+                {
                     lbl.Content = "**";
+                    lbl.Foreground = Brushes.Red;
+                }
                 else
+                {
                     lbl.Content = "✔";
+                    lbl.Foreground = Brushes.Green;
+                }
             }
             catch (Exception ex)
             {
@@ -104,9 +116,15 @@ namespace LoanManagement.Desktop
                 }
 
                 if (err == true)
+                {
                     lbl.Content = "**";
+                    lbl.Foreground = Brushes.Red;
+                }
                 else
+                {
                     lbl.Content = "✔";
+                    lbl.Foreground = Brushes.Green;
+                }
             }
             catch (Exception ex)
             {
@@ -135,9 +153,15 @@ namespace LoanManagement.Desktop
                 }
 
                 if (err == true)
+                {
                     lbl.Content = "**";
+                    lbl.Foreground = Brushes.Red;
+                }
                 else
+                {
                     lbl.Content = "✔";
+                    lbl.Foreground = Brushes.Green;
+                }
             }
             catch (Exception ex)
             {
@@ -166,9 +190,15 @@ namespace LoanManagement.Desktop
                 }
 
                 if (err == true)
+                {
                     lbl.Content = "**";
+                    lbl.Foreground = Brushes.Red;
+                }
                 else
+                {
                     lbl.Content = "✔";
+                    lbl.Foreground = Brushes.Green;
+                }
             }
             catch (Exception ex)
             {

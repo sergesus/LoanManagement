@@ -157,12 +157,13 @@ namespace LoanManagement.Desktop
 
         private void btnFull_Click(object sender, RoutedEventArgs e)
         {
-            wpfClientInfo frm = new wpfClientInfo();
-            frm.status = "View";
+            wpfViewClientInfo frm = new wpfViewClientInfo();
+            frm.status = "View2";
+            frm.Height = 600;
             using (var ctx = new iContext())
             {
                 var lon = ctx.Loans.Find(lId);
-                frm.cId = lon.ClientID;
+                frm.cID = lon.ClientID;
             }
             frm.ShowDialog();
         }

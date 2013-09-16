@@ -89,7 +89,7 @@ namespace LoanManagement.Desktop
                     using (var ctx = new iContext())
                     {
                         var lon = from ln in ctx.Loans
-                                  where ln.Status == "Released" && ln.Service.Department == iDept
+                                  where ln.Status == "Released" && ln.Service.Department == iDept && ln.FPaymentInfo.Where(x=> x.PaymentStatus!="Pending").Count() == 0
                                   select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
                         dgLoan.ItemsSource = lon.ToList();
 
@@ -155,7 +155,17 @@ namespace LoanManagement.Desktop
                     using (var ctx = new iContext())
                     {
                         var lon = from ln in ctx.Loans
-                                  where (ln.Status == "Released" || ln.Status == "Active") && (ln.FPaymentInfo.Where(x => x.PaymentStatus == "Cleared").Count() >= 3) && ln.Service.Department == iDept
+                                  where ((ln.Status == "Released" || ln.Status == "Active") && (ln.FPaymentInfo.Where(x => x.PaymentStatus == "Cleared").Count() >= 3)) || (ln.Status == "Closed Account") && ln.Service.Department == iDept
+                                  select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
+                        dgLoan.ItemsSource = lon.ToList();
+                        btnView.Content = "View";
+                    }
+                }
+                else if(status=="View")
+                {
+                    using (var ctx = new iContext())
+                    {
+                        var lon = from ln in ctx.Loans
                                   select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
                         dgLoan.ItemsSource = lon.ToList();
                         btnView.Content = "View";
@@ -319,12 +329,16 @@ namespace LoanManagement.Desktop
                     this.Close();
                     frm.ShowDialog();
                 }
-                else if (status == "Adjustment" || status == "Restructure")
+                else if (status == "Adjustment" || status == "Restructure" || status=="View")
                 {
                     int n = Convert.ToInt32(getRow(dgLoan, 0));
                     wpfReleasedLoanInfo frm = new wpfReleasedLoanInfo();
                     frm.lId = n;
                     frm.status = status;
+                    if (status == "View")
+                    {
+                        frm.Height = 605.5;
+                    }
                     this.Close();
                     frm.ShowDialog();
                 }

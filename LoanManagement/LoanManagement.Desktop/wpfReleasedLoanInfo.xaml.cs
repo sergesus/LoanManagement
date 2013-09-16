@@ -71,6 +71,22 @@ namespace LoanManagement.Desktop
                         }
                     }
 
+                    var lons = from lo in ctx.Loans
+                               select lo;
+
+                    foreach (var item in lons)
+                    {
+                        var ctr1 = ctx.FPaymentInfo.Where(x => x.LoanID == item.LoanID && x.PaymentStatus == "Cleared").Count();
+                        var ctr2 = ctx.FPaymentInfo.Where(x => x.LoanID == item.LoanID).Count();
+                        if (ctr1 == ctr2)
+                        {
+                            item.Status = "Paid";
+                            PaidLoan pl = new PaidLoan { LoanID = item.LoanID, DateFinished = DateTime.Today.Date };
+                            ctx.PaidLoans.Add(pl);
+                        }
+                    }
+
+
                     ctx.SaveChanges();
                 }
             }
@@ -120,7 +136,9 @@ namespace LoanManagement.Desktop
                     img.Source = bi;
 
                     lblAmt.Content = lon.ReleasedLoan.Principal.ToString("N2");
-                    lblDt.Content = lon.ReleasedLoan.DateReleased;
+                    string[] mdt = lon.ReleasedLoan.DateReleased.ToString().Split(' ');
+                    string d = mdt[0];
+                    lblDt.Content = d;
                     lblMode.Content = lon.Mode;
                     lblTOL.Content = lon.Service.Name;
                     lblType.Content = lon.Service.Type;
@@ -128,7 +146,7 @@ namespace LoanManagement.Desktop
                     if (ctr > 0)
                     {
                         var l = ctx.FPaymentInfo.Where(x => x.LoanID == lId && (x.PaymentStatus == "Pending" || x.PaymentStatus == "Due/Pending")).First();
-                        lblNextP.Content = l.PaymentDate.ToString();
+                        lblNextP.Content = l.PaymentDate.ToString().Split(' ')[0];
                         lblPayment.Content = lon.ReleasedLoan.MonthlyPayment.ToString("N2");
                         double hf = lon.ReleasedLoan.MonthlyPayment * (lon.Service.Holding / 100);
                         lblHF.Content = hf.ToString("N2");
@@ -144,8 +162,10 @@ namespace LoanManagement.Desktop
                                 dt = dts.PaymentDate.AddDays(-5);
                                 dt1 = dt.AddDays(4);
                             }
-                            lblSDt.Content = dt.ToString();
-                            lblEDt.Content = dt1.ToString(); ;
+                            mdt = dt.ToString().Split(' ');
+                            lblSDt.Content = mdt[0];
+                            mdt = dt1.ToString().Split(' ');
+                            lblEDt.Content = mdt[0];
                         }
                         else if (status == "Adjustment")
                         {
@@ -228,10 +248,43 @@ namespace LoanManagement.Desktop
                     checkDue();
                     var chqs = from ge in ctx.FPaymentInfo
                                where ge.LoanID == lId
-                               select new { No = ge.PaymentNumber, ChequeID = ge.ChequeInfo, TotalPayment = ge.Amount, ChequeDueDate = ge.ChequeDueDate, PaymentDate = ge.PaymentDate, Status = ge.PaymentStatus };
+                               select new { No = ge.PaymentNumber, ChequeID = ge.ChequeInfo, TotalPayment = ge.Amount, ChequeDueDate = ge.ChequeDueDate, PaymentDate = ge.PaymentDate, Status = ge.PaymentStatus, DateCleared = ge.ClearCheque.DateCleared };
 
+                    ctx.Database.ExecuteSqlCommand("delete from dbo.ViewLoans");
+                    foreach (var i in chqs)
+                    {
+                        string s;
+                        string[] dtCleared=null;
+                        string myStr;
+                        if (i.DateCleared != null)
+                        {
+                            s = i.DateCleared.ToString();
+                            dtCleared = s.Split(' ');
+                            myStr = dtCleared[0];
+                        }
+                        else
+                        {
+                            myStr = "";
+                        }
+                        s = i.PaymentDate.ToString();
+                        string[] dtPayment = s.Split(' ');
+                        s = i.ChequeDueDate.ToString();
+                        string[] dtDue = s.Split(' ');
+                        ViewLoan vl = new ViewLoan { DateCleared = myStr, DueDate = dtDue[0], PaymentDate= dtPayment[0], PaymentInfo= i.ChequeID, PaymentNumber=i.No, Status=i.Status, TotalPayment=i.TotalPayment.ToString("N2")};
+                        ctx.ViewLoans.Add(vl);
+                    }
+                    ctx.SaveChanges();
+                    var chqs1 = from ge in ctx.ViewLoans
+                               select new { No = ge.PaymentNumber, ChequeID = ge.PaymentInfo, TotalPayment = ge.TotalPayment, ChequeDueDate = ge.DueDate, PaymentDate = ge.PaymentDate, Status = ge.Status, DateCleared = ge.DateCleared };
+                    dg.ItemsSource = chqs1.ToList();
 
-                    dg.ItemsSource = chqs.ToList();
+                    if (status == "View")
+                    {
+                        btnFull.Visibility = Visibility.Hidden;
+                        btnUpdate.Visibility = Visibility.Hidden;
+                        btnVoid.Visibility = Visibility.Hidden;
+                        
+                    }
                 }
             }
             catch (Exception ex)
@@ -423,12 +476,13 @@ namespace LoanManagement.Desktop
 
         private void btnFull_Click(object sender, RoutedEventArgs e)
         {
-            wpfClientInfo frm = new wpfClientInfo();
-            frm.status = "View";
+            wpfViewClientInfo frm = new wpfViewClientInfo();
+            frm.status = "View2";
+            frm.Height = 600;
             using (var ctx = new iContext())
             {
                 var lon = ctx.Loans.Find(lId);
-                frm.cId = lon.ClientID;
+                frm.cID = lon.ClientID;
             }
             frm.ShowDialog();
         }

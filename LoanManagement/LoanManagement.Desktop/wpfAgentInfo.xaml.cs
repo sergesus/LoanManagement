@@ -57,9 +57,15 @@ namespace LoanManagement.Desktop
                 }
 
                 if (err == true)
+                {
                     lbl.Content = "**";
+                    lbl.Foreground = System.Windows.Media.Brushes.Red;
+                }
                 else
+                {
                     lbl.Content = "✔";
+                    lbl.Foreground = System.Windows.Media.Brushes.Green;
+                }
             }
             catch (Exception ex)
             {
@@ -83,9 +89,15 @@ namespace LoanManagement.Desktop
                 }
 
                 if (err == true)
+                {
                     lbl.Content = "**";
+                    lbl.Foreground = System.Windows.Media.Brushes.Red;
+                }
                 else
+                {
                     lbl.Content = "✔";
+                    lbl.Foreground = System.Windows.Media.Brushes.Green;
+                }
             }
             catch (Exception ex)
             {
@@ -113,9 +125,15 @@ namespace LoanManagement.Desktop
                 }
 
                 if (err == true)
+                {
                     lbl.Content = "**";
+                    lbl.Foreground = System.Windows.Media.Brushes.Red;
+                }
                 else
+                {
                     lbl.Content = "✔";
+                    lbl.Foreground = System.Windows.Media.Brushes.Green;
+                }
             }
             catch (Exception ex)
             {
@@ -144,9 +162,15 @@ namespace LoanManagement.Desktop
                 }
 
                 if (err == true)
+                {
                     lbl.Content = "**";
+                    lbl.Foreground = System.Windows.Media.Brushes.Red;
+                }
                 else
+                {
                     lbl.Content = "✔";
+                    lbl.Foreground = System.Windows.Media.Brushes.Green;
+                }
             }
             catch (Exception ex)
             {
@@ -175,9 +199,15 @@ namespace LoanManagement.Desktop
                 }
 
                 if (err == true)
+                {
                     lbl.Content = "**";
+                    lbl.Foreground = System.Windows.Media.Brushes.Red;
+                }
                 else
+                {
                     lbl.Content = "✔";
+                    lbl.Foreground = System.Windows.Media.Brushes.Green;
+                }
             }
             catch (Exception ex)
             {

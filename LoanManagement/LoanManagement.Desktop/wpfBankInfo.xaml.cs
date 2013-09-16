@@ -16,6 +16,7 @@ using LoanManagement.Domain;
 using System.Data.Entity;
 using System.Windows.Forms;
 using MahApps.Metro.Controls;
+using System.Text.RegularExpressions;
 
 namespace LoanManagement.Desktop
 {
@@ -48,9 +49,15 @@ namespace LoanManagement.Desktop
                 }
 
                 if (err == true)
+                {
                     lbl.Content = "**";
+                    lbl.Foreground = Brushes.Red;
+                }
                 else
+                {
                     lbl.Content = "✔";
+                    lbl.Foreground = Brushes.Green;
+                }
             }
             catch (Exception ex)
             {
@@ -74,9 +81,15 @@ namespace LoanManagement.Desktop
                 }
 
                 if (err == true)
+                {
                     lbl.Content = "**";
+                    lbl.Foreground = Brushes.Red;
+                }
                 else
+                {
                     lbl.Content = "✔";
+                    lbl.Foreground = Brushes.Green;
+                }
             }
             catch (Exception ex)
             {
@@ -104,9 +117,15 @@ namespace LoanManagement.Desktop
                 }
 
                 if (err == true)
+                {
                     lbl.Content = "**";
+                    lbl.Foreground = Brushes.Red;
+                }
                 else
+                {
                     lbl.Content = "✔";
+                    lbl.Foreground = Brushes.Green;
+                }
             }
             catch (Exception ex)
             {
@@ -135,9 +154,15 @@ namespace LoanManagement.Desktop
                 }
 
                 if (err == true)
+                {
                     lbl.Content = "**";
+                    lbl.Foreground = Brushes.Red;
+                }
                 else
+                {
                     lbl.Content = "✔";
+                    lbl.Foreground = Brushes.Green;
+                }
             }
             catch (Exception ex)
             {

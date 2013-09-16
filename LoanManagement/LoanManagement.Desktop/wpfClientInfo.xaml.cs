@@ -66,9 +66,15 @@ namespace LoanManagement.Desktop
                 }
 
                 if (err == true)
+                {
                     lbl.Content = "**";
+                    lbl.Foreground = System.Windows.Media.Brushes.Red;
+                }
                 else
+                {
                     lbl.Content = "✔";
+                    lbl.Foreground = System.Windows.Media.Brushes.Green;
+                }
             }
             catch (Exception ex)
             {
@@ -92,9 +98,15 @@ namespace LoanManagement.Desktop
                 }
 
                 if (err == true)
+                {
                     lbl.Content = "**";
+                    lbl.Foreground = System.Windows.Media.Brushes.Red;
+                }
                 else
+                {
                     lbl.Content = "✔";
+                    lbl.Foreground = System.Windows.Media.Brushes.Green;
+                }
             }
             catch (Exception ex)
             {
@@ -122,9 +134,15 @@ namespace LoanManagement.Desktop
                 }
 
                 if (err == true)
+                {
                     lbl.Content = "**";
+                    lbl.Foreground = System.Windows.Media.Brushes.Red;
+                }
                 else
+                {
                     lbl.Content = "✔";
+                    lbl.Foreground = System.Windows.Media.Brushes.Green;
+                }
             }
             catch (Exception ex)
             {
@@ -153,9 +171,15 @@ namespace LoanManagement.Desktop
                 }
 
                 if (err == true)
+                {
                     lbl.Content = "**";
+                    lbl.Foreground = System.Windows.Media.Brushes.Red;
+                }
                 else
+                {
                     lbl.Content = "✔";
+                    lbl.Foreground = System.Windows.Media.Brushes.Green;
+                }
             }
             catch(Exception ex)
             {
@@ -184,9 +208,15 @@ namespace LoanManagement.Desktop
                 }
 
                 if (err == true)
+                {
                     lbl.Content = "**";
+                    lbl.Foreground = System.Windows.Media.Brushes.Red;
+                }
                 else
+                {
                     lbl.Content = "✔";
+                    lbl.Foreground = System.Windows.Media.Brushes.Green;
+                }
             }
             catch (Exception ex)
             {
@@ -1901,7 +1931,7 @@ namespace LoanManagement.Desktop
                             return;
                         }
 
-                        Client clt = new Client { Birthday = Convert.ToDateTime(dtBDay.SelectedDate).Date, Active = true, MiddleName = txtMName.Text, LastName = txtLName.Text, FirstName = txtFName.Text, Email = txtEmail.Text, Sex = cmbSex.Text, SSS = txtSSS.Text, Suffix = txtSuffix.Text, TIN = txtTIN.Text, Status = cmbStatus.Text, Photo = ConvertImageToByteArray(selectedFileName) };
+                        Client clt = new Client { Birthday = Convert.ToDateTime(dtBDay.SelectedDate).Date, Active = true, MiddleName = txtMName.Text, LastName = txtLName.Text, FirstName = txtFName.Text, Email = txtEmail_Copy.Text, Sex = cmbSex.Text, SSS = txtSSS.Text, Suffix = txtSuffix.Text, TIN = txtTIN.Text, Status = cmbStatus.Text, Photo = ConvertImageToByteArray(selectedFileName) };
 
                         var ads = from ad in ctx.TempHomeAddresses
                                   select ad;
@@ -1967,7 +1997,7 @@ namespace LoanManagement.Desktop
                         clt.MiddleName = txtMName.Text;
                         clt.LastName = txtLName.Text;
                         clt.FirstName = txtFName.Text;
-                        clt.Email = txtEmail.Text;
+                        clt.Email = txtEmail_Copy.Text;
                         clt.Sex = cmbSex.Text;
                         clt.SSS = txtSSS.Text;
                         clt.Suffix = txtSuffix.Text;
