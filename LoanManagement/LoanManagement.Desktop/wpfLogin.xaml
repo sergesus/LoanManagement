@@ -3,7 +3,7 @@
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
-        Title="User Login" Height="394.94" Width="592.031" Loaded="Window_Loaded_1" ResizeMode="NoResize" Background="{x:Null}">
+        Title="User Login" Height="394.94" Width="592.031" Loaded="Window_Loaded_1" ResizeMode="NoResize" Background="{x:Null}" KeyUp="wdw1_KeyUp">
     <Window.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -26,7 +26,7 @@
         <PasswordBox x:Name="txtPassword" HorizontalAlignment="Left" Height="26" Margin="319,163,0,0" VerticalAlignment="Top" Width="175" Controls:TextboxHelper.ClearTextButton="True" FontFamily="Segoe UI" FontSize="16"/>
         <Button x:Name="btnLogIn" Content="↵" HorizontalAlignment="Left" VerticalAlignment="Top" Width="30" Margin="494,163,0,0" Height="26" FontFamily="Segoe UI" FontSize="15" Click="btnLogIn_Click" FontWeight="Bold" IsDefault="True"/>
         <Image x:Name="img" HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100" Margin="93,89,0,0" RenderTransformOrigin="0.698,1.038"/>
-        <Grid HorizontalAlignment="Left" Height="74" VerticalAlignment="Top" Width="988" Background="#7F48CB00" Margin="0,-75,-406,0" Grid.ColumnSpan="2">
+        <Grid HorizontalAlignment="Left" Height="74" VerticalAlignment="Top" Width="603" Background="#7F48CB00" Margin="0,-75,-21,0" Grid.ColumnSpan="2">
             <Image HorizontalAlignment="Left" Height="74" VerticalAlignment="Top" Width="97" Source="Images/Lock.ico"/>
             <Label Content="Security Module" HorizontalAlignment="Left" Height="54" Margin="87,10,0,0" VerticalAlignment="Top" Width="285" FontSize="30"/>
         </Grid>

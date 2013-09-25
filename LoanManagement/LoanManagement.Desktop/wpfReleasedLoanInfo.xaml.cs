@@ -72,6 +72,7 @@ namespace LoanManagement.Desktop
                     }
 
                     var lons = from lo in ctx.Loans
+                               where lo.Status == "Released"
                                select lo;
 
                     foreach (var item in lons)
@@ -409,8 +410,9 @@ namespace LoanManagement.Desktop
                                 ctx.FPaymentInfo.Remove(item);
                             }
                             ctx.SaveChanges();
-                            System.Windows.MessageBox.Show("Okay");
                             this.Close();
+                            System.Windows.MessageBox.Show("Okay");
+                            
                         }
                     }
                 }

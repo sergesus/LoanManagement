@@ -12,6 +12,16 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 
+using PdfSharp;
+using PdfSharp.Drawing;
+using PdfSharp.Pdf;
+using PdfSharp.Pdf.IO;
+using MigraDoc.DocumentObjectModel;
+using MigraDoc;
+using MigraDoc.Rendering;
+using MigraDoc.RtfRendering;
+using System.Diagnostics;
+
 using MahApps.Metro.Controls;
 using System.Data.Entity;
 using LoanManagement.Domain;
@@ -28,6 +38,7 @@ namespace LoanManagement.Desktop
         public int bId;
         public int myNum;
         public TextBox[] textarray = new TextBox[0];
+        public int UserID;
         public wpfFReleasing()
         {
             InitializeComponent();
@@ -156,16 +167,19 @@ namespace LoanManagement.Desktop
 
                         dt = DateAndTime.DateAdd(dInt, Interval, dt);
                         int num = 1;
-                        while (Remaining > 1)
+                        while (Remaining >= 0)
                         {
                             //System.Windows.MessageBox.Show(num.ToString());
                             Remaining = Remaining - Payment;
                             GenSOA soa = new GenSOA { Amount = Payment.ToString("N2"), PaymentDate = dt, PaymentNumber = num, RemainingBalance = Remaining.ToString("N2") };
                             ctx.GenSOA.Add(soa);
                             num++;
-                            //System.Windows.MessageBox.Show(Remaining.ToString());
                             dt = DateAndTime.DateAdd(dInt, Interval, dt);
                             myNum++;
+                            if (Remaining <= 0)
+                            {
+                                Remaining = -1;
+                            }
                         }
                         lblMonthly.Content = Payment.ToString("N2");
                         ctx.SaveChanges();
@@ -197,13 +211,14 @@ namespace LoanManagement.Desktop
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Windows.MessageBox.Show("Incorrect Format on some Fields / Incomplete Input(s)", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
         }
 
         private void wdw1_Loaded(object sender, RoutedEventArgs e)
         {
+            //printSOA();
             try
             {
                 ImageBrush myBrush = new ImageBrush();
@@ -374,12 +389,159 @@ namespace LoanManagement.Desktop
             }
         }
 
+        private void printSOA() 
+        {
+            try
+            {
+                PdfDocument document = new PdfDocument();
+                document.Info.Title = "Statement Of Account";
+
+                PdfPage page = document.AddPage();
+                page.Orientation = PageOrientation.Landscape;
+                String imagePath = AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\GFC.jpg";
+                XImage xImage = XImage.FromFile(imagePath);
+                XGraphics gfx = XGraphics.FromPdfPage(page);
+                XFont font = new XFont("Verdana", 20, XFontStyle.BoldItalic);
+                //Header Start
+                //gfx.DrawString("Guahan Financing Corporation", font, XBrushes.Black, new XRect(0, 0, page.Width, 80), XStringFormats.Center);
+                //System.Windows.MessageBox.Show(xImage.Width.ToString());
+                gfx.DrawImage(xImage, 40, 10, xImage.Width - 260, xImage.Height / 3);
+                font = new XFont("Verdana", 18, XFontStyle.Italic);
+                gfx.DrawString("Statement Of Account", font, XBrushes.Black, new XRect(0, 0, page.Width, 220), XStringFormats.Center);
+                using (var ctx = new iContext())
+                {
+                    font = new XFont("Verdana", 10, XFontStyle.Italic);
+                    var lon = ctx.Loans.Find(lId);
+                    gfx.DrawString("Type Of Loan : "+ lon.Service.Name, font, XBrushes.Black, new XRect(0, 0, 250, 250), XStringFormats.Center);
+                    gfx.DrawString("Service Type : " + lon.Service.Type, font, XBrushes.Black, new XRect(0, 0, 250, 280), XStringFormats.Center);
+                    gfx.DrawString("Principal Amount : " + lon.ReleasedLoan.Principal.ToString("N2"), font, XBrushes.Black, new XRect(0, 0, 250, 310), XStringFormats.Center);
+                    gfx.DrawString("Monthly Payment : " + lon.ReleasedLoan.MonthlyPayment.ToString("N2"), font, XBrushes.Black, new XRect(0, 0, 250, 340), XStringFormats.Center);
+                    gfx.DrawString("Client: : " + lon.Client.LastName + ", " + lon.Client.FirstName + " " + lon.Client.MiddleName + " " + lon.Client.Suffix, font, XBrushes.Black, new XRect(0, 0, page.Width, 370), XStringFormats.Center);
+
+                    gfx.DrawString("Term : " + lon.Term, font, XBrushes.Black, new XRect(0, 0, 1300, 250), XStringFormats.Center);
+                    gfx.DrawString("Mode of Payment : " + lon.Mode, font, XBrushes.Black, new XRect(0, 0, 1300, 280), XStringFormats.Center);
+                    var bk = ctx.Banks.Find(lon.BankID);
+                    gfx.DrawString("Bank : " + bk.BankName, font, XBrushes.Black, new XRect(0, 0, 1300, 310), XStringFormats.Center);
+                    var fl = ctx.FPaymentInfo.Where(x => x.LoanID == lId).First();
+                    gfx.DrawString("Payment Start : " + fl.PaymentDate.ToString().Split(' ')[0], font, XBrushes.Black, new XRect(0, 0, 1300, 340), XStringFormats.Center);
+                }
+                //font = new XFont("Verdana", 10, XFontStyle.Italic);
+                //gfx.DrawString("As of " + DateTime.Today.Date.ToString().Split(' ')[0], font, XBrushes.Black, new XRect(0, 0, page.Width, 250), XStringFormats.Center);
+                //Header End
+
+                //ColumnHeader Start
+                font = new XFont("Verdana", 10, XFontStyle.Bold);
+                gfx.DrawString("No.", font, XBrushes.Black, new XRect(0, 0, 200, 400), XStringFormats.Center);
+                gfx.DrawString("Cheque Number", font, XBrushes.Black, new XRect(0, 0, 420, 400), XStringFormats.Center);
+                gfx.DrawString("Amount", font, XBrushes.Black, new XRect(0, 0, 620, 400), XStringFormats.Center);
+                gfx.DrawString("Balance", font, XBrushes.Black, new XRect(0, 0, 850, 400), XStringFormats.Center);
+                gfx.DrawString("Payment Date", font, XBrushes.Black, new XRect(0, 0, 1057, 400), XStringFormats.Center);
+                //ColumnHeader End
+
+                int n = 430;
+                int p = 1;
+                font = new XFont("Verdana", 10, XFontStyle.Regular);
+                using (var ctx = new iContext())
+                {
+                    var clt = from cl in ctx.FPaymentInfo
+                              where cl.LoanID == lId
+                              select cl;
+
+                    foreach (var i in clt)
+                    {
+                        font = new XFont("Verdana", 10, XFontStyle.Regular);
+                        gfx.DrawString(i.PaymentNumber.ToString(), font, XBrushes.Black, new XRect(0, 0, 200, n), XStringFormats.Center);
+                        gfx.DrawString(i.ChequeInfo, font, XBrushes.Black, new XRect(0, 0, 420, n), XStringFormats.Center);
+                        gfx.DrawString(i.Amount.ToString("N2"), font, XBrushes.Black, new XRect(0, 0, 620, n), XStringFormats.Center);
+                        gfx.DrawString(i.RemainingBalance.ToString("N2"), font, XBrushes.Black, new XRect(0, 0, 850, n), XStringFormats.Center);
+                        gfx.DrawString(i.ChequeDueDate.ToString().Split(' ')[0], font, XBrushes.Black, new XRect(0, 0, 1050, n), XStringFormats.Center);
+
+                        n += 30;
+                        if (n >= 1000)
+                        {
+                            gfx.DrawString("Page " + p.ToString(), font, XBrushes.Black, new XRect(0, 0, 1500, 1150), XStringFormats.Center); ;
+                            page = document.AddPage();
+                            page.Orientation = PageOrientation.Landscape;
+                            gfx = XGraphics.FromPdfPage(page);
+                            font = new XFont("Verdana", 20, XFontStyle.BoldItalic);
+                            gfx.DrawImage(xImage, 40, 10, xImage.Width - 260, xImage.Height / 3);
+                            font = new XFont("Verdana", 18, XFontStyle.Italic);
+                            gfx.DrawString("Statement Of Account", font, XBrushes.Black, new XRect(0, 0, page.Width, 220), XStringFormats.Center);
+                            font = new XFont("Verdana", 10, XFontStyle.Italic);
+                            //gfx.DrawString("As of " + DateTime.Today.Date.ToString().Split(' ')[0], font, XBrushes.Black, new XRect(0, 0, page.Width, 250), XStringFormats.Center);
+                            //ColumnHeader Start
+                            font = new XFont("Verdana", 10, XFontStyle.Bold);
+                            gfx.DrawString("No.", font, XBrushes.Black, new XRect(0, 0, 200, 270), XStringFormats.Center);
+                            gfx.DrawString("Cheque Number", font, XBrushes.Black, new XRect(0, 0, 420, 270), XStringFormats.Center);
+                            gfx.DrawString("Amount", font, XBrushes.Black, new XRect(0, 0, 620, 270), XStringFormats.Center);
+                            gfx.DrawString("Balance", font, XBrushes.Black, new XRect(0, 0, 850, 270), XStringFormats.Center);
+                            gfx.DrawString("Payment Date", font, XBrushes.Black, new XRect(0, 0, 1057, 270), XStringFormats.Center);
+                            //ColumnHeader End
+                            n = 300;
+                            p++;
+                        }
+                    }
+                    if (n < 1000)
+                    {
+                        gfx.DrawString("Page " + p.ToString(), font, XBrushes.Black, new XRect(0, 0, 1500, 1150), XStringFormats.Center);
+                    }
+                }
+
+                //Footer Start
+                font = new XFont("Verdana", 10, XFontStyle.Italic);
+                string user = "";
+                using (var ctx = new iContext())
+                {
+                    var usr = ctx.Employees.Find(UserID);
+                    user = usr.LastName + ", " + usr.FirstName + " " + usr.MI + " " + usr.Suffix;
+                }
+                gfx.DrawString("Prepared By: " + user, font, XBrushes.Black, new XRect(0, 0, 200, 1150), XStringFormats.Center);
+                //Footer End
+
+
+                const string filename = "SOA.pdf";
+                document.Save(filename);
+                Process.Start(filename);
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
         private void btnRelease_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 if (status == "Releasing")
                 {
+                    double max = 0;
+                    double min = 0;
+                    using (var ctx = new iContext())
+                    {
+                        var lon = ctx.Loans.Find(lId);
+                        var ser = ctx.Services.Find(lon.ServiceID);
+                        max = ser.MaxTerm;
+                        min = ser.MinTerm;
+
+
+                        if (Convert.ToDouble(txtTerm.Text) > max || Convert.ToDouble(txtTerm.Text) < min)
+                        {
+                            System.Windows.MessageBox.Show("Term must not be greater than the maximum term(" + ser.MaxTerm + " mo.) OR less than the minimum term(" + ser.MinTerm + " mo.)", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
+                        }
+
+                        max = ser.MaxValue;
+                        min = ser.MinValue;
+
+                        if (Convert.ToDouble(txtAmt.Text) > max || Convert.ToDouble(txtAmt.Text) < min)
+                        {
+                            System.Windows.MessageBox.Show("Principal amount must not be greater than the maximum loanable amount OR less than the minimum loanable amount", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
+                        }
+                    }
+
                     if (Convert.ToDouble(txtAmt.Text) > Convert.ToDouble(lblPrincipal.Content))
                     {
                         MessageBox.Show("Principal amount must not be greater than the maximum loanable amount", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
@@ -414,6 +576,7 @@ namespace LoanManagement.Desktop
                                 y++;
                             }
                             ctx.SaveChanges();
+                            printSOA();
                             MessageBox.Show("Okay");
                             this.Close();
                         }
@@ -444,9 +607,14 @@ namespace LoanManagement.Desktop
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Windows.MessageBox.Show("Incorrect Format on some Fields / Incomplete Input(s)", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
+        }
+
+        private void txtAmt_LostFocus(object sender, RoutedEventArgs e)
+        {
+            refr();
         }
     }
 }

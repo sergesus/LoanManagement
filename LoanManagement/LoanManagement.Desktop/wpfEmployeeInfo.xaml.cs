@@ -396,6 +396,7 @@ namespace LoanManagement.Desktop
                 {
                     btnSave.Content = "Update";
                     //btnClear.Visibility = Visibility.Hidden;
+
                     if (uId != 1)
                     {
                         btnDel.Visibility = Visibility.Visible;
@@ -408,6 +409,14 @@ namespace LoanManagement.Desktop
 
                     using (var ctx = new iContext())
                     {
+
+                        var ctr = ctx.Loans.Where(x => x.CI == uId && x.Status == "Released").Count();
+                        if (ctr > 0)
+                        {
+                            System.Windows.MessageBox.Show("Basic Information cannot be updated and Record cannot be deleted at this moment", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                            btnDel.IsEnabled = false;
+                            tbInfo.IsEnabled = false;
+                        }
                         var emp = ctx.Employees.Find(uId);
                         txtFName.Text = emp.FirstName;
                         txtLName.Text = emp.LastName;

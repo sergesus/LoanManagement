@@ -397,16 +397,10 @@
                                 <ListBoxItem x:Name="itm40" Content="Loan Re-structure" FontSize="25" Foreground="#FF32AFD4" MouseUp="itm11_MouseUp"/>
                                 <ListBoxItem x:Name="itm41" Content="Payment Adjustment" FontSize="25" Foreground="#FF32AFD4" MouseUp="itm13_MouseUp"/>
                             </ListBox>
-                            <Button HorizontalAlignment="Left" Height="118" Margin="345,10,0,0" VerticalAlignment="Top" Width="128" BorderBrush="#FF4AEE0D" BorderThickness="4" Grid.Column="1" Click="Button_Click_7">
+                            <Button HorizontalAlignment="Left" Height="118" Margin="212,10,0,0" VerticalAlignment="Top" Width="128" BorderBrush="#FF4AEE0D" BorderThickness="4" Grid.Column="1" Click="Button_Click_7">
                                 <DockPanel LastChildFill="True">
                                     <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom" Foreground="#FF343434" Content="List of Employee"/>
                                     <Image Source="Images/Employee.ico" />
-                                </DockPanel>
-                            </Button>
-                            <Button x:Name="btnBank_Copy1" HorizontalAlignment="Left" Height="118" Margin="212,10,0,0" VerticalAlignment="Top" Width="128" BorderBrush="#FF4AEE0D" BorderThickness="4" Grid.Column="1">
-                                <DockPanel LastChildFill="True">
-                                    <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom" Foreground="#FF343434" Content="List of Bank Info"/>
-                                    <Image Source="Images/Clients.ico" />
                                 </DockPanel>
                             </Button>
                             <Button HorizontalAlignment="Left" Height="118" Margin="10,10,0,0" VerticalAlignment="Top" Width="128" BorderBrush="#FF4AEE0D" BorderThickness="4" Grid.ColumnSpan="2" Click="Button_Click_5">
@@ -421,7 +415,7 @@
                                     <Image Source="Images/Services.ico" />
                                 </DockPanel>
                             </Button>
-                            <Button x:Name="btnAgents_Copy1" HorizontalAlignment="Left" Height="118" Margin="478,10,0,0" VerticalAlignment="Top" Width="128" BorderBrush="#FF4AEE0D" BorderThickness="4" Grid.Column="1" Click="btnAgents_Copy1_Click">
+                            <Button x:Name="btnAgents_Copy1" HorizontalAlignment="Left" Height="118" Margin="345,10,0,0" VerticalAlignment="Top" Width="128" BorderBrush="#FF4AEE0D" BorderThickness="4" Grid.Column="1" Click="btnAgents_Copy1_Click">
                                 <DockPanel LastChildFill="True">
                                     <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom" Foreground="#FF343434" Content="List of Agents"/>
                                     <Image Source="Images/Bank.ico" />

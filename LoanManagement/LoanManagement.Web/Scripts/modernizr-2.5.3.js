@@ -283,7 +283,7 @@ window.Modernizr = (function( window, document, undefined ) {
 
     /**
      * testProps is a generic CSS / DOM property test; if a browser supports
-     *   a certain property, it won't return undefined for it.
+     *   a selected property, it won't return undefined for it.
      *   A supported CSS property returns empty string when its not yet set.
      */
     function testProps( props, prefixed ) {
@@ -297,7 +297,7 @@ window.Modernizr = (function( window, document, undefined ) {
 
     /**
      * testDOMProps is a generic DOM property test; if a browser supports
-     *   a certain property, it won't return undefined for it.
+     *   a selected property, it won't return undefined for it.
      */
     function testDOMProps( props, obj, elem ) {
         for ( var i in props ) {
@@ -1232,7 +1232,7 @@ window.Modernizr = (function( window, document, undefined ) {
     //
     //     str.replace(/([A-Z])/g, function(str,m1){ return '-' + m1.toLowerCase(); }).replace(/^ms-/,'-ms-');
     
-    // If you're trying to ascertain which transition end event to bind to, you might do something like...
+    // If you're trying to asselected which transition end event to bind to, you might do something like...
     // 
     //     var transEndEventNames = {
     //       'WebkitTransition' : 'webkitTransitionEnd',

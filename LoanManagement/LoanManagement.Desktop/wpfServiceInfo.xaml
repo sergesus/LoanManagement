@@ -77,14 +77,14 @@
                     <Label Content="**" HorizontalAlignment="Left" Height="23" Margin="285,12,0,0" VerticalAlignment="Top" Width="34" Foreground="Red" Grid.Column="2"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Penalties/Fees" Margin="150,-2,-154,0" FontSize="16">
+            <TabItem x:Name="tbPen" Header="Penalties/Fees" Margin="150,-2,-154,0" FontSize="16">
                 <Grid Background="#FFE5E5E5" Margin="0,0,0,-1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="11*"/>
                         <ColumnDefinition Width="18*"/>
                         <ColumnDefinition Width="277*"/>
                     </Grid.ColumnDefinitions>
-                    <Grid Margin="10,10,156,150" Grid.ColumnSpan="3">
+                    <Grid x:Name="grdFinan" Margin="10,10,454,150" Grid.ColumnSpan="3">
                         <Label Content="Holding Fee:" HorizontalAlignment="Left" Height="31" VerticalAlignment="Top" Width="122" Foreground="Black" FontSize="18" RenderTransformOrigin="0.683,-1.051" Margin="10,0,0,0"/>
                         <Label Content="%" HorizontalAlignment="Left" Height="31" Margin="208,0,0,0" VerticalAlignment="Top" Width="29" Foreground="Black" FontSize="18" RenderTransformOrigin="0.683,-1.051"/>
                         <TextBox x:Name="txtHolding" HorizontalAlignment="Left" Height="24" Margin="153,7,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" FontSize="18"/>
@@ -104,17 +104,27 @@
                         <Label Content="Interest::" HorizontalAlignment="Left" Height="30" Margin="9,158,0,0" VerticalAlignment="Top" Width="139" Foreground="Black" FontSize="18" RenderTransformOrigin="0.683,-1.051"/>
                         <Label Content="%" HorizontalAlignment="Left" Height="30" Margin="207,158,0,0" VerticalAlignment="Top" Width="30" Foreground="Black" FontSize="18" RenderTransformOrigin="0.683,-1.051"/>
                         <Label Content="*" HorizontalAlignment="Left" Height="31" Margin="113,0,0,0" VerticalAlignment="Top" Width="16" Foreground="Red"/>
-                        <Label Content="**" HorizontalAlignment="Left" Height="23" Margin="231,-1,0,0" VerticalAlignment="Top" Width="34" Foreground="Red"/>
+                        <Label Content="**" HorizontalAlignment="Left" Height="23" Margin="231,-1,-11,0" VerticalAlignment="Top" Width="34" Foreground="Red"/>
                         <Label Content="*" HorizontalAlignment="Left" Height="31" Margin="134,27,0,0" VerticalAlignment="Top" Width="16" Foreground="Red"/>
                         <Label Content="*" HorizontalAlignment="Left" Height="31" Margin="46,60,0,0" VerticalAlignment="Top" Width="16" Foreground="Red"/>
                         <Label Content="*" HorizontalAlignment="Left" Height="31" Margin="137,92,0,0" VerticalAlignment="Top" Width="16" Foreground="Red"/>
                         <Label Content="*" HorizontalAlignment="Left" Height="31" Margin="132,127,0,0" VerticalAlignment="Top" Width="16" Foreground="Red"/>
                         <Label Content="*" HorizontalAlignment="Left" Height="31" Margin="75,157,0,0" VerticalAlignment="Top" Width="16" Foreground="Red"/>
-                        <Label Content="**" HorizontalAlignment="Left" Height="23" Margin="231,27,0,0" VerticalAlignment="Top" Width="34" Foreground="Red"/>
-                        <Label Content="**" HorizontalAlignment="Left" Height="23" Margin="231,60,0,0" VerticalAlignment="Top" Width="34" Foreground="Red"/>
-                        <Label Content="**" HorizontalAlignment="Left" Height="23" Margin="231,92,0,0" VerticalAlignment="Top" Width="34" Foreground="Red"/>
-                        <Label Content="**" HorizontalAlignment="Left" Height="23" Margin="231,130,0,0" VerticalAlignment="Top" Width="34" Foreground="Red"/>
-                        <Label Content="**" HorizontalAlignment="Left" Height="23" Margin="231,157,0,0" VerticalAlignment="Top" Width="34" Foreground="Red"/>
+                        <Label Content="**" HorizontalAlignment="Left" Height="23" Margin="231,27,-11,0" VerticalAlignment="Top" Width="34" Foreground="Red"/>
+                        <Label Content="**" HorizontalAlignment="Left" Height="23" Margin="231,60,-11,0" VerticalAlignment="Top" Width="34" Foreground="Red"/>
+                        <Label Content="**" HorizontalAlignment="Left" Height="23" Margin="231,92,-11,0" VerticalAlignment="Top" Width="34" Foreground="Red"/>
+                        <Label Content="**" HorizontalAlignment="Left" Height="23" Margin="231,130,-11,0" VerticalAlignment="Top" Width="34" Foreground="Red"/>
+                        <Label Content="**" HorizontalAlignment="Left" Height="23" Margin="231,157,-11,0" VerticalAlignment="Top" Width="34" Foreground="Red"/>
+                    </Grid>
+                    <Grid Grid.Column="2" HorizontalAlignment="Left" Height="237" Margin="245,10,0,0" VerticalAlignment="Top" Width="234"/>
+                    <Grid x:Name="grdMicro" Margin="281,10,110,150" Grid.Column="2">
+                        <Grid x:Name="grdFinan_Copy" Margin="10,10,-10,-10">
+                            <Label Content="LatePayment:" HorizontalAlignment="Left" Height="31" VerticalAlignment="Top" Width="122" Foreground="Black" FontSize="18" RenderTransformOrigin="0.683,-1.051" Margin="10,0,0,0"/>
+                            <Label Content="%" HorizontalAlignment="Left" Height="31" Margin="208,0,0,0" VerticalAlignment="Top" Width="29" Foreground="Black" FontSize="18" RenderTransformOrigin="0.683,-1.051"/>
+                            <TextBox x:Name="txtLtPen" HorizontalAlignment="Left" Height="24" Margin="153,7,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" FontSize="18"/>
+                            <Label Content="*" HorizontalAlignment="Left" Height="31" Margin="121,0,0,0" VerticalAlignment="Top" Width="16" Foreground="Red"/>
+                            <Label Content="**" HorizontalAlignment="Left" Height="23" Margin="231,-1,0,0" VerticalAlignment="Top" Width="34" Foreground="Red"/>
+                        </Grid>
                     </Grid>
                 </Grid>
             </TabItem>
@@ -139,7 +149,7 @@
                             <ComboBoxItem Content="Non Collateral"/>
                         </ComboBox>
                         <Label Content="Dept:" HorizontalAlignment="Left" Height="31" Margin="6,44,0,0" VerticalAlignment="Top" Width="74" Foreground="Black" FontSize="18" RenderTransformOrigin="0.506,3.129"/>
-                        <ComboBox x:Name="cmbDept" HorizontalAlignment="Left" Height="26" Margin="134,49,0,0" VerticalAlignment="Top" Width="224" FontSize="18">
+                        <ComboBox x:Name="cmbDept" HorizontalAlignment="Left" Height="26" Margin="134,49,0,0" VerticalAlignment="Top" Width="224" FontSize="18" SelectionChanged="cmbDept_SelectionChanged">
                             <ComboBoxItem Content="Financing"/>
                             <ComboBoxItem Content="Micro Business"/>
                         </ComboBox>

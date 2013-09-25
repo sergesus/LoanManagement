@@ -11,6 +11,7 @@ namespace LoanManagement.Domain
 
     public class iContext : DbContext
     {
+        public DbSet<State> State { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Scope> Scopes { get; set; }
         public DbSet<Position> Positions { get; set; }
@@ -50,6 +51,7 @@ namespace LoanManagement.Domain
         public DbSet<ApprovedLoan> ApprovedLoans { get; set; }
         public DbSet<ReleasedLoan> ReleasedLoans { get; set; }
         public DbSet<FPaymentInfo> FPaymentInfo { get; set; }
+        public DbSet<iText> iTexts { get; set; }
         public DbSet<HeldCheque> HeldCheques { get; set; }
         public DbSet<DepositedCheque> DepositedCheques { get; set; }
         public DbSet<TempClearing> TempClearings { get; set; }
@@ -150,8 +152,17 @@ namespace LoanManagement.Domain
             modelBuilder.Entity<PaidLoan>()
                 .HasKey(x => x.LoanID)
                 .HasRequired(x => x.Loan);
+            modelBuilder.Entity<iText>()
+                .HasKey(x => x.FPaymentInfoID)
+                .HasRequired(x => x.FPaymentInfo);
                 
         }
+    }
+
+    public class State
+    {
+        public int StateID { get; set; }
+        public int iState { get; set; }
     }
 
     public class User
@@ -278,6 +289,7 @@ namespace LoanManagement.Domain
         public double RestructureFee { get; set; }
         public double RestructureInterest { get; set; }
         public double AdjustmentFee { get; set; }
+        public double LatePaymentPenalty { get; set; }
         public bool Active { get; set; }
 
         public ICollection<Requirement> Requirement { get; set; }
@@ -656,6 +668,13 @@ namespace LoanManagement.Domain
         public virtual Loan Loan { get; set; }
     }
 
+    public class iText
+    {
+        public int FPaymentInfoID { get; set; }
+        public virtual FPaymentInfo FPaymentInfo { get; set; }
+    }
+
+
     public class FPaymentInfo
     {
         public int FPaymentInfoID { get; set; }
@@ -672,6 +691,7 @@ namespace LoanManagement.Domain
         public virtual DepositedCheque DepositedCheque { get; set; }
         public virtual ClearedCheque ClearCheque { get; set; }
         public virtual ReturnedCheque ReturnedCheque { get; set; }
+        public virtual iText iText { get; set; }
     }
 
     public class HeldCheque

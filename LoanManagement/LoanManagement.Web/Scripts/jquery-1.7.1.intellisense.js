@@ -859,7 +859,7 @@ intellisense.annotate(jQuery.fn, {
   },
   'attributeEquals': function() {
     /// <signature>
-    ///   <summary>Selects elements that have the specified attribute with a value exactly equal to a certain value.</summary>
+    ///   <summary>Selects elements that have the specified attribute with a value exactly equal to a selected value.</summary>
     ///   <param name="attribute" type="String">An attribute name.</param>
     ///   <param name="value" type="String">An attribute value. Can be either an unquoted single word or a quoted string.</param>
     /// </signature>
@@ -880,7 +880,7 @@ intellisense.annotate(jQuery.fn, {
   },
   'attributeNotEqual': function() {
     /// <signature>
-    ///   <summary>Select elements that either don't have the specified attribute, or do have the specified attribute but not with a certain value.</summary>
+    ///   <summary>Select elements that either don't have the specified attribute, or do have the specified attribute but not with a selected value.</summary>
     ///   <param name="attribute" type="String">An attribute name.</param>
     ///   <param name="value" type="String">An attribute value. Can be either an unquoted single word or a quoted string.</param>
     /// </signature>
@@ -1984,7 +1984,7 @@ intellisense.annotate(jQuery.fn, {
   },
   'promise': function() {
     /// <signature>
-    ///   <summary>Return a Promise object to observe when all actions of a certain type bound to the collection, queued or not, have finished.</summary>
+    ///   <summary>Return a Promise object to observe when all actions of a selected type bound to the collection, queued or not, have finished.</summary>
     ///   <param name="type" type="String">The type of queue that needs to be observed.</param>
     ///   <param name="target" type="Object">Object onto which the promise methods have to be attached</param>
     ///   <returns type="Promise" />

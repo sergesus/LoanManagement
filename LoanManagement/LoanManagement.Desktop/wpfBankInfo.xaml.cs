@@ -576,6 +576,14 @@ namespace LoanManagement.Desktop
                 {
                     using (var ctx = new iContext())
                     {
+                        var ctr = ctx.Loans.Where(x => x.BankID == bId && x.Status == "Released").Count();
+                        if (ctr > 0)
+                        {
+                            System.Windows.MessageBox.Show("Only selected values be updated and Record cannot be deleted at this moment", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                            btnDel.IsEnabled = false;
+                            txtName.IsEnabled = false;
+                        }
+
                         var add = from ad in ctx.BankAdresses
                                   where ad.BankID == bId
                                   select new { BankNumber = ad.BankNum, Street = ad.Street, Province = ad.Province, City = ad.City };

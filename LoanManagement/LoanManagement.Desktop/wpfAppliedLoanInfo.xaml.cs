@@ -31,6 +31,7 @@ namespace LoanManagement.Desktop
 
         public int lId;
         public string status;
+        public int UserID;
         public wpfAppliedLoanInfo()
         {
             InitializeComponent();
@@ -147,6 +148,12 @@ namespace LoanManagement.Desktop
                 myBrush.ImageSource = image.Source;
                 //Grid grid = new Grid();
                 wdw1.Background = myBrush;
+
+                if (status == "View")
+                {
+                    btnApprove.Visibility = Visibility.Hidden;
+                    btnDecline.Visibility = Visibility.Hidden;
+                }
             }
             catch (Exception ex)
             {
@@ -209,6 +216,7 @@ namespace LoanManagement.Desktop
                 {
                     wpfFReleasing frm = new wpfFReleasing();
                     frm.status = status;
+                    frm.UserID = UserID;
                     frm.lId = lId;
                     this.Close();
                     frm.ShowDialog();
@@ -241,6 +249,12 @@ namespace LoanManagement.Desktop
                         using (var ctx = new iContext())
                         {
                             var lon = ctx.Loans.Find(lId);
+                            var ctr = ctx.Loans.Where(x => x.ClientID == lon.ClientID && (x.Status == "Applied" || x.Status == "Released" || x.Status == "Closed Account" || x.Status == "Approved") && x.LoanID != lon.LoanID).Count();
+                            if (ctr > 0)
+                            {
+                                System.Windows.MessageBox.Show("Client cannot have more than one(1) application/Loan");
+                                return;
+                            }
                             if (lon.Status == "Approved")
                             {
                                 ctx.ApprovedLoans.Remove(lon.ApprovedLoan);

@@ -309,9 +309,15 @@ namespace LoanManagement.Desktop
 
                     using (var ctx = new iContext())
                     {
-                        Service ser = new Service { Name = txtName.Text, Department = cmbDept.Text, Description = txtDesc.Text, Type = cmbType.Text, Active = true, Interest = Convert.ToDouble(txtInterest.Text), MinTerm = Convert.ToInt32(txtMinTerm.Text), MaxTerm = Convert.ToInt32(txtMaxTerm.Text), MinValue = Convert.ToDouble(txtMinVal.Text), MaxValue = Convert.ToDouble(txtMaxVal.Text), AgentCommission = Convert.ToDouble(txtCom.Text), Holding = Convert.ToDouble(txtHolding.Text), ClosedAccountPenalty = Convert.ToDouble(txtClosed.Text), DaifPenalty = Convert.ToDouble(txtDaif.Text), RestructureFee = Convert.ToDouble(txtResFee.Text), RestructureInterest = Convert.ToDouble(txtResInt.Text), AdjustmentFee = Convert.ToDouble(txtAdjust.Text) };
-
-
+                        Service ser = null;
+                        if (cmbDept.Text == "Financing")
+                        {
+                            ser = new Service { Name = txtName.Text, Department = cmbDept.Text, Description = txtDesc.Text, Type = cmbType.Text, Active = true, Interest = Convert.ToDouble(txtInterest.Text), MinTerm = Convert.ToInt32(txtMinTerm.Text), MaxTerm = Convert.ToInt32(txtMaxTerm.Text), MinValue = Convert.ToDouble(txtMinVal.Text), MaxValue = Convert.ToDouble(txtMaxVal.Text), AgentCommission = Convert.ToDouble(txtCom.Text), Holding = Convert.ToDouble(txtHolding.Text), ClosedAccountPenalty = Convert.ToDouble(txtClosed.Text), DaifPenalty = Convert.ToDouble(txtDaif.Text), RestructureFee = Convert.ToDouble(txtResFee.Text), RestructureInterest = Convert.ToDouble(txtResInt.Text), AdjustmentFee = Convert.ToDouble(txtAdjust.Text), LatePaymentPenalty=0 };
+                        }
+                        else
+                        {
+                            ser = new Service { Name = txtName.Text, Department = cmbDept.Text, Description = txtDesc.Text, Type = cmbType.Text, Active = true, Interest = Convert.ToDouble(txtInterest.Text), MinTerm = Convert.ToInt32(txtMinTerm.Text), MaxTerm = Convert.ToInt32(txtMaxTerm.Text), MinValue = Convert.ToDouble(txtMinVal.Text), MaxValue = Convert.ToDouble(txtMaxVal.Text), AgentCommission = Convert.ToDouble(txtCom.Text), Holding = 0, ClosedAccountPenalty = 0, DaifPenalty = 0, RestructureFee = 0, RestructureInterest = 0, AdjustmentFee = 0, LatePaymentPenalty=Convert.ToDouble(txtLtPen.Text) };
+                        }
                         var deds = from dd in ctx.TempoDeductions
                                    select new { DedNumber = dd.DeductionNum, Name = dd.Name, Percentage = dd.Percentage };
                         var rqs = from rq in ctx.TempoRequirements
@@ -349,13 +355,28 @@ namespace LoanManagement.Desktop
                         ser.MaxTerm = Convert.ToInt32(txtMaxTerm.Text);
                         ser.MinValue = Convert.ToDouble(txtMinVal.Text);
                         ser.MaxValue = Convert.ToDouble(txtMaxVal.Text);
-                        ser.Holding = Convert.ToDouble(txtHolding.Text);
-                        ser.DaifPenalty = Convert.ToDouble(txtDaif.Text);
-                        ser.ClosedAccountPenalty = Convert.ToDouble(txtClosed.Text);
-                        ser.AgentCommission = Convert.ToDouble(txtCom.Text);
-                        ser.RestructureFee = Convert.ToDouble(txtResFee.Text);
-                        ser.RestructureInterest = Convert.ToDouble(txtResInt.Text);
-                        ser.AdjustmentFee = Convert.ToDouble(txtAdjust.Text);
+                        if (cmbDept.Text == "Financing")
+                        {
+                            ser.Holding = Convert.ToDouble(txtHolding.Text);
+                            ser.DaifPenalty = Convert.ToDouble(txtDaif.Text);
+                            ser.ClosedAccountPenalty = Convert.ToDouble(txtClosed.Text);
+                            ser.AgentCommission = Convert.ToDouble(txtCom.Text);
+                            ser.RestructureFee = Convert.ToDouble(txtResFee.Text);
+                            ser.RestructureInterest = Convert.ToDouble(txtResInt.Text);
+                            ser.AdjustmentFee = Convert.ToDouble(txtAdjust.Text);
+                            ser.LatePaymentPenalty = 0;
+                        }
+                        else
+                        {
+                            ser.Holding = 0;
+                            ser.DaifPenalty = 0;
+                            ser.ClosedAccountPenalty = 0;
+                            ser.AgentCommission = 0;
+                            ser.RestructureFee = 0;
+                            ser.RestructureInterest = 0;
+                            ser.AdjustmentFee = 0;
+                            ser.LatePaymentPenalty = Convert.ToDouble(txtLtPen.Text);
+                        }
                         ctx.SaveChanges();
                         MessageBox.Show("Service updated");
                         this.Close();
@@ -421,6 +442,17 @@ namespace LoanManagement.Desktop
                 {
                     using (var ctx = new iContext())
                     {
+                        var ctr = ctx.Loans.Where(x => x.ServiceID == sId && x.Status == "Released").Count();
+                        if (ctr > 0)
+                        {
+                            System.Windows.MessageBox.Show("Only selected values can be updated and Record cannot be deleted at this moment", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                            txtName.IsEnabled = false;
+                            cmbDept.IsEnabled = false;
+                            cmbType.IsEnabled = false;
+                            btnDel.IsEnabled = false;
+                            //tbInfo.IsEnabled = false;
+                        }
+
                         var ser = ctx.Services.Find(sId);
                         txtDesc.Text = ser.Description;
                         txtInterest.Text = ser.Interest.ToString();
@@ -883,22 +915,119 @@ namespace LoanManagement.Desktop
 
         private void txtMinTerm_LostFocus(object sender, RoutedEventArgs e)
         {
-            checkNumeric(txtMinTerm, lblMinTerm, true);
+            
+            try
+            {
+                checkNumeric(txtMinTerm, lblMinTerm, true);
+                if (Convert.ToInt32(txtMinTerm.Text) > Convert.ToInt32(txtMaxTerm.Text))
+                {
+                    lblMaxTerm.Foreground = Brushes.Red;
+                    lblMinTerm.Foreground = Brushes.Red;
+                    lblMaxTerm.Content = "**";
+                    lblMinTerm.Content = "**";
+                }
+                else
+                {
+                    lblMaxTerm.Foreground = Brushes.Green;
+                    lblMinTerm.Foreground = Brushes.Green;
+                    lblMaxTerm.Content = "✔";
+                    lblMinTerm.Content = "✔";
+                }
+            }
+            catch
+            {
+                lblMaxTerm.Foreground = Brushes.Red;
+                lblMinTerm.Foreground = Brushes.Red;
+                lblMaxTerm.Content = "**";
+                lblMinTerm.Content = "**";
+            }
         }
 
         private void txtMaxTerm_LostFocus(object sender, RoutedEventArgs e)
         {
-            checkNumeric(txtMaxTerm, lblMaxTerm, true);
+            try
+            {
+                checkNumeric(txtMaxTerm, lblMaxTerm, true);
+                if (Convert.ToInt32(txtMinTerm.Text) > Convert.ToInt32(txtMaxTerm.Text))
+                {
+                    lblMaxTerm.Foreground = Brushes.Red;
+                    lblMinTerm.Foreground = Brushes.Red;
+                    lblMaxTerm.Content = "**";
+                    lblMinTerm.Content = "**";
+                }
+                else
+                {
+                    lblMaxTerm.Foreground = Brushes.Green;
+                    lblMinTerm.Foreground = Brushes.Green;
+                    lblMaxTerm.Content = "✔";
+                    lblMinTerm.Content = "✔";
+                }
+            }
+            catch
+            {
+                lblMaxTerm.Foreground = Brushes.Red;
+                lblMinTerm.Foreground = Brushes.Red;
+                lblMaxTerm.Content = "**";
+                lblMinTerm.Content = "**";
+            }
         }
 
         private void txtMinVal_LostFocus(object sender, RoutedEventArgs e)
         {
-            checkDouble(txtMinVal, lblMinVal, true);
+            try
+            {
+                checkDouble(txtMinVal, lblMinVal, true);
+                if (Convert.ToDouble(txtMinVal.Text) > Convert.ToDouble(txtMaxVal.Text))
+                {
+                    lblMaxVal.Foreground = Brushes.Red;
+                    lblMinVal.Foreground = Brushes.Red;
+                    lblMinVal.Content = "**";
+                    lblMaxVal.Content = "**";
+                }
+                else
+                {
+                    lblMaxVal.Foreground = Brushes.Green;
+                    lblMaxVal.Foreground = Brushes.Green;
+                    lblMaxVal.Content = "✔";
+                    lblMinVal.Content = "✔";
+                }
+            }
+            catch
+            {
+                lblMaxVal.Foreground = Brushes.Red;
+                lblMinVal.Foreground = Brushes.Red;
+                lblMinVal.Content = "**";
+                lblMaxVal.Content = "**";
+            }
         }
 
         private void txtMaxVal_LostFocus(object sender, RoutedEventArgs e)
         {
-            checkDouble(txtMaxVal, lblMaxVal, true);
+            try
+            {
+                checkDouble(txtMaxVal, lblMaxVal, true);
+                if (Convert.ToDouble(txtMinVal.Text) > Convert.ToDouble(txtMaxVal.Text))
+                {
+                    lblMaxVal.Foreground = Brushes.Red;
+                    lblMinVal.Foreground = Brushes.Red;
+                    lblMinVal.Content = "**";
+                    lblMaxVal.Content = "**";
+                }
+                else
+                {
+                    lblMaxVal.Foreground = Brushes.Green;
+                    lblMaxVal.Foreground = Brushes.Green;
+                    lblMaxVal.Content = "✔";
+                    lblMinVal.Content = "✔";
+                }
+            }
+            catch
+            {
+                lblMaxVal.Foreground = Brushes.Red;
+                lblMinVal.Foreground = Brushes.Red;
+                lblMinVal.Content = "**";
+                lblMaxVal.Content = "**";
+            }
         }
 
         private void txtInterest_LostFocus(object sender, RoutedEventArgs e)
@@ -919,6 +1048,36 @@ namespace LoanManagement.Desktop
         private void txtReqDesc_LostFocus(object sender, RoutedEventArgs e)
         {
             checkString(txtReqDesc, lblReqDesc, true);
+        }
+
+        private void cmbDept_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                ComboBoxItem typeItem = (ComboBoxItem)cmbDept.SelectedItem;
+                string value = typeItem.Content.ToString();
+                if (value == "Financing")
+                {
+                    tbPen.IsEnabled = true;
+                    grdFinan.Visibility = Visibility.Visible;
+                    grdMicro.Visibility = Visibility.Hidden;
+                }
+                else if (value == "Micro Business")
+                {
+                    tbPen.IsEnabled = true;
+                    grdFinan.Visibility = Visibility.Hidden;
+                    grdMicro.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    tbPen.IsEnabled = !true;
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
     }

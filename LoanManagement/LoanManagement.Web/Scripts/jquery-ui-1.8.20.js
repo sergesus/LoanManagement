@@ -10929,7 +10929,7 @@ $.widget( "ui.tabs", {
 				this.load( o.selected );
 			}
 
-			// clean up to avoid memory leaks in certain versions of IE 6
+			// clean up to avoid memory leaks in selected versions of IE 6
 			// TODO: namespace this event
 			$( window ).bind( "unload", function() {
 				self.lis.add( self.anchors ).unbind( ".tabs" );
@@ -10998,7 +10998,7 @@ $.widget( "ui.tabs", {
 			}
 		}
 
-		// Reset certain styles left over from animation
+		// Reset selected styles left over from animation
 		// and prevent IE's ClearType bug...
 		function resetStyle( $el, fx ) {
 			$el.css( "display", "" );

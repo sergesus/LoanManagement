@@ -22,6 +22,7 @@ namespace LoanManagement.Desktop
     {
         public string status;
         public string iDept;
+        public int UserID;
 
         public wpfSelectApplication()
         {
@@ -72,6 +73,7 @@ namespace LoanManagement.Desktop
                 {
                     this.Close();
                     wpfLoanSearch frm = new wpfLoanSearch();
+                    frm.UserID = UserID;
                     frm.status = status;
                     frm.iDept = iDept;
                     frm.ShowDialog();
@@ -110,6 +112,7 @@ namespace LoanManagement.Desktop
                     this.Close();
                     wpfLoanSearch frm = new wpfLoanSearch();
                     frm.status = "UReleasing";
+                    frm.UserID = UserID;
                     frm.iDept = iDept;
                     frm.ShowDialog();
                 }

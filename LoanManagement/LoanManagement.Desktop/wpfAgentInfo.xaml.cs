@@ -499,6 +499,17 @@ namespace LoanManagement.Desktop
 
                     using (var ctx = new iContext())
                     {
+                        var ctr = ctx.Loans.Where(x => x.AgentID == aId && x.Status == "Released").Count();
+                        if (ctr > 0)
+                        {
+                            System.Windows.MessageBox.Show("Only selected values be updated and Record cannot be deleted at this moment", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                            btnDel.IsEnabled = false;
+                            txtLName.IsEnabled = false;
+                            txtFName.IsEnabled = false;
+                            txtMI.IsEnabled = false;
+                            txtSuffix.IsEnabled = false;
+                        }
+
                         var agt = ctx.Agents.Find(aId);
                         txtFName.Text = agt.FirstName;
                         txtLName.Text = agt.LastName;

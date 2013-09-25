@@ -25,6 +25,7 @@ namespace LoanManagement.Desktop
     {
         public string status;
         public string iDept;
+        public int UserID;
 
         public wpfLoanSearch()
         {
@@ -331,21 +332,49 @@ namespace LoanManagement.Desktop
                 }
                 else if (status == "Adjustment" || status == "Restructure" || status=="View")
                 {
-                    int n = Convert.ToInt32(getRow(dgLoan, 0));
-                    wpfReleasedLoanInfo frm = new wpfReleasedLoanInfo();
-                    frm.lId = n;
-                    frm.status = status;
                     if (status == "View")
                     {
-                        frm.Height = 605.5;
+                        using (var ctx = new iContext())
+                        {
+                            int n = Convert.ToInt32(getRow(dgLoan, 0));
+                            var lon = ctx.Loans.Find(n);
+                            if (lon.Status == "Applied" || lon.Status == "Declined" || lon.Status == "Approved")
+                            {
+                                wpfAppliedLoanInfo frm = new wpfAppliedLoanInfo();
+                                frm.lId = n;
+                                frm.status = "View";
+                                frm.Height = 605.5;
+                                frm.ShowDialog();
+                            }
+                            else
+                            {
+                                wpfReleasedLoanInfo frm = new wpfReleasedLoanInfo();
+                                frm.lId = n;
+                                frm.status = "View";
+                                frm.Height = 605.5;
+                                frm.ShowDialog();
+                            }
+                        }
                     }
-                    this.Close();
-                    frm.ShowDialog();
+                    else
+                    {
+                        int n = Convert.ToInt32(getRow(dgLoan, 0));
+                        wpfReleasedLoanInfo frm = new wpfReleasedLoanInfo();
+                        frm.lId = n;
+                        frm.status = status;
+                        if (status == "View")
+                        {
+                            frm.Height = 605.5;
+                        }
+                        this.Close();
+                        frm.ShowDialog();
+                    }
                 }
                 else
                 {
                     wpfAppliedLoanInfo frm = new wpfAppliedLoanInfo();
                     int num = Convert.ToInt32(getRow(dgLoan, 0));
+                    frm.UserID = UserID;
                     frm.lId = num;
                     frm.status = status;
                     frm.ShowDialog();

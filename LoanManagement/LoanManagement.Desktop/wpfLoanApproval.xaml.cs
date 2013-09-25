@@ -80,6 +80,22 @@ namespace LoanManagement.Desktop
         {
             try
             {
+                double max  = 0;
+                double min = 0;
+                using (var ctx = new iContext())
+                { 
+                    var lon = ctx.Loans.Find(lId);
+                    var ser = ctx.Services.Find(lon.ServiceID);
+                    max = ser.MaxValue;
+                    min = ser.MinValue;
+                }
+                if (Convert.ToDouble(txtAmt.Text) > max || Convert.ToDouble(txtAmt.Text) < min)
+                {
+                    System.Windows.MessageBox.Show("Principal amount must not be greater than the maximum loanable amount OR less than the minimum loanable amount", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+
                 System.Windows.MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (mr == System.Windows.MessageBoxResult.Yes)
                 {
@@ -134,7 +150,7 @@ namespace LoanManagement.Desktop
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Windows.MessageBox.Show("Incorrect Format on some Fields / Incomplete Input(s)", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
         }
@@ -260,7 +276,7 @@ namespace LoanManagement.Desktop
                     dt = DateAndTime.DateAdd(dInt, Interval, dt);
                     //Double Remaining = WithInt;
                     int num = 1;
-                    while (Remaining > 1)
+                    while (Remaining >=0)
                     {
                         //System.Windows.MessageBox.Show(num.ToString());
                         Remaining = Remaining - Payment;
@@ -268,6 +284,10 @@ namespace LoanManagement.Desktop
                         ctx.GenSOA.Add(soa);
                         num++;
                         //System.Windows.MessageBox.Show(Remaining.ToString());
+                        if (Remaining <= 0)
+                        {
+                            Remaining = -1;
+                        }
                         dt = DateAndTime.DateAdd(dInt, Interval, dt);
 
                     }

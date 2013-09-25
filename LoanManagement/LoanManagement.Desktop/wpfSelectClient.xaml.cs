@@ -95,6 +95,32 @@ namespace LoanManagement.Desktop
                         MessageBox.Show("Client doesn't exists");
                         return;
                     }
+
+                    var ictr = ctx.Loans.Where(x => x.ClientID == cid && x.Status == "Released").Count();
+                    if (ictr > 0)
+                    {
+                        ictr = ctx.Loans.Where(x => x.ClientID == cid && x.Status == "Released" && x.Service.Department!= iDept).Count();
+                        if (ictr > 0)
+                        {
+                            System.Windows.MessageBox.Show("Client has an existing loan on other department", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
+                        }
+                        else
+                        {
+                            ictr = ctx.Loans.Where(x => x.ClientID == cid && x.Status == "Released" && x.Service.Type == "Non Collateral" && x.Service.Department == iDept).Count();
+                            if (ictr > 0)
+                            {
+                                System.Windows.MessageBox.Show("Client has an existing Non-Collateral loan. The client can only apply for collateral loan.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                            }
+                        }
+                    }
+
+                    ictr = ctx.Loans.Where(x => x.ClientID == cid && (x.Status == "Applied" || x.Status == "Approved")).Count();
+                    if (ictr > 0)
+                    {
+                        System.Windows.MessageBox.Show("Client cannot have multiple applications at the same time", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
                     wpfLoanApplication frm = new wpfLoanApplication();
                     frm.cId = Convert.ToInt32(txtID.Text);
                     frm.status = "Add";

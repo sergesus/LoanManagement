@@ -88,6 +88,7 @@ namespace LoanManagement.Desktop
                     }
 
                     var lons = from lo in ctx.Loans
+                               where lo.Status == "Released"
                                select lo;
 
                     foreach (var item in lons)
@@ -605,6 +606,7 @@ namespace LoanManagement.Desktop
             {
                 wpfSelectApplication frm = new wpfSelectApplication();
                 frm.status = "Releasing";
+                frm.UserID = UserID;
                 frm.iDept = "Financing";
                 frm.ShowDialog();
             }
@@ -799,30 +801,34 @@ namespace LoanManagement.Desktop
             try
             {
                 PdfDocument document = new PdfDocument();
-                document.Info.Title = "List Of Employees";
+                document.Info.Title = "List Of Clients";
 
                 PdfPage page = document.AddPage();
                 page.Orientation = PageOrientation.Landscape;
+                String imagePath = AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\GFC.jpg";
+                XImage xImage = XImage.FromFile(imagePath);
                 XGraphics gfx = XGraphics.FromPdfPage(page);
                 XFont font = new XFont("Verdana", 20, XFontStyle.BoldItalic);
                 //Header Start
-                gfx.DrawString("Guahan Financing Corporation", font, XBrushes.Black, new XRect(0, 0, page.Width, 80), XStringFormats.Center);
+                //gfx.DrawString("Guahan Financing Corporation", font, XBrushes.Black, new XRect(0, 0, page.Width, 80), XStringFormats.Center);
+                //System.Windows.MessageBox.Show(xImage.Width.ToString());
+                gfx.DrawImage(xImage, 40, 10, xImage.Width - 260,xImage.Height / 3);
                 font = new XFont("Verdana", 18, XFontStyle.Italic);
-                gfx.DrawString("List Of Clients", font, XBrushes.Black, new XRect(0, 0, page.Width, 120), XStringFormats.Center);
+                gfx.DrawString("List Of Clients", font, XBrushes.Black, new XRect(0, 0, page.Width, 220), XStringFormats.Center);
                 font = new XFont("Verdana", 10, XFontStyle.Italic);
-                gfx.DrawString(DateTime.Today.Date.ToString(), font, XBrushes.Black, new XRect(0, 0, 200, 200), XStringFormats.Center);
+                gfx.DrawString("As of " + DateTime.Today.Date.ToString().Split(' ')[0], font, XBrushes.Black, new XRect(0, 0, page.Width, 250), XStringFormats.Center);
                 //Header End
 
                 //ColumnHeader Start
                 font = new XFont("Verdana", 10, XFontStyle.Bold);
-                gfx.DrawString("Name", font, XBrushes.Black, new XRect(0, 0, 200, 250), XStringFormats.Center);
-                gfx.DrawString("Gender", font, XBrushes.Black, new XRect(0, 0, 420, 250), XStringFormats.Center);
-                gfx.DrawString("Status", font, XBrushes.Black, new XRect(0, 0, 620, 250), XStringFormats.Center);
-                gfx.DrawString("Email", font, XBrushes.Black, new XRect(0, 0, 850, 250), XStringFormats.Center);
-                gfx.DrawString("Contact", font, XBrushes.Black, new XRect(0, 0, 1057, 250), XStringFormats.Center);
+                gfx.DrawString("Name", font, XBrushes.Black, new XRect(0, 0, 200, 350), XStringFormats.Center);
+                gfx.DrawString("Gender", font, XBrushes.Black, new XRect(0, 0, 420, 350), XStringFormats.Center);
+                gfx.DrawString("Status", font, XBrushes.Black, new XRect(0, 0, 620, 350), XStringFormats.Center);
+                gfx.DrawString("Email", font, XBrushes.Black, new XRect(0, 0, 850, 350), XStringFormats.Center);
+                gfx.DrawString("Contact", font, XBrushes.Black, new XRect(0, 0, 1057, 350), XStringFormats.Center);
                 //ColumnHeader End
 
-                int n = 280;
+                int n = 380;
                 int p = 1;
                 font = new XFont("Verdana", 10, XFontStyle.Regular);
                 using (var ctx = new iContext())
@@ -852,11 +858,11 @@ namespace LoanManagement.Desktop
                             page.Orientation = PageOrientation.Landscape;
                             gfx = XGraphics.FromPdfPage(page);
                             font = new XFont("Verdana", 20, XFontStyle.BoldItalic);
-                            gfx.DrawString("Guahan Financing Corporation", font, XBrushes.Black, new XRect(0, 0, page.Width, 80), XStringFormats.Center);
+                            gfx.DrawImage(xImage, 40, 10, xImage.Width - 260, xImage.Height / 3);
                             font = new XFont("Verdana", 18, XFontStyle.Italic);
-                            gfx.DrawString("List Of Employees", font, XBrushes.Black, new XRect(0, 0, page.Width, 120), XStringFormats.Center);
+                            gfx.DrawString("List Of Clients", font, XBrushes.Black, new XRect(0, 0, page.Width, 220), XStringFormats.Center);
                             font = new XFont("Verdana", 10, XFontStyle.Italic);
-                            gfx.DrawString(DateTime.Today.Date.ToString(), font, XBrushes.Black, new XRect(0, 0, 200, 200), XStringFormats.Center);
+                            gfx.DrawString("As of " + DateTime.Today.Date.ToString().Split(' ')[0], font, XBrushes.Black, new XRect(0, 0, page.Width, 250), XStringFormats.Center);
                             //ColumnHeader Start
                             font = new XFont("Verdana", 10, XFontStyle.Bold);
                             gfx.DrawString("Name", font, XBrushes.Black, new XRect(0, 0, 200, 250), XStringFormats.Center);
@@ -875,7 +881,19 @@ namespace LoanManagement.Desktop
                     }
                 }
 
-                const string filename = "Employees.pdf";
+                //Footer Start
+                font = new XFont("Verdana", 10, XFontStyle.Italic);
+                string user = "";
+                using (var ctx = new iContext())
+                {
+                    var usr = ctx.Employees.Find(UserID);
+                    user = usr.LastName + ", " + usr.FirstName + " " + usr.MI + " " + usr.Suffix;
+                }
+                gfx.DrawString("Prepared By: " + user, font, XBrushes.Black, new XRect(0, 0, 200, 1150), XStringFormats.Center);
+                //Footer End
+                
+
+                const string filename = "Clients.pdf";
                 document.Save(filename);
                 Process.Start(filename);
             }
@@ -895,26 +913,30 @@ namespace LoanManagement.Desktop
 
                 PdfPage page = document.AddPage();
                 page.Orientation = PageOrientation.Landscape;
+                String imagePath = AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\GFC.jpg";
+                XImage xImage = XImage.FromFile(imagePath);
                 XGraphics gfx = XGraphics.FromPdfPage(page);
                 XFont font = new XFont("Verdana", 20, XFontStyle.BoldItalic);
                 //Header Start
-                gfx.DrawString("Guahan Financing Corporation", font, XBrushes.Black, new XRect(0, 0, page.Width, 80), XStringFormats.Center);
+                //gfx.DrawString("Guahan Financing Corporation", font, XBrushes.Black, new XRect(0, 0, page.Width, 80), XStringFormats.Center);
+                //System.Windows.MessageBox.Show(xImage.Width.ToString());
+                gfx.DrawImage(xImage, 40, 10, xImage.Width - 260, xImage.Height / 3);
                 font = new XFont("Verdana", 18, XFontStyle.Italic);
-                gfx.DrawString("List Of Services", font, XBrushes.Black, new XRect(0, 0, page.Width, 120), XStringFormats.Center);
+                gfx.DrawString("List Of Services", font, XBrushes.Black, new XRect(0, 0, page.Width, 220), XStringFormats.Center);
                 font = new XFont("Verdana", 10, XFontStyle.Italic);
-                gfx.DrawString(DateTime.Today.Date.ToString(), font, XBrushes.Black, new XRect(0, 0, 200, 200), XStringFormats.Center);
+                gfx.DrawString("As of " + DateTime.Today.Date.ToString().Split(' ')[0], font, XBrushes.Black, new XRect(0, 0, page.Width, 250), XStringFormats.Center);
                 //Header End
 
                 //ColumnHeader Start
                 font = new XFont("Verdana", 10, XFontStyle.Bold);
-                gfx.DrawString("Service Name", font, XBrushes.Black, new XRect(0, 0, 200, 250), XStringFormats.Center);
-                gfx.DrawString("Type", font, XBrushes.Black, new XRect(0, 0, 450, 250), XStringFormats.Center);
-                gfx.DrawString("Department", font, XBrushes.Black, new XRect(0, 0, 650, 250), XStringFormats.Center);
-                gfx.DrawString("Interest %", font, XBrushes.Black, new XRect(0, 0, 850, 250), XStringFormats.Center);
-                gfx.DrawString("Commission %", font, XBrushes.Black, new XRect(0, 0, 1050, 250), XStringFormats.Center);
+                gfx.DrawString("Service Name", font, XBrushes.Black, new XRect(0, 0, 200, 350), XStringFormats.Center);
+                gfx.DrawString("Type", font, XBrushes.Black, new XRect(0, 0, 450, 350), XStringFormats.Center);
+                gfx.DrawString("Department", font, XBrushes.Black, new XRect(0, 0, 650, 350), XStringFormats.Center);
+                gfx.DrawString("Interest %", font, XBrushes.Black, new XRect(0, 0, 850, 350), XStringFormats.Center);
+                gfx.DrawString("Commission %", font, XBrushes.Black, new XRect(0, 0, 1050, 350), XStringFormats.Center);
                 //ColumnHeader End
 
-                int n = 280;
+                int n = 380;
                 int p = 1;
                 font = new XFont("Verdana", 10, XFontStyle.Regular);
                 using (var ctx = new iContext())
@@ -938,11 +960,11 @@ namespace LoanManagement.Desktop
                             page.Orientation = PageOrientation.Landscape;
                             gfx = XGraphics.FromPdfPage(page);
                             font = new XFont("Verdana", 20, XFontStyle.BoldItalic);
-                            gfx.DrawString("Guahan Financing Corporation", font, XBrushes.Black, new XRect(0, 0, page.Width, 80), XStringFormats.Center);
+                            gfx.DrawImage(xImage, 40, 10, xImage.Width - 260, xImage.Height / 3);
                             font = new XFont("Verdana", 18, XFontStyle.Italic);
-                            gfx.DrawString("List Of Services", font, XBrushes.Black, new XRect(0, 0, page.Width, 120), XStringFormats.Center);
+                            gfx.DrawString("List Of Services", font, XBrushes.Black, new XRect(0, 0, page.Width, 220), XStringFormats.Center);
                             font = new XFont("Verdana", 10, XFontStyle.Italic);
-                            gfx.DrawString(DateTime.Today.Date.ToString(), font, XBrushes.Black, new XRect(0, 0, 200, 200), XStringFormats.Center);
+                            gfx.DrawString("As of " + DateTime.Today.Date.ToString().Split(' ')[0], font, XBrushes.Black, new XRect(0, 0, page.Width, 250), XStringFormats.Center);
                             //ColumnHeader Start
                             gfx.DrawString("Service Name", font, XBrushes.Black, new XRect(0, 0, 200, 250), XStringFormats.Center);
                             gfx.DrawString("Type", font, XBrushes.Black, new XRect(0, 0, 450, 250), XStringFormats.Center);
@@ -961,7 +983,16 @@ namespace LoanManagement.Desktop
                 }
 
 
-
+                //Footer Start
+                font = new XFont("Verdana", 10, XFontStyle.Italic);
+                string user = "";
+                using (var ctx = new iContext())
+                {
+                    var usr = ctx.Employees.Find(UserID);
+                    user = usr.LastName + ", " + usr.FirstName + " " + usr.MI + " " + usr.Suffix;
+                }
+                gfx.DrawString("Prepared By: " + user, font, XBrushes.Black, new XRect(0, 0, 200, 1150), XStringFormats.Center);
+                //Footer End
 
                 const string filename = "Services.pdf";
                 document.Save(filename);
@@ -983,26 +1014,31 @@ namespace LoanManagement.Desktop
 
                 PdfPage page = document.AddPage();
                 page.Orientation = PageOrientation.Landscape;
+                String imagePath = AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\GFC.jpg";
+                XImage xImage = XImage.FromFile(imagePath);
                 XGraphics gfx = XGraphics.FromPdfPage(page);
                 XFont font = new XFont("Verdana", 20, XFontStyle.BoldItalic);
                 //Header Start
-                gfx.DrawString("Guahan Financing Corporation", font, XBrushes.Black, new XRect(0, 0, page.Width, 80), XStringFormats.Center);
+                //gfx.DrawString("Guahan Financing Corporation", font, XBrushes.Black, new XRect(0, 0, page.Width, 80), XStringFormats.Center);
+                //System.Windows.MessageBox.Show(xImage.Width.ToString());
+                gfx.DrawImage(xImage, 40, 10, xImage.Width - 260, xImage.Height / 3);
                 font = new XFont("Verdana", 18, XFontStyle.Italic);
-                gfx.DrawString("List Of Employees", font, XBrushes.Black, new XRect(0, 0, page.Width, 120), XStringFormats.Center);
+                gfx.DrawString("List Of Employees", font, XBrushes.Black, new XRect(0, 0, page.Width, 220), XStringFormats.Center);
                 font = new XFont("Verdana", 10, XFontStyle.Italic);
-                gfx.DrawString(DateTime.Today.Date.ToString(), font, XBrushes.Black, new XRect(0, 0, 200, 200), XStringFormats.Center);
+                gfx.DrawString("As of " + DateTime.Today.Date.ToString().Split(' ')[0], font, XBrushes.Black, new XRect(0, 0, page.Width, 250), XStringFormats.Center);
+                //Header EndDateTime.Today.Date.ToString(), font, XBrushes.Black, new XRect(0, 0, 200, 200), XStringFormats.Center);
                 //Header End
 
                 //ColumnHeader Start
                 font = new XFont("Verdana", 10, XFontStyle.Bold);
-                gfx.DrawString("Name", font, XBrushes.Black, new XRect(0, 0, 180, 250), XStringFormats.Center);
-                gfx.DrawString("Position", font, XBrushes.Black, new XRect(0, 0, 400, 250), XStringFormats.Center);
-                gfx.DrawString("Department", font, XBrushes.Black, new XRect(0, 0, 600, 250), XStringFormats.Center);
-                gfx.DrawString("Email", font, XBrushes.Black, new XRect(0, 0, 830, 250), XStringFormats.Center);
-                gfx.DrawString("Contact", font, XBrushes.Black, new XRect(0, 0, 1050, 250), XStringFormats.Center);
+                gfx.DrawString("Name", font, XBrushes.Black, new XRect(0, 0, 180, 350), XStringFormats.Center);
+                gfx.DrawString("Position", font, XBrushes.Black, new XRect(0, 0, 400, 350), XStringFormats.Center);
+                gfx.DrawString("Department", font, XBrushes.Black, new XRect(0, 0, 600, 350), XStringFormats.Center);
+                gfx.DrawString("Email", font, XBrushes.Black, new XRect(0, 0, 830, 350), XStringFormats.Center);
+                gfx.DrawString("Contact", font, XBrushes.Black, new XRect(0, 0, 1050, 350), XStringFormats.Center);
                 //ColumnHeader End
 
-                int n = 280;
+                int n = 380;
                 int p = 1;
                 font = new XFont("Verdana", 10, XFontStyle.Regular);
                 using (var ctx = new iContext())
@@ -1032,11 +1068,11 @@ namespace LoanManagement.Desktop
                             page.Orientation = PageOrientation.Landscape;
                             gfx = XGraphics.FromPdfPage(page);
                             font = new XFont("Verdana", 20, XFontStyle.BoldItalic);
-                            gfx.DrawString("Guahan Financing Corporation", font, XBrushes.Black, new XRect(0, 0, page.Width, 80), XStringFormats.Center);
+                            gfx.DrawImage(xImage, 40, 10, xImage.Width - 260, xImage.Height / 3);
                             font = new XFont("Verdana", 18, XFontStyle.Italic);
-                            gfx.DrawString("List Of Employees", font, XBrushes.Black, new XRect(0, 0, page.Width, 120), XStringFormats.Center);
+                            gfx.DrawString("List Of Employees", font, XBrushes.Black, new XRect(0, 0, page.Width, 220), XStringFormats.Center);
                             font = new XFont("Verdana", 10, XFontStyle.Italic);
-                            gfx.DrawString(DateTime.Today.Date.ToString(), font, XBrushes.Black, new XRect(0, 0, 200, 200), XStringFormats.Center);
+                            gfx.DrawString("As of " + DateTime.Today.Date.ToString().Split(' ')[0], font, XBrushes.Black, new XRect(0, 0, page.Width, 250), XStringFormats.Center);
                             //ColumnHeader Start
                             font = new XFont("Verdana", 10, XFontStyle.Bold);
                             gfx.DrawString("Name", font, XBrushes.Black, new XRect(0, 0, 180, 250), XStringFormats.Center);
@@ -1054,6 +1090,17 @@ namespace LoanManagement.Desktop
                         gfx.DrawString("Page " + p.ToString(), font, XBrushes.Black, new XRect(0, 0, 1500, 1150), XStringFormats.Center);
                     }
                 }
+
+                //Footer Start
+                font = new XFont("Verdana", 10, XFontStyle.Italic);
+                string user = "";
+                using (var ctx = new iContext())
+                {
+                    var usr = ctx.Employees.Find(UserID);
+                    user = usr.LastName + ", " + usr.FirstName + " " + usr.MI + " " + usr.Suffix;
+                }
+                gfx.DrawString("Prepared By: " + user, font, XBrushes.Black, new XRect(0, 0, 200, 1150), XStringFormats.Center);
+                //Footer End
 
                 const string filename = "Employees.pdf";
                 document.Save(filename);
@@ -1075,24 +1122,28 @@ namespace LoanManagement.Desktop
 
                 PdfPage page = document.AddPage();
                 page.Orientation = PageOrientation.Landscape;
+                String imagePath = AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\GFC.jpg";
+                XImage xImage = XImage.FromFile(imagePath);
                 XGraphics gfx = XGraphics.FromPdfPage(page);
                 XFont font = new XFont("Verdana", 20, XFontStyle.BoldItalic);
                 //Header Start
-                gfx.DrawString("Guahan Financing Corporation", font, XBrushes.Black, new XRect(0, 0, page.Width, 80), XStringFormats.Center);
+                //gfx.DrawString("Guahan Financing Corporation", font, XBrushes.Black, new XRect(0, 0, page.Width, 80), XStringFormats.Center);
+                //System.Windows.MessageBox.Show(xImage.Width.ToString());
+                gfx.DrawImage(xImage, 40, 10, xImage.Width - 260, xImage.Height / 3);
                 font = new XFont("Verdana", 18, XFontStyle.Italic);
-                gfx.DrawString("List Of Agents", font, XBrushes.Black, new XRect(0, 0, page.Width, 120), XStringFormats.Center);
+                gfx.DrawString("List Of Agents", font, XBrushes.Black, new XRect(0, 0, page.Width, 220), XStringFormats.Center);
                 font = new XFont("Verdana", 10, XFontStyle.Italic);
-                gfx.DrawString(DateTime.Today.Date.ToString(), font, XBrushes.Black, new XRect(0, 0, 200, 200), XStringFormats.Center);
+                gfx.DrawString("As of " + DateTime.Today.Date.ToString().Split(' ')[0], font, XBrushes.Black, new XRect(0, 0, page.Width, 250), XStringFormats.Center);
                 //Header End
 
                 //ColumnHeader Start
                 font = new XFont("Verdana", 10, XFontStyle.Bold);
-                gfx.DrawString("Name", font, XBrushes.Black, new XRect(0, 0, 180, 250), XStringFormats.Center);
-                gfx.DrawString("Email", font, XBrushes.Black, new XRect(0, 0, 400, 250), XStringFormats.Center);
-                gfx.DrawString("Contact", font, XBrushes.Black, new XRect(0, 0, 600, 250), XStringFormats.Center);
+                gfx.DrawString("Name", font, XBrushes.Black, new XRect(0, 0, 180, 350), XStringFormats.Center);
+                gfx.DrawString("Email", font, XBrushes.Black, new XRect(0, 0, 400, 350), XStringFormats.Center);
+                gfx.DrawString("Contact", font, XBrushes.Black, new XRect(0, 0, 600, 350), XStringFormats.Center);
                 //ColumnHeader End
 
-                int n = 280;
+                int n = 380;
                 int p = 1;
                 font = new XFont("Verdana", 10, XFontStyle.Regular);
                 using (var ctx = new iContext())
@@ -1115,16 +1166,16 @@ namespace LoanManagement.Desktop
                         n += 30;
                         if (n >= 1150)
                         {
-                            gfx.DrawString("Page " + p.ToString(), font, XBrushes.Black, new XRect(0, 0, 1150, 1500), XStringFormats.Center);
+                            gfx.DrawString("Page " + p.ToString(), font, XBrushes.Black, new XRect(0, 0, 1500, 1150), XStringFormats.Center);
                             page = document.AddPage();
                             page.Orientation = PageOrientation.Landscape;
                             gfx = XGraphics.FromPdfPage(page);
                             font = new XFont("Verdana", 20, XFontStyle.BoldItalic);
-                            gfx.DrawString("Guahan Financing Corporation", font, XBrushes.Black, new XRect(0, 0, page.Width, 80), XStringFormats.Center);
+                            gfx.DrawImage(xImage, 40, 10, xImage.Width - 260, xImage.Height / 3);
                             font = new XFont("Verdana", 18, XFontStyle.Italic);
-                            gfx.DrawString("List Of Employees", font, XBrushes.Black, new XRect(0, 0, page.Width, 120), XStringFormats.Center);
+                            gfx.DrawString("List Of Agents", font, XBrushes.Black, new XRect(0, 0, page.Width, 220), XStringFormats.Center);
                             font = new XFont("Verdana", 10, XFontStyle.Italic);
-                            gfx.DrawString(DateTime.Today.Date.ToString(), font, XBrushes.Black, new XRect(0, 0, 200, 200), XStringFormats.Center);
+                            gfx.DrawString("As of " + DateTime.Today.Date.ToString().Split(' ')[0], font, XBrushes.Black, new XRect(0, 0, page.Width, 250), XStringFormats.Center);
                             //ColumnHeader Start
                             font = new XFont("Verdana", 10, XFontStyle.Bold);
 
@@ -1135,9 +1186,20 @@ namespace LoanManagement.Desktop
                     }
                     if (n < 1150)
                     {
-                        gfx.DrawString("Page " + p.ToString(), font, XBrushes.Black, new XRect(0, 0, 1000, 1150), XStringFormats.Center);
+                        gfx.DrawString("Page " + p.ToString(), font, XBrushes.Black, new XRect(0, 0, 1500, 1150), XStringFormats.Center);
                     }
                 }
+
+                //Footer Start
+                font = new XFont("Verdana", 10, XFontStyle.Italic);
+                string user = "";
+                using (var ctx = new iContext())
+                {
+                    var usr = ctx.Employees.Find(UserID);
+                    user = usr.LastName + ", " + usr.FirstName + " " + usr.MI + " " + usr.Suffix;
+                }
+                gfx.DrawString("Prepared By: " + user, font, XBrushes.Black, new XRect(0, 0, 200, 1150), XStringFormats.Center);
+                //Footer End
 
                 const string filename = "Agents.pdf";
                 document.Save(filename);

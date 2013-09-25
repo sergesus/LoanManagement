@@ -204,5 +204,32 @@ namespace LoanManagement.Desktop
                 return;
             }
         }
+
+        private void dgClient_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                using (var ctx = new iContext())
+                {
+                    img.Visibility = Visibility.Visible;
+                    var clt = ctx.Clients.Find(Convert.ToInt32(getRow(dgClient, 0)));
+                    byte[] imageArr;
+                    imageArr = clt.Photo;
+                    BitmapImage bi = new BitmapImage();
+                    bi.BeginInit();
+                    bi.CreateOptions = BitmapCreateOptions.None;
+                    bi.CacheOption = BitmapCacheOption.Default;
+                    bi.StreamSource = new MemoryStream(imageArr);
+                    bi.EndInit();
+                    img.Source = bi;
+                    lblName.Content = clt.FirstName + " " + clt.MiddleName + " " + clt.LastName + " " + clt.Suffix;
+                }
+            }
+            catch (Exception ex)
+            {
+                //System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
     }
 }

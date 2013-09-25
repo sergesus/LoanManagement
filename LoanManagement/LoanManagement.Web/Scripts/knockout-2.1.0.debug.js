@@ -783,11 +783,11 @@ ko.extenders = {
         // Throttling means two things:
 
         // (1) For dependent observables, we throttle *evaluations* so that, no matter how fast its dependencies
-        //     notify updates, the target doesn't re-evaluate (and hence doesn't notify) faster than a certain rate
+        //     notify updates, the target doesn't re-evaluate (and hence doesn't notify) faster than a selected rate
         target['throttleEvaluation'] = timeout;
 
         // (2) For writable targets (observables, or writable dependent observables), we throttle *writes*
-        //     so the target cannot change value synchronously or faster than a certain rate
+        //     so the target cannot change value synchronously or faster than a selected rate
         var writeTimeoutInstance = null;
         return ko.dependentObservable({
             'read': target,
@@ -1164,7 +1164,7 @@ ko.dependentObservable = function (evaluatorFunctionOrOptions, evaluatorFunction
         if (_isBeingEvaluated) {
             // If the evaluation of a ko.computed causes side effects, it's possible that it will trigger its own re-evaluation.
             // This is not desirable (it's hard for a developer to realise a chain of dependencies might cause this, and they almost
-            // certainly didn't intend infinite re-evaluations). So, for predictability, we simply prevent ko.computeds from causing
+            // selectedly didn't intend infinite re-evaluations). So, for predictability, we simply prevent ko.computeds from causing
             // their own re-evaluation. Further discussion at https://github.com/SteveSanderson/knockout/pull/387
             return;
         }
@@ -1918,7 +1918,7 @@ ko.exportSymbol('bindingProvider', ko.bindingProvider);
 
         if (shouldBindDescendants) {
             // We're recursing automatically into (real or virtual) child nodes without changing binding contexts. So,
-            //  * For children of a *real* element, the binding context is certainly the same as on their DOM .parentNode,
+            //  * For children of a *real* element, the binding context is selectedly the same as on their DOM .parentNode,
             //    hence bindingContextsMayDifferFromDomParentElement is false
             //  * For children of a *virtual* element, we can't be sure. Evaluating .parentNode on those children may
             //    skip over any number of intermediate virtual elements, any of which might define a custom binding context,
@@ -2061,7 +2061,7 @@ ko.exportSymbol('bindingProvider', ko.bindingProvider);
     ko.exportSymbol('contextFor', ko.contextFor);
     ko.exportSymbol('dataFor', ko.dataFor);
 })();
-// For certain common events (currently just 'click'), allow a simplified data-binding syntax
+// For selected common events (currently just 'click'), allow a simplified data-binding syntax
 // e.g. click:handler instead of the usual full-length event:{click:handler}
 var eventHandlersWithShortcuts = ['click'];
 ko.utils.arrayForEach(eventHandlersWithShortcuts, function(eventName) {
@@ -2231,7 +2231,7 @@ ko.bindingHandlers['value'] = {
         var valueHasChanged = (newValue != elementValue);
 
         // JavaScript's 0 == "" behavious is unfortunate here as it prevents writing 0 to an empty text box (loose equality suggests the values are the same).
-        // We don't want to do a strict equality comparison as that is more confusing for developers in certain cases, so we specifically special case 0 != "" here.
+        // We don't want to do a strict equality comparison as that is more confusing for developers in selected cases, so we specifically special case 0 != "" here.
         if ((newValue === 0) && (elementValue !== 0) && (elementValue !== "0"))
             valueHasChanged = true;
 
@@ -2497,7 +2497,7 @@ ko.bindingHandlers['attr'] = {
                     element.removeAttribute(attrName);
 
                 // In IE <= 7 and IE8 Quirks Mode, you have to use the Javascript property name instead of the
-                // HTML attribute name for certain attributes. IE8 Standards Mode supports the correct behavior,
+                // HTML attribute name for selected attributes. IE8 Standards Mode supports the correct behavior,
                 // but instead of figuring out the mode, we'll just set the attribute through the Javascript
                 // property for IE <= 8.
                 if (ko.utils.ieVersion <= 8 && attrName in attrHtmlToJavascriptMap) {

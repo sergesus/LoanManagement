@@ -30,7 +30,7 @@
             </DataGrid.Resources>
         </DataGrid>
         <Label Content="Principal Amount:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="414,49,0,0" Width="177" FontSize="16" Foreground="#CC48CB00" FontWeight="Bold" RenderTransformOrigin="1.107,0.71"/>
-        <TextBox x:Name="txtAmt" HorizontalAlignment="Left" Height="31" Margin="596,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="329" IsEnabled="False"/>
+        <TextBox x:Name="txtAmt" HorizontalAlignment="Left" Height="31" Margin="596,49,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="329" LostFocus="txtAmt_LostFocus"/>
         <Label Content="Generated SOA:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="415,85,0,0" Width="177" FontSize="16" Foreground="#CC48CB00" FontWeight="Bold"/>
         <Label x:Name="lbl1" Content="Max. Loanable Amt.:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="418,367,0,0" Width="173" FontSize="16" Foreground="#CC48CB00" FontWeight="Bold"/>
         <Label x:Name="lbl2" Content="Total Payment:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="418,403,0,0" Width="124" FontSize="16" Foreground="#CC48CB00" FontWeight="Bold"/>

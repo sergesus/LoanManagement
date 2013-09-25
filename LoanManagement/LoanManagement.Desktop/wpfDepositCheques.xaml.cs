@@ -66,12 +66,29 @@ namespace LoanManagement.Desktop
                         }
                     }
 
+                    var lons = from lo in ctx.Loans
+                               where lo.Status == "Released"
+                               select lo;
+
+                    foreach (var item in lons)
+                    {
+                        var ctr1 = ctx.FPaymentInfo.Where(x => x.LoanID == item.LoanID && x.PaymentStatus == "Cleared").Count();
+                        var ctr2 = ctx.FPaymentInfo.Where(x => x.LoanID == item.LoanID).Count();
+                        if (ctr1 == ctr2)
+                        {
+                            item.Status = "Paid";
+                            PaidLoan pl = new PaidLoan { LoanID = item.LoanID, DateFinished = DateTime.Today.Date };
+                            ctx.PaidLoans.Add(pl);
+                        }
+                    }
+
+
                     ctx.SaveChanges();
                 }
             }
             catch (Exception ex)
             {
-                //System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
         }

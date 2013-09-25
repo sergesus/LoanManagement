@@ -479,7 +479,7 @@ namespace LoanManagement.Desktop
                 myBrush.ImageSource = image.Source;
                 wdw1.Background = myBrush;
 
-                txtLName.Focus();
+                //txtLName.Focus();
                 //System.Windows.MessageBox.Show(cmbStatus.Text);
                 tbInfo.IsSelected = true;
                 if (cmbStatus.Text == "Married")
@@ -515,6 +515,19 @@ namespace LoanManagement.Desktop
                 {
                     using (var ctx = new iContext())
                     {
+                        var ctr = ctx.Loans.Where(x => x.ClientID == cId && x.Status == "Released").Count();
+                        if (ctr > 0)
+                        {
+                            System.Windows.MessageBox.Show("Only selected values be updated and Record cannot be deleted at this moment", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                            btnDel.IsEnabled = false;
+                            txtLName.IsEnabled = false;
+                            txtFName.IsEnabled = false;
+                            txtMName.IsEnabled = false;
+                            txtSuffix.IsEnabled = false;
+                            dtBDay.IsEnabled=false;
+                            cmbSex.IsEnabled = false;
+                        }
+
                         var clt = ctx.Clients.Find(cId);
                         txtLName.Text = clt.LastName;
                         txtFName.Text = clt.FirstName;

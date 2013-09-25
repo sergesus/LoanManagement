@@ -23,6 +23,8 @@ using System.Drawing.Imaging;
 using System.Drawing;
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
+using System.Net;
+using System.Net.Mail;
 
 
 namespace LoanManagement.Desktop
@@ -38,6 +40,87 @@ namespace LoanManagement.Desktop
             this.WindowStartupLocation = WindowStartupLocation.CenterScreen;
             this.ResizeMode = ResizeMode.NoResize;
             
+        }
+
+        private void remind()
+        {
+            try
+            {
+                using (var ctx = new iContext())
+                {
+                    DateTime dt = DateTime.Today.Date.AddDays(7);
+                    var lons = from lo in ctx.FPaymentInfo
+                               where lo.ChequeDueDate == dt && lo.PaymentStatus=="Pending"
+                               select lo;
+                    string contact = "";
+                    foreach (var item in lons)
+                    {
+                        var ctr = ctx.iTexts.Where(x => x.FPaymentInfoID == item.FPaymentInfoID).Count();
+                        if (ctr == 0)
+                        {
+                            
+                            var c1 = ctx.ClientContacts.Where(x => x.ClientID == item.Loan.ClientID).Count();
+                            if (c1 > 0)
+                            {
+                                var c2 = ctx.ClientContacts.Where(x => x.ClientID == item.Loan.ClientID && x.Primary == true).Count();
+                                if (c2 > 0)
+                                {
+                                    var con = ctx.ClientContacts.Where(x => x.ClientID == item.Loan.ClientID && x.Primary == true).First();
+                                    contact = con.Contact;
+                                }
+                                else
+                                {
+                                    var con = ctx.ClientContacts.Where(x => x.ClientID == item.Loan.ClientID).First();
+                                    contact = con.Contact;
+                                }
+
+                                MailMessage msg = new MailMessage();
+                                msg.To.Add(contact + "@m2m.ph");
+                                msg.From = new MailAddress("aldrinarciga@gmail.com"); //See the note afterwards...
+                                msg.Body = "We would like to inform you that your next payment with an amount of (Php " + item.Amount.ToString("N2") + ") is due next week, " + dt.ToString().Split(' ')[0] + ". \nKindly settle your accounts BEFORE the due date or you can request for a hold provided paying the holding fee of (Php " + (item.Amount * (item.Loan.Service.Holding / 100)).ToString("N2") + ") ON or BEFORE " + item.ChequeDueDate.AddDays(-3).ToString().Split(' ')[0] + ", thank you.\nFrom: Financing Department";
+                                SmtpClient smtp = new SmtpClient("smtp.gmail.com");
+                                smtp.EnableSsl = true;
+                                smtp.Port = 587;
+                                smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                                smtp.Credentials = new NetworkCredential("aldrinarciga@gmail.com", "312231212131");
+                                smtp.Send(msg);
+                                //MessageBox.Show("Message successfuly sent.");
+                                iText it = new iText { FPaymentInfoID = item.FPaymentInfoID };
+                                ctx.iTexts.Add(it);
+                            }
+                        }
+                    }
+                    ctx.SaveChanges();
+                }
+            }
+            catch(Exception ex)
+            {
+                 System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+        }
+
+        private void checkState()
+        {
+            using (var ctx = new iContext())
+            {
+                var st = ctx.State.Find(1);
+                if (st.iState > 2)
+                {
+                    System.Windows.MessageBox.Show("System is blocked temporarily. Please contact the administrator.");
+                    txtPassword.IsEnabled = false;
+                    txtUsername.IsEnabled = false;
+                    btnLogIn.IsEnabled = false;
+                    this.Focus();
+                }
+                else
+                {
+                    txtPassword.IsEnabled = !false;
+                    txtUsername.IsEnabled = !false;
+                    btnLogIn.IsEnabled = !false;
+                }
+            }
         }
 
         private void checkDue()
@@ -74,6 +157,23 @@ namespace LoanManagement.Desktop
                         }
                     }
 
+                    var lons = from lo in ctx.Loans
+                               where lo.Status == "Released"
+                               select lo;
+
+                    foreach (var item in lons)
+                    {
+                        var ctr1 = ctx.FPaymentInfo.Where(x => x.LoanID == item.LoanID && x.PaymentStatus == "Cleared").Count();
+                        var ctr2 = ctx.FPaymentInfo.Where(x => x.LoanID == item.LoanID).Count();
+                        if (ctr1 == ctr2)
+                        {
+                            item.Status = "Paid";
+                            PaidLoan pl = new PaidLoan { LoanID = item.LoanID, DateFinished = DateTime.Today.Date };
+                            ctx.PaidLoans.Add(pl);
+                        }
+                    }
+
+
                     ctx.SaveChanges();
                 }
             }
@@ -83,6 +183,7 @@ namespace LoanManagement.Desktop
                 return;
             }
         }
+        
 
 
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
@@ -91,6 +192,7 @@ namespace LoanManagement.Desktop
             {
                 //System.Windows.MessageBox.Show("Okay");
                 checkDue();
+                remind();
                 /*
                 using (var ctx = new iContext())
                 {
@@ -124,6 +226,7 @@ namespace LoanManagement.Desktop
                 myBrush.ImageSource = image.Source;
                 //Grid grid = new Grid();
                 wdw1.Background = myBrush;
+                checkState();
 
             }
             catch (Exception ex)
@@ -214,6 +317,10 @@ namespace LoanManagement.Desktop
                         //sc.Reports = Convert.ToBoolean(cReports.IsChecked);
                         wnd.grdStatistic.IsEnabled = sc.Statistics;
                         //sc.Scopes = Convert.ToBoolean(cUserScopes.IsChecked);
+
+                        var st = ctx.State.Find(1);
+                        st.iState = 0;
+                        ctx.SaveChanges();
                         
                         this.Close();
                         wnd.Show();
@@ -222,6 +329,12 @@ namespace LoanManagement.Desktop
                     else
                     {
                         System.Windows.MessageBox.Show("Username/Password is incorrect", "Error");
+                        txtPassword.Password = "";
+                        txtUsername.Text = "";
+                        var st = ctx.State.Find(1);
+                        st.iState = st.iState + 1;
+                        ctx.SaveChanges();
+                        checkState();
                         pr1.IsActive = !true;
                     }
                 }
@@ -268,6 +381,25 @@ namespace LoanManagement.Desktop
             {
                 //System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
+            }
+        }
+
+        private void wdw1_KeyUp(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            int ascii = Convert.ToInt16(e.Key);
+            if (ascii == 2)
+            {
+                using (var ctx = new iContext())
+                {
+                    var st = ctx.State.Find(1);
+                    if (st.iState > 2)
+                    {
+                        wpfActivate frm = new wpfActivate();
+                        frm.Show();
+                        this.Close();
+                    }
+                }
+               
             }
         }
     }

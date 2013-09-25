@@ -106,10 +106,11 @@ namespace LoanManagement.Desktop
 
                         var lon = ctx.Loans.Find(lId);
                         cId = lon.ClientID;
-                        cmbServices.IsEnabled = !true;
+                        cmbServices.Items.Add(lon.Service.Name);
                         cmbServices.Text = lon.Service.Name;
+                        cmbServices.IsEnabled = !true;
                         txtCat.Text = lon.Service.Type;
-                        cmbMode.Text = lon.Mode;
+                        servId = lon.ServiceID;
                         var la = ctx.LoanApplications.Where(x => x.LoanID == lId).First();
                         txtAmt.Text = la.AmountApplied.ToString();
                         txtTerm.Text = lon.Term.ToString();
@@ -122,6 +123,25 @@ namespace LoanManagement.Desktop
                             grdAgent.Visibility = Visibility.Visible;
                             cboxAgent.IsChecked = true;
                         }
+
+                        cmbMode.Items.Clear();
+                        
+
+                        if (lon.Service.Department == "Financing")
+                        {
+                            cmbMode.Items.Add(new ComboBoxItem { Content = "Monthly" });
+                            cmbMode.Items.Add(new ComboBoxItem { Content = "Semi-Monthly" });
+                            cmbMode.Items.Add(new ComboBoxItem { Content = "One-Time Payment" });
+                        }
+                        else if (lon.Service.Department == "Micro Business")
+                        {
+                            cmbMode.Items.Add(new ComboBoxItem { Content = "Semi-Monthly" });
+                            cmbMode.Items.Add(new ComboBoxItem { Content = "Weekly" });
+                            cmbMode.Items.Add(new ComboBoxItem { Content = "Daily" });
+                        }
+                        cmbMode.Text = lon.Mode;
+
+                        //cmbMode.SelectedIndex = 0;
 
                         if (lon.CI != 0)
                         {
@@ -157,7 +177,7 @@ namespace LoanManagement.Desktop
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                //System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
         }
@@ -290,7 +310,7 @@ namespace LoanManagement.Desktop
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                //System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
         }
@@ -436,6 +456,23 @@ namespace LoanManagement.Desktop
         {
             try
             {
+                if (txtCat.Text == "Non Collateral")
+                {
+                    using (var ctx = new iContext())
+                    {
+                        var ictr = ctx.Loans.Where(x => x.ClientID == cId && x.Status == "Released" && x.Service.Type == "Non Collateral" && x.Service.Department == iDept).Count();
+                        if (ictr > 0)
+                        {
+                            System.Windows.MessageBox.Show("Client has an existing Non-Collateral loan. The client can only apply for collateral loan.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                            return;
+                        }
+                    }
+                    if (string.IsNullOrWhiteSpace(txtID.Text))
+                    {
+                        System.Windows.MessageBox.Show("Client Must have co-borrower", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                        return;
+                    }
+                }
                 if (cmbServices.Text == "" || cmbMode.Text == "" || txtAmt.Text == "" || txtTerm.Text == "")
                 {
                     System.Windows.MessageBox.Show("Please complete the required information");
@@ -450,7 +487,7 @@ namespace LoanManagement.Desktop
                 using (var ctx = new iContext())
                 {
                     var ser = ctx.Services.Find(servId);
-                    if (ser.Type == "Non-Collateral" && txtID.Text == "")
+                    if (ser.Type == "Non Collateral" && txtID.Text == "")
                     {
                         System.Windows.MessageBox.Show("Please select the Co-Borrower");
                         return;

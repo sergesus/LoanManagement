@@ -28,7 +28,7 @@
                 <ColumnDefinition Width="629*"/>
                 <ColumnDefinition Width="21*"/>
             </Grid.ColumnDefinitions>
-            <DataGrid x:Name="dgClient" HorizontalAlignment="Left" Height="323" Margin="344,10,0,0" VerticalAlignment="Top" Width="682" CanUserAddRows="False" CanUserDeleteRows="False" SelectionChanged="dgClient_SelectionChanged" FontSize="18" GridLinesVisibility="None" Grid.ColumnSpan="3" BorderBrush="#CC48CB00" BorderThickness="2" Background="#7FF0F0F0">
+            <DataGrid x:Name="dgClient" HorizontalAlignment="Left" Height="323" Margin="344,10,0,0" VerticalAlignment="Top" Width="682" CanUserAddRows="False" CanUserDeleteRows="False" SelectionChanged="dgClient_SelectionChanged" FontSize="18" GridLinesVisibility="None" Grid.ColumnSpan="3" BorderBrush="#CC48CB00" BorderThickness="2" Background="#7FF0F0F0" MouseDown="dgClient_MouseDown">
                 <DataGrid.Resources>
                     <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" 
         			Color="#CC48CB00"/>
