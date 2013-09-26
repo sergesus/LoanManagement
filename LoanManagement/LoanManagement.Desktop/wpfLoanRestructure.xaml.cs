@@ -29,6 +29,7 @@ namespace LoanManagement.Desktop
         public int myNum;
         public TextBox[] textarray;
         public bool cont = false;
+        public int UserID;
         public wpfLoanRestructure()
         {
             InitializeComponent();
@@ -68,6 +69,12 @@ namespace LoanManagement.Desktop
         {
             try
             {
+                if (Convert.ToInt16(txtTerm.Text) < 1)
+                {
+                    System.Windows.MessageBox.Show("Incorrect Format for term");
+                    return;
+                }
+
                 using (var ctx = new iContext())
                 {
                     myNum = 0;
@@ -100,25 +107,27 @@ namespace LoanManagement.Desktop
                     double Interval = 0;
                     DateInterval dInt = DateInterval.Month;
                     Double Remaining = WithInt;
-                    if (cmbMode.Text == "Monthly")
+                    ComboBoxItem typeItem = (ComboBoxItem)cmbMode.SelectedItem;
+                    string value = typeItem.Content.ToString();
+                    if (value == "Monthly")
                     {
                         Interval = 1;
                         dInt = DateInterval.Month;
                         Payment = WithInt / Convert.ToInt32(txtTerm.Text);
                     }
-                    else if (cmbMode.Text == "Semi-Monthly")
+                    else if (value == "Semi-Monthly")
                     {
                         Interval = 15;
                         dInt = DateInterval.Day;
                         Payment = WithInt / (Convert.ToInt32(txtTerm.Text) * 2);
                     }
-                    else if (cmbMode.Text == "Weekly")
+                    else if (value == "Weekly")
                     {
                         Interval = 7;
                         dInt = DateInterval.Day;
                         Payment = WithInt / (Convert.ToInt32(txtTerm.Text) * 4);
                     }
-                    else if (cmbMode.Text == "Daily")
+                    else if (value == "Daily")
                     {
                         Interval = 1;
                         dInt = DateInterval.Day;
@@ -282,6 +291,68 @@ namespace LoanManagement.Desktop
         {
             try
             {
+                double max = 0;
+                double min = 0;
+                using (var ctx = new iContext())
+                {
+                    var lon = ctx.Loans.Find(lId);
+                    var ser = ctx.Services.Find(lon.ServiceID);
+                    max = ser.MaxTerm;
+                    min = ser.MinTerm;
+
+
+                    if (Convert.ToDouble(txtTerm.Text) > max || Convert.ToDouble(txtTerm.Text) < min)
+                    {
+                        System.Windows.MessageBox.Show("Term must not be greater than the maximum term(" + ser.MaxTerm + " mo.) OR less than the minimum term(" + ser.MinTerm + " mo.)", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
+                    max = ser.MaxValue;
+                    min = ser.MinValue;
+
+                    if (Convert.ToDouble(txtAmt.Text) > max || Convert.ToDouble(txtAmt.Text) < min)
+                    {
+                        System.Windows.MessageBox.Show("Principal amount must not be greater than the maximum loanable amount OR less than the minimum loanable amount", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+                }
+
+                if (Convert.ToDouble(txtAmt.Text) > Convert.ToDouble(lblPrincipal.Content))
+                {
+                    MessageBox.Show("Principal amount must not be greater than the maximum loanable amount", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+                foreach (var i in textarray)
+                {
+                    if (i.Text.Length != 6)
+                    {
+                        System.Windows.MessageBox.Show("Please input all cheque numbers");
+                        return;
+                    }
+                    bool err;
+                    int res;
+                    String str = i.Text;
+                    err = int.TryParse(str, out res);
+                    if (err == false)
+                    {
+                        System.Windows.MessageBox.Show("Please input the correct format for cheque numbers(Strictly numbers only.)");
+                        return;
+                    }
+                }
+
+                for (int x = 0; x < textarray.Length; x++)
+                {
+                    for (int y = x + 1; y < textarray.Length; y++)
+                    {
+                        if (textarray[x].Text == textarray[y].Text)
+                        {
+                            System.Windows.MessageBox.Show("No duplications of cheque numbers");
+                            return;
+                        }
+                    }
+                }
+
                 MessageBoxResult mr = MessageBox.Show("Sure?", "Question", MessageBoxButton.YesNo);
                 if (mr == MessageBoxResult.Yes)
                 {
@@ -327,6 +398,9 @@ namespace LoanManagement.Desktop
                             y++;
                         }
 
+                        AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Processed Restructure for Loan " + lId + "" };
+                        ctx.AuditTrails.Add(at);
+
                         ctx.Loans.Add(l);
                         ctx.ReleasedLoans.Add(rl);
                         ctx.SaveChanges();
@@ -342,7 +416,7 @@ namespace LoanManagement.Desktop
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Windows.MessageBox.Show("Incorrect Format on some Fields / Incomplete Input(s)", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
         }
@@ -355,6 +429,11 @@ namespace LoanManagement.Desktop
         private void cmbMode_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             refresh();
+        }
+
+        private void txtTerm_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }

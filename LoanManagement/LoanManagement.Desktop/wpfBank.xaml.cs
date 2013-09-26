@@ -24,6 +24,7 @@ namespace LoanManagement.Desktop
     public partial class wpfBranch : MetroWindow
     {
         public bool status;
+        public int UserID;
 
         public wpfBranch()
         {
@@ -98,6 +99,7 @@ namespace LoanManagement.Desktop
             {
                 wpfBranchInfo frm = new wpfBranchInfo();
                 frm.status = "Add";
+                frm.UserID = UserID;
                 frm.ShowDialog();
             }
             catch (Exception ex)
@@ -113,6 +115,7 @@ namespace LoanManagement.Desktop
             {
                 wpfBranchInfo frm = new wpfBranchInfo();
                 frm.status = "View";
+                frm.UserID = UserID;
                 frm.bId = Convert.ToInt32(getRow(dgBank, 0));
                 frm.txtDesc.Text = getRow(dgBank, 2);
                 frm.txtName.Text = getRow(dgBank, 1);

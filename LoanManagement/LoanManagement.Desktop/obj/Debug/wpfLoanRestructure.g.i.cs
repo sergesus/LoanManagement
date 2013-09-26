@@ -252,6 +252,12 @@ namespace LoanManagement.Desktop {
             
             #line default
             #line hidden
+            
+            #line 45 "..\..\wpfLoanRestructure.xaml"
+            this.txtTerm.TextChanged += new System.Windows.Controls.TextChangedEventHandler(this.txtTerm_TextChanged);
+            
+            #line default
+            #line hidden
             return;
             case 13:
             this.stck = ((System.Windows.Controls.StackPanel)(target));

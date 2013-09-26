@@ -24,6 +24,7 @@ namespace LoanManagement.Desktop
     public partial class wpfPaymentAdjustment : MetroWindow
     {
         public int lId;
+        public int UserID;
 
         public wpfPaymentAdjustment()
         {

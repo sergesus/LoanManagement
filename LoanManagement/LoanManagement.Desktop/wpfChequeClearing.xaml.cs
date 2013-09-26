@@ -23,6 +23,7 @@ namespace LoanManagement.Desktop
     /// </summary>
     public partial class wpfChequeClearing : MetroWindow
     {
+        public int UserID;
         public wpfChequeClearing()
         {
             InitializeComponent();
@@ -201,6 +202,9 @@ namespace LoanManagement.Desktop
                         ClearedCheque cc = new ClearedCheque { FPaymentInfoID = item.FPaymentInfoID, DateCleared = DateTime.Today.Date };
                         ctx.ClearedCheques.Add(cc);
                     }
+                    AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Cleared Cheques" };
+                    ctx.AuditTrails.Add(at);
+
                     ctx.SaveChanges();
                     MessageBox.Show("Okay");
                     this.Close();

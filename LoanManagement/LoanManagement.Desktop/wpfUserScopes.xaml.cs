@@ -24,7 +24,7 @@ namespace LoanManagement.Desktop
     public partial class wpfUserScopes : MetroWindow
     {
         public int ID;
-
+        public int UserID;
         public wpfUserScopes()
         {
             InitializeComponent();

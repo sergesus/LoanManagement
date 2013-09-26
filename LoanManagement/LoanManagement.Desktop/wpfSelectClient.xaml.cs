@@ -25,6 +25,7 @@ namespace LoanManagement.Desktop
     {
         public string status;
         public string iDept;
+        public int UserID;
 
         public wpfSelectClient()
         {
@@ -126,6 +127,7 @@ namespace LoanManagement.Desktop
                     frm.status = "Add";
                     frm.btnContinue.Content = "Continue";
                     frm.iDept = iDept;
+                    frm.UserID = UserID;
                     this.Close();
                     frm.ShowDialog();
                     //this.Close();

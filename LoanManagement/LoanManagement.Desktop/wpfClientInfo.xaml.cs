@@ -36,6 +36,7 @@ namespace LoanManagement.Desktop
         string selectedFileName;
         public bool isChanged = false;
         public bool error;
+        public int UserID;
 
         public wpfClientInfo()
         {
@@ -1990,6 +1991,9 @@ namespace LoanManagement.Desktop
                             ctx.Spouses.Add(sps);
                         }
 
+                        AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Added new Client " + txtFName.Text + " " + txtMName.Text + " " + txtLName.Text + " " + txtSuffix.Text };
+                        ctx.AuditTrails.Add(at);
+
                         ctx.Clients.Add(clt);
                         ctx.SaveChanges();
                         System.Windows.MessageBox.Show("Client successfuly added");
@@ -2020,6 +2024,8 @@ namespace LoanManagement.Desktop
                         {
                             clt.Photo = ConvertImageToByteArray(selectedFileName);
                         }
+                        AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Updated Client " + txtFName.Text + " " + txtMName.Text + " " + txtLName.Text + " " + txtSuffix.Text };
+                        ctx.AuditTrails.Add(at);
                         ctx.SaveChanges();
                         System.Windows.MessageBox.Show("User Updated", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                         this.Close();

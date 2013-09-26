@@ -498,6 +498,7 @@ namespace LoanManagement.Desktop
             try
             {
                 wpfClient frm = new wpfClient();
+                frm.UserID = UserID;
                 frm.status = true;
                 frm.ShowDialog();
             }
@@ -513,6 +514,7 @@ namespace LoanManagement.Desktop
             try
             {
                 wpfServices frm = new wpfServices();
+                frm.UserID = UserID;
                 frm.status = true;
                 frm.ShowDialog();
             }
@@ -528,6 +530,7 @@ namespace LoanManagement.Desktop
             try
             {
                 wpfBranch frm = new wpfBranch();
+                frm.UserID = UserID;
                 frm.status = true;
                 frm.ShowDialog();
             }
@@ -543,6 +546,7 @@ namespace LoanManagement.Desktop
             try
             {
                 wpfEmployee frm = new wpfEmployee();
+                frm.UserID = UserID;
                 frm.status = true;
                 frm.ShowDialog();
             }
@@ -558,6 +562,7 @@ namespace LoanManagement.Desktop
             try
             {
                 wpfAgent frm = new wpfAgent();
+                frm.UserID = UserID;
                 frm.status = true;
                 frm.ShowDialog();
             }
@@ -574,6 +579,7 @@ namespace LoanManagement.Desktop
             {
                 wpfSelectApplication frm = new wpfSelectApplication();
                 frm.status = "Application";
+                frm.UserID = UserID;
                 frm.iDept = "Financing";
                 frm.ShowDialog();
             }
@@ -590,6 +596,7 @@ namespace LoanManagement.Desktop
             {
                 wpfSelectApplication frm = new wpfSelectApplication();
                 frm.status = "Approval";
+                frm.UserID = UserID;
                 frm.iDept = "Financing";
                 frm.ShowDialog();
             }
@@ -622,6 +629,7 @@ namespace LoanManagement.Desktop
             try
             {
                 wpfSelectPayment frm = new wpfSelectPayment();
+                frm.UserID = UserID;
                 frm.ShowDialog();
             }
             catch (Exception ex)
@@ -636,6 +644,7 @@ namespace LoanManagement.Desktop
             try
             {
                 wpfSelectClosed frm = new wpfSelectClosed();
+                frm.UserID = UserID;
                 frm.ShowDialog();
             }
             catch (Exception ex)
@@ -650,6 +659,7 @@ namespace LoanManagement.Desktop
             try
             {
                 wpfLoanSearch frm = new wpfLoanSearch();
+                frm.UserID = UserID;
                 frm.status = "Restructure";
                 frm.iDept = "Financing";
                 frm.ShowDialog();
@@ -667,6 +677,7 @@ namespace LoanManagement.Desktop
             {
                 wpfLoanSearch frm = new wpfLoanSearch();
                 frm.iDept = "Financing";
+                frm.UserID = UserID;
                 frm.status = "Adjustment";
                 frm.ShowDialog();
             }
@@ -1215,6 +1226,7 @@ namespace LoanManagement.Desktop
         private void btnPosition_Click(object sender, RoutedEventArgs e)
         {
             wpfPosition frm = new wpfPosition();
+            frm.UserID = UserID;
             frm.ShowDialog();
         }
 

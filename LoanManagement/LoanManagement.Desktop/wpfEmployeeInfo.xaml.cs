@@ -37,6 +37,7 @@ namespace LoanManagement.Desktop
         string selectedFileName;
         public bool isChanged = false;
         public bool cont = false;
+        public int UserID;
 
         public wpfEmployeeInfo()
         {
@@ -891,6 +892,9 @@ namespace LoanManagement.Desktop
                             EmployeeContact con = new EmployeeContact { Contact = item.Contact };
                             ctx.EmployeeContacts.Add(con);
                         }
+                        AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Added new Employee " + txtFName.Text + " " + txtMI.Text + " " + txtLName.Text + " " + txtSuffix.Text };
+                        ctx.AuditTrails.Add(at);
+
                         ctx.Employees.Add(emp);
                         ctx.SaveChanges();
                         System.Windows.MessageBox.Show("Added New Employee");
@@ -922,6 +926,8 @@ namespace LoanManagement.Desktop
                         {
                             emp.Photo = ConvertImageToByteArray(selectedFileName);
                         }
+                        AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Updated Employee " + txtFName.Text + " " + txtMI.Text + " " + txtLName.Text + " " + txtSuffix.Text };
+                        ctx.AuditTrails.Add(at);
                         ctx.SaveChanges();
                         System.Windows.MessageBox.Show("User Updated", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                         this.Close();

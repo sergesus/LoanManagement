@@ -66,6 +66,7 @@ namespace LoanManagement.Desktop
                 {
                     this.Close();
                     wpfSelectClient frm = new wpfSelectClient();
+                    frm.UserID = UserID;
                     frm.iDept = iDept;
                     frm.ShowDialog();
                 }
@@ -94,7 +95,8 @@ namespace LoanManagement.Desktop
                 if (status == "Application")
                 {
                     this.Close();
-                    wpfLoanSearch frm = new wpfLoanSearch();
+                    wpfLoanSearch frm = new wpfLoanSearch(); 
+                    frm.UserID = UserID;
                     frm.status = "Application";
                     frm.iDept = iDept;
                     frm.ShowDialog();
@@ -103,6 +105,7 @@ namespace LoanManagement.Desktop
                 {
                     this.Close();
                     wpfLoanSearch frm = new wpfLoanSearch();
+                    frm.UserID = UserID;
                     frm.status = "UApproval";
                     frm.iDept = iDept;
                     frm.ShowDialog();
@@ -111,6 +114,7 @@ namespace LoanManagement.Desktop
                 {
                     this.Close();
                     wpfLoanSearch frm = new wpfLoanSearch();
+                    frm.UserID = UserID;
                     frm.status = "UReleasing";
                     frm.UserID = UserID;
                     frm.iDept = iDept;

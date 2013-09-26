@@ -74,6 +74,7 @@ namespace LoanManagement.Desktop
                     textarray[ctr].Height = 25;
                     textarray[ctr].Width = 300;
                     textarray[ctr].FontSize = 16;
+                    textarray[ctr].MaxLength = 6;
                     sp[ctr] = new StackPanel();
                     sp[ctr].Width = 300;
                     sp[ctr].Height = 60;
@@ -95,6 +96,12 @@ namespace LoanManagement.Desktop
         {
             try
             {
+                if (Convert.ToInt16(txtTerm.Text) < 1)
+                {
+                    System.Windows.MessageBox.Show("Incorrect Format for term");
+                    return;
+                }
+
                 if (status == "Releasing")
                 {
                     using (var ctx = new iContext())
@@ -127,33 +134,36 @@ namespace LoanManagement.Desktop
                         double Interval = 0;
                         DateInterval dInt = DateInterval.Month;
                         Double Remaining = WithInt;
-                        if (cmbMode.Text == "Monthly")
+
+                        ComboBoxItem typeItem = (ComboBoxItem)cmbMode.SelectedItem;
+                        string value = typeItem.Content.ToString();
+                        if (value == "Monthly")
                         {
                             Interval = 1;
                             dInt = DateInterval.Month;
                             Payment = WithInt / Convert.ToInt32(txtTerm.Text);
                             lbl4.Content = "Monthly Payment";
                         }
-                        else if (cmbMode.Text == "Semi-Monthly")
+                        else if (value == "Semi-Monthly")
                         {
                             Interval = 15;
                             dInt = DateInterval.Day;
                             Payment = WithInt / (Convert.ToInt32(txtTerm.Text) * 2);
                             lbl4.Content = "Semi-Monthly Payment";
                         }
-                        else if (cmbMode.Text == "Weekly")
+                        else if (value == "Weekly")
                         {
                             Interval = 7;
                             dInt = DateInterval.Day;
                             Payment = WithInt / (Convert.ToInt32(txtTerm.Text) * 4);
                         }
-                        else if (cmbMode.Text == "Daily")
+                        else if (value == "Daily")
                         {
                             Interval = 1;
                             dInt = DateInterval.Day;
                             Payment = WithInt / ((Convert.ToInt32(txtTerm.Text) * 4) * 7);
                         }
-                        else if (cmbMode.Text == "One-Time Payment")
+                        else if (value == "One-Time Payment")
                         {
                             NetProceed = NetProceed - ((Convert.ToDouble(txtAmt.Text) * TotalInt));
                             lblProceed.Content = NetProceed.ToString("N2");
@@ -412,18 +422,23 @@ namespace LoanManagement.Desktop
                 {
                     font = new XFont("Verdana", 10, XFontStyle.Italic);
                     var lon = ctx.Loans.Find(lId);
-                    gfx.DrawString("Type Of Loan : "+ lon.Service.Name, font, XBrushes.Black, new XRect(0, 0, 250, 250), XStringFormats.Center);
-                    gfx.DrawString("Service Type : " + lon.Service.Type, font, XBrushes.Black, new XRect(0, 0, 250, 280), XStringFormats.Center);
-                    gfx.DrawString("Principal Amount : " + lon.ReleasedLoan.Principal.ToString("N2"), font, XBrushes.Black, new XRect(0, 0, 250, 310), XStringFormats.Center);
-                    gfx.DrawString("Monthly Payment : " + lon.ReleasedLoan.MonthlyPayment.ToString("N2"), font, XBrushes.Black, new XRect(0, 0, 250, 340), XStringFormats.Center);
-                    gfx.DrawString("Client: : " + lon.Client.LastName + ", " + lon.Client.FirstName + " " + lon.Client.MiddleName + " " + lon.Client.Suffix, font, XBrushes.Black, new XRect(0, 0, page.Width, 370), XStringFormats.Center);
-
-                    gfx.DrawString("Term : " + lon.Term, font, XBrushes.Black, new XRect(0, 0, 1300, 250), XStringFormats.Center);
+                    string str = "Client: : " + lon.Client.LastName + ", " + lon.Client.FirstName + " " + lon.Client.MiddleName + " " + lon.Client.Suffix
+                        + "\nType Of Loan : " + lon.Service.Name + "\nService Type : " + lon.Service.Type + "\nPrincipal Amount : " + lon.ReleasedLoan.Principal.ToString("N2")
+                        + "\nMonthly Payment : " + lon.ReleasedLoan.MonthlyPayment.ToString("N2");
+                    //System.Windows.MessageBox.Show(str);
+                    //gfx.DrawString(str, font, XBrushes.Black, new XRect(100,100,1000,248), XStringFormats.Center);
+                    gfx.DrawString("Client: : " + lon.Client.LastName + ", " + lon.Client.FirstName + " " + lon.Client.MiddleName + " " + lon.Client.Suffix, font, XBrushes.Black, new XRect(0, 0, 269, 250), XStringFormats.Center);
+                    gfx.DrawString("Type Of Loan : "+ lon.Service.Name, font, XBrushes.Black, new XRect(0, 0, 247, 280), XStringFormats.Center);
+                    gfx.DrawString("Service Type : " + lon.Service.Type, font, XBrushes.Black, new XRect(0, 0, 241, 310), XStringFormats.Center);
+                    gfx.DrawString("Principal Amount : " + lon.ReleasedLoan.Principal.ToString("N2"), font, XBrushes.Black, new XRect(0, 0, 250, 340), XStringFormats.Center);
+                    gfx.DrawString("Monthly Payment : " + lon.ReleasedLoan.MonthlyPayment.ToString("N2"), font, XBrushes.Black, new XRect(0, 0, 240, 370), XStringFormats.Center);
+                    
+                    gfx.DrawString("Term : " + lon.Term, font, XBrushes.Black, new XRect(0, 0, 1183, 250), XStringFormats.Center);
                     gfx.DrawString("Mode of Payment : " + lon.Mode, font, XBrushes.Black, new XRect(0, 0, 1300, 280), XStringFormats.Center);
                     var bk = ctx.Banks.Find(lon.BankID);
-                    gfx.DrawString("Bank : " + bk.BankName, font, XBrushes.Black, new XRect(0, 0, 1300, 310), XStringFormats.Center);
+                    gfx.DrawString("Bank : " + bk.BankName, font, XBrushes.Black, new XRect(0, 0, 1237, 310), XStringFormats.Center);
                     var fl = ctx.FPaymentInfo.Where(x => x.LoanID == lId).First();
-                    gfx.DrawString("Payment Start : " + fl.PaymentDate.ToString().Split(' ')[0], font, XBrushes.Black, new XRect(0, 0, 1300, 340), XStringFormats.Center);
+                    gfx.DrawString("Payment Start : " + fl.PaymentDate.ToString().Split(' ')[0], font, XBrushes.Black, new XRect(0, 0, 1270, 340), XStringFormats.Center);
                 }
                 //font = new XFont("Verdana", 10, XFontStyle.Italic);
                 //gfx.DrawString("As of " + DateTime.Today.Date.ToString().Split(' ')[0], font, XBrushes.Black, new XRect(0, 0, page.Width, 250), XStringFormats.Center);
@@ -431,14 +446,14 @@ namespace LoanManagement.Desktop
 
                 //ColumnHeader Start
                 font = new XFont("Verdana", 10, XFontStyle.Bold);
-                gfx.DrawString("No.", font, XBrushes.Black, new XRect(0, 0, 200, 400), XStringFormats.Center);
-                gfx.DrawString("Cheque Number", font, XBrushes.Black, new XRect(0, 0, 420, 400), XStringFormats.Center);
-                gfx.DrawString("Amount", font, XBrushes.Black, new XRect(0, 0, 620, 400), XStringFormats.Center);
-                gfx.DrawString("Balance", font, XBrushes.Black, new XRect(0, 0, 850, 400), XStringFormats.Center);
-                gfx.DrawString("Payment Date", font, XBrushes.Black, new XRect(0, 0, 1057, 400), XStringFormats.Center);
+                gfx.DrawString("No.", font, XBrushes.Black, new XRect(0, 0, 200, 430), XStringFormats.Center);
+                gfx.DrawString("Cheque Number", font, XBrushes.Black, new XRect(0, 0, 420, 430), XStringFormats.Center);
+                gfx.DrawString("Amount", font, XBrushes.Black, new XRect(0, 0, 620, 430), XStringFormats.Center);
+                gfx.DrawString("Balance", font, XBrushes.Black, new XRect(0, 0, 850, 430), XStringFormats.Center);
+                gfx.DrawString("Payment Date", font, XBrushes.Black, new XRect(0, 0, 1057, 430), XStringFormats.Center);
                 //ColumnHeader End
 
-                int n = 430;
+                int n = 460;
                 int p = 1;
                 font = new XFont("Verdana", 10, XFontStyle.Regular);
                 using (var ctx = new iContext())
@@ -548,6 +563,36 @@ namespace LoanManagement.Desktop
                         return;
                     }
 
+                    foreach (var i in textarray)
+                    {
+                        if (i.Text.Length != 6)
+                        {
+                            System.Windows.MessageBox.Show("Please input all cheque numbers");
+                            return;
+                        }
+                        bool err;
+                        int res;
+                        String str = i.Text;
+                        err = int.TryParse(str, out res);
+                        if (err == false)
+                        {
+                            System.Windows.MessageBox.Show("Please input the correct format for cheque numbers(Strictly numbers only.)");
+                            return;
+                        }
+                    }
+
+                    for (int x = 0; x < textarray.Length; x++)
+                    {
+                        for (int y = x + 1; y < textarray.Length; y++)
+                        {
+                            if (textarray[x].Text == textarray[y].Text)
+                            {
+                                System.Windows.MessageBox.Show("No duplications of cheque numbers");
+                                return;
+                            }
+                        }
+                    }
+
                     MessageBoxResult mr = MessageBox.Show("Are you sure?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
                     if (mr == MessageBoxResult.Yes)
                     {
@@ -575,6 +620,8 @@ namespace LoanManagement.Desktop
                                 ctx.FPaymentInfo.Add(fp);
                                 y++;
                             }
+                            AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Released loan (" + lon.Service.Name + ") for client + " + lon.Client.FirstName + " " + lon.Client.MiddleName + " " + lon.Client.LastName + " " + lon.Client.Suffix };
+                            ctx.AuditTrails.Add(at);
                             ctx.SaveChanges();
                             printSOA();
                             MessageBox.Show("Okay");
@@ -599,6 +646,9 @@ namespace LoanManagement.Desktop
                         var bk = ctx.Banks.Where(x => x.BankName == cmbBank.Text).First();
                         int bId = bk.BankID;
                         lon.BankID = bId;
+
+                        AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Updated Released loan (" + lon.Service.Name + ") for client + " + lon.Client.FirstName + " " + lon.Client.MiddleName + " " + lon.Client.LastName + " " + lon.Client.Suffix };
+                        ctx.AuditTrails.Add(at);
                         ctx.SaveChanges();
                         MessageBox.Show("Updated");
                         this.Close();

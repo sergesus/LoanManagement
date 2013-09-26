@@ -21,6 +21,7 @@ namespace LoanManagement.Desktop
     /// </summary>
     public partial class wpfSelectPayment : MetroWindow
     {
+        public int UserID;
         public wpfSelectPayment()
         {
             InitializeComponent();
@@ -52,6 +53,7 @@ namespace LoanManagement.Desktop
                 wpfLoanSearch frm = new wpfLoanSearch();
                 frm.status = "Holding";
                 frm.iDept = "Financing";
+                frm.UserID = UserID;
                 this.Close();
                 frm.ShowDialog();
             }
@@ -68,6 +70,7 @@ namespace LoanManagement.Desktop
             {
                 wpfDepositCheques frm = new wpfDepositCheques();
                 frm.status = "Deposit";
+                frm.UserID = UserID;
                 this.Close();
                 frm.ShowDialog();
             }
@@ -83,6 +86,7 @@ namespace LoanManagement.Desktop
             try
             {
                 wpfChequeClearing frm = new wpfChequeClearing();
+                frm.UserID = UserID;
                 this.Close();
                 frm.ShowDialog();
             }
@@ -99,6 +103,7 @@ namespace LoanManagement.Desktop
             {
                 wpfDepositCheques frm = new wpfDepositCheques();
                 frm.status = "Returning";
+                frm.UserID = UserID;
                 this.Close();
                 frm.ShowDialog();
             }
@@ -115,6 +120,7 @@ namespace LoanManagement.Desktop
             {
                 wpfLoanSearch frm = new wpfLoanSearch();
                 frm.status = "Voiding";
+                frm.UserID = UserID;
                 frm.iDept = "Financing";
                 this.Close();
                 frm.ShowDialog();

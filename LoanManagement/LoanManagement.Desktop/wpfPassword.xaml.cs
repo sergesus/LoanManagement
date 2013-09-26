@@ -26,6 +26,7 @@ namespace LoanManagement.Desktop
         public string status;
         public int ID;
         public int eID;
+        public int UserID;
 
         public wpfPassword()
         {

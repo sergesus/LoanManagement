@@ -38,6 +38,7 @@ namespace LoanManagement.Desktop
         public int lId;
         public int ciId;
         public string iDept;
+        public int UserID;
 
         public wpfLoanApplication()
         {
@@ -538,6 +539,8 @@ namespace LoanManagement.Desktop
                             loan = new Loan { CI = ciId, AgentID = 0, ClientID = cId, CoBorrower = cbId, ServiceID = servId, Status = "Applied", Term = Convert.ToInt32(txtTerm.Text), LoanApplication = la, Mode = cmbMode.Text };
                         }
 
+                        AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Processed new loan application (" + cmbServices.Text + ") for client + " + txtFName.Text + " " + txtMName.Text + " " + txtLName.Text + " " + txtSuffix.Text };
+                        ctx.AuditTrails.Add(at);
 
                         ctx.Loans.Add(loan);
                         ctx.SaveChanges();
@@ -569,6 +572,9 @@ namespace LoanManagement.Desktop
                                 ln.LoanApplication.AmountApplied = Convert.ToDouble(txtAmt.Text);
                                 ln.Term = Convert.ToInt32(txtTerm.Text);
                             }
+                            AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Updated loan application (" + cmbServices.Text + ") for client + " + txtFName.Text + " " + txtMName.Text + " " + txtLName.Text + " " + txtSuffix.Text };
+                            ctx.AuditTrails.Add(at);
+
                             ctx.SaveChanges();
                             System.Windows.MessageBox.Show("Record updated");
                             this.Close();

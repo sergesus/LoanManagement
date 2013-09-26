@@ -210,6 +210,7 @@ namespace LoanManagement.Desktop
                     frm.status = "Edit";
                     int id = Convert.ToInt32(getRow(dgLoan, 0));
                     frm.lId = id;
+                    frm.UserID = UserID;
                     frm.btnContinue.Content = "Update";
                     frm.ShowDialog();
                 }
@@ -218,6 +219,7 @@ namespace LoanManagement.Desktop
                     wpfReleasedLoanInfo frm = new wpfReleasedLoanInfo();
                     int num = Convert.ToInt32(getRow(dgLoan, 0));
                     frm.lId = num;
+                    frm.UserID = UserID;
                     frm.status = status;
                     frm.ShowDialog();
                 }
@@ -226,6 +228,7 @@ namespace LoanManagement.Desktop
                     wpfReleasedLoanInfo frm = new wpfReleasedLoanInfo();
                     int num = Convert.ToInt32(getRow(dgLoan, 0));
                     frm.lId = num;
+                    frm.UserID = UserID;
                     frm.status = status;
                     frm.ShowDialog();
                 }
@@ -264,6 +267,8 @@ namespace LoanManagement.Desktop
                                 fp.PaymentStatus = "Deposited";
                                 ClearedCheque cc = ctx.ClearedCheques.Find(fp.ClearCheque.FPaymentInfoID);
                                 ctx.ClearedCheques.Remove(cc);
+                                AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Voided Payment for Cheque " + fp.ChequeInfo };
+                                ctx.AuditTrails.Add(at);
                                 ctx.SaveChanges();
                                 MessageBox.Show("Okay");
                             }
@@ -316,6 +321,8 @@ namespace LoanManagement.Desktop
                                 }
                                 myC++;
                             }
+                            AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Voided Closed Account for Loan " + lon.LoanID };
+                            ctx.AuditTrails.Add(at);
                             ctx.SaveChanges();
                             MessageBox.Show("Okay");
                             return;
@@ -326,6 +333,7 @@ namespace LoanManagement.Desktop
                 {
                     int n = Convert.ToInt32(getRow(dgLoan, 0));
                     wpfRenewClosed frm = new wpfRenewClosed();
+                    frm.UserID = UserID;
                     frm.lId = n;
                     this.Close();
                     frm.ShowDialog();
@@ -352,6 +360,7 @@ namespace LoanManagement.Desktop
                                 frm.lId = n;
                                 frm.status = "View";
                                 frm.Height = 605.5;
+                                frm.UserID = UserID;
                                 frm.ShowDialog();
                             }
                         }
@@ -361,6 +370,7 @@ namespace LoanManagement.Desktop
                         int n = Convert.ToInt32(getRow(dgLoan, 0));
                         wpfReleasedLoanInfo frm = new wpfReleasedLoanInfo();
                         frm.lId = n;
+                        frm.UserID = UserID;
                         frm.status = status;
                         if (status == "View")
                         {

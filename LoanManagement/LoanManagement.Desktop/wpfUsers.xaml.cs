@@ -154,6 +154,7 @@ namespace LoanManagement.Desktop
                     {
                         wpfPassword frm = new wpfPassword();
                         frm.status = "view";
+                        frm.UserID = UserID;
                         frm.ID = n;
                         frm.ShowDialog();
                     }
@@ -170,6 +171,7 @@ namespace LoanManagement.Desktop
         {
             wpfClientSearch frm = new wpfClientSearch();
             frm.status = "Employee";
+            frm.UserID = UserID;
             frm.ShowDialog();
         }
 

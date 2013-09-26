@@ -35,6 +35,7 @@ namespace LoanManagement.Desktop
 
         public int lId;
         public string status;
+        public int UserID;
         public wpfLoanApproval()
         {
             InitializeComponent();
@@ -108,6 +109,8 @@ namespace LoanManagement.Desktop
                             lon.Status = "Approved";
                             ApprovedLoan al = new ApprovedLoan { AmountApproved = Convert.ToDouble(txtAmt.Text), DateApproved = DateTime.Today.Date, ReleaseDate = dtDate.SelectedDate.Value.Date };
                             lon.ApprovedLoan = al;
+                            AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Processed approval for loan (" + lon.Service.Name + ") for client + " + lon.Client.FirstName + " " + lon.Client.MiddleName + " " + lon.Client.LastName + " " + lon.Client.Suffix };
+                            ctx.AuditTrails.Add(at);
                             ctx.SaveChanges();
                             System.Windows.MessageBox.Show("Loan Approved");
                         }
@@ -116,6 +119,8 @@ namespace LoanManagement.Desktop
                             lon.ApprovedLoan.AmountApproved = Convert.ToDouble(txtAmt.Text);
                             lon.ApprovedLoan.DateApproved = DateTime.Today.Date;
                             lon.ApprovedLoan.ReleaseDate = dtDate.SelectedDate.Value.Date;
+                            AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Updated approval for loan (" + lon.Service.Name + ") for client + " + lon.Client.FirstName + " " + lon.Client.MiddleName + " " + lon.Client.LastName + " " + lon.Client.Suffix };
+                            ctx.AuditTrails.Add(at);
                             ctx.SaveChanges();
                             System.Windows.MessageBox.Show("Loan Updated");
                         }

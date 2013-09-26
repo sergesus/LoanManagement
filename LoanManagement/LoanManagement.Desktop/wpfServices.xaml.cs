@@ -31,6 +31,7 @@ namespace LoanManagement.Desktop
     public partial class wpfServices : MetroWindow
     {
         public bool status;
+        public int UserID;
 
         public wpfServices()
         {

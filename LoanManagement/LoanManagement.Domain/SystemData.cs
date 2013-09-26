@@ -62,6 +62,7 @@ namespace LoanManagement.Domain
         public DbSet<RestructuredLoan> RestructuredLoans { get; set; }
         public DbSet<PaidLoan> PaidLoans { get; set; }
         public DbSet<ViewLoan> ViewLoans { get; set; }
+        public DbSet<AuditTrail> AuditTrails { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -799,6 +800,16 @@ namespace LoanManagement.Domain
         public string Amount { get; set; }
         public DateTime PaymentDate { get; set; }
         public string RemainingBalance { get; set; }
+    }
+
+    public class AuditTrail
+    {
+        public int AuditTrailID { get; set; }
+        public int EmployeeID { get; set; }
+        public string Action { get; set; }
+        public DateTime DateAndTime { get; set; }
+
+        public virtual Employee Employee { get; set; }
     }
 
 }

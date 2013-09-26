@@ -25,6 +25,7 @@ namespace LoanManagement.Desktop
     {
 
         public int fId;
+        public int UserID;
 
         public wpfNewCheque()
         {
@@ -59,10 +60,14 @@ namespace LoanManagement.Desktop
                 MessageBoxResult mr = MessageBox.Show("You sure?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (mr == MessageBoxResult.Yes)
                 {
+                    AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Changed Cheque "+ fp.ChequeInfo +" to "+ txtId.Text +"" };
+                    ctx.AuditTrails.Add(at);
                     fp.PaymentStatus = "Deposited";
                     fp.ChequeInfo = txtId.Text;
                     dp.DepositDate = DateTime.Today.Date;
                     ctx.SaveChanges();
+
+
                     MessageBox.Show("Okay");
                     this.Close();
                 }

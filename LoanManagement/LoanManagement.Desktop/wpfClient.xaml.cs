@@ -29,6 +29,7 @@ namespace LoanManagement.Desktop
     public partial class wpfClient : MetroWindow
     {
         public bool status;
+        public int UserID;
 
         public wpfClient()
         {
@@ -68,6 +69,7 @@ namespace LoanManagement.Desktop
             {
                 wpfClientInfo frm = new wpfClientInfo();
                 frm.status = "Add";
+                frm.UserID = UserID;
                 frm.ShowDialog();
             }
             catch (Exception ex)
@@ -83,6 +85,7 @@ namespace LoanManagement.Desktop
             {
                 wpfClientInfo frm = new wpfClientInfo();
                 frm.status = "View";
+                frm.UserID = UserID;
                 frm.cId = Convert.ToInt32(getRow(dgClient, 0));
                 frm.ShowDialog();
             }

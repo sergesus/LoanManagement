@@ -26,6 +26,7 @@ namespace LoanManagement.Desktop
     public partial class wpfLoanDeclining : MetroWindow
     {
         public int lId;
+        public int UserID;
         public wpfLoanDeclining()
         {
             InitializeComponent();

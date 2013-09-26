@@ -23,6 +23,7 @@ namespace LoanManagement.Desktop
     /// </summary>
     public partial class wpfChequeReturning : MetroWindow
     {
+        public int UserID;
         public wpfChequeReturning()
         {
             InitializeComponent();
@@ -78,6 +79,10 @@ namespace LoanManagement.Desktop
                             ReturnedCheque rc = new ReturnedCheque { DateReturned = DateTime.Today.Date, Fee = DaifFee, FPaymentInfoID = fId, Remarks = "DAIF", isPaid = false };
                             fp.PaymentStatus = "Returned";
                             ctx.ReturnedCheques.Add(rc);
+
+                            AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Processed returned cheque " + fp.ChequeInfo };
+                            ctx.AuditTrails.Add(at);
+
                             ctx.SaveChanges();
                             MessageBox.Show("Okay");
                             this.Close();
@@ -101,6 +106,8 @@ namespace LoanManagement.Desktop
                             {
                                 item.PaymentStatus = "Void";
                             }
+                            AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Processed returned cheque " + fp.ChequeInfo };
+                            ctx.AuditTrails.Add(at);
 
                             ctx.SaveChanges();
                             MessageBox.Show("Okay");

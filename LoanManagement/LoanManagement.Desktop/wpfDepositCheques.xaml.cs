@@ -24,6 +24,7 @@ namespace LoanManagement.Desktop
     /// </summary>
     public partial class wpfDepositCheques : MetroWindow
     {
+        public int UserID;
         public wpfDepositCheques()
         {
             InitializeComponent();
@@ -237,6 +238,9 @@ namespace LoanManagement.Desktop
                                         ctx.DepositedCheques.Add(dc);
                                     }
                                 }
+                                AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Deposited Cheque(s)" };
+                                ctx.AuditTrails.Add(at);
+
                                 ctx.SaveChanges();
                                 MessageBox.Show("Okay");
                                 rg();
@@ -277,6 +281,8 @@ namespace LoanManagement.Desktop
                             {
                                 fp.PaymentStatus = "Deposited";
                                 dp.DepositDate = DateTime.Today.Date;
+                                AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Redeposit cheque " + fp.ChequeInfo };
+                                ctx.AuditTrails.Add(at);
                                 ctx.SaveChanges();
                                 MessageBox.Show("Okay");
                                 checkDue();
@@ -306,6 +312,7 @@ namespace LoanManagement.Desktop
 
                             wpfChequeReturning frm = new wpfChequeReturning();
                             frm.fId = fp.FPaymentInfoID;
+                            frm.UserID = UserID;
                             frm.ShowDialog();
                         }
                     }

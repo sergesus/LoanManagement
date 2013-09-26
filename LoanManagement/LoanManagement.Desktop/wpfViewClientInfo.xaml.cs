@@ -33,6 +33,7 @@ namespace LoanManagement.Desktop
         }
         public int cID;
         public string status;
+        public int UserID;
 
         public string getRow(System.Windows.Controls.DataGrid dg, int row)
         {

@@ -27,6 +27,7 @@ namespace LoanManagement.Desktop
         public int fId;
         public int lId;
         public double days;
+        public int UserID;
         public wpfCheckout()
         {
             InitializeComponent();
@@ -62,7 +63,8 @@ namespace LoanManagement.Desktop
                             ctx.HeldCheques.Add(hc);
                             ctx.SaveChanges();
                             //reset();
-
+                            AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Processed Holding for cheque "+ dts.ChequeInfo +""};
+                            ctx.AuditTrails.Add(at);
                             System.Windows.MessageBox.Show("Transaction Finished");
 
                             this.Close();
@@ -86,6 +88,9 @@ namespace LoanManagement.Desktop
                             }
                             ctx.AdjustedLoans.Add(al);
                             ctx.SaveChanges();
+                            AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Processed Adjustment for Loan " + lId + "" };
+                            ctx.AuditTrails.Add(at);
+
                             MessageBox.Show("Transaction Finished");
                             this.Close();
                         }

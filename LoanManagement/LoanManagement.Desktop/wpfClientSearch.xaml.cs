@@ -26,6 +26,7 @@ namespace LoanManagement.Desktop
         public string status;
         public int cId;
         public string status2;
+        public int UserID;
 
         public wpfClientSearch()
         {

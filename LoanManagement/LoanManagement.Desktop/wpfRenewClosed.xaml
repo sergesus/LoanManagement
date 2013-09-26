@@ -26,7 +26,7 @@
         <Label Content="Bank:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,11,0,0" Width="135" FontSize="16" Foreground="#CC48CB00" FontWeight="Bold" RenderTransformOrigin="1.107,0.71"/>
         <Label Content="First Due Date:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,47,0,0" Width="135" FontSize="16" Foreground="#CC48CB00" FontWeight="Bold" RenderTransformOrigin="1.107,0.71"/>
         <DatePicker x:Name="dtPcker" HorizontalAlignment="Left" Height="36" Margin="145,47,0,0" VerticalAlignment="Top" Width="263" FontSize="18"/>
-        <Grid HorizontalAlignment="Left" Height="74" VerticalAlignment="Top" Width="863" Background="#7F48CB00" Margin="-4,-69,-439,0">
+        <Grid HorizontalAlignment="Left" Height="74" VerticalAlignment="Top" Width="479" Background="#7F48CB00" Margin="-4,-69,-55,0">
             <Image HorizontalAlignment="Left" Height="74" VerticalAlignment="Top" Width="97" Source="Images/Renew.ico"/>
             <Label Content="Closed Account Renewal" HorizontalAlignment="Left" Height="54" Margin="87,10,0,0" VerticalAlignment="Top" Width="340" FontSize="30"/>
         </Grid>

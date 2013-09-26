@@ -21,6 +21,7 @@ namespace LoanManagement.Desktop
     /// </summary>
     public partial class wpfSelectClosed : MetroWindow
     {
+        public int UserID;
         public wpfSelectClosed()
         {
             InitializeComponent();
@@ -52,6 +53,7 @@ namespace LoanManagement.Desktop
                 wpfLoanSearch frm = new wpfLoanSearch();
                 frm.status = "VoidClosed";
                 frm.iDept = "Financing";
+                frm.UserID = UserID;
                 this.Close();
                 frm.ShowDialog();
             }
@@ -68,6 +70,7 @@ namespace LoanManagement.Desktop
             {
                 wpfLoanSearch frm = new wpfLoanSearch();
                 frm.status = "Renewal";
+                frm.UserID = UserID;
                 frm.iDept = "Financing";
                 this.Close();
                 frm.ShowDialog();
@@ -90,6 +93,7 @@ namespace LoanManagement.Desktop
             {
                 wpfLoanSearch frm = new wpfLoanSearch();
                 frm.status = "Restructure";
+                frm.UserID = UserID;
                 frm.iDept = "Financing";
                 frm.ShowDialog();
             }

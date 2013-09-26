@@ -25,6 +25,7 @@ namespace LoanManagement.Desktop
     {
         public string status;
         public int pID;
+        public int UserID;
 
         public wpfPositionInfo()
         {
@@ -74,6 +75,10 @@ namespace LoanManagement.Desktop
                     }
                     Domain.Position pos = new Domain.Position { PositionName = txtPosition.Text, Description = txtDesc.Text };
                     ctx.Positions.Add(pos);
+
+                    AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Added new Position " + txtPosition.Text };
+                    ctx.AuditTrails.Add(at);
+
                     ctx.SaveChanges();
                     MessageBox.Show("Okay");
                     this.Close();
@@ -86,6 +91,8 @@ namespace LoanManagement.Desktop
                     Domain.Position pos = ctx.Positions.Find(pID);
                     pos.PositionName = txtPosition.Text;
                     pos.Description = txtDesc.Text;
+                    AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Updated Position " + txtPosition.Text };
+                    ctx.AuditTrails.Add(at);
                     ctx.SaveChanges();
                     MessageBox.Show("Okay");
                     this.Close();

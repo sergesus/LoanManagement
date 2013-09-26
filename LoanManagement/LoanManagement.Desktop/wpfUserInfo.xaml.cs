@@ -26,6 +26,7 @@ namespace LoanManagement.Desktop
 
         public int eId;
         public string status;
+        public int UserID;
         public wpfUserInfo()
         {
             InitializeComponent();
@@ -86,6 +87,10 @@ namespace LoanManagement.Desktop
                         Scope sc = new Scope { EmployeeID = eId };
                         ctx.Users.Add(usr);
                         ctx.Scopes.Add(sc);
+
+                        AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Added new User Account " + txtUserName.Text };
+                        ctx.AuditTrails.Add(at);
+
                         ctx.SaveChanges();
                         MessageBox.Show("Okay");
                         this.Close();
@@ -97,6 +102,8 @@ namespace LoanManagement.Desktop
                     {
                         var u = ctx.Users.Find(eId);
                         u.Password = txtPassword.Password;
+                        AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Updated User Account " + txtUserName.Text };
+                        ctx.AuditTrails.Add(at);
                         ctx.SaveChanges();
                         MessageBox.Show("Okay");
                         this.Close();

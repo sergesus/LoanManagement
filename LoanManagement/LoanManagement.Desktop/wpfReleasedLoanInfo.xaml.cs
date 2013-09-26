@@ -31,6 +31,7 @@ namespace LoanManagement.Desktop
     {
         public int lId;
         public string status;
+        public int UserID;
 
         public wpfReleasedLoanInfo()
         {
@@ -328,6 +329,7 @@ namespace LoanManagement.Desktop
                 {
                     wpfFReleasing frm = new wpfFReleasing();
                     frm.status = "UReleasing";
+                    frm.UserID = UserID;
                     frm.lId = lId;
                     this.Close();
                     frm.ShowDialog();

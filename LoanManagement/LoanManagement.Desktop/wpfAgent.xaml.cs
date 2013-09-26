@@ -30,6 +30,7 @@ namespace LoanManagement.Desktop
     {
 
         public bool status;
+        public int UserID;
 
         public wpfAgent()
         {
@@ -155,6 +156,7 @@ namespace LoanManagement.Desktop
             {
                 wpfAgentInfo frm = new wpfAgentInfo();
                 frm.status = "Add";
+                frm.UserID = UserID;
                 frm.ShowDialog();
             }
             catch (Exception ex)
@@ -170,6 +172,7 @@ namespace LoanManagement.Desktop
             {
                 wpfAgentInfo frm = new wpfAgentInfo();
                 frm.status = "View";
+                frm.UserID = UserID;
                 frm.aId = Convert.ToInt32(getRow(dgEmp, 0));
                 frm.ShowDialog();
             }

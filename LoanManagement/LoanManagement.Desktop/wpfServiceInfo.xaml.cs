@@ -26,6 +26,7 @@ namespace LoanManagement.Desktop
     {
         public string status;
         public int sId;
+        public int UserID;
 
         public wpfServiceInfo()
         {
@@ -335,6 +336,9 @@ namespace LoanManagement.Desktop
                             ctx.Requirements.Add(rr);
                         }
 
+                        AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Added new Service " + txtName.Text };
+                        ctx.AuditTrails.Add(at);
+
                         ctx.Services.Add(ser);
                         ctx.SaveChanges();
                         MessageBox.Show("Service added");
@@ -377,6 +381,9 @@ namespace LoanManagement.Desktop
                             ser.AdjustmentFee = 0;
                             ser.LatePaymentPenalty = Convert.ToDouble(txtLtPen.Text);
                         }
+
+                        AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Updated Service " + txtName.Text };
+                        ctx.AuditTrails.Add(at);
                         ctx.SaveChanges();
                         MessageBox.Show("Service updated");
                         this.Close();

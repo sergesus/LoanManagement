@@ -23,6 +23,7 @@ namespace LoanManagement.Desktop
     /// </summary>
     public partial class wpfPosition : MetroWindow
     {
+        public int UserID;
         public wpfPosition()
         {
             InitializeComponent();
@@ -87,6 +88,7 @@ namespace LoanManagement.Desktop
             {
                 wpfPositionInfo frm = new wpfPositionInfo();
                 frm.status = "Add";
+                frm.UserID = UserID;
                 frm.ShowDialog();
             }
             catch (Exception ex)
@@ -106,6 +108,7 @@ namespace LoanManagement.Desktop
             }
             wpfPositionInfo frm = new wpfPositionInfo();
             frm.status = "View";
+            frm.UserID = UserID;
             frm.pID = n;
             frm.ShowDialog();
         }

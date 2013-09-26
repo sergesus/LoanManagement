@@ -28,7 +28,7 @@ namespace LoanManagement.Desktop
         {
             InitializeComponent();
         }
-
+        public int UserID;
         public int lId;
         public int myNum;
         public TextBox[] textarray = new TextBox[0];
@@ -56,6 +56,7 @@ namespace LoanManagement.Desktop
                         textarray[ctr].Height = 25;
                         textarray[ctr].Width = 300;
                         textarray[ctr].FontSize = 16;
+                        textarray[ctr].MaxLength = 6;
                         sp[ctr] = new StackPanel();
                         sp[ctr].Width = 300;
                         sp[ctr].Height = 60;
@@ -114,6 +115,38 @@ namespace LoanManagement.Desktop
         {
             try
             {
+                foreach (var i in textarray)
+                {
+                    if (i.Text.Length != 6)
+                    {
+                        System.Windows.MessageBox.Show("Please input all cheque numbers");
+                        return;
+                    }
+                    bool err;
+                    int res;
+                    String str = i.Text;
+                    err = int.TryParse(str, out res);
+                    if (err == false)
+                    {
+                        System.Windows.MessageBox.Show("Please input the correct format for cheque numbers(Strictly numbers only.)");
+                        return;
+                    }
+                }
+
+                for (int x = 0; x < textarray.Length; x++)
+                {
+                    for (int y = x + 1; y < textarray.Length; y++)
+                    {
+                        if (textarray[x].Text == textarray[y].Text)
+                        {
+                            System.Windows.MessageBox.Show("No duplications of cheque numbers");
+                            return;
+                        }
+                    }
+                }
+
+
+
                 MessageBoxResult mr = MessageBox.Show("You sure?", "Question", MessageBoxButton.YesNo);
                 if (mr == MessageBoxResult.Yes)
                 {
@@ -171,6 +204,10 @@ namespace LoanManagement.Desktop
                             dt = DateAndTime.DateAdd(dInt, Interval, dt);
                             num++;
                         }
+
+                        AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Processed renewal for Closed Account Loan " + lon.LoanID };
+                        ctx.AuditTrails.Add(at);
+
                         ctx.SaveChanges();
                         MessageBox.Show("Okay");
                         this.Close();

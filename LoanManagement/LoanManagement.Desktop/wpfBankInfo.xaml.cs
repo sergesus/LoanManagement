@@ -27,6 +27,7 @@ namespace LoanManagement.Desktop
     {
         public string status;
         public int bId;
+        public int UserID;
 
         public wpfBranchInfo()
         {
@@ -494,6 +495,9 @@ namespace LoanManagement.Desktop
                             ctr++;
                         }
 
+                        AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Added new Bank " + txtName.Text };
+                        ctx.AuditTrails.Add(at);
+
                         ctx.Banks.Add(bank);
                         ctx.SaveChanges();
                         System.Windows.MessageBox.Show("New Bank Added");
@@ -507,6 +511,8 @@ namespace LoanManagement.Desktop
                         var bank = ctx.Banks.Find(bId);
                         bank.BankName = txtName.Text;
                         bank.Description = txtDesc.Text;
+                        AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Updated Bank " + txtName.Text };
+                        ctx.AuditTrails.Add(at);
                         ctx.SaveChanges();
                         System.Windows.MessageBox.Show("Bank Successfully Updated");
                         this.Close();

@@ -35,6 +35,7 @@ namespace LoanManagement.Desktop
         public int aId;
         string selectedFileName;
         public bool isChanged = false;
+        public int UserID;
 
         public wpfAgentInfo()
         {
@@ -359,6 +360,8 @@ namespace LoanManagement.Desktop
                             AgentContact con = new AgentContact { CNumber=item.CNumber, Contact = item.Contact };
                             ctx.AgentContacts.Add(con);
                         }
+                        AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Added new Agent " + agt.FirstName + " " + agt.MI + " " + agt.LastName + " " + agt.Suffix};
+                        ctx.AuditTrails.Add(at);
                         ctx.Agents.Add(agt);
                         ctx.SaveChanges();
                         System.Windows.MessageBox.Show("Added New Agent");
@@ -387,6 +390,8 @@ namespace LoanManagement.Desktop
                         {
                             agt.Photo = ConvertImageToByteArray(selectedFileName);
                         }
+                        AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Updated Agent " + agt.FirstName + " " + agt.MI + " " + agt.LastName + " " + agt.Suffix };
+                        ctx.AuditTrails.Add(at);
                         ctx.SaveChanges();
                         System.Windows.MessageBox.Show("Agent Updated", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                         this.Close();
