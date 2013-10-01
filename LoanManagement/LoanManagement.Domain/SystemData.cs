@@ -54,6 +54,8 @@ namespace LoanManagement.Domain
         public DbSet<ClearedCheque> ClearedCheques { get; set; }
         public DbSet<ReturnedCheque> ReturnedCheques { get; set; }
         public DbSet<ClosedAccount> ClosedAccounts { get; set; }
+        public DbSet<AdjustedLoan> AdjustedLoans { get; set; }
+        public DbSet<RestructuredLoan> RestructuredLoans { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -133,7 +135,12 @@ namespace LoanManagement.Domain
                 .HasKey(x => x.FPaymentInfoID)
                 .HasRequired(x => x.FPaymentInfo);
 
-                
+            modelBuilder.Entity<AdjustedLoan>()
+                .HasKey(x => x.LoanID)
+                .HasRequired(x => x.Loan);
+            modelBuilder.Entity<RestructuredLoan>()
+                .HasKey(x => x.LoanID)
+                .HasRequired(x => x.Loan);
                 
         }
     }
@@ -556,6 +563,8 @@ namespace LoanManagement.Domain
         public virtual DeclinedLoan DeclinedLoan { get; set; }
         public virtual ApprovedLoan ApprovedLoan { get; set; }
         public virtual ReleasedLoan ReleasedLoan { get; set; }
+        public virtual AdjustedLoan AdjustedLoan { get; set; }
+        public virtual RestructuredLoan RestructuredLoan { get; set; }
         public ICollection<FPaymentInfo> FPaymentInfo { get; set; }
         public ICollection<ClosedAccount> ClosedAccount { get; set; }
     }
@@ -675,6 +684,26 @@ namespace LoanManagement.Domain
         public int FPaymentInfoID { get; set; }
 
         public virtual FPaymentInfo FPaymentInfo { get; set; }
+    }
+
+    public class AdjustedLoan
+    {
+        public int LoanID { get; set; }
+        public int Days { get; set; }
+        public double Fee { get; set; }
+        public DateTime DateAdjusted { get; set; }
+
+        public virtual Loan Loan { get; set; }
+    }
+
+    public class RestructuredLoan
+    {
+        public int LoanID { get; set; }
+        public int NewLoanID { get; set; }
+        public double Fee { get; set; }
+        public DateTime DateRestructured { get; set; }
+
+        public virtual Loan Loan { get; set; }
     }
 
     public class GenSOA

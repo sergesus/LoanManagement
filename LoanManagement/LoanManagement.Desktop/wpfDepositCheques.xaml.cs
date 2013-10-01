@@ -34,24 +34,32 @@ namespace LoanManagement.Desktop
 
         private void checkDue()
         {
-            using (var ctx = new MyLoanContext())
+            try
             {
-                var lon = from lo in ctx.FPaymentInfo
-                          where lo.PaymentDate <= DateTime.Today.Date && (lo.PaymentStatus == "Pending" || lo.PaymentStatus == "On Hold")
-                          select lo;
-                foreach (var item in lon)
+                using (var ctx = new MyLoanContext())
                 {
-                    var ctr = ctx.FPaymentInfo.Where(x => (x.PaymentDate <= DateTime.Today.Date && x.LoanID == item.LoanID) && (x.PaymentStatus == "Due" || x.PaymentStatus == "Returned")).Count();
-                    if (ctr == 0)
+                    var lon = from lo in ctx.FPaymentInfo
+                              where lo.PaymentDate <= DateTime.Today.Date && (lo.PaymentStatus == "Pending" || lo.PaymentStatus == "On Hold")
+                              select lo;
+                    foreach (var item in lon)
                     {
-                        item.PaymentStatus = "Due";
+                        var ctr = ctx.FPaymentInfo.Where(x => (x.PaymentDate <= DateTime.Today.Date && x.LoanID == item.LoanID) && (x.PaymentStatus == "Due" || x.PaymentStatus == "Returned")).Count();
+                        if (ctr == 0)
+                        {
+                            item.PaymentStatus = "Due";
+                        }
+                        else
+                        {
+                            item.PaymentStatus = "Due/Pending";
+                        }
                     }
-                    else
-                    {
-                        item.PaymentStatus = "Due/Pending";
-                    }
+                    ctx.SaveChanges();
                 }
-                ctx.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
         }
 
@@ -72,6 +80,8 @@ namespace LoanManagement.Desktop
 
         private void rg()
         {
+            try
+            {
                 if (rdDue.IsChecked == true)
                 {
                     using (var ctx = new MyLoanContext())
@@ -97,9 +107,9 @@ namespace LoanManagement.Desktop
                                   where ch.PaymentStatus == "Deposited"
                                   select new { LoanID = ch.LoanID, No = ch.PaymentNumber, ChequeID = ch.ChequeInfo, ClientName = ch.Loan.Client.FirstName + " " + ch.Loan.Client.LastName, PaymentDate = ch.PaymentDate, DateDeposited = ch.DepositedCheque.DepositDate };
                         dg.ItemsSource = chq.ToList();
-                        if(status=="Deposit")
+                        if (status == "Deposit")
                             btnDep.Content = "Void";
-                        else if(status=="Returning")
+                        else if (status == "Returning")
                             btnDep.Content = "Mark as Returned";
                         state = "Undep";
                     }
@@ -119,25 +129,38 @@ namespace LoanManagement.Desktop
                         state = "Redep";
                     }
                 }
-            
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         private void wdw1_Loaded(object sender, RoutedEventArgs e)
         {
-            ImageBrush myBrush = new ImageBrush();
-            System.Windows.Controls.Image image = new System.Windows.Controls.Image();
-            image.Source = new BitmapImage(
-                new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
-            myBrush.ImageSource = image.Source;
-            //Grid grid = new Grid();
-            wdw1.Background = myBrush;
-            rdDue.IsChecked = true;
-            if (status == "Returning")
+            try
             {
-                rdDue.Visibility = Visibility.Hidden;
-                rdDeposited.IsChecked = true;
+                ImageBrush myBrush = new ImageBrush();
+                System.Windows.Controls.Image image = new System.Windows.Controls.Image();
+                image.Source = new BitmapImage(
+                    new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
+                myBrush.ImageSource = image.Source;
+                //Grid grid = new Grid();
+                wdw1.Background = myBrush;
+                rdDue.IsChecked = true;
+                if (status == "Returning")
+                {
+                    rdDue.Visibility = Visibility.Hidden;
+                    rdDeposited.IsChecked = true;
+                }
+                rg();
             }
-            rg();
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         private void btnDep_Click(object sender, RoutedEventArgs e)
@@ -267,23 +290,48 @@ namespace LoanManagement.Desktop
             }
             catch (Exception ex)
             {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
         }
 
         private void rdDue_Checked(object sender, RoutedEventArgs e)
         {
-            rg();
+            try
+            {
+                rg();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         private void rdDeposited_Checked(object sender, RoutedEventArgs e)
         {
-            rg();
+            try
+            {
+                rg();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         private void wdw1_Activated(object sender, EventArgs e)
         {
-            rg();
+            try
+            {
+                rg();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
     }
 }

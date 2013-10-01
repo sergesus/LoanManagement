@@ -30,7 +30,7 @@
 
         <Grid HorizontalAlignment="Left" Height="36" VerticalAlignment="Top" Width="808" Background="#FFC1B8B8" Grid.ColumnSpan="2">
             <Label x:Name="lblName" Content="(name)" HorizontalAlignment="Left" VerticalAlignment="Top" Height="36" Width="528" FontSize="20"/>
-            <Button x:Name="btnFull" Content="View Full Info" HorizontalAlignment="Left" Width="128" Margin="680,0,0,0"/>
+            <Button x:Name="btnFull" Content="View Full Info" HorizontalAlignment="Left" Width="128" Margin="680,0,0,0" Click="btnFull_Click"/>
         </Grid>
         <Image x:Name="img" HorizontalAlignment="Left" Height="130" Margin="10,53,0,0" VerticalAlignment="Top" Width="130" Grid.ColumnSpan="2"/>
         <Label Content="Loan Info:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="73,48,0,0" Width="150" FontSize="16" Foreground="#FF32AFD4" FontWeight="Bold" Grid.Column="1"/>

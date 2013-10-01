@@ -114,17 +114,30 @@
                                 <ListBoxItem x:Name="itm9" Content="Releasing" FontSize="25" Foreground="#FF32AFD4" Selected="itm9_Selected" MouseUp="itm9_MouseUp"/>
                                 <ListBoxItem x:Name="itm10" Content="Payments" FontSize="25" Foreground="#FF32AFD4" MouseUp="itm10_MouseUp"/>
                                 <ListBoxItem x:Name="itm12" Content="Manage Closed Accounts" FontSize="25" Foreground="#FF32AFD4" MouseUp="itm12_MouseUp"/>
-                                <ListBoxItem x:Name="itm11" Content="Loan Re-structure" FontSize="25" Foreground="#FF32AFD4"/>
-                                <ListBoxItem x:Name="itm13" Content="Payment Adjustment" FontSize="25" Foreground="#FF32AFD4"/>
+                                <ListBoxItem x:Name="itm11" Content="Loan Re-structure" FontSize="25" Foreground="#FF32AFD4" MouseUp="itm11_MouseUp"/>
+                                <ListBoxItem x:Name="itm13" Content="Payment Adjustment" FontSize="25" Foreground="#FF32AFD4" MouseUp="itm13_MouseUp"/>
                             </ListBox>
                         </Grid>
                     </TabItem>
                     <TabItem Header="Micro-Business" MouseUp="TabItem_MouseUp_1">
                         <Grid x:Name="grdLo1">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="13*"/>
-                                <ColumnDefinition Width="115*"/>
+                                <ColumnDefinition Width="91*"/>
+                                <ColumnDefinition Width="93*"/>
+                                <ColumnDefinition Width="712*"/>
                             </Grid.ColumnDefinitions>
+                            <ListBox x:Name="lb1_Copy3" HorizontalAlignment="Left" Height="318" VerticalAlignment="Top" Width="361" OpacityMask="#FFA0A0A0" BorderBrush="#FFB4A1A1" SelectionChanged="ListBox_SelectionChanged_1" Margin="10,10,0,0" Grid.ColumnSpan="3">
+                                <ListBox.Background>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop Color="Black" Offset="0"/>
+                                        <GradientStop Color="#FF9C9C9C" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </ListBox.Background>
+                                <ListBoxItem x:Name="itm7" Content="Loan Application" FontSize="25" Foreground="#FF32AFD4" MouseUp="itm6_MouseUp"/>
+                                <ListBoxItem x:Name="itm14" Content="Loan Approval" FontSize="25" Foreground="#FF32AFD4" MouseUp="itm8_MouseUp" Selected="itm8_Selected"/>
+                                <ListBoxItem x:Name="itm15" Content="Releasing" FontSize="25" Foreground="#FF32AFD4" Selected="itm9_Selected"/>
+                                <ListBoxItem x:Name="itm16" Content="Payments" FontSize="25" Foreground="#FF32AFD4"/>
+                            </ListBox>
 
                         </Grid>
                     </TabItem>

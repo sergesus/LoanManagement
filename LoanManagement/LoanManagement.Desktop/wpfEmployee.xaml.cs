@@ -63,10 +63,18 @@ namespace LoanManagement.Desktop
 
         public void resetGrid()
         {
-            using (var ctx = new MyLoanContext())
+            try
             {
-                var emp = from em in ctx.Employees where em.Active == true select new { em.EmployeeID, em.FirstName,em.MI,em.LastName,em.Suffix,em.Position};
-                dgEmp.ItemsSource = emp.ToList();
+                using (var ctx = new MyLoanContext())
+                {
+                    var emp = from em in ctx.Employees where em.Active == true select new { em.EmployeeID, em.FirstName, em.MI, em.LastName, em.Suffix, em.Position };
+                    dgEmp.ItemsSource = emp.ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
         }
 
@@ -74,13 +82,21 @@ namespace LoanManagement.Desktop
 
         private void EmpWindow_Loaded(object sender, RoutedEventArgs e)
         {
-            ImageBrush myBrush = new ImageBrush();
-            System.Windows.Controls.Image image = new System.Windows.Controls.Image();
-            image.Source = new BitmapImage(
-                new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
-            myBrush.ImageSource = image.Source;
-            EmpWindow.Background = myBrush;
-            resetGrid();
+            try
+            {
+                ImageBrush myBrush = new ImageBrush();
+                System.Windows.Controls.Image image = new System.Windows.Controls.Image();
+                image.Source = new BitmapImage(
+                    new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
+                myBrush.ImageSource = image.Source;
+                EmpWindow.Background = myBrush;
+                resetGrid();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         
@@ -108,6 +124,7 @@ namespace LoanManagement.Desktop
             }
             catch (Exception ex)
             {
+                //System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
         }
@@ -120,18 +137,34 @@ namespace LoanManagement.Desktop
 
         private void EmpWindow_Activated(object sender, EventArgs e)
         {
-            resetGrid();
-            lblDept.Content = "";
-            lblName.Content = "";
-            lblPosition.Content = "";
-            img.Visibility = Visibility.Hidden;
+            try
+            {
+                resetGrid();
+                lblDept.Content = "";
+                lblName.Content = "";
+                lblPosition.Content = "";
+                img.Visibility = Visibility.Hidden;
+            }
+            catch (Exception ex)
+            {
+                //System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            wpfEmployeeInfo emp = new wpfEmployeeInfo();
-            emp.status = "Add";
-            emp.ShowDialog();
+            try
+            {
+                wpfEmployeeInfo emp = new wpfEmployeeInfo();
+                emp.status = "Add";
+                emp.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         private void btnView_Click(object sender, RoutedEventArgs e)
@@ -145,6 +178,7 @@ namespace LoanManagement.Desktop
             }
             catch (Exception ex)
             {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
         }
@@ -173,6 +207,7 @@ namespace LoanManagement.Desktop
             }
             catch (Exception ex)
             {
+                //System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
         }

@@ -35,13 +35,28 @@ namespace LoanManagement.Desktop
 
         private static byte[] ConvertImageToByteArray(string fileName)
         {
-            Bitmap bitMap = new Bitmap(fileName);
-            ImageFormat bmpFormat = bitMap.RawFormat;
-            var imageToConvert = System.Drawing.Image.FromFile(fileName);
-            using (MemoryStream ms = new MemoryStream())
+            try
             {
-                imageToConvert.Save(ms, bmpFormat);
-                return ms.ToArray();
+                Bitmap bitMap = new Bitmap(fileName);
+                ImageFormat bmpFormat = bitMap.RawFormat;
+                var imageToConvert = System.Drawing.Image.FromFile(fileName);
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    imageToConvert.Save(ms, bmpFormat);
+                    return ms.ToArray();
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                Bitmap bitMap = new Bitmap(fileName);
+                ImageFormat bmpFormat = bitMap.RawFormat;
+                var imageToConvert = System.Drawing.Image.FromFile(fileName);
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    imageToConvert.Save(ms, bmpFormat);
+                    return ms.ToArray();
+                }
             }
         }
 
@@ -63,22 +78,37 @@ namespace LoanManagement.Desktop
 
         public void resetGrid()
         {
-            using (var ctx = new MyLoanContext())
+            try
             {
-                var emp = from em in ctx.Agents where em.Active == true select new { em.AgentID, em.FirstName, em.MI, em.LastName, em.Suffix };
-                dgEmp.ItemsSource = emp.ToList();
+                using (var ctx = new MyLoanContext())
+                {
+                    var emp = from em in ctx.Agents where em.Active == true select new { em.AgentID, em.FirstName, em.MI, em.LastName, em.Suffix };
+                    dgEmp.ItemsSource = emp.ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
         private void MetroWindow_Loaded_1(object sender, RoutedEventArgs e)
         {
-            ImageBrush myBrush = new ImageBrush();
-            System.Windows.Controls.Image image = new System.Windows.Controls.Image();
-            image.Source = new BitmapImage(
-                new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
-            myBrush.ImageSource = image.Source;
-            wdw1.Background = myBrush;
-            resetGrid();
+            try
+            {
+                ImageBrush myBrush = new ImageBrush();
+                System.Windows.Controls.Image image = new System.Windows.Controls.Image();
+                image.Source = new BitmapImage(
+                    new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
+                myBrush.ImageSource = image.Source;
+                wdw1.Background = myBrush;
+                resetGrid();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         private void dgEmp_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -103,15 +133,24 @@ namespace LoanManagement.Desktop
             }
             catch (Exception ex)
             {
+                //System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            wpfAgentInfo frm = new wpfAgentInfo();
-            frm.status = "Add";
-            frm.ShowDialog();
+            try
+            {
+                wpfAgentInfo frm = new wpfAgentInfo();
+                frm.status = "Add";
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         private void btnView_Click(object sender, RoutedEventArgs e)
@@ -125,13 +164,22 @@ namespace LoanManagement.Desktop
             }
             catch (Exception ex)
             {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
         }
 
         private void wdw1_Activated(object sender, EventArgs e)
         {
-            resetGrid();
+            try
+            {
+                resetGrid();
+            }
+            catch (Exception ex)
+            {
+                //System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
     }
 }

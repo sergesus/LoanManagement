@@ -38,110 +38,133 @@ namespace LoanManagement.Desktop
 
         public void reset()
         {
-            using (var ctx = new MyLoanContext())
+            try
             {
-                var lon = ctx.Loans.Find(lId);
-
-                byte[] imageArr;
-                imageArr = lon.Client.Photo;
-                BitmapImage bi = new BitmapImage();
-                bi.BeginInit();
-                bi.CreateOptions = BitmapCreateOptions.None;
-                bi.CacheOption = BitmapCacheOption.Default;
-                bi.StreamSource = new MemoryStream(imageArr);
-                bi.EndInit();
-                img.Source = bi;
-
-                lblTOL.Content = lon.Service.Name;
-                lblType.Content = lon.Service.Type;
-                lblMode.Content = lon.Mode;
-                lblInt.Content = lon.Service.Interest + "%";
-                lblPen.Content = lon.Service.Holding + "%";
-                lblCom.Content = lon.Service.AgentCommission + "%";
-                lblTerm.Content = lon.Term;
-                lblStatus.Content = lon.Status;
-
-                if (lon.Status == "Declined")
+                using (var ctx = new MyLoanContext())
                 {
-                    lblR.Visibility = Visibility.Visible;
-                    lblReason1.Visibility = Visibility.Visible;
-                    lblReason1.Content = lon.DeclinedLoan.Reason;
-                }
-                else if (lon.Status == "Approved")
-                {
-                    lblR.Content = "Amount Approved:";
-                    lblReason1.Content = "Php " + lon.ApprovedLoan.AmountApproved.ToString("N2");
-                }
-                else
-                {
-                    lblR.Visibility = Visibility.Hidden;
-                    lblReason1.Visibility = Visibility.Hidden;
-                }
+                    var lon = ctx.Loans.Find(lId);
 
-                double ded = lon.Service.AgentCommission;
-                var dec = from de in ctx.Deductions
-                          where de.ServiceID == lon.ServiceID
-                          select de;
-                foreach (var item in dec)
-                {
-                    ded = ded + item.Percentage;
-                }
+                    byte[] imageArr;
+                    imageArr = lon.Client.Photo;
+                    BitmapImage bi = new BitmapImage();
+                    bi.BeginInit();
+                    bi.CreateOptions = BitmapCreateOptions.None;
+                    bi.CacheOption = BitmapCacheOption.Default;
+                    bi.StreamSource = new MemoryStream(imageArr);
+                    bi.EndInit();
+                    img.Source = bi;
 
-                lblDed.Content = ded.ToString() + "%";
-                lblAmt.Content = "Php " + lon.LoanApplication.AmountApplied.ToString("N0");
-                lblDt.Content = lon.LoanApplication.DateApplied.ToString();
+                    lblTOL.Content = lon.Service.Name;
+                    lblType.Content = lon.Service.Type;
+                    lblMode.Content = lon.Mode;
+                    lblInt.Content = lon.Service.Interest + "%";
+                    lblPen.Content = lon.Service.Holding + "%";
+                    lblCom.Content = lon.Service.AgentCommission + "%";
+                    lblTerm.Content = lon.Term;
+                    lblStatus.Content = lon.Status;
 
-                lblName.Content = lon.Client.LastName + ", " + lon.Client.FirstName + " " + lon.Client.MiddleName;
-
-                if (status == "UApproval")
-                {
-                    btnApprove.Content = "Update Approval";
-                    btnDecline.Content = "Revert Approval";
                     if (lon.Status == "Declined")
                     {
-                        btnApprove.Visibility = Visibility.Hidden;
+                        lblR.Visibility = Visibility.Visible;
+                        lblReason1.Visibility = Visibility.Visible;
+                        lblReason1.Content = lon.DeclinedLoan.Reason;
+                    }
+                    else if (lon.Status == "Approved")
+                    {
+                        lblR.Content = "Amount Approved:";
+                        lblReason1.Content = "Php " + lon.ApprovedLoan.AmountApproved.ToString("N2");
+                    }
+                    else
+                    {
+                        lblR.Visibility = Visibility.Hidden;
+                        lblReason1.Visibility = Visibility.Hidden;
+                    }
+
+                    double ded = lon.Service.AgentCommission;
+                    var dec = from de in ctx.Deductions
+                              where de.ServiceID == lon.ServiceID
+                              select de;
+                    foreach (var item in dec)
+                    {
+                        ded = ded + item.Percentage;
+                    }
+
+                    lblDed.Content = ded.ToString() + "%";
+                    lblAmt.Content = "Php " + lon.LoanApplication.AmountApplied.ToString("N0");
+                    lblDt.Content = lon.LoanApplication.DateApplied.ToString();
+
+                    lblName.Content = lon.Client.LastName + ", " + lon.Client.FirstName + " " + lon.Client.MiddleName;
+
+                    if (status == "UApproval")
+                    {
+                        btnApprove.Content = "Update Approval";
+                        btnDecline.Content = "Revert Approval";
+                        if (lon.Status == "Declined")
+                        {
+                            btnApprove.Visibility = Visibility.Hidden;
+                        }
+                    }
+                    else if (status == "Releasing")
+                    {
+                        btnApprove.Content = "Release Loan";
+                        btnDecline.Visibility = Visibility.Hidden;
+                        lblR.Visibility = Visibility.Visible;
+                        lblReason1.Visibility = Visibility.Visible;
+                        lblR.Content = "Amount Approved:";
+                        lblReason1.Content = "Php " + lon.ApprovedLoan.AmountApproved.ToString("N2");
+                    }
+
+                    if (lblStatus.Content.ToString() == "Approved")
+                    {
+                        lblStatus.Foreground = System.Windows.Media.Brushes.Green;
+                    }
+                    else if (lblStatus.Content.ToString() == "Declined")
+                    {
+                        lblStatus.Foreground = System.Windows.Media.Brushes.Red;
+                    }
+                    else
+                    {
+                        lblStatus.Foreground = System.Windows.Media.Brushes.Black;
                     }
                 }
-                else if (status == "Releasing")
-                {
-                    btnApprove.Content = "Release Loan";
-                    btnDecline.Visibility=Visibility.Hidden;
-                    lblR.Visibility = Visibility.Visible;
-                    lblReason1.Visibility = Visibility.Visible;
-                    lblR.Content = "Amount Approved:";
-                    lblReason1.Content = "Php " + lon.ApprovedLoan.AmountApproved.ToString("N2");
-                }
-
-                if (lblStatus.Content.ToString() == "Approved")
-                {
-                    lblStatus.Foreground = System.Windows.Media.Brushes.Green;
-                }
-                else if (lblStatus.Content.ToString() == "Declined")
-                {
-                    lblStatus.Foreground = System.Windows.Media.Brushes.Red;
-                }
-                else
-                {
-                    lblStatus.Foreground = System.Windows.Media.Brushes.Black;
-                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
         }
 
         private void wdw1_Loaded(object sender, RoutedEventArgs e)
         {
-            reset();
-            ImageBrush myBrush = new ImageBrush();
-            System.Windows.Controls.Image image = new System.Windows.Controls.Image();
-            image.Source = new BitmapImage(
-                new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
-            myBrush.ImageSource = image.Source;
-            //Grid grid = new Grid();
-            wdw1.Background = myBrush;
+            try
+            {
+                reset();
+                ImageBrush myBrush = new ImageBrush();
+                System.Windows.Controls.Image image = new System.Windows.Controls.Image();
+                image.Source = new BitmapImage(
+                    new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
+                myBrush.ImageSource = image.Source;
+                //Grid grid = new Grid();
+                wdw1.Background = myBrush;
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         private void btnFull_Click(object sender, RoutedEventArgs e)
         {
-
+            wpfClientInfo frm = new wpfClientInfo();
+            frm.status = "View";
+            using (var ctx = new MyLoanContext())
+            {
+                var lon = ctx.Loans.Find(lId);
+                frm.cId = lon.ClientID;
+            }
+            frm.ShowDialog();
         }
 
         private void TextBlock_MouseUp_1(object sender, MouseButtonEventArgs e)
@@ -151,69 +174,94 @@ namespace LoanManagement.Desktop
 
         private void Hyperlink_Click_1(object sender, RoutedEventArgs e)
         {
-            wpfAgentInfo frm = new wpfAgentInfo();
-            frm.status = "View";
-            using (var ctx = new MyLoanContext())
+            try
             {
-                var lon = ctx.Loans.Find(lId);
-                frm.aId = lon.AgentID;
+                wpfAgentInfo frm = new wpfAgentInfo();
+                frm.status = "View";
+                using (var ctx = new MyLoanContext())
+                {
+                    var lon = ctx.Loans.Find(lId);
+                    frm.aId = lon.AgentID;
+                }
+                frm.ShowDialog();
             }
-            frm.ShowDialog();
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         private void btnApprove_Click(object sender, RoutedEventArgs e)
         {
-            if (status == "Approval" || status == "UApproval")
+            try
             {
-                wpfLoanApproval frm = new wpfLoanApproval();
-                frm.status = status;
-                frm.lId = lId;
-                this.Close();
-                frm.ShowDialog();
+                if (status == "Approval" || status == "UApproval")
+                {
+                    wpfLoanApproval frm = new wpfLoanApproval();
+                    frm.status = status;
+                    frm.lId = lId;
+                    this.Close();
+                    frm.ShowDialog();
+                }
+                else if (status == "Releasing")
+                {
+                    wpfFReleasing frm = new wpfFReleasing();
+                    frm.status = status;
+                    frm.lId = lId;
+                    this.Close();
+                    frm.ShowDialog();
+                }
             }
-            else if (status == "Releasing")
+            catch (Exception ex)
             {
-                wpfFReleasing frm = new wpfFReleasing();
-                frm.status = status;
-                frm.lId = lId;
-                this.Close();
-                frm.ShowDialog();
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
 
         }
 
         private void btnDecline_Click(object sender, RoutedEventArgs e)
         {
-            if (status == "Approval")
+            try
             {
-                wpfLoanDeclining frm = new wpfLoanDeclining();
-                frm.lId = lId;
-                this.Close();
-                frm.ShowDialog();
-            }
-            else if(status == "UApproval")
-            {
-                System.Windows.MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure?", "Question", MessageBoxButton.YesNo);
-                if (mr == System.Windows.MessageBoxResult.Yes)
+                if (status == "Approval")
                 {
-                    using (var ctx = new MyLoanContext())
+                    wpfLoanDeclining frm = new wpfLoanDeclining();
+                    frm.lId = lId;
+                    this.Close();
+                    frm.ShowDialog();
+                }
+                else if (status == "UApproval")
+                {
+                    System.Windows.MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure?", "Question", MessageBoxButton.YesNo);
+                    if (mr == System.Windows.MessageBoxResult.Yes)
                     {
-                        var lon = ctx.Loans.Find(lId);
-                        if (lon.Status == "Approved")
+                        using (var ctx = new MyLoanContext())
                         {
-                            ctx.ApprovedLoans.Remove(lon.ApprovedLoan);
+                            var lon = ctx.Loans.Find(lId);
+                            if (lon.Status == "Approved")
+                            {
+                                ctx.ApprovedLoans.Remove(lon.ApprovedLoan);
+                            }
+                            else
+                            {
+                                ctx.DeclinedLoans.Remove(lon.DeclinedLoan);
+                            }
+                            lon.Status = "Applied";
+                            ctx.SaveChanges();
+                            System.Windows.MessageBox.Show("Transaction has been voided");
+                            this.Close();
                         }
-                        else
-                        {
-                            ctx.DeclinedLoans.Remove(lon.DeclinedLoan);
-                        }
-                        lon.Status = "Applied";
-                        ctx.SaveChanges();
-                        System.Windows.MessageBox.Show("Transaction has been voided");
-                        this.Close();
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
+
     }
 }

@@ -28,52 +28,100 @@ namespace LoanManagement.Desktop
 
         private void wdw1_Loaded(object sender, RoutedEventArgs e)
         {
-            ImageBrush myBrush = new ImageBrush();
-            System.Windows.Controls.Image image = new System.Windows.Controls.Image();
-            image.Source = new BitmapImage(
-                new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
-            myBrush.ImageSource = image.Source;
-            //Grid grid = new Grid();
-            wdw1.Background = myBrush;
+            try
+            {
+                ImageBrush myBrush = new ImageBrush();
+                System.Windows.Controls.Image image = new System.Windows.Controls.Image();
+                image.Source = new BitmapImage(
+                    new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
+                myBrush.ImageSource = image.Source;
+                //Grid grid = new Grid();
+                wdw1.Background = myBrush;
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         private void btnHold_Click(object sender, RoutedEventArgs e)
         {
-            wpfLoanSearch frm = new wpfLoanSearch();
-            frm.status = "Holding";
-            this.Close();
-            frm.ShowDialog();
+            try
+            {
+                wpfLoanSearch frm = new wpfLoanSearch();
+                frm.status = "Holding";
+                this.Close();
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         private void btnDeposit_Click(object sender, RoutedEventArgs e)
         {
-            wpfDepositCheques frm = new wpfDepositCheques();
-            frm.status = "Deposit";
-            this.Close();
-            frm.ShowDialog();
+            try
+            {
+                wpfDepositCheques frm = new wpfDepositCheques();
+                frm.status = "Deposit";
+                this.Close();
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
-            wpfChequeClearing frm = new wpfChequeClearing();
-            this.Close();
-            frm.ShowDialog();
+            try
+            {
+                wpfChequeClearing frm = new wpfChequeClearing();
+                this.Close();
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         private void btnReturn_Click(object sender, RoutedEventArgs e)
         {
-            wpfDepositCheques frm = new wpfDepositCheques();
-            frm.status = "Returning";
-            this.Close();
-            frm.ShowDialog();
+            try
+            {
+                wpfDepositCheques frm = new wpfDepositCheques();
+                frm.status = "Returning";
+                this.Close();
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         private void btnVoid_Click(object sender, RoutedEventArgs e)
         {
-            wpfLoanSearch frm = new wpfLoanSearch();
-            frm.status = "Voiding";
-            this.Close();
-            frm.ShowDialog();
+            try
+            {
+                wpfLoanSearch frm = new wpfLoanSearch();
+                frm.status = "Voiding";
+                this.Close();
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
     }
 }

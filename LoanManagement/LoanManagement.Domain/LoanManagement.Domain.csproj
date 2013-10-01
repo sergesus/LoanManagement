@@ -53,6 +53,14 @@
     <Compile Include="Migrations\201308261021085_UpdatedServices2.Designer.cs">
       <DependentUpon>201308261021085_UpdatedServices2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201308272337452_AddedPaymentAdjustment.cs" />
+    <Compile Include="Migrations\201308272337452_AddedPaymentAdjustment.Designer.cs">
+      <DependentUpon>201308272337452_AddedPaymentAdjustment.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201311290128235_AddedRestructred.cs" />
+    <Compile Include="Migrations\201311290128235_AddedRestructred.Designer.cs">
+      <DependentUpon>201311290128235_AddedRestructred.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemData.cs" />
@@ -67,6 +75,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201308261021085_UpdatedServices2.resx">
       <DependentUpon>201308261021085_UpdatedServices2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201308272337452_AddedPaymentAdjustment.resx">
+      <DependentUpon>201308272337452_AddedPaymentAdjustment.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201311290128235_AddedRestructred.resx">
+      <DependentUpon>201311290128235_AddedRestructred.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

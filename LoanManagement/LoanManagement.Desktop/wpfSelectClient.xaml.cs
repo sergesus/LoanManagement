@@ -32,29 +32,53 @@ namespace LoanManagement.Desktop
 
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
         {
-            //toEdit
-            status = "Application";
-            ImageBrush myBrush = new ImageBrush();
-            System.Windows.Controls.Image image = new System.Windows.Controls.Image();
-            image.Source = new BitmapImage(
-                new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
-            myBrush.ImageSource = image.Source;
-            wdw1.Background = myBrush;
+            try
+            {
+                //toEdit
+                status = "Application";
+                ImageBrush myBrush = new ImageBrush();
+                System.Windows.Controls.Image image = new System.Windows.Controls.Image();
+                image.Source = new BitmapImage(
+                    new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
+                myBrush.ImageSource = image.Source;
+                wdw1.Background = myBrush;
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            wpfClientSearch frm = new wpfClientSearch();
-            frm.status = "Client";
-            frm.cId = 0;
-            frm.ShowDialog();
+            try
+            {
+                wpfClientSearch frm = new wpfClientSearch();
+                frm.status = "Client";
+                frm.cId = 0;
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            wpfClientInfo frm = new wpfClientInfo();
-            frm.status = "Add";
-            frm.ShowDialog();
+            try
+            {
+                wpfClientInfo frm = new wpfClientInfo();
+                frm.status = "Add";
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         private void Button_Click_3(object sender, RoutedEventArgs e)
@@ -79,9 +103,10 @@ namespace LoanManagement.Desktop
                     //this.Close();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
         }
     }

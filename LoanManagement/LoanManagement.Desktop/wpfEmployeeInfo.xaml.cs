@@ -76,83 +76,99 @@ namespace LoanManagement.Desktop
 
         public void reset()
         {
-            btnAddAddress.Content = "Add";
-            btnEdtAddress.Content = "Edit";
-            dgAddress.IsEnabled = true;
-            btnDelAddress.Visibility = Visibility.Visible;
-            grpAddress.Visibility = Visibility.Hidden;
-            txtCity.Text = "";
-            txtProvince.Text = "";
-            txtStreet.Text = "";
+            try
+            {
+                btnAddAddress.Content = "Add";
+                btnEdtAddress.Content = "Edit";
+                dgAddress.IsEnabled = true;
+                btnDelAddress.Visibility = Visibility.Visible;
+                grpAddress.Visibility = Visibility.Hidden;
+                txtCity.Text = "";
+                txtProvince.Text = "";
+                txtStreet.Text = "";
 
-            btnAddContact.Content = "Add";
-            btnEdtContact.Content = "Edit";
-            dgContact.IsEnabled = true;
-            btnDelContact.Visibility = Visibility.Visible;
-            grpContact.Visibility = Visibility.Hidden;
-            txtContact.Text = "";
-            int num1=0;
-            int num2 = 0;
-            if (status == "Add")
-            {
-                using (var ctx = new MyLoanContext())
+                btnAddContact.Content = "Add";
+                btnEdtContact.Content = "Edit";
+                dgContact.IsEnabled = true;
+                btnDelContact.Visibility = Visibility.Visible;
+                grpContact.Visibility = Visibility.Hidden;
+                txtContact.Text = "";
+                int num1 = 0;
+                int num2 = 0;
+                if (status == "Add")
                 {
-                    num1 = ctx.TempAdresses.Count();
-                    num2 = ctx.TempContacts.Count();
+                    using (var ctx = new MyLoanContext())
+                    {
+                        num1 = ctx.TempAdresses.Count();
+                        num2 = ctx.TempContacts.Count();
+                    }
+                }
+                else
+                {
+                    using (var ctx = new MyLoanContext())
+                    {
+                        num1 = ctx.EmployeeAddresses.Where(x => x.EmployeeID == uId).Count();
+                        num2 = ctx.EmployeeContacts.Where(x => x.EmployeeID == uId).Count();
+                    }
+                }
+                if (num1 > 0)
+                {
+                    btnDelAddress.IsEnabled = true;
+                    btnEdtAddress.IsEnabled = true;
+                }
+                else
+                {
+                    btnDelAddress.IsEnabled = !true;
+                    btnEdtAddress.IsEnabled = !true;
+                }
+                if (num2 > 0)
+                {
+                    btnDelContact.IsEnabled = true;
+                    btnEdtContact.IsEnabled = true;
+                }
+                else
+                {
+                    btnDelContact.IsEnabled = !true;
+                    btnEdtContact.IsEnabled = !true;
                 }
             }
-            else
-            { 
-                using (var ctx = new MyLoanContext())
-                {
-                    num1 = ctx.EmployeeAddresses.Where(x=> x.EmployeeID==uId).Count();
-                    num2 = ctx.EmployeeContacts.Where(x=> x.EmployeeID==uId).Count();
-                }
-            }
-            if (num1 > 0)
+            catch (Exception ex)
             {
-                btnDelAddress.IsEnabled = true;
-                btnEdtAddress.IsEnabled = true;
-            }
-            else
-            {
-                btnDelAddress.IsEnabled = !true;
-                btnEdtAddress.IsEnabled = !true;
-            }
-            if (num2 > 0)
-            {
-                btnDelContact.IsEnabled = true;
-                btnEdtContact.IsEnabled = true;
-            }
-            else
-            {
-                btnDelContact.IsEnabled = !true;
-                btnEdtContact.IsEnabled = !true;
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
         }
 
 
         private void btnBrowse_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog dlg = new OpenFileDialog();
-            dlg.InitialDirectory = "c:\\";
-            dlg.Filter = "Image files (*.jpg)|*.jpg|All Files (*.*)|*.*";
-            dlg.RestoreDirectory = true;
+            try
+            {
+                OpenFileDialog dlg = new OpenFileDialog();
+                dlg.InitialDirectory = "c:\\";
+                dlg.Filter = "Image files (*.jpg)|*.jpg|All Files (*.*)|*.*";
+                dlg.RestoreDirectory = true;
 
-            if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                selectedFileName = dlg.FileName;
-                //FileNameLabel.Content = selectedFileName;
-                BitmapImage bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.UriSource = new Uri(selectedFileName);
-                bitmap.EndInit();
-                img.Source = bitmap;
-                isChanged = true;
+                if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    selectedFileName = dlg.FileName;
+                    //FileNameLabel.Content = selectedFileName;
+                    BitmapImage bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.UriSource = new Uri(selectedFileName);
+                    bitmap.EndInit();
+                    img.Source = bitmap;
+                    isChanged = true;
+                }
+                else
+                {
+                    isChanged = false;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                isChanged = false;
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
         }
 
@@ -240,90 +256,98 @@ namespace LoanManagement.Desktop
             }
             catch (Exception ex)
             {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
         }
 
         private void btnAddAddress_Click(object sender, RoutedEventArgs e)
         {
-            
-            if (btnAddAddress.Content.ToString() == "Add")
+            try
             {
-                grpAddress.Visibility = Visibility.Visible;
-                btnAddAddress.Content = "Save";
-                btnEdtAddress.Content = "Cancel";
-                btnEdtAddress.IsEnabled = true;
-                btnDelAddress.Visibility = Visibility.Hidden;
-                
-            }
-            else if (btnAddAddress.Content.ToString() == "Save")
-            {
-                if (txtCity.Text == "" || txtProvince.Text == "" || txtStreet.Text == "")
+                if (btnAddAddress.Content.ToString() == "Add")
                 {
-                    System.Windows.MessageBox.Show("Please complete the required information", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
-                }
+                    grpAddress.Visibility = Visibility.Visible;
+                    btnAddAddress.Content = "Save";
+                    btnEdtAddress.Content = "Cancel";
+                    btnEdtAddress.IsEnabled = true;
+                    btnDelAddress.Visibility = Visibility.Hidden;
 
-                //for view
-                if (status == "View")
+                }
+                else if (btnAddAddress.Content.ToString() == "Save")
                 {
+                    if (txtCity.Text == "" || txtProvince.Text == "" || txtStreet.Text == "")
+                    {
+                        System.Windows.MessageBox.Show("Please complete the required information", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
+                    //for view
+                    if (status == "View")
+                    {
+                        using (var ctx = new MyLoanContext())
+                        {
+                            EmployeeAddress empAdd = new EmployeeAddress { Street = txtStreet.Text, Province = txtProvince.Text, City = txtCity.Text, EmployeeID = uId };
+                            ctx.EmployeeAddresses.Add(empAdd);
+                            ctx.SaveChanges();
+                            var add = from cn in ctx.EmployeeAddresses
+                                      where cn.EmployeeID == uId
+                                      select new { cn.EmpAddID, cn.Street, cn.Province, cn.City };
+                            dgAddress.ItemsSource = add.ToList();
+                        }
+                        reset();
+                        return;
+                    }
+
                     using (var ctx = new MyLoanContext())
                     {
-                        EmployeeAddress empAdd= new EmployeeAddress { Street = txtStreet.Text, Province = txtProvince.Text, City = txtCity.Text, EmployeeID = uId };
-                        ctx.EmployeeAddresses.Add(empAdd);
+                        TempAddress add = new TempAddress { Street = txtStreet.Text, Province = txtProvince.Text, City = txtCity.Text };
+                        ctx.TempAdresses.Add(add);
                         ctx.SaveChanges();
-                        var add = from cn in ctx.EmployeeAddresses
-                                  where cn.EmployeeID == uId
-                                  select new { cn.EmpAddID, cn.Street, cn.Province, cn.City };
-                        dgAddress.ItemsSource = add.ToList();
+                        dgAddress.ItemsSource = ctx.TempAdresses.ToList();
                     }
+
                     reset();
-                    return;
                 }
-
-                using (var ctx = new MyLoanContext())
+                else
                 {
-                    TempAddress add = new TempAddress { Street = txtStreet.Text, Province = txtProvince.Text, City = txtCity.Text };
-                    ctx.TempAdresses.Add(add);
-                    ctx.SaveChanges();
-                    dgAddress.ItemsSource = ctx.TempAdresses.ToList();
-                }
+                    //for view
+                    if (status == "View")
+                    {
+                        using (var ctx = new MyLoanContext())
+                        {
+                            var adds = ctx.EmployeeAddresses.Find(Convert.ToInt32(getRow(dgAddress, 0)));
+                            adds.City = txtCity.Text;
+                            adds.Province = txtProvince.Text;
+                            adds.Street = txtStreet.Text;
+                            ctx.SaveChanges();
+                            var add = from cn in ctx.EmployeeAddresses
+                                      where cn.EmployeeID == uId
+                                      select new { cn.EmpAddID, cn.Street, cn.Province, cn.City };
+                            dgAddress.ItemsSource = add.ToList();
+                        }
+                        reset();
+                        return;
+                    }
 
-                reset();
-            }
-            else
-            {
-                //for view
-                if (status == "View")
-                {
+
                     using (var ctx = new MyLoanContext())
                     {
-                        var adds = ctx.EmployeeAddresses.Find(Convert.ToInt32(getRow(dgAddress, 0)));
-                        adds.City = txtCity.Text;
-                        adds.Province = txtProvince.Text;
-                        adds.Street = txtStreet.Text;
+                        var add = ctx.TempAdresses.Find(Convert.ToInt32(getRow(dgAddress, 0)));
+                        add.City = txtCity.Text;
+                        add.Province = txtProvince.Text;
+                        add.Street = txtStreet.Text;
                         ctx.SaveChanges();
-                        var add = from cn in ctx.EmployeeAddresses
-                                  where cn.EmployeeID == uId
-                                  select new { cn.EmpAddID, cn.Street, cn.Province, cn.City };
-                        dgAddress.ItemsSource = add.ToList();
+                        dgAddress.ItemsSource = ctx.TempAdresses.ToList();
+                        reset();
+
                     }
-                    reset();
-                    return;
                 }
-                
-
-                using (var ctx = new MyLoanContext())
-                {
-                    var add = ctx.TempAdresses.Find(Convert.ToInt32(getRow(dgAddress, 0)));
-                    add.City=txtCity.Text;
-                    add.Province = txtProvince.Text;
-                    add.Street = txtStreet.Text;
-                    ctx.SaveChanges();
-                    dgAddress.ItemsSource = ctx.TempAdresses.ToList();
-                    reset();
-
-                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
         }
 
@@ -368,150 +392,175 @@ namespace LoanManagement.Desktop
             }
             catch (Exception ex)
             {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
         }
 
         private void btnAddContact_Click(object sender, RoutedEventArgs e)
         {
-            if (btnAddContact.Content.ToString() == "Add")
+            try
             {
-                grpContact.Visibility = Visibility.Visible;
-                btnAddContact.Content = "Save";
-                btnEdtContact.Content = "Cancel";
-                btnDelContact.Visibility = Visibility.Hidden;
-                btnEdtContact.IsEnabled = true;
-
-            }
-            else if (btnAddContact.Content.ToString() == "Save")
-            {
-                if (txtContact.Text == "")
+                if (btnAddContact.Content.ToString() == "Add")
                 {
-                    System.Windows.MessageBox.Show("Please complete the required information", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
+                    grpContact.Visibility = Visibility.Visible;
+                    btnAddContact.Content = "Save";
+                    btnEdtContact.Content = "Cancel";
+                    btnDelContact.Visibility = Visibility.Hidden;
+                    btnEdtContact.IsEnabled = true;
+
                 }
-
-                //for view
-                if (status == "View")
+                else if (btnAddContact.Content.ToString() == "Save")
                 {
+                    if (txtContact.Text == "")
+                    {
+                        System.Windows.MessageBox.Show("Please complete the required information", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
+                    //for view
+                    if (status == "View")
+                    {
+                        using (var ctx = new MyLoanContext())
+                        {
+                            EmployeeContact empCont = new EmployeeContact { Contact = txtContact.Text, EmployeeID = uId };
+                            ctx.EmployeeContacts.Add(empCont);
+                            ctx.SaveChanges();
+                            var cont = from cn in ctx.EmployeeContacts
+                                       where cn.EmployeeID == uId
+                                       select new { cn.EmpContactID, cn.Contact };
+                            dgContact.ItemsSource = cont.ToList();
+                        }
+                        reset();
+                        return;
+                    }
+
                     using (var ctx = new MyLoanContext())
                     {
-                        EmployeeContact empCont = new EmployeeContact { Contact=txtContact.Text, EmployeeID = uId };
-                        ctx.EmployeeContacts.Add(empCont);
+                        TempContact con = new TempContact { Contact = txtContact.Text };
+                        ctx.TempContacts.Add(con);
                         ctx.SaveChanges();
-                        var cont = from cn in ctx.EmployeeContacts
-                                   where cn.EmployeeID == uId
-                                   select new { cn.EmpContactID, cn.Contact };
-                        dgContact.ItemsSource = cont.ToList();
+                        dgContact.ItemsSource = ctx.TempContacts.ToList();
                     }
+
                     reset();
-                    return;
                 }
-
-                using (var ctx = new MyLoanContext())
+                else
                 {
-                    TempContact con = new TempContact { Contact = txtContact.Text };
-                    ctx.TempContacts.Add(con);
-                    ctx.SaveChanges();
-                    dgContact.ItemsSource = ctx.TempContacts.ToList();
-                }
+                    //for view
+                    if (status == "View")
+                    {
+                        using (var ctx = new MyLoanContext())
+                        {
+                            var conts = ctx.EmployeeContacts.Find(Convert.ToInt32(getRow(dgAddress, 0)));
+                            conts.Contact = txtContact.Text;
+                            ctx.SaveChanges();
+                            var cont = from cn in ctx.EmployeeContacts
+                                       where cn.EmployeeID == uId
+                                       select new { cn.EmpContactID, cn.Contact };
+                            dgContact.ItemsSource = cont.ToList();
+                        }
+                        reset();
+                        return;
+                    }
 
-                reset();
-            }
-            else 
-            {
-                //for view
-                if (status == "View")
-                {
                     using (var ctx = new MyLoanContext())
                     {
-                        var conts = ctx.EmployeeContacts.Find(Convert.ToInt32(getRow(dgAddress, 0)));
-                        conts.Contact = txtContact.Text;
+                        var con = ctx.TempContacts.Find(Convert.ToInt32(getRow(dgContact, 0)));
+                        con.Contact = txtContact.Text;
                         ctx.SaveChanges();
-                        var cont = from cn in ctx.EmployeeContacts
-                                   where cn.EmployeeID == uId
-                                   select new { cn.EmpContactID, cn.Contact };
-                        dgContact.ItemsSource = cont.ToList();
+                        dgContact.ItemsSource = ctx.TempContacts.ToList();
+                        reset();
+
                     }
-                    reset();
-                    return;
                 }
-
-                using (var ctx = new MyLoanContext())
-                {
-                    var con = ctx.TempContacts.Find(Convert.ToInt32(getRow(dgContact, 0)));
-                    con.Contact = txtContact.Text;
-                    ctx.SaveChanges();
-                    dgContact.ItemsSource = ctx.TempContacts.ToList();
-                    reset();
-
-                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
         }
 
         private void btnEdtContact_Click(object sender, RoutedEventArgs e)
         {
-            if (btnEdtContact.Content.ToString() == "Edit")
+            try
             {
-                btnEdtContact.Content = "Cancel";
-                btnAddContact.Content = "Update";
-                dgContact.IsEnabled = false;
-                btnDelContact.Visibility = Visibility.Hidden;
-                grpContact.Visibility = Visibility.Visible;
-
-                //for view
-                if (status == "View")
+                if (btnEdtContact.Content.ToString() == "Edit")
                 {
-                    using (var ctx = new MyLoanContext())
+                    btnEdtContact.Content = "Cancel";
+                    btnAddContact.Content = "Update";
+                    dgContact.IsEnabled = false;
+                    btnDelContact.Visibility = Visibility.Hidden;
+                    grpContact.Visibility = Visibility.Visible;
+
+                    //for view
+                    if (status == "View")
                     {
-                        var cont= ctx.EmployeeContacts.Find(Convert.ToInt32(getRow(dgAddress, 0)));
-                        txtContact.Text = cont.Contact;
+                        using (var ctx = new MyLoanContext())
+                        {
+                            var cont = ctx.EmployeeContacts.Find(Convert.ToInt32(getRow(dgAddress, 0)));
+                            txtContact.Text = cont.Contact;
+                        }
+
+                        return;
                     }
 
-                    return;
+                    using (var ctx = new MyLoanContext())
+                    {
+                        var add = ctx.TempContacts.Find(Convert.ToInt32(getRow(dgContact, 0)));
+                        txtContact.Text = add.Contact;
+                    }
                 }
-
-                using (var ctx = new MyLoanContext())
+                else
                 {
-                    var add = ctx.TempContacts.Find(Convert.ToInt32(getRow(dgContact, 0)));
-                    txtContact.Text = add.Contact;
+                    reset();
                 }
             }
-            else
+            catch (Exception ex)
             {
-                reset();
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
         }
 
         private void btnDelAddress_Click(object sender, RoutedEventArgs e)
         {
-            using (var ctx = new MyLoanContext())
+            try
             {
-                try
+                using (var ctx = new MyLoanContext())
                 {
-                    //for view
-                    if (status == "View")
+                    try
                     {
-                        var conts = ctx.EmployeeContacts.Find(Convert.ToInt32(getRow(dgAddress, 0)));
-                        ctx.EmployeeContacts.Remove(conts);
+                        //for view
+                        if (status == "View")
+                        {
+                            var conts = ctx.EmployeeContacts.Find(Convert.ToInt32(getRow(dgAddress, 0)));
+                            ctx.EmployeeContacts.Remove(conts);
+                            ctx.SaveChanges();
+                            var cont = from cn in ctx.EmployeeContacts
+                                       where cn.EmployeeID == uId
+                                       select new { cn.EmpContactID, cn.Contact };
+                            dgContact.ItemsSource = cont.ToList();
+                            return;
+                        }
+
+                        var add = ctx.TempAdresses.Find(Convert.ToInt32(getRow(dgAddress, 0)));
+                        ctx.TempAdresses.Remove(add);
                         ctx.SaveChanges();
-                        var cont = from cn in ctx.EmployeeContacts
-                                   where cn.EmployeeID == uId
-                                   select new { cn.EmpContactID, cn.Contact };
-                        dgContact.ItemsSource = cont.ToList();
+                        dgAddress.ItemsSource = ctx.TempAdresses.ToList();
+                        reset();
+                    }
+                    catch (Exception ex)
+                    {
                         return;
                     }
-
-                    var add = ctx.TempAdresses.Find(Convert.ToInt32(getRow(dgAddress, 0)));
-                    ctx.TempAdresses.Remove(add);
-                    ctx.SaveChanges();
-                    dgAddress.ItemsSource = ctx.TempAdresses.ToList();
-                    reset();
                 }
-                catch (Exception ex)
-                {
-                    return;
-                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
         }
 
@@ -543,6 +592,7 @@ namespace LoanManagement.Desktop
                 }
                 catch (Exception ex)
                 {
+                    System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
             }
@@ -550,19 +600,27 @@ namespace LoanManagement.Desktop
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
         {
-            DialogResult dr = System.Windows.Forms.MessageBox.Show("Are you sure you want to clear all fields?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (dr == System.Windows.Forms.DialogResult.No)
+            try
             {
+                DialogResult dr = System.Windows.Forms.MessageBox.Show("Are you sure you want to clear all fields?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                if (dr == System.Windows.Forms.DialogResult.No)
+                {
+                    return;
+                }
+
+                txtFName.Text = "";
+                txtLName.Text = "";
+                txtMI.Text = "";
+                txtSuffix.Text = "";
+                cmbPosition.Text = "";
+                cmbDept.Text = "";
+                txtEmail.Text = "";
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            
-            txtFName.Text = "";
-            txtLName.Text = "";
-            txtMI.Text = "";
-            txtSuffix.Text = "";
-            cmbPosition.Text = "";
-            cmbDept.Text = "";
-            txtEmail.Text = "";
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -647,25 +705,34 @@ namespace LoanManagement.Desktop
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show(ex.InnerException.ToString());
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
         }
 
         private void btnDel_Click(object sender, RoutedEventArgs e)
         {
-            using (var ctx = new MyLoanContext())
+            try
             {
-                DialogResult dr = System.Windows.Forms.MessageBox.Show("Are you sure you want to delete this record?","Question",MessageBoxButtons.YesNo,MessageBoxIcon.Question);
-                if (dr == System.Windows.Forms.DialogResult.Yes)
+                using (var ctx = new MyLoanContext())
                 {
-                    Employee emp = ctx.Employees.Find(uId);
-                    emp.Active = false;
-                    ctx.SaveChanges();
-                    System.Windows.Forms.MessageBox.Show("User successfuly deleted");
-                    this.Close();
+                    DialogResult dr = System.Windows.Forms.MessageBox.Show("Are you sure you want to delete this record?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (dr == System.Windows.Forms.DialogResult.Yes)
+                    {
+                        Employee emp = ctx.Employees.Find(uId);
+                        emp.Active = false;
+                        ctx.SaveChanges();
+                        System.Windows.Forms.MessageBox.Show("User successfuly deleted");
+                        this.Close();
+
+                    }
 
                 }
-
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
         }
 

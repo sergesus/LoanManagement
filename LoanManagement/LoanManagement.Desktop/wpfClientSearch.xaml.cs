@@ -49,99 +49,124 @@ namespace LoanManagement.Desktop
 
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
         {
-            resetGrid();
-            ImageBrush myBrush = new ImageBrush();
-            System.Windows.Controls.Image image = new System.Windows.Controls.Image();
-            image.Source = new BitmapImage(
-                new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
-            myBrush.ImageSource = image.Source;
-            wdw1.Background = myBrush;
+            try
+            {
+                resetGrid();
+                ImageBrush myBrush = new ImageBrush();
+                System.Windows.Controls.Image image = new System.Windows.Controls.Image();
+                image.Source = new BitmapImage(
+                    new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
+                myBrush.ImageSource = image.Source;
+                wdw1.Background = myBrush;
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         public void resetGrid()
         {
-            if (status == "Client")
+            try
             {
-                using (var ctx = new MyLoanContext())
+                if (status == "Client")
                 {
-                    var clt = from cl in ctx.Clients
-                              where cl.Active == true && cl.ClientID != cId
-                              select new { ClientID = cl.ClientID, FirstName = cl.FirstName, MiddleName = cl.MiddleName, LastName = cl.LastName, Suffix = cl.Suffix };
-                    dgClient.ItemsSource = clt.ToList();
+                    using (var ctx = new MyLoanContext())
+                    {
+                        var clt = from cl in ctx.Clients
+                                  where cl.Active == true && cl.ClientID != cId
+                                  select new { ClientID = cl.ClientID, FirstName = cl.FirstName, MiddleName = cl.MiddleName, LastName = cl.LastName, Suffix = cl.Suffix };
+                        dgClient.ItemsSource = clt.ToList();
+                    }
+                }
+                else if (status == "Agent")
+                {
+                    using (var ctx = new MyLoanContext())
+                    {
+                        var agt = from ag in ctx.Agents
+                                  where ag.Active == true
+                                  select new { AgentID = ag.AgentID, FirstName = ag.FirstName, MiddleName = ag.MI, LastName = ag.LastName, Suffix = ag.Suffix };
+                        dgClient.ItemsSource = agt.ToList();
+                    }
+                }
+                else if (status == "CI")
+                {
+                    using (var ctx = new MyLoanContext())
+                    {
+                        var agt = from ag in ctx.Employees
+                                  where ag.Active == true
+                                  select new { AgentID = ag.EmployeeID, FirstName = ag.FirstName, MI = ag.MI, LastName = ag.LastName, Suffix = ag.Suffix };
+                        dgClient.ItemsSource = agt.ToList();
+                    }
                 }
             }
-            else if (status == "Agent")
+            catch (Exception ex)
             {
-                using (var ctx = new MyLoanContext())
-                {
-                    var agt = from ag in ctx.Agents
-                              where ag.Active == true
-                              select new { AgentID = ag.AgentID, FirstName = ag.FirstName, MiddleName = ag.MI, LastName = ag.LastName, Suffix = ag.Suffix };
-                    dgClient.ItemsSource = agt.ToList();
-                }
-            }
-            else if (status == "CI")
-            {
-                using (var ctx = new MyLoanContext())
-                {
-                    var agt = from ag in ctx.Employees
-                              where ag.Active == true
-                              select new { AgentID = ag.EmployeeID, FirstName = ag.FirstName, MI = ag.MI, LastName = ag.LastName, Suffix = ag.Suffix };
-                    dgClient.ItemsSource = agt.ToList();
-                }
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
         }
 
         private void btnSelect_Click(object sender, RoutedEventArgs e)
         {
-            if (status == "Client")
+            try
             {
-                var ctr = Application.Current.Windows.Count;
-                if (status2 == "LoanApplication")
+                if (status == "Client")
                 {
+                    var ctr = Application.Current.Windows.Count;
+                    if (status2 == "LoanApplication")
+                    {
+                        var frm = Application.Current.Windows[ctr - 2] as wpfLoanApplication;
+                        int cbId = Convert.ToInt32(getRow(dgClient, 0));
+                        frm.cbId = Convert.ToInt32(getRow(dgClient, 0));
+                        using (var ctx = new MyLoanContext())
+                        {
+                            var agt = ctx.Clients.Find(cbId);
+                            String str = "(" + cbId + ")" + agt.FirstName + " " + agt.MiddleName + " " + agt.LastName;
+                            frm.txtID.Text = str;
+                        }
+                    }
+                    else
+                    {
+                        var frm = Application.Current.Windows[ctr - 2] as wpfSelectClient;
+                        frm.txtID.Text = getRow(dgClient, 0);
+                        if (frm.txtID.Text == "")
+                        {
+                            return;
+                        }
+                    }
+                    this.Close();
+                }
+                else if (status == "Agent")
+                {
+                    var ctr = Application.Current.Windows.Count;
                     var frm = Application.Current.Windows[ctr - 2] as wpfLoanApplication;
-                    int cbId = Convert.ToInt32(getRow(dgClient, 0));
-                    frm.cbId = Convert.ToInt32(getRow(dgClient, 0));
+                    int num = Convert.ToInt32(getRow(dgClient, 0));
+                    frm.agentId = num;
+                    this.Close();
+                }
+                else if (status == "CI")
+                {
+                    var ctr = Application.Current.Windows.Count;
+                    var frm = Application.Current.Windows[ctr - 2] as wpfLoanApplication;
+                    int num = Convert.ToInt32(getRow(dgClient, 0));
+                    frm.ciId = num;
                     using (var ctx = new MyLoanContext())
                     {
-                        var agt = ctx.Clients.Find(cbId);
-                        String str = "(" + cbId + ")" + agt.FirstName + " " + agt.MiddleName + " " + agt.LastName;
-                        frm.txtID.Text = str;
+                        var agt = ctx.Employees.Find(num);
+                        String str = "(" + num + ")" + agt.FirstName + " " + agt.MI + " " + agt.LastName;
+                        frm.txtCI.Text = str;
                     }
+                    this.Close();
                 }
-                else
-                {
-                    var frm = Application.Current.Windows[ctr - 2] as wpfSelectClient;
-                    frm.txtID.Text = getRow(dgClient, 0);
-                    if (frm.txtID.Text == "")
-                    {
-                        return;
-                    }
-                }
-                this.Close();
             }
-            else if (status == "Agent")
+            catch (Exception ex)
             {
-                var ctr = Application.Current.Windows.Count;
-                var frm = Application.Current.Windows[ctr-2] as wpfLoanApplication;
-                int num=Convert.ToInt32(getRow(dgClient, 0));
-                frm.agentId = num;
-                this.Close();
-            }
-            else if (status == "CI")
-            {
-                var ctr = Application.Current.Windows.Count;
-                var frm = Application.Current.Windows[ctr - 2] as wpfLoanApplication;
-                int num = Convert.ToInt32(getRow(dgClient, 0));
-                frm.ciId = num;
-                using (var ctx = new MyLoanContext())
-                {
-                    var agt = ctx.Employees.Find(num);
-                    String str = "(" + num + ")" + agt.FirstName + " " + agt.MI + " " + agt.LastName;
-                    frm.txtCI.Text = str;
-                }
-                this.Close();
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
         }
+
     }
 }

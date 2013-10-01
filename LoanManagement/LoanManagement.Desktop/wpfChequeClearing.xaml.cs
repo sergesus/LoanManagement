@@ -45,35 +45,51 @@ namespace LoanManagement.Desktop
 
         public void rg()
         {
-            using (var ctx = new MyLoanContext())
+            try
             {
-                var chq = from ch in ctx.FPaymentInfo
-                          where ch.PaymentStatus == "Deposited"
-                          && !(from o in ctx.TempClearings select o.FPaymentInfoID).Contains(ch.FPaymentInfoID)
-                          select new { PaymentID = ch.FPaymentInfoID, ChequeID = ch.ChequeInfo, ClientName = ch.Loan.Client.FirstName + " " + ch.Loan.Client.LastName, TypeOfLoan = ch.Loan.Service.Name};
-                dg1.ItemsSource = chq.ToList();
+                using (var ctx = new MyLoanContext())
+                {
+                    var chq = from ch in ctx.FPaymentInfo
+                              where ch.PaymentStatus == "Deposited"
+                              && !(from o in ctx.TempClearings select o.FPaymentInfoID).Contains(ch.FPaymentInfoID)
+                              select new { PaymentID = ch.FPaymentInfoID, ChequeID = ch.ChequeInfo, ClientName = ch.Loan.Client.FirstName + " " + ch.Loan.Client.LastName, TypeOfLoan = ch.Loan.Service.Name };
+                    dg1.ItemsSource = chq.ToList();
 
-                var chq1 = from ch in ctx.TempClearings
-                           select new { PaymentID = ch.FPaymentInfoID, ChequeID = ch.FPaymentInfo.ChequeInfo, ClientName = ch.FPaymentInfo.Loan.Client.FirstName + " " + ch.FPaymentInfo.Loan.Client.LastName, TypeOfLoan = ch.FPaymentInfo.Loan.Service.Name };
-                dg2.ItemsSource = chq1.ToList();
+                    var chq1 = from ch in ctx.TempClearings
+                               select new { PaymentID = ch.FPaymentInfoID, ChequeID = ch.FPaymentInfo.ChequeInfo, ClientName = ch.FPaymentInfo.Loan.Client.FirstName + " " + ch.FPaymentInfo.Loan.Client.LastName, TypeOfLoan = ch.FPaymentInfo.Loan.Service.Name };
+                    dg2.ItemsSource = chq1.ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
         }
 
         private void wdw1_Loaded(object sender, RoutedEventArgs e)
         {
-            ImageBrush myBrush = new ImageBrush();
-            System.Windows.Controls.Image image = new System.Windows.Controls.Image();
-            image.Source = new BitmapImage(
-                new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
-            myBrush.ImageSource = image.Source;
-            //Grid grid = new Grid();
-            wdw1.Background = myBrush;
-
-            using (var ctx = new MyLoanContext())
+            try
             {
-                ctx.Database.ExecuteSqlCommand("delete  from dbo.TempClearings");
+                ImageBrush myBrush = new ImageBrush();
+                System.Windows.Controls.Image image = new System.Windows.Controls.Image();
+                image.Source = new BitmapImage(
+                    new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
+                myBrush.ImageSource = image.Source;
+                //Grid grid = new Grid();
+                wdw1.Background = myBrush;
+
+                using (var ctx = new MyLoanContext())
+                {
+                    ctx.Database.ExecuteSqlCommand("delete  from dbo.TempClearings");
+                }
+                rg();
             }
-            rg();
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -91,7 +107,7 @@ namespace LoanManagement.Desktop
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Runtime Error: " + ex.Message);
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
         }
@@ -111,36 +127,52 @@ namespace LoanManagement.Desktop
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Runtime Error: " + ex.Message);
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
-            using (var ctx = new MyLoanContext())
+            try
             {
-                ctx.Database.ExecuteSqlCommand("delete  from dbo.TempClearings");
+                using (var ctx = new MyLoanContext())
+                {
+                    ctx.Database.ExecuteSqlCommand("delete  from dbo.TempClearings");
+                }
+                rg();
             }
-            rg();
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         private void Button_Click_3(object sender, RoutedEventArgs e)
         {
-            using (var ctx = new MyLoanContext())
+            try
             {
-                //ctx.Database.ExecuteSqlCommand("delete  from dbo.TempClearings");
-                var chq = from ch in ctx.FPaymentInfo
-                          where ch.PaymentStatus == "Deposited"
-                          && !(from o in ctx.TempClearings select o.FPaymentInfoID).Contains(ch.FPaymentInfoID)
-                          select ch;
-                foreach (var item in chq)
+                using (var ctx = new MyLoanContext())
                 {
-                    TempClearing tc = new TempClearing { FPaymentInfoID = item.FPaymentInfoID };
-                    ctx.TempClearings.Add(tc);
+                    //ctx.Database.ExecuteSqlCommand("delete  from dbo.TempClearings");
+                    var chq = from ch in ctx.FPaymentInfo
+                              where ch.PaymentStatus == "Deposited"
+                              && !(from o in ctx.TempClearings select o.FPaymentInfoID).Contains(ch.FPaymentInfoID)
+                              select ch;
+                    foreach (var item in chq)
+                    {
+                        TempClearing tc = new TempClearing { FPaymentInfoID = item.FPaymentInfoID };
+                        ctx.TempClearings.Add(tc);
+                    }
+                    ctx.SaveChanges();
+                    rg();
                 }
-                ctx.SaveChanges();
-                rg();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
             
         }
@@ -175,9 +207,10 @@ namespace LoanManagement.Desktop
                 }
             }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                MessageBox.Show("Runtime Error: " + ex.Message);
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
         }
     }

@@ -48,243 +48,304 @@ namespace LoanManagement.Desktop
 
         public void rg()
         {
-            if (status == "UApproval")
+            try
             {
-                using (var ctx = new MyLoanContext())
+                if (status == "UApproval")
                 {
-                    var lon = from ln in ctx.Loans
-                              where ln.Status == "Approved" || ln.Status=="Declined"
-                              select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
-                    dgLoan.ItemsSource = lon.ToList();
+                    using (var ctx = new MyLoanContext())
+                    {
+                        var lon = from ln in ctx.Loans
+                                  where ln.Status == "Approved" || ln.Status == "Declined"
+                                  select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
+                        dgLoan.ItemsSource = lon.ToList();
 
+                    }
                 }
-            }
-            else if(status=="Approval" || status=="Application")
-            {
-                using (var ctx = new MyLoanContext())
+                else if (status == "Approval" || status == "Application")
                 {
-                    var lon = from ln in ctx.Loans
-                              where ln.Status == "Applied"
-                              select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
-                    dgLoan.ItemsSource = lon.ToList();
+                    using (var ctx = new MyLoanContext())
+                    {
+                        var lon = from ln in ctx.Loans
+                                  where ln.Status == "Applied"
+                                  select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
+                        dgLoan.ItemsSource = lon.ToList();
 
+                    }
                 }
-            }
-            else if (status == "Releasing")
-            {
-                using (var ctx = new MyLoanContext())
+                else if (status == "Releasing")
                 {
-                    var lon = from ln in ctx.Loans
-                              where ln.Status == "Approved"
-                              select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
-                    dgLoan.ItemsSource = lon.ToList();
+                    using (var ctx = new MyLoanContext())
+                    {
+                        var lon = from ln in ctx.Loans
+                                  where ln.Status == "Approved"
+                                  select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
+                        dgLoan.ItemsSource = lon.ToList();
 
+                    }
                 }
-            }
-            else if (status == "UReleasing")
-            {
-                using (var ctx = new MyLoanContext())
+                else if (status == "UReleasing")
                 {
-                    var lon = from ln in ctx.Loans
-                              where ln.Status == "Released"
-                              select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
-                    dgLoan.ItemsSource = lon.ToList();
+                    using (var ctx = new MyLoanContext())
+                    {
+                        var lon = from ln in ctx.Loans
+                                  where ln.Status == "Released"
+                                  select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
+                        dgLoan.ItemsSource = lon.ToList();
 
+                    }
                 }
-            }
-            else if (status == "Holding")
-            {
-                using (var ctx = new MyLoanContext())
+                else if (status == "Holding")
                 {
-                    var lon = from ln in ctx.Loans
-                              where ln.Status == "Released" || ln.Status=="Active"
-                              select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
-                    dgLoan.ItemsSource = lon.ToList();
+                    using (var ctx = new MyLoanContext())
+                    {
+                        var lon = from ln in ctx.Loans
+                                  where ln.Status == "Released" || ln.Status == "Active"
+                                  select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
+                        dgLoan.ItemsSource = lon.ToList();
 
+                    }
                 }
-            }
-            else if (status == "Voiding")
-            {
-                using (var ctx = new MyLoanContext())
+                else if (status == "Voiding")
                 {
-                    var lon = from ln in ctx.Loans
-                              where ln.Status == "Released" || ln.Status == "Active"
-                              select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
-                    dgLoan.ItemsSource = lon.ToList();
-                    btnView.Content = "Void last payment";
+                    using (var ctx = new MyLoanContext())
+                    {
+                        var lon = from ln in ctx.Loans
+                                  where ln.Status == "Released" || ln.Status == "Active"
+                                  select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
+                        dgLoan.ItemsSource = lon.ToList();
+                        btnView.Content = "Void last payment";
+                    }
                 }
-            }
-            else if (status == "VoidClosed")
-            {
-                using (var ctx = new MyLoanContext())
+                else if (status == "VoidClosed")
                 {
-                    var lon = from ln in ctx.Loans
-                              where ln.Status == "Closed Account"
-                              select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
-                    dgLoan.ItemsSource = lon.ToList();
-                    btnView.Content = "Void Closed Account";
+                    using (var ctx = new MyLoanContext())
+                    {
+                        var lon = from ln in ctx.Loans
+                                  where ln.Status == "Closed Account"
+                                  select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
+                        dgLoan.ItemsSource = lon.ToList();
+                        btnView.Content = "Void Closed Account";
+                    }
                 }
-            }
-            else if (status == "Renewal")
-            {
-                using (var ctx = new MyLoanContext())
+                else if (status == "Renewal")
                 {
-                    var lon = from ln in ctx.Loans
-                              where ln.Status == "Closed Account"
-                              select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
-                    dgLoan.ItemsSource = lon.ToList();
-                    btnView.Content = "Renew Closed Account";
+                    using (var ctx = new MyLoanContext())
+                    {
+                        var lon = from ln in ctx.Loans
+                                  where ln.Status == "Closed Account"
+                                  select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
+                        dgLoan.ItemsSource = lon.ToList();
+                        btnView.Content = "Renew Closed Account";
+                    }
+                }
+                else if (status == "Adjustment")
+                {
+                    using (var ctx = new MyLoanContext())
+                    {
+                        var lon = from ln in ctx.Loans
+                                  where ln.Status == "Released" || ln.Status == "Active"
+                                  select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
+                        dgLoan.ItemsSource = lon.ToList();
+                        btnView.Content = "Adjust Payment Date";
+                    }
+                }
+                else if (status == "Restructure")
+                {
+                    using (var ctx = new MyLoanContext())
+                    {
+                        var lon = from ln in ctx.Loans
+                                  where (ln.Status == "Released" || ln.Status == "Active") && ln.FPaymentInfo.Where(x => x.PaymentStatus == "Cleared").Count() >= 3
+                                  select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
+                        dgLoan.ItemsSource = lon.ToList();
+                        btnView.Content = "View";
+                    }
                 }
             }
-            
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         private void wdw1_Loaded(object sender, RoutedEventArgs e)
         {
-            ImageBrush myBrush = new ImageBrush();
-            System.Windows.Controls.Image image = new System.Windows.Controls.Image();
-            image.Source = new BitmapImage(
-                new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
-            myBrush.ImageSource = image.Source;
-            //Grid grid = new Grid();
-            wdw1.Background = myBrush;
-            rg();
+            try
+            {
+                ImageBrush myBrush = new ImageBrush();
+                System.Windows.Controls.Image image = new System.Windows.Controls.Image();
+                image.Source = new BitmapImage(
+                    new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
+                myBrush.ImageSource = image.Source;
+                //Grid grid = new Grid();
+                wdw1.Background = myBrush;
+                rg();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         private void btnView_Click(object sender, RoutedEventArgs e)
         {
-            if (status == "Application")
+            try
             {
-                wpfLoanApplication frm = new wpfLoanApplication();
-                frm.status = "Edit";
-                int id = Convert.ToInt32(getRow(dgLoan, 0));
-                frm.lId = id;
-                frm.btnContinue.Content = "Update";
-                frm.ShowDialog();
-            }
-            else if (status == "UReleasing")
-            {
-                wpfReleasedLoanInfo frm = new wpfReleasedLoanInfo();
-                int num = Convert.ToInt32(getRow(dgLoan, 0));
-                frm.lId = num;
-                frm.status = status;
-                frm.ShowDialog();
-            }
-            else if (status == "Holding")
-            {
-                wpfReleasedLoanInfo frm = new wpfReleasedLoanInfo();
-                int num = Convert.ToInt32(getRow(dgLoan, 0));
-                frm.lId = num;
-                frm.status = status;
-                frm.ShowDialog();
-            }
-            else if (status == "Voiding")
-            {
-                using (var ctx = new MyLoanContext())
+                if (status == "Application")
                 {
-                    int n = Convert.ToInt32(getRow(dgLoan,0));
-                    int num = ctx.FPaymentInfo.Where(x => x.LoanID == n && x.PaymentStatus == "Deposited").Count();
-                    if (num > 0)
-                    {
-                        MessageBox.Show("Unable to void payment due to deposited cheque");
-                        return;
-                    }
-                    num = ctx.FPaymentInfo.Where(x => x.LoanID == n && x.PaymentStatus == "Cleared").Count();
-                    if (num > 0)
-                    {
-                        var fp1 = from f in ctx.FPaymentInfo
-                                  where f.LoanID == n && f.PaymentStatus == "Cleared"
-                                  select f;
-                        int x = 0;
-                        FPaymentInfo fp = null;
-                        foreach (var item in fp1)
-                        {
-                            if (x == num-1)
-                            {
-                                fp = item;
-                            }
-                            x++;
-                        }
-                        //var fp = ctx.FPaymentInfo.Where(x => x.LoanID == n && x.PaymentStatus == "Cleared").Last();
-                        MessageBox.Show("The last payment has the following info: \n No :" + fp.PaymentNumber + " \n ChequeNumber: " + fp.ChequeInfo + " \n Amount: " + fp.Amount.ToString("N2") + "");
-                        MessageBoxResult mr = MessageBox.Show("You sure?","Question",MessageBoxButton.YesNo);
-                        if (mr == MessageBoxResult.Yes)
-                        {
-                            fp.PaymentStatus = "Deposited";
-                            ClearedCheque cc = ctx.ClearedCheques.Find(fp.ClearCheque.FPaymentInfoID);
-                            ctx.ClearedCheques.Remove(cc);
-                            ctx.SaveChanges();
-                            MessageBox.Show("Okay");
-                        }
-                    }
-                    else
-                    {
-                        MessageBox.Show("No payments to void");
-                    }
+                    wpfLoanApplication frm = new wpfLoanApplication();
+                    frm.status = "Edit";
+                    int id = Convert.ToInt32(getRow(dgLoan, 0));
+                    frm.lId = id;
+                    frm.btnContinue.Content = "Update";
+                    frm.ShowDialog();
                 }
-            }
-            else if (status == "VoidClosed")
-            {
-                int n = Convert.ToInt32(getRow(dgLoan, 0));
-                MessageBoxResult mr = MessageBox.Show("You sure?","Question",MessageBoxButton.YesNo);
-                if (mr == MessageBoxResult.Yes)
+                else if (status == "UReleasing")
                 {
-                    
+                    wpfReleasedLoanInfo frm = new wpfReleasedLoanInfo();
+                    int num = Convert.ToInt32(getRow(dgLoan, 0));
+                    frm.lId = num;
+                    frm.status = status;
+                    frm.ShowDialog();
+                }
+                else if (status == "Holding")
+                {
+                    wpfReleasedLoanInfo frm = new wpfReleasedLoanInfo();
+                    int num = Convert.ToInt32(getRow(dgLoan, 0));
+                    frm.lId = num;
+                    frm.status = status;
+                    frm.ShowDialog();
+                }
+                else if (status == "Voiding")
+                {
                     using (var ctx = new MyLoanContext())
                     {
-                        var lon = ctx.Loans.Find(n);
-                        lon.Status = "Released";//active
-                        int num = ctx.ClosedAccounts.Where(x => x.LoanID == n).Count();
-                        var fp1 = from f in ctx.ClosedAccounts
-                                  where f.LoanID == n
-                                  select f;
-                        int y = 0;
-                        ClosedAccount fp = null;
-                        foreach (var item in fp1)
+                        int n = Convert.ToInt32(getRow(dgLoan, 0));
+                        int num = ctx.FPaymentInfo.Where(x => x.LoanID == n && x.PaymentStatus == "Deposited").Count();
+                        if (num > 0)
                         {
-                            if (y == num - 1)
+                            MessageBox.Show("Unable to void payment due to deposited cheque");
+                            return;
+                        }
+                        num = ctx.FPaymentInfo.Where(x => x.LoanID == n && x.PaymentStatus == "Cleared").Count();
+                        if (num > 0)
+                        {
+                            var fp1 = from f in ctx.FPaymentInfo
+                                      where f.LoanID == n && f.PaymentStatus == "Cleared"
+                                      select f;
+                            int x = 0;
+                            FPaymentInfo fp = null;
+                            foreach (var item in fp1)
                             {
-                                fp = item;
+                                if (x == num - 1)
+                                {
+                                    fp = item;
+                                }
+                                x++;
                             }
-                            y++;
+                            //var fp = ctx.FPaymentInfo.Where(x => x.LoanID == n && x.PaymentStatus == "Cleared").Last();
+                            MessageBox.Show("The last payment has the following info: \n No :" + fp.PaymentNumber + " \n ChequeNumber: " + fp.ChequeInfo + " \n Amount: " + fp.Amount.ToString("N2") + "");
+                            MessageBoxResult mr = MessageBox.Show("You sure?", "Question", MessageBoxButton.YesNo);
+                            if (mr == MessageBoxResult.Yes)
+                            {
+                                fp.PaymentStatus = "Deposited";
+                                ClearedCheque cc = ctx.ClearedCheques.Find(fp.ClearCheque.FPaymentInfoID);
+                                ctx.ClearedCheques.Remove(cc);
+                                ctx.SaveChanges();
+                                MessageBox.Show("Okay");
+                            }
                         }
-                        ctx.ClosedAccounts.Remove(fp);
-                        var fp2 = from f in ctx.FPaymentInfo
-                                 where f.LoanID == n && f.PaymentStatus != "Cleared"
-                                 select f;
-                        foreach (var item in fp2)
+                        else
                         {
-                            item.PaymentStatus = "Pending";
+                            MessageBox.Show("No payments to void");
                         }
-                        ctx.SaveChanges();
-                        MessageBox.Show("Okay");
-                        return;
                     }
                 }
+                else if (status == "VoidClosed")
+                {
+                    int n = Convert.ToInt32(getRow(dgLoan, 0));
+                    MessageBoxResult mr = MessageBox.Show("You sure?", "Question", MessageBoxButton.YesNo);
+                    if (mr == MessageBoxResult.Yes)
+                    {
+
+                        using (var ctx = new MyLoanContext())
+                        {
+                            var lon = ctx.Loans.Find(n);
+                            lon.Status = "Released";//active
+                            int num = ctx.ClosedAccounts.Where(x => x.LoanID == n).Count();
+                            var fp1 = from f in ctx.ClosedAccounts
+                                      where f.LoanID == n
+                                      select f;
+                            int y = 0;
+                            ClosedAccount fp = null;
+                            foreach (var item in fp1)
+                            {
+                                if (y == num - 1)
+                                {
+                                    fp = item;
+                                }
+                                y++;
+                            }
+                            ctx.ClosedAccounts.Remove(fp);
+                            var fp2 = from f in ctx.FPaymentInfo
+                                      where f.LoanID == n && f.PaymentStatus != "Cleared"
+                                      select f;
+                            foreach (var item in fp2)
+                            {
+                                item.PaymentStatus = "Pending";
+                            }
+                            ctx.SaveChanges();
+                            MessageBox.Show("Okay");
+                            return;
+                        }
+                    }
+                }
+                else if (status == "Renewal")
+                {
+                    int n = Convert.ToInt32(getRow(dgLoan, 0));
+                    wpfRenewClosed frm = new wpfRenewClosed();
+                    frm.lId = n;
+                    this.Close();
+                    frm.ShowDialog();
+                }
+                else if (status == "Adjustment" || status == "Restructure")
+                {
+                    int n = Convert.ToInt32(getRow(dgLoan, 0));
+                    wpfReleasedLoanInfo frm = new wpfReleasedLoanInfo();
+                    frm.lId = n;
+                    frm.status = status;
+                    this.Close();
+                    frm.ShowDialog();
+                }
+                else
+                {
+                    wpfAppliedLoanInfo frm = new wpfAppliedLoanInfo();
+                    int num = Convert.ToInt32(getRow(dgLoan, 0));
+                    frm.lId = num;
+                    frm.status = status;
+                    frm.ShowDialog();
+                }
             }
-            else if (status == "Renewal")
+            catch (Exception ex)
             {
-                int n = Convert.ToInt32(getRow(dgLoan, 0));
-                wpfRenewClosed frm = new wpfRenewClosed();
-                frm.lId = n;
-                this.Close();
-                frm.ShowDialog();
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
-            else
-            {
-                wpfAppliedLoanInfo frm = new wpfAppliedLoanInfo();
-                int num = Convert.ToInt32(getRow(dgLoan, 0));
-                frm.lId = num;
-                frm.status = status;
-                frm.ShowDialog();
-            }
-            
             
         }
 
         private void wdw1_Activated(object sender, EventArgs e)
         {
-            rg();
+            try
+            {
+                rg();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
     }
 }

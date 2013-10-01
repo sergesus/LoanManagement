@@ -29,65 +29,89 @@ namespace LoanManagement.Desktop
 
         private void MetroWindow_Loaded_1(object sender, RoutedEventArgs e)
         {
-            ImageBrush myBrush = new ImageBrush();
-            System.Windows.Controls.Image image = new System.Windows.Controls.Image();
-            image.Source = new BitmapImage(
-                new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
-            myBrush.ImageSource = image.Source;
-            //Grid grid = new Grid();
-            wdw1.Background = myBrush;
-            if (status == "Approval")
+            try
             {
-                btnNew.Content = "View all Applied Loans";
-                btnView.Content = "View/Update Approved and Declined Loans";
+                ImageBrush myBrush = new ImageBrush();
+                System.Windows.Controls.Image image = new System.Windows.Controls.Image();
+                image.Source = new BitmapImage(
+                    new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
+                myBrush.ImageSource = image.Source;
+                //Grid grid = new Grid();
+                wdw1.Background = myBrush;
+                if (status == "Approval")
+                {
+                    btnNew.Content = "View all Applied Loans";
+                    btnView.Content = "View/Update Approved and Declined Loans";
+                }
+                else if (status == "Releasing")
+                {
+                    btnNew.Content = "View all Approved Loans";
+                    btnView.Content = "View/Update Released Loans";
+                }
             }
-            else if (status == "Releasing")
+            catch (Exception ex)
             {
-                btnNew.Content = "View all Approved Loans";
-                btnView.Content = "View/Update Released Loans";
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
         }
 
         private void btnNew_Click(object sender, RoutedEventArgs e)
         {
-            if (status == "Application")
+            try
             {
-                this.Close();
-                wpfSelectClient frm = new wpfSelectClient();
-                frm.ShowDialog();
+                if (status == "Application")
+                {
+                    this.Close();
+                    wpfSelectClient frm = new wpfSelectClient();
+                    frm.ShowDialog();
+                }
+                else
+                {
+                    this.Close();
+                    wpfLoanSearch frm = new wpfLoanSearch();
+                    frm.status = status;
+                    frm.ShowDialog();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                this.Close();
-                wpfLoanSearch frm = new wpfLoanSearch();
-                frm.status = status;
-                frm.ShowDialog();
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
 
         }
 
         private void btnView_Click(object sender, RoutedEventArgs e)
         {
-            if (status == "Application")
+            try
             {
-                this.Close();
-                wpfLoanSearch frm = new wpfLoanSearch();
-                frm.status = "Application";
-                frm.ShowDialog();
+                if (status == "Application")
+                {
+                    this.Close();
+                    wpfLoanSearch frm = new wpfLoanSearch();
+                    frm.status = "Application";
+                    frm.ShowDialog();
+                }
+                else if (status == "Approval")
+                {
+                    this.Close();
+                    wpfLoanSearch frm = new wpfLoanSearch();
+                    frm.status = "UApproval";
+                    frm.ShowDialog();
+                }
+                else if (status == "Releasing")
+                {
+                    this.Close();
+                    wpfLoanSearch frm = new wpfLoanSearch();
+                    frm.status = "UReleasing";
+                    frm.ShowDialog();
+                }
             }
-            else if (status == "Approval")
+            catch (Exception ex)
             {
-                this.Close();
-                wpfLoanSearch frm = new wpfLoanSearch();
-                frm.status = "UApproval";
-                frm.ShowDialog();
-            }
-            else if (status == "Releasing")
-            {
-                this.Close();
-                wpfLoanSearch frm = new wpfLoanSearch();
-                frm.status = "UReleasing";
-                frm.ShowDialog();
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
         }
     }

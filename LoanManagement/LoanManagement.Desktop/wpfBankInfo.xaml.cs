@@ -34,39 +34,47 @@ namespace LoanManagement.Desktop
 
         public void reset()
         {
-            btnAddAddress.Content = "Add";
-            btnEdtAddress.Content = "Edit";
-            dgAddress.IsEnabled = true;
-            btnDelAddress.Visibility = Visibility.Visible;
-            grpAddress.Visibility = Visibility.Hidden;
-            txtCity.Text = "";
-            txtProvince.Text = "";
-            txtStreet.Text = "";
+            try
+            {
+                btnAddAddress.Content = "Add";
+                btnEdtAddress.Content = "Edit";
+                dgAddress.IsEnabled = true;
+                btnDelAddress.Visibility = Visibility.Visible;
+                grpAddress.Visibility = Visibility.Hidden;
+                txtCity.Text = "";
+                txtProvince.Text = "";
+                txtStreet.Text = "";
 
-            int num1 = 0;
-            if (status == "Add")
-            {
-                using (var ctx = new MyLoanContext())
+                int num1 = 0;
+                if (status == "Add")
                 {
-                    num1 = ctx.TempAdresses.Count();
+                    using (var ctx = new MyLoanContext())
+                    {
+                        num1 = ctx.TempAdresses.Count();
+                    }
+                }
+                else
+                {
+                    using (var ctx = new MyLoanContext())
+                    {
+                        num1 = ctx.BankAdresses.Where(x => x.BankID == bId).Count();
+                    }
+                }
+                if (num1 > 0)
+                {
+                    btnDelAddress.IsEnabled = true;
+                    btnEdtAddress.IsEnabled = true;
+                }
+                else
+                {
+                    btnDelAddress.IsEnabled = !true;
+                    btnEdtAddress.IsEnabled = !true;
                 }
             }
-            else
+            catch (Exception ex)
             {
-                using (var ctx = new MyLoanContext())
-                {
-                    num1 = ctx.BankAdresses.Where(x => x.BankID == bId).Count();
-                }
-            }
-            if (num1 > 0)
-            {
-                btnDelAddress.IsEnabled = true;
-                btnEdtAddress.IsEnabled = true;
-            }
-            else
-            {
-                btnDelAddress.IsEnabled = !true;
-                btnEdtAddress.IsEnabled = !true;
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
            
         }
@@ -89,88 +97,96 @@ namespace LoanManagement.Desktop
 
         private void btnAddAddress_Click(object sender, RoutedEventArgs e)
         {
-            if (btnAddAddress.Content.ToString() == "Add")
+            try
             {
-                grpAddress.Visibility = Visibility.Visible;
-                btnAddAddress.Content = "Save";
-                btnEdtAddress.Content = "Cancel";
-                btnEdtAddress.IsEnabled = true;
-                btnDelAddress.Visibility = Visibility.Hidden;
-
-            }
-            else if (btnAddAddress.Content.ToString() == "Save")
-            {
-                if (txtCity.Text == "" || txtProvince.Text == "" || txtStreet.Text == "")
+                if (btnAddAddress.Content.ToString() == "Add")
                 {
-                    System.Windows.MessageBox.Show("Please complete the required information", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
+                    grpAddress.Visibility = Visibility.Visible;
+                    btnAddAddress.Content = "Save";
+                    btnEdtAddress.Content = "Cancel";
+                    btnEdtAddress.IsEnabled = true;
+                    btnDelAddress.Visibility = Visibility.Hidden;
+
                 }
-
-                //for view
-                if (status == "View")
+                else if (btnAddAddress.Content.ToString() == "Save")
                 {
+                    if (txtCity.Text == "" || txtProvince.Text == "" || txtStreet.Text == "")
+                    {
+                        System.Windows.MessageBox.Show("Please complete the required information", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
+                    //for view
+                    if (status == "View")
+                    {
+                        using (var ctx = new MyLoanContext())
+                        {
+                            var add = ctx.BankAdresses.Where(x => x.BankID == bId).Count();
+                            int ctr = add + 1;
+                            BankAddress adds = new BankAddress { BankID = bId, BankNum = ctr, Street = txtStreet.Text, Province = txtProvince.Text, City = txtCity.Text };
+                            ctx.BankAdresses.Add(adds);
+                            ctx.SaveChanges();
+                            var adds1 = from ad in ctx.BankAdresses
+                                        where ad.BankID == bId
+                                        select new { BankNumber = ad.BankNum, Street = ad.Street, Province = ad.Province, City = ad.City };
+                            dgAddress.ItemsSource = adds1.ToList();
+                        }
+
+
+                        reset();
+                        return;
+                    }
+
                     using (var ctx = new MyLoanContext())
                     {
-                        var add = ctx.BankAdresses.Where(x => x.BankID == bId).Count();
-                        int ctr = add + 1;
-                        BankAddress adds = new BankAddress {BankID=bId, BankNum=ctr, Street = txtStreet.Text, Province = txtProvince.Text, City = txtCity.Text };
-                        ctx.BankAdresses.Add(adds);
+                        TempAddress add = new TempAddress { Street = txtStreet.Text, Province = txtProvince.Text, City = txtCity.Text };
+                        ctx.TempAdresses.Add(add);
                         ctx.SaveChanges();
-                        var adds1 = from ad in ctx.BankAdresses
-                                   where ad.BankID == bId
-                                   select new { BankNumber = ad.BankNum, Street = ad.Street, Province = ad.Province, City = ad.City };
-                        dgAddress.ItemsSource = adds1.ToList();
+                        dgAddress.ItemsSource = ctx.TempAdresses.ToList();
                     }
-                    
 
                     reset();
-                    return;
                 }
-
-                using (var ctx = new MyLoanContext())
+                else
                 {
-                    TempAddress add = new TempAddress { Street = txtStreet.Text, Province = txtProvince.Text, City = txtCity.Text };
-                    ctx.TempAdresses.Add(add);
-                    ctx.SaveChanges();
-                    dgAddress.ItemsSource = ctx.TempAdresses.ToList();
-                }
+                    //for view
+                    if (status == "View")
+                    {
+                        using (var ctx = new MyLoanContext())
+                        {
+                            int bankNum = Convert.ToInt32(getRow(dgAddress, 0));
+                            var add = ctx.BankAdresses.Where(x => x.BankID == bId && x.BankNum == bankNum).First();
+                            add.City = txtCity.Text;
+                            add.Province = txtProvince.Text;
+                            add.Street = txtStreet.Text;
+                            ctx.SaveChanges();
+                            var adds = from ad in ctx.BankAdresses
+                                       where ad.BankID == bId
+                                       select new { BankNumber = ad.BankNum, Street = ad.Street, Province = ad.Province, City = ad.City };
+                            dgAddress.ItemsSource = adds.ToList();
+                        }
+                        reset();
+                        return;
+                    }
 
-                reset();
-            }
-            else
-            {
-                //for view
-                if (status == "View")
-                {
+
                     using (var ctx = new MyLoanContext())
                     {
-                        int bankNum=Convert.ToInt32(getRow(dgAddress, 0));
-                        var add = ctx.BankAdresses.Where(x => x.BankID == bId && x.BankNum == bankNum).First();
+                        var add = ctx.TempAdresses.Find(Convert.ToInt32(getRow(dgAddress, 0)));
                         add.City = txtCity.Text;
                         add.Province = txtProvince.Text;
                         add.Street = txtStreet.Text;
                         ctx.SaveChanges();
-                        var adds = from ad in ctx.BankAdresses
-                                  where ad.BankID == bId
-                                  select new { BankNumber = ad.BankNum, Street = ad.Street, Province = ad.Province, City = ad.City };
-                        dgAddress.ItemsSource = adds.ToList();
+                        dgAddress.ItemsSource = ctx.TempAdresses.ToList();
+                        reset();
+
                     }
-                    reset();
-                    return;
                 }
-
-
-                using (var ctx = new MyLoanContext())
-                {
-                    var add = ctx.TempAdresses.Find(Convert.ToInt32(getRow(dgAddress, 0)));
-                    add.City = txtCity.Text;
-                    add.Province = txtProvince.Text;
-                    add.Street = txtStreet.Text;
-                    ctx.SaveChanges();
-                    dgAddress.ItemsSource = ctx.TempAdresses.ToList();
-                    reset();
-
-                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
         }
 
@@ -215,6 +231,7 @@ namespace LoanManagement.Desktop
             }
             catch (Exception ex)
             {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
         }
@@ -258,6 +275,7 @@ namespace LoanManagement.Desktop
                 }
                 catch (Exception ex)
                 {
+                    System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
             }
@@ -265,54 +283,61 @@ namespace LoanManagement.Desktop
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            if (txtName.Text == "")
+            try
             {
+                if (txtName.Text == "")
+                {
+                    return;
+                }
+
+                if (status == "Add")
+                {
+                    using (var ctx = new MyLoanContext())
+                    {
+                        var num = ctx.Banks.Where(x => x.BankName == txtName.Text).Count();
+                        if (num > 0)
+                        {
+                            return;
+                        }
+
+                        Bank bank = new Bank { BankName = txtName.Text, Description = txtDesc.Text, Active = true };
+
+
+                        var add = from ad in ctx.TempAdresses
+                                  select ad;
+                        int ctr = 1;
+                        foreach (var item in add)
+                        {
+                            BankAddress bAd = new BankAddress { BankNum = ctr, City = item.City, Province = item.Province, Street = item.Street };
+                            ctx.BankAdresses.Add(bAd);
+                            ctr++;
+                        }
+
+                        ctx.Banks.Add(bank);
+                        ctx.SaveChanges();
+                        System.Windows.MessageBox.Show("New Bank Added");
+                        this.Close();
+                    }
+                }
+                else
+                {
+                    using (var ctx = new MyLoanContext())
+                    {
+                        var bank = ctx.Banks.Find(bId);
+                        bank.BankName = txtName.Text;
+                        bank.Description = txtDesc.Text;
+                        ctx.SaveChanges();
+                        System.Windows.MessageBox.Show("Bank Successfully Updated");
+                        this.Close();
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-
-            if (status == "Add")
-            {
-                using (var ctx = new MyLoanContext())
-                {
-                    var num = ctx.Banks.Where(x => x.BankName == txtName.Text).Count();
-                    if (num > 0)
-                    {
-                        return;
-                    }
-
-                    Bank bank = new Bank { BankName = txtName.Text, Description = txtDesc.Text, Active = true };
-
-
-                    var add = from ad in ctx.TempAdresses
-                              select ad;
-                    int ctr = 1;
-                    foreach (var item in add)
-                    {
-                        BankAddress bAd = new BankAddress { BankNum = ctr, City = item.City, Province = item.Province, Street = item.Street };
-                        ctx.BankAdresses.Add(bAd);
-                        ctr++;
-                    }
-
-                    ctx.Banks.Add(bank);
-                    ctx.SaveChanges();
-                    System.Windows.MessageBox.Show("New Bank Added");
-                    this.Close();
-                }
-            }
-            else
-            {
-                using (var ctx = new MyLoanContext())
-                {
-                    var bank = ctx.Banks.Find(bId);
-                    bank.BankName = txtName.Text;
-                    bank.Description = txtDesc.Text;
-                    ctx.SaveChanges();
-                    System.Windows.MessageBox.Show("Bank Successfully Updated");
-                    this.Close();
-                }
-            }
-
-            
         }
 
         private void btnClear_Click(object sender, RoutedEventArgs e)
@@ -322,51 +347,67 @@ namespace LoanManagement.Desktop
 
         private void btnDel_Click(object sender, RoutedEventArgs e)
         {
-            using (var ctx = new MyLoanContext())
+            try
             {
-                DialogResult dr = System.Windows.Forms.MessageBox.Show("Are you sure you want to delete this record?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (dr == System.Windows.Forms.DialogResult.Yes)
+                using (var ctx = new MyLoanContext())
                 {
-                    Bank bnk = ctx.Banks.Find(bId);
-                    bnk.Active = false;
-                    ctx.SaveChanges();
-                    System.Windows.Forms.MessageBox.Show("Bank successfuly deleted");
-                    this.Close();
+                    DialogResult dr = System.Windows.Forms.MessageBox.Show("Are you sure you want to delete this record?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (dr == System.Windows.Forms.DialogResult.Yes)
+                    {
+                        Bank bnk = ctx.Banks.Find(bId);
+                        bnk.Active = false;
+                        ctx.SaveChanges();
+                        System.Windows.Forms.MessageBox.Show("Bank successfuly deleted");
+                        this.Close();
+
+                    }
 
                 }
-
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
         }
 
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
         {
-            ImageBrush myBrush = new ImageBrush();
-            System.Windows.Controls.Image image = new System.Windows.Controls.Image();
-            image.Source = new BitmapImage(
-                new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
-            myBrush.ImageSource = image.Source;
-            wdw1.Background = myBrush;
+            try
+            {
+                ImageBrush myBrush = new ImageBrush();
+                System.Windows.Controls.Image image = new System.Windows.Controls.Image();
+                image.Source = new BitmapImage(
+                    new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
+                myBrush.ImageSource = image.Source;
+                wdw1.Background = myBrush;
 
-            if (status == "Add")
-            {
-                using (var ctx = new MyLoanContext())
+                if (status == "Add")
                 {
-                    ctx.Database.ExecuteSqlCommand("delete from dbo.TempAddresses");
+                    using (var ctx = new MyLoanContext())
+                    {
+                        ctx.Database.ExecuteSqlCommand("delete from dbo.TempAddresses");
+                    }
+                    reset();
+                    btnDel.Visibility = Visibility.Hidden;
                 }
-                reset();
-                btnDel.Visibility = Visibility.Hidden;
+                else
+                {
+                    using (var ctx = new MyLoanContext())
+                    {
+                        var add = from ad in ctx.BankAdresses
+                                  where ad.BankID == bId
+                                  select new { BankNumber = ad.BankNum, Street = ad.Street, Province = ad.Province, City = ad.City };
+                        dgAddress.ItemsSource = add.ToList();
+                    }
+                    reset();
+                    btnDel.Visibility = Visibility.Visible;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                using (var ctx = new MyLoanContext())
-                {
-                    var add = from ad in ctx.BankAdresses
-                              where ad.BankID == bId
-                              select new { BankNumber = ad.BankNum, Street = ad.Street, Province = ad.Province, City = ad.City };
-                    dgAddress.ItemsSource = add.ToList();
-                }
-                reset();
-                btnDel.Visibility = Visibility.Visible;
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
         }
     }

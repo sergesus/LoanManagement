@@ -45,33 +45,56 @@ namespace LoanManagement.Desktop
 
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
         {
-            ImageBrush myBrush = new ImageBrush();
-            System.Windows.Controls.Image image = new System.Windows.Controls.Image();
-            image.Source = new BitmapImage(
-                new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
-            myBrush.ImageSource = image.Source;
-            wdw1.Background = myBrush;
-            resetGrid();
+            try
+            {
+                ImageBrush myBrush = new ImageBrush();
+                System.Windows.Controls.Image image = new System.Windows.Controls.Image();
+                image.Source = new BitmapImage(
+                    new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
+                myBrush.ImageSource = image.Source;
+                wdw1.Background = myBrush;
+                resetGrid();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         public void resetGrid()
         {
-            using (var ctx = new MyLoanContext())
+            try
             {
-                var bank = from bn in ctx.Banks
-                           where bn.Active == true
-                           select new { BankID = bn.BankID, BankName= bn.BankName, Description=bn.Description };
-                dgBank.ItemsSource = bank.ToList();
+                using (var ctx = new MyLoanContext())
+                {
+                    var bank = from bn in ctx.Banks
+                               where bn.Active == true
+                               select new { BankID = bn.BankID, BankName = bn.BankName, Description = bn.Description };
+                    dgBank.ItemsSource = bank.ToList();
 
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
         }
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            wpfBranchInfo frm = new wpfBranchInfo();
-            frm.status = "Add";
-            frm.ShowDialog();
-            
+            try
+            {
+                wpfBranchInfo frm = new wpfBranchInfo();
+                frm.status = "Add";
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         private void btnView_Click(object sender, RoutedEventArgs e)
@@ -87,6 +110,7 @@ namespace LoanManagement.Desktop
             }
             catch (Exception ex)
             {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
             
@@ -94,7 +118,15 @@ namespace LoanManagement.Desktop
 
         private void Window_Activated_1(object sender, EventArgs e)
         {
-            resetGrid();
+            try
+            {
+                resetGrid();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         

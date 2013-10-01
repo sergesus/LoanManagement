@@ -35,39 +35,47 @@ namespace LoanManagement.Desktop
 
         private void refresh()
         {
-            if (status == "UReleasing")
+            try
             {
-                using (var ctx = new MyLoanContext())
+                if (status == "UReleasing")
                 {
-                    var lons = from ge in ctx.FPaymentInfo
-                               where ge.LoanID == lId
-                               select ge;
+                    using (var ctx = new MyLoanContext())
+                    {
+                        var lons = from ge in ctx.FPaymentInfo
+                                   where ge.LoanID == lId
+                                   select ge;
                         myNum = ctx.FPaymentInfo.Where(x => x.LoanID == lId).Count();
+                    }
+                }
+
+                textarray = new TextBox[myNum];
+                Label[] labelarray = new Label[myNum];
+                StackPanel[] sp = new StackPanel[myNum];
+                stck.Children.Clear();
+                for (int ctr = 0; ctr < myNum; ctr++)
+                {
+                    labelarray[ctr] = new Label();
+                    labelarray[ctr].Height = 30;
+                    //labelarray[ctr].Width = 50;
+                    labelarray[ctr].FontSize = 16;
+                    labelarray[ctr].Content = "Cheque No. " + (ctr + 1).ToString();
+                    textarray[ctr] = new TextBox();
+                    textarray[ctr].Height = 25;
+                    textarray[ctr].Width = 300;
+                    textarray[ctr].FontSize = 16;
+                    sp[ctr] = new StackPanel();
+                    sp[ctr].Width = 300;
+                    sp[ctr].Height = 60;
+                    sp[ctr].Children.Add(labelarray[ctr]);
+                    sp[ctr].Children.Add(textarray[ctr]);
+                    stck.Children.Add(sp[ctr]);
+
                 }
             }
-
-            textarray = new TextBox[myNum];
-            Label[] labelarray = new Label[myNum];
-            StackPanel[] sp = new StackPanel[myNum];
-            stck.Children.Clear();
-            for (int ctr = 0; ctr < myNum; ctr++)
+            catch (Exception ex)
             {
-                labelarray[ctr] = new Label();
-                labelarray[ctr].Height = 30;
-                //labelarray[ctr].Width = 50;
-                labelarray[ctr].FontSize = 16;
-                labelarray[ctr].Content = "Cheque No. " + (ctr + 1).ToString();
-                textarray[ctr] = new TextBox();
-                textarray[ctr].Height = 25;
-                textarray[ctr].Width = 300;
-                textarray[ctr].FontSize = 16;
-                sp[ctr] = new StackPanel();
-                sp[ctr].Width = 300;
-                sp[ctr].Height = 60;
-                sp[ctr].Children.Add(labelarray[ctr]);
-                sp[ctr].Children.Add(textarray[ctr]);
-                stck.Children.Add(sp[ctr]);
-
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
 
         }
@@ -113,12 +121,14 @@ namespace LoanManagement.Desktop
                             Interval = 1;
                             dInt = DateInterval.Month;
                             Payment = WithInt / Convert.ToInt32(txtTerm.Text);
+                            lbl4.Content = "Monthly Payment";
                         }
                         else if (cmbMode.Text == "Semi-Monthly")
                         {
                             Interval = 15;
                             dInt = DateInterval.Day;
                             Payment = WithInt / (Convert.ToInt32(txtTerm.Text) * 2);
+                            lbl4.Content = "Semi-Monthly Payment";
                         }
                         else if (cmbMode.Text == "Weekly")
                         {
@@ -187,109 +197,126 @@ namespace LoanManagement.Desktop
             }
             catch (Exception ex)
             {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
         }
 
         private void wdw1_Loaded(object sender, RoutedEventArgs e)
         {
-            ImageBrush myBrush = new ImageBrush();
-            System.Windows.Controls.Image image = new System.Windows.Controls.Image();
-            image.Source = new BitmapImage(
-                new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
-            myBrush.ImageSource = image.Source;
-            //Grid grid = new Grid();
-            wdw1.Background = myBrush;
-
-            //num = 0;
-            if (status == "Releasing")
+            try
             {
-                using (var ctx = new MyLoanContext())
+                ImageBrush myBrush = new ImageBrush();
+                System.Windows.Controls.Image image = new System.Windows.Controls.Image();
+                image.Source = new BitmapImage(
+                    new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
+                myBrush.ImageSource = image.Source;
+                //Grid grid = new Grid();
+                wdw1.Background = myBrush;
+
+                //num = 0;
+                if (status == "Releasing")
                 {
-                    var lon = ctx.Loans.Find(lId);
-                    var ser = ctx.Services.Find(lon.ServiceID);
-                    cmbMode.Items.Clear();
-                    Double Amt = Convert.ToDouble(lon.ApprovedLoan.AmountApproved);
-                    lblPrincipal.Content = Amt.ToString("N2");
-                    txtAmt.Text = Amt.ToString("N2");
-                    if (ser.Department == "Financing")
+                    using (var ctx = new MyLoanContext())
                     {
-                        cmbMode.Items.Add(new ComboBoxItem { Content = "Monthly" });
-                        cmbMode.Items.Add(new ComboBoxItem { Content = "Semi-Monthly" });
-                        cmbMode.Items.Add(new ComboBoxItem { Content = "One-Time Payment" });
+                        var lon = ctx.Loans.Find(lId);
+                        var ser = ctx.Services.Find(lon.ServiceID);
+                        cmbMode.Items.Clear();
+                        Double Amt = Convert.ToDouble(lon.ApprovedLoan.AmountApproved);
+                        lblPrincipal.Content = Amt.ToString("N2");
+                        txtAmt.Text = Amt.ToString("N2");
+                        if (ser.Department == "Financing")
+                        {
+                            cmbMode.Items.Add(new ComboBoxItem { Content = "Monthly" });
+                            cmbMode.Items.Add(new ComboBoxItem { Content = "Semi-Monthly" });
+                            cmbMode.Items.Add(new ComboBoxItem { Content = "One-Time Payment" });
+                        }
+                        else if (ser.Department == "Micro Business")
+                        {
+                            cmbMode.Items.Add(new ComboBoxItem { Content = "Semi-Monthly" });
+                            cmbMode.Items.Add(new ComboBoxItem { Content = "Weekly" });
+                            cmbMode.Items.Add(new ComboBoxItem { Content = "Daily" });
+                        }
+                        else
+                        {
+                            cmbMode.Items.Add(new ComboBoxItem { Content = "Monthly" });
+                            cmbMode.Items.Add(new ComboBoxItem { Content = "Semi-Monthly" });
+                            cmbMode.Items.Add(new ComboBoxItem { Content = "Weekly" });
+                            cmbMode.Items.Add(new ComboBoxItem { Content = "Daily" });
+                        }
+                        txtTerm.Text = lon.Term.ToString();
+                        cmbMode.Text = lon.Mode;
+                        refr();
+                        cmbBank.Items.Clear();
+                        var ban = from ba in ctx.Banks
+                                  where ba.Active == true
+                                  select ba;
+                        foreach (var item in ban)
+                        {
+                            cmbBank.Items.Add(item.BankName);
+                        }
+                        //MessageBox.Show(myNum.ToString());
+                        refresh();
                     }
-                    else if (ser.Department == "Micro Business")
-                    {
-                        cmbMode.Items.Add(new ComboBoxItem { Content = "Semi-Monthly" });
-                        cmbMode.Items.Add(new ComboBoxItem { Content = "Weekly" });
-                        cmbMode.Items.Add(new ComboBoxItem { Content = "Daily" });
-                    }
-                    else
-                    {
-                        cmbMode.Items.Add(new ComboBoxItem { Content = "Monthly" });
-                        cmbMode.Items.Add(new ComboBoxItem { Content = "Semi-Monthly" });
-                        cmbMode.Items.Add(new ComboBoxItem { Content = "Weekly" });
-                        cmbMode.Items.Add(new ComboBoxItem { Content = "Daily" });
-                    }
-                    txtTerm.Text = lon.Term.ToString();
-                    cmbMode.Text = lon.Mode;
-                    refr();
-                    cmbBank.Items.Clear();
-                    var ban = from ba in ctx.Banks
-                              where ba.Active == true
-                              select ba;
-                    foreach (var item in ban)
-                    {
-                        cmbBank.Items.Add(item.BankName);
-                    }
-                    //MessageBox.Show(myNum.ToString());
+                }
+                else if (status == "UReleasing")
+                {
+
+                    txtAmt.IsEnabled = false;
+                    txtTerm.IsEnabled = false;
+                    cmbMode.IsEnabled = false;
+                    btnRef.IsEnabled = false;
+                    btnRelease.Content = "Update";
                     refresh();
+                    refr();
+                    int myCtr = 0;
+                    using (var ctx = new MyLoanContext())
+                    {
+                        var lon = ctx.Loans.Find(lId);
+                        var bnk = ctx.Banks.Find(lon.BankID);
+                        cmbBank.Items.Clear();
+                        var ban = from ba in ctx.Banks
+                                  where ba.Active == true
+                                  select ba;
+                        foreach (var item in ban)
+                        {
+                            cmbBank.Items.Add(item.BankName);
+                        }
+                        //cmbBank.SelectedIndex = 0;
+                        cmbBank.Text = bnk.BankName;
+                        cmbMode.Items.Clear();
+                        cmbMode.Items.Add(lon.Mode);
+                        cmbMode.Text = lon.Mode;
+                        var lons = from lo in ctx.FPaymentInfo
+                                   where lo.LoanID == lId
+                                   select lo;
+                        foreach (var item in lons)
+                        {
+                            //MessageBox.Show(myCtr.ToString());
+                            textarray[myCtr].Text = item.ChequeInfo;
+                            myCtr++;
+                        }
+                    }
                 }
             }
-            else if (status == "UReleasing")
+            catch (Exception ex)
             {
-
-                txtAmt.IsEnabled = false;
-                txtTerm.IsEnabled = false;
-                cmbMode.IsEnabled = false;
-                btnRef.IsEnabled = false;
-                btnRelease.Content = "Update";
-                refresh();
-                refr();
-                int myCtr = 0;
-                using (var ctx = new MyLoanContext())
-                {
-                    var lon = ctx.Loans.Find(lId);
-                    var bnk = ctx.Banks.Find(lon.BankID);
-                    cmbBank.Items.Clear();
-                    var ban = from ba in ctx.Banks
-                              where ba.Active == true
-                              select ba;
-                    foreach (var item in ban)
-                    {
-                        cmbBank.Items.Add(item.BankName);
-                    }
-                    //cmbBank.SelectedIndex = 0;
-                    cmbBank.Text = bnk.BankName;
-                    cmbMode.Items.Clear();
-                    cmbMode.Items.Add(lon.Mode);
-                    cmbMode.Text = lon.Mode;
-                    var lons = from lo in ctx.FPaymentInfo
-                               where lo.LoanID == lId
-                               select lo;
-                    foreach (var item in lons)
-                    {
-                        //MessageBox.Show(myCtr.ToString());
-                        textarray[myCtr].Text = item.ChequeInfo;
-                        myCtr++;
-                    }
-                }
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
         }
 
         private void btnRef_Click(object sender, RoutedEventArgs e)
         {
-            refr();
+            try
+            {
+                refr();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         private void cmbBank_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -305,7 +332,15 @@ namespace LoanManagement.Desktop
 
         private void cmbMode_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            refr();
+            try
+            {
+                refr();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         private void cmbMode_PreviewMouseUp(object sender, MouseButtonEventArgs e)
@@ -315,78 +350,102 @@ namespace LoanManagement.Desktop
 
         private void cmbMode_DropDownClosed(object sender, EventArgs e)
         {
-            refr();
+            try
+            {
+                refr();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         private void txtTerm_LostFocus(object sender, RoutedEventArgs e)
         {
-            refr();
+            try
+            {
+                refr();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         private void btnRelease_Click(object sender, RoutedEventArgs e)
         {
-            if (status == "Releasing")
+            try
             {
-                if (Convert.ToDouble(txtAmt.Text) > Convert.ToDouble(lblPrincipal.Content))
+                if (status == "Releasing")
                 {
-                    MessageBox.Show("Principal amount must not be greater than the maximum loanable amount","Error",MessageBoxButton.OK,MessageBoxImage.Error);
-                    return;
-                }
+                    if (Convert.ToDouble(txtAmt.Text) > Convert.ToDouble(lblPrincipal.Content))
+                    {
+                        MessageBox.Show("Principal amount must not be greater than the maximum loanable amount", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
 
-                MessageBoxResult mr = MessageBox.Show("Are you sure?","Question",MessageBoxButton.YesNo,MessageBoxImage.Question);
-                if (mr == MessageBoxResult.Yes)
+                    MessageBoxResult mr = MessageBox.Show("Are you sure?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    if (mr == MessageBoxResult.Yes)
+                    {
+                        using (var ctx = new MyLoanContext())
+                        {
+                            var bk = ctx.Banks.Where(x => x.BankName == cmbBank.Text).First();
+                            int bId = bk.BankID;
+                            var lon = ctx.Loans.Find(lId);
+                            lon.Status = "Released";
+                            lon.BankID = bId;
+                            lon.Mode = cmbMode.Text;
+                            lon.Term = Convert.ToInt32(txtTerm.Text);
+                            var cn = ctx.Services.Find(lon.ServiceID);
+                            double co = cn.AgentCommission / 100;
+                            double cm = Convert.ToDouble(txtAmt.Text) * co;
+                            //MessageBox.Show(cm.ToString());
+                            ReleasedLoan rl = new ReleasedLoan { AgentsCommission = cm, DateReleased = DateTime.Today.Date, LoanID = lId, MonthlyPayment = Convert.ToDouble(lblMonthly.Content), NetProceed = Convert.ToDouble(lblProceed.Content), Principal = Convert.ToDouble(txtAmt.Text), TotalLoan = Convert.ToDouble(lblInt.Content) };
+                            lon.ReleasedLoan = rl;
+                            var lo = from l in ctx.GenSOA
+                                     select l;
+                            int y = 0;
+                            foreach (var item in lo)
+                            {
+                                FPaymentInfo fp = new FPaymentInfo { PaymentNumber = item.PaymentNumber, Amount = Convert.ToDouble(item.Amount), ChequeInfo = textarray[y].Text, LoanID = lId, ChequeDueDate = item.PaymentDate, PaymentDate = item.PaymentDate, PaymentStatus = "Pending", RemainingBalance = Convert.ToDouble(item.RemainingBalance) };
+                                ctx.FPaymentInfo.Add(fp);
+                                y++;
+                            }
+                            ctx.SaveChanges();
+                            MessageBox.Show("Okay");
+                            this.Close();
+                        }
+                    }
+                }
+                else if (status == "UReleasing")
                 {
+                    int myCtr = 0;
                     using (var ctx = new MyLoanContext())
                     {
+                        var lons = from lo in ctx.FPaymentInfo
+                                   where lo.LoanID == lId
+                                   select lo;
+                        foreach (var item in lons)
+                        {
+                            item.ChequeInfo = textarray[myCtr].Text;
+                            myCtr++;
+                        }
+                        var lon = ctx.Loans.Find(lId);
                         var bk = ctx.Banks.Where(x => x.BankName == cmbBank.Text).First();
                         int bId = bk.BankID;
-                        var lon = ctx.Loans.Find(lId);
-                        lon.Status = "Released";
                         lon.BankID = bId;
-                        lon.Mode = cmbMode.Text;
-                        lon.Term = Convert.ToInt32(txtTerm.Text);
-                        var cn = ctx.Services.Find(lon.ServiceID);
-                        double co = cn.AgentCommission / 100;
-                        double cm = Convert.ToDouble(txtAmt.Text) * co;
-                        //MessageBox.Show(cm.ToString());
-                        ReleasedLoan rl = new ReleasedLoan { AgentsCommission = cm, DateReleased= DateTime.Today.Date, LoanID= lId, MonthlyPayment=Convert.ToDouble(lblMonthly.Content), NetProceed=Convert.ToDouble(lblProceed.Content), Principal=Convert.ToDouble(txtAmt.Text), TotalLoan=Convert.ToDouble(lblInt.Content) };
-                        lon.ReleasedLoan = rl;
-                        var lo = from l in ctx.GenSOA
-                                 select l;
-                        int y = 0;
-                        foreach (var item in lo)
-                        {
-                            FPaymentInfo fp = new FPaymentInfo { PaymentNumber = item.PaymentNumber, Amount = Convert.ToDouble(item.Amount), ChequeInfo = textarray[y].Text, LoanID = lId, ChequeDueDate=item.PaymentDate ,PaymentDate = item.PaymentDate, PaymentStatus = "Pending", RemainingBalance = Convert.ToDouble(item.RemainingBalance) };
-                            ctx.FPaymentInfo.Add(fp);
-                            y++;
-                        }
                         ctx.SaveChanges();
-                        MessageBox.Show("Okay");
+                        MessageBox.Show("Updated");
                         this.Close();
                     }
                 }
             }
-            else if (status == "UReleasing")
+            catch (Exception ex)
             {
-                int myCtr = 0;
-                using (var ctx = new MyLoanContext())
-                {
-                    var lons = from lo in ctx.FPaymentInfo
-                               where lo.LoanID == lId
-                               select lo;
-                    foreach (var item in lons)
-                    {
-                        item.ChequeInfo=textarray[myCtr].Text;
-                        myCtr++;
-                    }
-                    var lon = ctx.Loans.Find(lId);
-                    var bk = ctx.Banks.Where(x => x.BankName == cmbBank.Text).First();
-                    int bId = bk.BankID;
-                    lon.BankID = bId;
-                    ctx.SaveChanges();
-                    MessageBox.Show("Updated");
-                    this.Close();
-                }
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
         }
     }

@@ -53,9 +53,17 @@ namespace LoanManagement.Desktop
 
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
-            wpfServiceInfo frm = new wpfServiceInfo();
-            frm.status = "Add";
-            frm.ShowDialog();
+            try
+            {
+                wpfServiceInfo frm = new wpfServiceInfo();
+                frm.status = "Add";
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         private void btnView_Click(object sender, RoutedEventArgs e)
@@ -69,32 +77,57 @@ namespace LoanManagement.Desktop
             }
             catch (Exception ex)
             {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
         }
 
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
         {
-            ImageBrush myBrush = new ImageBrush();
-            System.Windows.Controls.Image image = new System.Windows.Controls.Image();
-            image.Source = new BitmapImage(
-                new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
-            myBrush.ImageSource = image.Source;
-            wdw1.Background = myBrush;
+            try
+            {
+                ImageBrush myBrush = new ImageBrush();
+                System.Windows.Controls.Image image = new System.Windows.Controls.Image();
+                image.Source = new BitmapImage(
+                    new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
+                myBrush.ImageSource = image.Source;
+                wdw1.Background = myBrush;
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         private void Window_Activated_1(object sender, EventArgs e)
         {
-            resetGrid();
+            try
+            {
+                resetGrid();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         private void resetGrid()
         {
-            using (var ctx = new MyLoanContext())
+            try
             {
-                var servs = from sr in ctx.Services
-                            select new { ServiceNumber = sr.ServiceID, Name = sr.Name , Description=sr.Description};
-                dgServ.ItemsSource = servs.ToList();
+                using (var ctx = new MyLoanContext())
+                {
+                    var servs = from sr in ctx.Services
+                                select new { ServiceNumber = sr.ServiceID, Name = sr.Name, Description = sr.Description };
+                    dgServ.ItemsSource = servs.ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
         }
     }

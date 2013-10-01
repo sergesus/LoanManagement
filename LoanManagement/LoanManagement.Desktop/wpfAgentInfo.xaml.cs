@@ -71,58 +71,66 @@ namespace LoanManagement.Desktop
 
         public void reset()
         {
-            btnAddAddress.Content = "Add";
-            btnEdtAddress.Content = "Edit";
-            dgAddress.IsEnabled = true;
-            btnDelAddress.Visibility = Visibility.Visible;
-            grpAddress.Visibility = Visibility.Hidden;
-            txtCity.Text = "";
-            txtProvince.Text = "";
-            txtStreet.Text = "";
+            try
+            {
+                btnAddAddress.Content = "Add";
+                btnEdtAddress.Content = "Edit";
+                dgAddress.IsEnabled = true;
+                btnDelAddress.Visibility = Visibility.Visible;
+                grpAddress.Visibility = Visibility.Hidden;
+                txtCity.Text = "";
+                txtProvince.Text = "";
+                txtStreet.Text = "";
 
-            btnAddContact.Content = "Add";
-            btnEdtContact.Content = "Edit";
-            dgContact.IsEnabled = true;
-            btnDelContact.Visibility = Visibility.Visible;
-            grpContact.Visibility = Visibility.Hidden;
-            txtContact.Text = "";
-            int num1 = 0;
-            int num2 = 0;
-            if (status == "Add")
-            {
-                using (var ctx = new MyLoanContext())
+                btnAddContact.Content = "Add";
+                btnEdtContact.Content = "Edit";
+                dgContact.IsEnabled = true;
+                btnDelContact.Visibility = Visibility.Visible;
+                grpContact.Visibility = Visibility.Hidden;
+                txtContact.Text = "";
+                int num1 = 0;
+                int num2 = 0;
+                if (status == "Add")
                 {
-                    num1 = ctx.TempAgentAddresses.Count();
-                    num2 = ctx.TempAgentContact.Count();
+                    using (var ctx = new MyLoanContext())
+                    {
+                        num1 = ctx.TempAgentAddresses.Count();
+                        num2 = ctx.TempAgentContact.Count();
+                    }
+                }
+                else
+                {
+                    using (var ctx = new MyLoanContext())
+                    {
+                        num1 = ctx.AgentAddresses.Where(x => x.AgentID == aId).Count();
+                        num2 = ctx.AgentContacts.Where(x => x.AgentID == aId).Count();
+                    }
+                }
+                if (num1 > 0)
+                {
+                    btnDelAddress.IsEnabled = true;
+                    btnEdtAddress.IsEnabled = true;
+                }
+                else
+                {
+                    btnDelAddress.IsEnabled = !true;
+                    btnEdtAddress.IsEnabled = !true;
+                }
+                if (num2 > 0)
+                {
+                    btnDelContact.IsEnabled = true;
+                    btnEdtContact.IsEnabled = true;
+                }
+                else
+                {
+                    btnDelContact.IsEnabled = !true;
+                    btnEdtContact.IsEnabled = !true;
                 }
             }
-            else
+            catch (Exception ex)
             {
-                using (var ctx = new MyLoanContext())
-                {
-                    num1 = ctx.AgentAddresses.Where(x => x.AgentID == aId).Count();
-                    num2 = ctx.AgentContacts.Where(x => x.AgentID == aId).Count();
-                }
-            }
-            if (num1 > 0)
-            {
-                btnDelAddress.IsEnabled = true;
-                btnEdtAddress.IsEnabled = true;
-            }
-            else
-            {
-                btnDelAddress.IsEnabled = !true;
-                btnEdtAddress.IsEnabled = !true;
-            }
-            if (num2 > 0)
-            {
-                btnDelContact.IsEnabled = true;
-                btnEdtContact.IsEnabled = true;
-            }
-            else
-            {
-                btnDelContact.IsEnabled = !true;
-                btnEdtContact.IsEnabled = !true;
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
         }
 
@@ -207,7 +215,8 @@ namespace LoanManagement.Desktop
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show(ex.InnerException.ToString());
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
         }
 
@@ -223,187 +232,211 @@ namespace LoanManagement.Desktop
 
         private void btnBrowse_Click(object sender, RoutedEventArgs e)
         {
-            OpenFileDialog dlg = new OpenFileDialog();
-            dlg.InitialDirectory = "c:\\";
-            dlg.Filter = "Image files (*.jpg)|*.jpg|All Files (*.*)|*.*";
-            dlg.RestoreDirectory = true;
+            try
+            {
+                OpenFileDialog dlg = new OpenFileDialog();
+                dlg.InitialDirectory = "c:\\";
+                dlg.Filter = "Image files (*.jpg)|*.jpg|All Files (*.*)|*.*";
+                dlg.RestoreDirectory = true;
 
-            if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                selectedFileName = dlg.FileName;
-                //FileNameLabel.Content = selectedFileName;
-                BitmapImage bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.UriSource = new Uri(selectedFileName);
-                bitmap.EndInit();
-                img.Source = bitmap;
-                isChanged = true;
+                if (dlg.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    selectedFileName = dlg.FileName;
+                    //FileNameLabel.Content = selectedFileName;
+                    BitmapImage bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.UriSource = new Uri(selectedFileName);
+                    bitmap.EndInit();
+                    img.Source = bitmap;
+                    isChanged = true;
+                }
+                else
+                {
+                    isChanged = false;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                isChanged = false;
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
         }
 
         private void wdw1_Loaded(object sender, RoutedEventArgs e)
         {
-            ImageBrush myBrush = new ImageBrush();
-            System.Windows.Controls.Image image = new System.Windows.Controls.Image();
-            image.Source = new BitmapImage(
-                new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
-            myBrush.ImageSource = image.Source;
-            wdw1.Background = myBrush;
-
-            selectedFileName = AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\myImg.gif";
-
-            reset();
-            if (status == "Add")
+            try
             {
-                BitmapImage bitmap = new BitmapImage();
-                bitmap.BeginInit();
-                bitmap.UriSource = new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\myImg.gif");
-                bitmap.EndInit();
-                img.Source = bitmap;
+                ImageBrush myBrush = new ImageBrush();
+                System.Windows.Controls.Image image = new System.Windows.Controls.Image();
+                image.Source = new BitmapImage(
+                    new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
+                myBrush.ImageSource = image.Source;
+                wdw1.Background = myBrush;
 
-                using (var ctx = new MyLoanContext())
-                {
-                    ctx.Database.ExecuteSqlCommand("delete from dbo.TempAgentAddresses");
-                    ctx.Database.ExecuteSqlCommand("delete from dbo.TempAgentContacts");
-                }
+                selectedFileName = AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\myImg.gif";
+
                 reset();
-                btnDel.Visibility = Visibility.Hidden;
-            }
-            else
-            {
-                btnSave.Content = "Update";
-                btnClear.Visibility = Visibility.Hidden;
-
-                using (var ctx = new MyLoanContext())
+                if (status == "Add")
                 {
-                    var agt = ctx.Agents.Find(aId);
-                    txtFName.Text = agt.FirstName;
-                    txtLName.Text = agt.LastName;
-                    txtEmail.Text = agt.Email;
-                    txtMI.Text = agt.MI;
-                    txtSuffix.Text = agt.Suffix;
+                    BitmapImage bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.UriSource = new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\myImg.gif");
+                    bitmap.EndInit();
+                    img.Source = bitmap;
 
-                    byte[] imageArr;
-                    imageArr = agt.Photo;
-                    BitmapImage bi = new BitmapImage();
-                    bi.BeginInit();
-                    bi.CreateOptions = BitmapCreateOptions.None;
-                    bi.CacheOption = BitmapCacheOption.Default;
-                    bi.StreamSource = new MemoryStream(imageArr);
-                    bi.EndInit();
-                    img.Source = bi;
-
-                    var add = from cn in ctx.AgentAddresses
-                              where cn.AgentID == aId
-                              select new { cn.AddressNumber, cn.Street, cn.Province, cn.City };
-                    dgAddress.ItemsSource = add.ToList();
-
-                    var cont = from cn in ctx.AgentContacts
-                               where cn.AgentID == aId
-                               select new { cn.CNumber, cn.Contact };
-                    dgContact.ItemsSource = cont.ToList();
-
-                    grpAddress.Visibility = Visibility.Hidden;
-                    grpContact.Visibility = Visibility.Hidden;
-
+                    using (var ctx = new MyLoanContext())
+                    {
+                        ctx.Database.ExecuteSqlCommand("delete from dbo.TempAgentAddresses");
+                        ctx.Database.ExecuteSqlCommand("delete from dbo.TempAgentContacts");
+                    }
+                    reset();
+                    btnDel.Visibility = Visibility.Hidden;
                 }
+                else
+                {
+                    btnSave.Content = "Update";
+                    btnClear.Visibility = Visibility.Hidden;
+
+                    using (var ctx = new MyLoanContext())
+                    {
+                        var agt = ctx.Agents.Find(aId);
+                        txtFName.Text = agt.FirstName;
+                        txtLName.Text = agt.LastName;
+                        txtEmail.Text = agt.Email;
+                        txtMI.Text = agt.MI;
+                        txtSuffix.Text = agt.Suffix;
+
+                        byte[] imageArr;
+                        imageArr = agt.Photo;
+                        BitmapImage bi = new BitmapImage();
+                        bi.BeginInit();
+                        bi.CreateOptions = BitmapCreateOptions.None;
+                        bi.CacheOption = BitmapCacheOption.Default;
+                        bi.StreamSource = new MemoryStream(imageArr);
+                        bi.EndInit();
+                        img.Source = bi;
+
+                        var add = from cn in ctx.AgentAddresses
+                                  where cn.AgentID == aId
+                                  select new { cn.AddressNumber, cn.Street, cn.Province, cn.City };
+                        dgAddress.ItemsSource = add.ToList();
+
+                        var cont = from cn in ctx.AgentContacts
+                                   where cn.AgentID == aId
+                                   select new { cn.CNumber, cn.Contact };
+                        dgContact.ItemsSource = cont.ToList();
+
+                        grpAddress.Visibility = Visibility.Hidden;
+                        grpContact.Visibility = Visibility.Hidden;
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
         }
 
         private void btnAddAddress_Click(object sender, RoutedEventArgs e)
         {
-            if (btnAddAddress.Content.ToString() == "Add")
+            try
             {
-                grpAddress.Visibility = Visibility.Visible;
-                btnAddAddress.Content = "Save";
-                btnEdtAddress.Content = "Cancel";
-                btnEdtAddress.IsEnabled = true;
-                btnDelAddress.Visibility = Visibility.Hidden;
-
-            }
-            else if (btnAddAddress.Content.ToString() == "Save")
-            {
-                if (txtCity.Text == "" || txtProvince.Text == "" || txtStreet.Text == "")
+                if (btnAddAddress.Content.ToString() == "Add")
                 {
-                    System.Windows.MessageBox.Show("Please complete the required information", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                    return;
+                    grpAddress.Visibility = Visibility.Visible;
+                    btnAddAddress.Content = "Save";
+                    btnEdtAddress.Content = "Cancel";
+                    btnEdtAddress.IsEnabled = true;
+                    btnDelAddress.Visibility = Visibility.Hidden;
+
                 }
-
-                //for view
-                if (status == "View")
+                else if (btnAddAddress.Content.ToString() == "Save")
                 {
+                    if (txtCity.Text == "" || txtProvince.Text == "" || txtStreet.Text == "")
+                    {
+                        System.Windows.MessageBox.Show("Please complete the required information", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
+                    //for view
+                    if (status == "View")
+                    {
+                        using (var ctx = new MyLoanContext())
+                        {
+                            int ctr = ctx.AgentAddresses.Count() + 1;
+                            AgentAddress add = new AgentAddress { AgentID = aId, AddressNumber = ctr, Street = txtStreet.Text, Province = txtProvince.Text, City = txtCity.Text };
+                            ctx.AgentAddresses.Add(add);
+                            ctx.SaveChanges();
+                            var adr = from ad in ctx.AgentAddresses
+                                      where ad.AgentID == aId
+                                      select new { ad.AddressNumber, ad.Street, ad.Province, ad.City };
+                            dgAddress.ItemsSource = adr.ToList();
+                        }
+
+                        reset();
+                        return;
+
+                    }
+
                     using (var ctx = new MyLoanContext())
                     {
-                        int ctr = ctx.AgentAddresses.Count() + 1;
-                        AgentAddress add = new AgentAddress { AgentID=aId, AddressNumber = ctr, Street = txtStreet.Text, Province = txtProvince.Text, City = txtCity.Text };
-                        ctx.AgentAddresses.Add(add);
+                        int ctr = ctx.TempAgentAddresses.Count() + 1;
+                        TempAgentAddress add = new TempAgentAddress { AddressNumber = ctr, Street = txtStreet.Text, Province = txtProvince.Text, City = txtCity.Text };
+                        ctx.TempAgentAddresses.Add(add);
                         ctx.SaveChanges();
-                        var adr = from ad in ctx.AgentAddresses
-                                  where ad.AgentID==aId
+                        var adr = from ad in ctx.TempAgentAddresses
                                   select new { ad.AddressNumber, ad.Street, ad.Province, ad.City };
                         dgAddress.ItemsSource = adr.ToList();
                     }
 
                     reset();
-                    return;
-                    
                 }
-
-                using (var ctx = new MyLoanContext())
+                else
                 {
-                    int ctr = ctx.TempAgentAddresses.Count() + 1;
-                    TempAgentAddress add = new TempAgentAddress { AddressNumber=ctr, Street = txtStreet.Text, Province = txtProvince.Text, City = txtCity.Text };
-                    ctx.TempAgentAddresses.Add(add);
-                    ctx.SaveChanges();
-                    var adr = from ad in ctx.TempAgentAddresses
-                                  select new { ad.AddressNumber, ad.Street, ad.Province, ad.City };
-                    dgAddress.ItemsSource = adr.ToList();
-                }
+                    //for view
+                    if (status == "View")
+                    {
+                        using (var ctx = new MyLoanContext())
+                        {
+                            int num = Convert.ToInt32(getRow(dgAddress, 0));
+                            var add = ctx.AgentAddresses.Where(x => x.AddressNumber == num && x.AgentID == aId).First();
+                            add.City = txtCity.Text;
+                            add.Province = txtProvince.Text;
+                            add.Street = txtStreet.Text;
+                            ctx.SaveChanges();
+                            var adr = from ad in ctx.AgentAddresses
+                                      where ad.AgentID == aId
+                                      select new { ad.AddressNumber, ad.Street, ad.Province, ad.City };
+                            dgAddress.ItemsSource = adr.ToList();
 
-                reset();
-            }
-            else
-            {
-                //for view
-                if (status == "View")
-                {
+                        }
+                        reset();
+                        return;
+                    }
+
+
                     using (var ctx = new MyLoanContext())
                     {
                         int num = Convert.ToInt32(getRow(dgAddress, 0));
-                        var add = ctx.AgentAddresses.Where(x => x.AddressNumber == num && x.AgentID==aId).First();
+                        var add = ctx.TempAgentAddresses.Where(x => x.AddressNumber == num).First();
                         add.City = txtCity.Text;
                         add.Province = txtProvince.Text;
                         add.Street = txtStreet.Text;
                         ctx.SaveChanges();
-                        var adr = from ad in ctx.AgentAddresses
-                                  where ad.AgentID == aId
+                        var adr = from ad in ctx.TempAgentAddresses
                                   select new { ad.AddressNumber, ad.Street, ad.Province, ad.City };
                         dgAddress.ItemsSource = adr.ToList();
-                         
+                        reset();
+
                     }
-                    reset();
-                    return;
                 }
-
-
-                using (var ctx = new MyLoanContext())
-                {
-                    int num=Convert.ToInt32(getRow(dgAddress,0));
-                    var add = ctx.TempAgentAddresses.Where(x => x.AddressNumber == num).First();
-                    add.City = txtCity.Text;
-                    add.Province = txtProvince.Text;
-                    add.Street = txtStreet.Text;
-                    ctx.SaveChanges();
-                    var adr = from ad in ctx.TempAgentAddresses
-                              select new { ad.AddressNumber, ad.Street, ad.Province, ad.City };
-                    dgAddress.ItemsSource = adr.ToList();
-                    reset();
-
-                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
         }
 
@@ -450,6 +483,7 @@ namespace LoanManagement.Desktop
             }
             catch (Exception ex)
             {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
         }
@@ -508,6 +542,7 @@ namespace LoanManagement.Desktop
                 }
                 catch (Exception ex)
                 {
+                    System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
             }
@@ -515,87 +550,95 @@ namespace LoanManagement.Desktop
 
         private void btnAddContact_Click(object sender, RoutedEventArgs e)
         {
-            if (btnAddContact.Content.ToString() == "Add")
+            try
             {
-                grpContact.Visibility = Visibility.Visible;
-                btnAddContact.Content = "Save";
-                btnEdtContact.Content = "Cancel";
-                btnEdtContact.IsEnabled = true;
-                btnDelContact.Visibility = Visibility.Hidden;
-
-            }
-            else if (btnAddContact.Content.ToString() == "Save")
-            {
-                
-
-                //for view
-                if (status == "View")
+                if (btnAddContact.Content.ToString() == "Add")
                 {
+                    grpContact.Visibility = Visibility.Visible;
+                    btnAddContact.Content = "Save";
+                    btnEdtContact.Content = "Cancel";
+                    btnEdtContact.IsEnabled = true;
+                    btnDelContact.Visibility = Visibility.Hidden;
+
+                }
+                else if (btnAddContact.Content.ToString() == "Save")
+                {
+
+
+                    //for view
+                    if (status == "View")
+                    {
+                        using (var ctx = new MyLoanContext())
+                        {
+                            int ctr = ctx.AgentContacts.Count() + 1;
+                            AgentContact con = new AgentContact { AgentID = aId, CNumber = ctr, Contact = txtContact.Text };
+                            ctx.AgentContacts.Add(con);
+                            ctx.SaveChanges();
+                            var cts = from ct in ctx.AgentContacts
+                                      where ct.AgentID == aId
+                                      select new { ContactNumberID = ct.CNumber, Contact = ct.Contact };
+                            dgContact.ItemsSource = cts.ToList();
+                        }
+
+                        reset();
+                        return;
+
+                    }
+
                     using (var ctx = new MyLoanContext())
                     {
-                        int ctr = ctx.AgentContacts.Count() + 1;
-                        AgentContact con = new AgentContact { AgentID=aId, CNumber = ctr, Contact = txtContact.Text };
-                        ctx.AgentContacts.Add(con);
+                        int ctr = ctx.TempAgentContact.Count() + 1;
+                        TempAgentContact con = new TempAgentContact { CNumber = ctr, Contact = txtContact.Text };
+                        ctx.TempAgentContact.Add(con);
                         ctx.SaveChanges();
-                        var cts = from ct in ctx.AgentContacts
-                                  where ct.AgentID==aId
+                        var cts = from ct in ctx.TempAgentContact
                                   select new { ContactNumberID = ct.CNumber, Contact = ct.Contact };
                         dgContact.ItemsSource = cts.ToList();
                     }
 
                     reset();
-                    return;
-                    
                 }
-
-                using (var ctx = new MyLoanContext())
+                else
                 {
-                    int ctr = ctx.TempAgentContact.Count() + 1;
-                    TempAgentContact con = new TempAgentContact { CNumber=ctr, Contact=txtContact.Text };
-                    ctx.TempAgentContact.Add(con);
-                    ctx.SaveChanges();
-                    var cts = from ct in ctx.TempAgentContact
-                              select new { ContactNumberID=ct.CNumber, Contact = ct.Contact };
-                    dgContact.ItemsSource = cts.ToList();
-                }
+                    //for view
+                    if (status == "View")
+                    {
+                        using (var ctx = new MyLoanContext())
+                        {
 
-                reset();
-            }
-            else
-            {
-                //for view
-                if (status == "View")
-                {
+                            int num = Convert.ToInt32(getRow(dgContact, 0));
+                            var con = ctx.AgentContacts.Where(x => x.CNumber == num && x.AgentID == aId).First();
+                            con.Contact = txtContact.Text;
+                            ctx.SaveChanges();
+                            var cts = from ct in ctx.AgentContacts
+                                      where ct.AgentID == aId
+                                      select new { ContactNumberID = ct.CNumber, Contact = ct.Contact };
+                            dgContact.ItemsSource = cts.ToList();
+
+                        }
+                        reset();
+                        return;
+                    }
+
+
                     using (var ctx = new MyLoanContext())
                     {
-
                         int num = Convert.ToInt32(getRow(dgContact, 0));
-                        var con = ctx.AgentContacts.Where(x => x.CNumber == num && x.AgentID==aId).First();
+                        var con = ctx.TempAgentContact.Where(x => x.CNumber == num).First();
                         con.Contact = txtContact.Text;
                         ctx.SaveChanges();
-                        var cts = from ct in ctx.AgentContacts
-                                  where ct.AgentID==aId
+                        var cts = from ct in ctx.TempAgentContact
                                   select new { ContactNumberID = ct.CNumber, Contact = ct.Contact };
                         dgContact.ItemsSource = cts.ToList();
-                         
+                        reset();
+
                     }
-                    reset();
-                    return;
                 }
-
-
-                using (var ctx = new MyLoanContext())
-                {
-                    int num = Convert.ToInt32(getRow(dgContact, 0));
-                    var con = ctx.TempAgentContact.Where(x => x.CNumber == num).First();
-                    con.Contact = txtContact.Text;
-                    ctx.SaveChanges();
-                    var cts = from ct in ctx.TempAgentContact
-                              select new { ContactNumberID = ct.CNumber, Contact = ct.Contact };
-                    dgContact.ItemsSource = cts.ToList();
-                    reset();
-
-                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
         }
 
@@ -638,6 +681,7 @@ namespace LoanManagement.Desktop
             }
             catch (Exception ex)
             {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
         }
@@ -696,6 +740,7 @@ namespace LoanManagement.Desktop
                 }
                 catch (Exception ex)
                 {
+                    System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
             }

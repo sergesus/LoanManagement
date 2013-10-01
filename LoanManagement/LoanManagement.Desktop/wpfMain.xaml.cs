@@ -30,126 +30,248 @@ namespace LoanManagement.Desktop
 
         private void btnSettings_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("asd");
+            //MessageBox.Show("asd");
         }
 
         private void ListBox_SelectionChanged_1(object sender, SelectionChangedEventArgs e)
         {
-            reset();
-            if (lb1.SelectedIndex == 0)
+            try
             {
-                tb1.IsSelected = true;
+                reset();
+                if (lb1.SelectedIndex == 0)
+                {
+                    tb1.IsSelected = true;
+                }
+                else if (lb1.SelectedIndex == 1)
+                {
+                    tb2.IsSelected = true;
+                }
             }
-            else if (lb1.SelectedIndex == 1)
+            catch (Exception ex)
             {
-                tb2.IsSelected = true;
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
         }
 
         private void MetroWindow_Activated_1(object sender, EventArgs e)
         {
-            //lbM.UnselectAll();
-            reset();
+            try
+            {
+                //lbM.UnselectAll();
+                reset();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         private void reset()
         {
-            itm1.IsSelected = false;
-            itm2.IsSelected = false;
-            itm3.IsSelected = false;
-            itm4.IsSelected = false;
-            itm5.IsSelected = false;
-            itm6.IsSelected = false;
-            itm8.IsSelected = false;
-            itm9.IsSelected = false;
-            itm10.IsSelected = false;
-            itm11.IsSelected = false;
-            itm12.IsSelected = false;
-            itm13.IsSelected = false;
+            try
+            {
+                itm1.IsSelected = false;
+                itm2.IsSelected = false;
+                itm3.IsSelected = false;
+                itm4.IsSelected = false;
+                itm5.IsSelected = false;
+                itm6.IsSelected = false;
+                itm7.IsSelected = false;
+                itm8.IsSelected = false;
+                itm9.IsSelected = false;
+                itm10.IsSelected = false;
+                itm11.IsSelected = false;
+                itm12.IsSelected = false;
+                itm13.IsSelected = false;
+                itm14.IsSelected = false;
+                itm15.IsSelected = false;
+                itm16.IsSelected = false;
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
 
         private void ListBoxItem_Selected_2(object sender, RoutedEventArgs e)
         {
-            wpfLogin frm = new wpfLogin();
-            frm.Show();
-            this.Close();
+            try
+            {
+                wpfLogin frm = new wpfLogin();
+                frm.Show();
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         private void wdw1_Loaded(object sender, RoutedEventArgs e)
         {
-            ImageBrush myBrush = new ImageBrush();
-            System.Windows.Controls.Image image = new System.Windows.Controls.Image();
-            image.Source = new BitmapImage(
-                new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
-            myBrush.ImageSource = image.Source;
-            //Grid grid = new Grid();
-            wdw1.Background = myBrush;
-            //grdLo.Background = myBrush;
-            //grdM.Background = myBrush;
-            //grdBG.Background = myBrush;
+            try
+            {
+                ImageBrush myBrush = new ImageBrush();
+                System.Windows.Controls.Image image = new System.Windows.Controls.Image();
+                image.Source = new BitmapImage(
+                    new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
+                myBrush.ImageSource = image.Source;
+                //Grid grid = new Grid();
+                wdw1.Background = myBrush;
+                //grdLo.Background = myBrush;
+                //grdM.Background = myBrush;
+                //grdBG.Background = myBrush;
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
 
         private void ListBoxItem_MouseUp_1(object sender, MouseButtonEventArgs e)
         {
-            wpfClient frm = new wpfClient();
-            frm.ShowDialog();
+            try
+            {
+                wpfClient frm = new wpfClient();
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         private void ListBoxItem_MouseUp_2(object sender, MouseButtonEventArgs e)
         {
-
-            wpfServices frm = new wpfServices();
-            frm.ShowDialog();
+            try
+            {
+                wpfServices frm = new wpfServices();
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         private void ListBoxItem_MouseUp_3(object sender, MouseButtonEventArgs e)
         {
-
-            wpfBranch frm = new wpfBranch();
-            frm.ShowDialog();
+            try
+            {
+                wpfBranch frm = new wpfBranch();
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         private void ListBoxItem_MouseUp_4(object sender, MouseButtonEventArgs e)
         {
-            wpfEmployee frm = new wpfEmployee();
-            frm.ShowDialog();
+            try
+            {
+                wpfEmployee frm = new wpfEmployee();
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         private void TabItem_MouseUp_1(object sender, MouseButtonEventArgs e)
         {
-            reset();
+            try
+            {
+                reset();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         private void TabItem_MouseUp_2(object sender, MouseButtonEventArgs e)
         {
-            reset();
+            try
+            {
+                reset();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         private void ListBoxItem_MouseUp_5(object sender, MouseButtonEventArgs e)
         {
-            reset();
+            try
+            {
+                reset();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         private void itm5_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            wpfAgent frm = new wpfAgent();
-            frm.ShowDialog();
+            try
+            {
+                wpfAgent frm = new wpfAgent();
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         private void itm6_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            wpfSelectApplication frm = new wpfSelectApplication();
-            frm.status = "Application";
-            frm.ShowDialog();
+            try
+            {
+                wpfSelectApplication frm = new wpfSelectApplication();
+                frm.status = "Application";
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         private void itm8_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            wpfSelectApplication frm = new wpfSelectApplication();
-            frm.status = "Approval";
-            frm.ShowDialog();
+            try
+            {
+                wpfSelectApplication frm = new wpfSelectApplication();
+                frm.status = "Approval";
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         private void itm8_Selected(object sender, RoutedEventArgs e)
@@ -164,9 +286,17 @@ namespace LoanManagement.Desktop
 
         private void itm9_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            wpfSelectApplication frm = new wpfSelectApplication();
-            frm.status = "Releasing";
-            frm.ShowDialog();
+            try
+            {
+                wpfSelectApplication frm = new wpfSelectApplication();
+                frm.status = "Releasing";
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         private void itm10_Selected(object sender, RoutedEventArgs e)
@@ -176,14 +306,60 @@ namespace LoanManagement.Desktop
 
         private void itm10_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            wpfSelectPayment frm = new wpfSelectPayment();
-            frm.ShowDialog();
+            try
+            {
+                wpfSelectPayment frm = new wpfSelectPayment();
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         private void itm12_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            wpfSelectClosed frm = new wpfSelectClosed();
-            frm.ShowDialog();
+            try
+            {
+                wpfSelectClosed frm = new wpfSelectClosed();
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void itm13_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                wpfLoanSearch frm = new wpfLoanSearch();
+                frm.status = "Adjustment";
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void itm11_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                wpfLoanSearch frm = new wpfLoanSearch();
+                frm.status = "Restructure";
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
 

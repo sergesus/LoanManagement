@@ -35,7 +35,7 @@
             <Label Content="Mid. Name:" HorizontalAlignment="Left" Height="31" Margin="6,174,0,0" VerticalAlignment="Top" Width="104" Foreground="Black" FontSize="18"/>
             <TextBox x:Name="txtSuffix" HorizontalAlignment="Left" Height="29" Margin="132,217,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="55" FontSize="14"/>
             <Label Content="Suffix:" HorizontalAlignment="Left" Height="31" Margin="10,210,0,0" VerticalAlignment="Top" Width="79" Foreground="Black" FontSize="18"/>
-            <Label Content="Birthday:" HorizontalAlignment="Left" Height="31" Margin="10,241,0,0" VerticalAlignment="Top" Width="79" Foreground="Red" FontSize="18" RenderTransformOrigin="0.506,3.129"/>
+            <Label Content="Birthdate:" HorizontalAlignment="Left" Height="31" Margin="10,241,0,0" VerticalAlignment="Top" Width="79" Foreground="Red" FontSize="18" RenderTransformOrigin="0.506,3.129"/>
             <Label Content="Sex:" HorizontalAlignment="Left" Height="31" Margin="10,283,0,0" VerticalAlignment="Top" Width="74" Foreground="Red" FontSize="18" RenderTransformOrigin="0.506,3.129"/>
             <ComboBox x:Name="cmbSex" HorizontalAlignment="Left" Height="29" Margin="132,285,0,0" VerticalAlignment="Top" Width="280" SelectionChanged="cmbSex_SelectionChanged" FontSize="18">
                 <ComboBoxItem Content="Male"/>
