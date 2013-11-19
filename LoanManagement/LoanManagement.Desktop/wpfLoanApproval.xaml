@@ -69,6 +69,12 @@
                 <Image Source="Images/Refresh.ico" />
             </DockPanel>
         </Button>
+        <Button x:Name="btnPrev" HorizontalAlignment="Left" Height="29" Margin="339,106,0,0" VerticalAlignment="Top" Width="142" BorderBrush="#CC48CB00" BorderThickness="2" Background="#7F48CB00" Click="btnPrev_Click">
+            <DockPanel LastChildFill="True">
+                <Label HorizontalContentAlignment="Center" DockPanel.Dock="Right" Foreground="#FF343434" Height="24" FontSize="10" Content="Preview Payment Sched"/>
+                <Image Source="Images/Refresh.ico" />
+            </DockPanel>
+        </Button>
 
     </Grid>
 </Controls:MetroWindow>
