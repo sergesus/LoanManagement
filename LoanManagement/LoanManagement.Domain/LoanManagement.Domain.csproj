@@ -73,6 +73,14 @@
     <Compile Include="Migrations\201309260020540_AddedAuditTrail.Designer.cs">
       <DependentUpon>201309260020540_AddedAuditTrail.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201309281318238_AddedNullableForDates.cs" />
+    <Compile Include="Migrations\201309281318238_AddedNullableForDates.Designer.cs">
+      <DependentUpon>201309281318238_AddedNullableForDates.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201309290057572_AddedPosScope.cs" />
+    <Compile Include="Migrations\201309290057572_AddedPosScope.Designer.cs">
+      <DependentUpon>201309290057572_AddedPosScope.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemData.cs" />
@@ -102,6 +110,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201309260020540_AddedAuditTrail.resx">
       <DependentUpon>201309260020540_AddedAuditTrail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201309281318238_AddedNullableForDates.resx">
+      <DependentUpon>201309281318238_AddedNullableForDates.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201309290057572_AddedPosScope.resx">
+      <DependentUpon>201309290057572_AddedPosScope.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

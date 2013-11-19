@@ -208,6 +208,7 @@ namespace LoanManagement.Desktop
                 {
                     wpfLoanApproval frm = new wpfLoanApproval();
                     frm.status = status;
+                    frm.UserID = UserID;
                     frm.lId = lId;
                     this.Close();
                     frm.ShowDialog();
@@ -238,6 +239,7 @@ namespace LoanManagement.Desktop
                 {
                     wpfLoanDeclining frm = new wpfLoanDeclining();
                     frm.lId = lId;
+                    frm.UserID = UserID;
                     this.Close();
                     frm.ShowDialog();
                 }

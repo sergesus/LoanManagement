@@ -123,7 +123,7 @@ namespace LoanManagement.Desktop
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                //System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
             
@@ -154,10 +154,41 @@ namespace LoanManagement.Desktop
                     {
                         var agt = ctx.Banks.Find(n);
                         agt.Active = true;
+                        AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Retrieved Bank " + getRow(dgBank,1) };
+                        ctx.AuditTrails.Add(at);
                         ctx.SaveChanges();
                         System.Windows.MessageBox.Show("Retreived");
                         resetGrid();
                     }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                using (var ctx = new iContext())
+                {
+                    int n;
+                    try
+                    {
+                        n = Convert.ToInt16(txtSearch.Text);
+                    }
+                    catch (Exception)
+                    {
+                        n = 0;
+                    }
+                    var bank = from bn in ctx.Banks
+                               where (bn.Active == status) && (bn.BankName.Contains(txtSearch.Text) || bn.BankID == n)
+                               select new { BankID = bn.BankID, BankName = bn.BankName, Description = bn.Description };
+                    dgBank.ItemsSource = bank.ToList();
+
                 }
             }
             catch (Exception ex)

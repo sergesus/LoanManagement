@@ -22,13 +22,13 @@
             <ColumnDefinition/>
             <ColumnDefinition Width="0*"/>
         </Grid.ColumnDefinitions>
-        <Grid Height="467" Margin="10,79,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.321,0.525">
+        <Grid Height="467" Margin="0,79,10,-73" VerticalAlignment="Top" RenderTransformOrigin="0.321,0.525">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="386*"/>
                 <ColumnDefinition Width="629*"/>
                 <ColumnDefinition Width="21*"/>
             </Grid.ColumnDefinitions>
-            <DataGrid x:Name="dgClient" HorizontalAlignment="Left" Height="323" Margin="344,10,0,0" VerticalAlignment="Top" Width="682" CanUserAddRows="False" CanUserDeleteRows="False" SelectionChanged="dgClient_SelectionChanged" FontSize="18" GridLinesVisibility="None" Grid.ColumnSpan="3" BorderBrush="#CC48CB00" BorderThickness="2" Background="#7FF0F0F0" MouseDown="dgClient_MouseDown">
+            <DataGrid x:Name="dgClient" HorizontalAlignment="Left" Height="292" Margin="344,41,0,0" VerticalAlignment="Top" Width="682" CanUserAddRows="False" CanUserDeleteRows="False" SelectionChanged="dgClient_SelectionChanged" FontSize="18" GridLinesVisibility="None" Grid.ColumnSpan="3" BorderBrush="#CC48CB00" BorderThickness="2" Background="#7FF0F0F0" MouseDown="dgClient_MouseDown">
                 <DataGrid.Resources>
                     <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" 
         			Color="#CC48CB00"/>
@@ -52,6 +52,8 @@
                     <Image Source="Images/View.ico" />
                 </DockPanel>
             </Button>
+            <TextBox x:Name="txtSearch" HorizontalAlignment="Left" Height="14" Margin="47,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="572" Grid.Column="1" FontFamily="Segoe UI" TextChanged="txtSearch_TextChanged"/>
+            <Label Grid.ColumnSpan="2" Content="Search:" HorizontalAlignment="Left" Height="31" Margin="344,10,0,0" VerticalAlignment="Top" Width="84" FontSize="18"/>
         </Grid>
         <Grid HorizontalAlignment="Left" Height="74" VerticalAlignment="Top" Width="1076" Background="#7F48CB00" Grid.ColumnSpan="2" Margin="0,0,-30,0">
             <Image HorizontalAlignment="Left" Height="74" VerticalAlignment="Top" Width="97" Source="Images/Bank.ico"/>

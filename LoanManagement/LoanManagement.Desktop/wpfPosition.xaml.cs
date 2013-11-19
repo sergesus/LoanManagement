@@ -100,22 +100,58 @@ namespace LoanManagement.Desktop
 
         private void btnView_Click(object sender, RoutedEventArgs e)
         {
-            int n = Convert.ToInt32(getRow(dgBank, 0));
-            if (n == 1)
+            try
             {
-                MessageBox.Show("Unable");
+                int n = Convert.ToInt32(getRow(dgBank, 0));
+                if (n == 1)
+                {
+                    MessageBox.Show("Unable");
+                    return;
+                }
+                wpfPositionInfo frm = new wpfPositionInfo();
+                frm.status = "View";
+                frm.UserID = UserID;
+                frm.pID = n;
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
                 return;
             }
-            wpfPositionInfo frm = new wpfPositionInfo();
-            frm.status = "View";
-            frm.UserID = UserID;
-            frm.pID = n;
-            frm.ShowDialog();
         }
 
         private void wdw1_Activated(object sender, EventArgs e)
         {
             resetGrid();
+        }
+
+        private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                using (var ctx = new iContext())
+                {
+                    int n;
+                    try
+                    {
+                        n = Convert.ToInt16(txtSearch.Text);
+                    }
+                    catch (Exception)
+                    {
+                        n = 0;
+                    }
+                    var post = from ps in ctx.Positions
+                               where (ps.PositionName.Contains(txtSearch.Text) || ps.PositionID == n)
+                               select new { PositionID = ps.PositionID, Position = ps.PositionName, Description = ps.Description };
+                    dgBank.ItemsSource = post.ToList();
+
+                }
+            }
+            catch (Exception ex)
+            {
+                //System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
     }
 }

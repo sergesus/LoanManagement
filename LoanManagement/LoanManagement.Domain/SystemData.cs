@@ -183,6 +183,7 @@ namespace LoanManagement.Domain
         public bool AgentM { get; set; }
         public bool BankM { get; set; }
         public bool EmployeeM { get; set; }
+        public bool PositionM { get; set; }
 
         public bool Application { get; set; }
         public bool Approval { get; set; }
@@ -361,7 +362,7 @@ namespace LoanManagement.Domain
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string Suffix { get; set; }
-        public DateTime Birthday { get; set; }
+        public DateTime? Birthday { get; set; }
         public string Sex { get; set; }
         public string Status { get; set; }
         public string SSS { get; set; }
@@ -412,7 +413,7 @@ namespace LoanManagement.Domain
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string Suffix { get; set; }
-        public DateTime Birthday { get; set; }
+        public DateTime? Birthday { get; set; }
         public string School { get; set; }
 
         public int ClientID { get; set; }
@@ -447,7 +448,7 @@ namespace LoanManagement.Domain
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string Suffix { get; set; }
-        public DateTime Birthday { get; set; }
+        public DateTime? Birthday { get; set; }
         public string BusinessName { get; set; }
         public string DTI { get; set; }
         public string Street { get; set; }
@@ -512,7 +513,7 @@ namespace LoanManagement.Domain
         public string FirstName { get; set; }
         public string MiddleName { get; set; }
         public string Suffix { get; set; }
-        public DateTime Birthday { get; set; }
+        public DateTime? Birthday { get; set; }
         public string School { get; set; }
     }
 

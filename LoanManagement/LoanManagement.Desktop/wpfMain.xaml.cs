@@ -1245,6 +1245,12 @@ namespace LoanManagement.Desktop
             frm.ShowDialog();
         }
 
+        private void btnClients_Copy9_Click(object sender, RoutedEventArgs e)
+        {
+            wpfAudtiTrail frm = new wpfAudtiTrail();
+            frm.ShowDialog();
+        }
+
 
 
 

@@ -66,7 +66,7 @@ namespace LoanManagement.Desktop
                         err = true;
                 }
 
-                if (err == true)
+                if (err == false)
                 {
                     lbl.Content = "**";
                     lbl.Foreground = System.Windows.Media.Brushes.Red;
@@ -98,7 +98,7 @@ namespace LoanManagement.Desktop
                         err = true;
                 }
 
-                if (err == true)
+                if (err == false)
                 {
                     lbl.Content = "**";
                     lbl.Foreground = System.Windows.Media.Brushes.Red;
@@ -473,6 +473,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
+                grdSpouseWork.Visibility = Visibility.Hidden;
                 ImageBrush myBrush = new ImageBrush();
                 System.Windows.Controls.Image image = new System.Windows.Controls.Image();
                 image.Source = new BitmapImage(
@@ -674,7 +675,8 @@ namespace LoanManagement.Desktop
                         {
                             var ctr = ctx.HomeAddresses.Where(x => x.ClientID == cId).Count() + 1;
 
-                            HomeAddress th = new HomeAddress { ClientID = cId, AddressNumber = ctr, City = txtHCity.Text, LengthOfStay = txtHLength.Text, MonthlyFee = val, OwnershipType = ownership, Province = txtHProvince.Text, Street = txtHStreet.Text };
+                            //HomeAddress th = new HomeAddress { ClientID = cId, AddressNumber = ctr, City = txtHCity.Text, LengthOfStay = txtHLength.Text, MonthlyFee = val, OwnershipType = ownership, Province = txtHProvince.Text, Street = txtHStreet.Text };
+                            HomeAddress th = new HomeAddress { ClientID = cId, AddressNumber = ctr, City = txtHCity.Text, LengthOfStay = txtHLength.Text, MonthlyFee = 0, OwnershipType = ownership, Province = txtHProvince.Text, Street = txtHStreet.Text };
                             ctx.HomeAddresses.Add(th);
                             ctx.SaveChanges();
 
@@ -690,20 +692,24 @@ namespace LoanManagement.Desktop
                     if (rdOwned1.IsChecked == true)
                     {
                         ownership = "Owned(Not Mortgage)";
+                        val = 0;
                     }
                     else if (rdOwned2.IsChecked == true)
                     {
                         ownership = "Owned(Mortgage)";
+                        val = 0;
                     }
                     else if (rdUsed.IsChecked == true)
                     {
                         ownership = "Used Free";
+                        val = 0;
                     }
                     else
                     {
                         ownership = "Rented";
                         val = Convert.ToDouble(txtRentedVal.Text);
                     }
+
 
 
                     using (var ctx = new iContext())
@@ -725,6 +731,26 @@ namespace LoanManagement.Desktop
                 }
                 else //for update
                 {
+                    if (rdOwned1.IsChecked == true)
+                    {
+                        ownership = "Owned(Not Mortgage)";
+                        val = 0;
+                    }
+                    else if (rdOwned2.IsChecked == true)
+                    {
+                        ownership = "Owned(Mortgage)";
+                        val = 0;
+                    }
+                    else if (rdUsed.IsChecked == true)
+                    {
+                        ownership = "Used Free";
+                        val = 0;
+                    }
+                    else
+                    {
+                        ownership = "Rented";
+                        val = Convert.ToDouble(txtRentedVal.Text);
+                    }
                     //for view
                     if (status == "View")
                     {
@@ -1987,7 +2013,8 @@ namespace LoanManagement.Desktop
 
                         if (cmbStatus.Text == "Married")
                         {
-                            Spouse sps = new Spouse { Birthday = Convert.ToDateTime(dtSBday.SelectedDate).Date, BusinessName = txtSWName.Text, BusinessNumber = txtSBsNumber.Text, City = txtSCity.Text, DTI = txtSDTI.Text, Employment = cmbSEmployment.Text, FirstName = txtSFName.Text, LastName = txtSLName.Text, LengthOfStay = txtSLength.Text, MiddleName = txtSMName.Text, MonthlyIncome = Convert.ToDouble(txtSIncome.Text), PLNumber = txtSPLNumber.Text, Position = txtSPosition.Text, Province = txtSProvince.Text, status = cmbSStatus.Text, Street = txtSStreet.Text, Suffix = txtSuffix.Text };
+                            //Spouse sps = new Spouse { Birthday = Convert.ToDateTime(dtSBday.SelectedDate).Date, BusinessName = txtSWName.Text, BusinessNumber = txtSBsNumber.Text, City = txtSCity.Text, DTI = txtSDTI.Text, Employment = cmbSEmployment.Text, FirstName = txtSFName.Text, LastName = txtSLName.Text, LengthOfStay = txtSLength.Text, MiddleName = txtSMName.Text, MonthlyIncome = Convert.ToDouble(txtSIncome.Text), PLNumber = txtSPLNumber.Text, Position = txtSPosition.Text, Province = txtSProvince.Text, status = cmbSStatus.Text, Street = txtSStreet.Text, Suffix = txtSuffix.Text };
+                            Spouse sps = new Spouse { Birthday = Convert.ToDateTime(dtSBday.SelectedDate).Date, FirstName = txtSFName.Text, LastName = txtSLName.Text, MiddleName = txtSMName.Text, Suffix = txtSuffix.Text };
                             ctx.Spouses.Add(sps);
                         }
 
@@ -2020,6 +2047,15 @@ namespace LoanManagement.Desktop
                         clt.Suffix = txtSuffix.Text;
                         clt.TIN = txtTIN.Text;
                         clt.Status = cmbStatus.Text;
+                        if (cmbStatus.Text == "Married")
+                        {
+                            var sps = ctx.Spouses.Where(x => x.ClientID == clt.ClientID).First();
+                            sps.Birthday = Convert.ToDateTime(dtSBday.SelectedDate).Date;
+                            sps.FirstName = txtSFName.Text;
+                            sps.LastName = txtSLName.Text;
+                            sps.MiddleName = txtSMName.Text;
+                            sps.Suffix = txtSuffix.Text;
+                        }
                         if (isChanged == true)
                         {
                             clt.Photo = ConvertImageToByteArray(selectedFileName);

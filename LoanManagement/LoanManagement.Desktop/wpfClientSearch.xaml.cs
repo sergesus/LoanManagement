@@ -131,6 +131,7 @@ namespace LoanManagement.Desktop
                         var frm = Application.Current.Windows[ctr - 2] as wpfLoanApplication;
                         int cbId = Convert.ToInt32(getRow(dgClient, 0));
                         frm.cbId = Convert.ToInt32(getRow(dgClient, 0));
+                        frm.UserID = UserID;
                         using (var ctx = new iContext())
                         {
                             var agt = ctx.Clients.Find(cbId);
@@ -144,6 +145,7 @@ namespace LoanManagement.Desktop
                         frm.status = status2;
                         int myCID = Convert.ToInt32(getRow(dgClient, 0));
                         frm.cID = myCID;
+                        frm.UserID = UserID;
                         this.Close();
                         frm.ShowDialog();
                     }
@@ -151,6 +153,7 @@ namespace LoanManagement.Desktop
                     {
                         var frm = Application.Current.Windows[ctr - 2] as wpfSelectClient;
                         frm.txtID.Text = getRow(dgClient, 0);
+                        frm.UserID = UserID;
                         if (frm.txtID.Text == "")
                         {
                             return;
@@ -162,6 +165,7 @@ namespace LoanManagement.Desktop
                 {
                     var ctr = Application.Current.Windows.Count;
                     var frm = Application.Current.Windows[ctr - 2] as wpfLoanApplication;
+                    frm.UserID = UserID;
                     int num = Convert.ToInt32(getRow(dgClient, 0));
                     frm.agentId = num;
                     this.Close();
@@ -170,6 +174,7 @@ namespace LoanManagement.Desktop
                 {
                     var ctr = Application.Current.Windows.Count;
                     var frm = Application.Current.Windows[ctr - 2] as wpfLoanApplication;
+                    frm.UserID = UserID;
                     int num = Convert.ToInt32(getRow(dgClient, 0));
                     frm.ciId = num;
                     using (var ctx = new iContext())
@@ -184,6 +189,7 @@ namespace LoanManagement.Desktop
                 {
                     int num = Convert.ToInt32(getRow(dgClient, 0));
                     wpfUserInfo frm = new wpfUserInfo();
+                    frm.UserID = UserID;
                     frm.eId = num;
                     this.Close();
                     frm.ShowDialog();
@@ -191,7 +197,7 @@ namespace LoanManagement.Desktop
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                //System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
         }

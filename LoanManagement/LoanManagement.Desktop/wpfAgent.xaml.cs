@@ -93,6 +93,7 @@ namespace LoanManagement.Desktop
             catch (Exception ex)
             {
                 //System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
         }
 
@@ -178,7 +179,7 @@ namespace LoanManagement.Desktop
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                //System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
         }
@@ -208,10 +209,40 @@ namespace LoanManagement.Desktop
                     {
                         var agt = ctx.Agents.Find(n);
                         agt.Active = true;
+                        AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Retrieved Agent " + agt.FirstName + " " + agt.MI + " " + agt.LastName + " " + agt.Suffix };
+                        ctx.AuditTrails.Add(at);
                         ctx.SaveChanges();
                         System.Windows.MessageBox.Show("Retreived");
                         resetGrid();
                     }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                using (var ctx = new iContext())
+                {
+                    int n;
+                    try
+                    {
+                        n = Convert.ToInt32(txtSearch.Text);
+                    }
+                    catch (Exception)
+                    {
+                        n = 0;
+                    }
+                    var emp = from em in ctx.Agents 
+                              where (em.Active == status) && ((em.FirstName + " " + em.MI + " " + em.LastName).Contains(txtSearch.Text) || em.AgentID == n) 
+                              select new { em.AgentID, em.FirstName, em.MI, em.LastName, em.Suffix };
+                    dgEmp.ItemsSource = emp.ToList();
                 }
             }
             catch (Exception ex)

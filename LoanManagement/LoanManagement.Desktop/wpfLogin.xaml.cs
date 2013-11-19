@@ -310,6 +310,7 @@ namespace LoanManagement.Desktop
                         wnd.btnFManage.IsEnabled = sc.ManageCLosed ;
                         wnd.btnFRestructure.IsEnabled = sc.Resturcture;
                         wnd.btnFAdjustment.IsEnabled = sc.PaymentAdjustment;
+                        wnd.btnPosition.IsEnabled = sc.PositionM;
 
                         wnd.grdArchive.IsEnabled=sc.Archive;
                         wnd.btnUBackUp.IsEnabled=sc.BackUp;
@@ -320,6 +321,10 @@ namespace LoanManagement.Desktop
 
                         var st = ctx.State.Find(1);
                         st.iState = 0;
+
+                        AuditTrail at = new AuditTrail { EmployeeID = em.EmployeeID, DateAndTime = DateTime.Now, Action = "Accessed the system" };
+                        ctx.AuditTrails.Add(at);
+
                         ctx.SaveChanges();
                         
                         this.Close();

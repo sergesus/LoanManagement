@@ -22,13 +22,13 @@
             <ColumnDefinition Width="85*"/>
             <ColumnDefinition Width="274*"/>
         </Grid.ColumnDefinitions>
-        <Grid Height="397" Margin="10,79,-922,-21" VerticalAlignment="Top" RenderTransformOrigin="0.321,0.525" Grid.ColumnSpan="2">
+        <Grid Height="397" Margin="10,79,-29,-19" VerticalAlignment="Top" RenderTransformOrigin="0.321,0.525" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="386*"/>
                 <ColumnDefinition Width="629*"/>
                 <ColumnDefinition Width="21*"/>
             </Grid.ColumnDefinitions>
-            <DataGrid x:Name="dgBank" HorizontalAlignment="Left" Height="323" VerticalAlignment="Top" Width="704" CanUserAddRows="False" CanUserDeleteRows="False" FontSize="18" GridLinesVisibility="None" Grid.ColumnSpan="2" BorderBrush="#CC48CB00" BorderThickness="2" Background="#7FF0F0F0">
+            <DataGrid x:Name="dgBank" HorizontalAlignment="Left" Height="277" VerticalAlignment="Top" Width="704" CanUserAddRows="False" CanUserDeleteRows="False" FontSize="18" GridLinesVisibility="None" Grid.ColumnSpan="2" BorderBrush="#CC48CB00" BorderThickness="2" Background="#7FF0F0F0" Margin="0,46,0,0">
                 <DataGrid.Resources>
                     <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" 
     					Color="#CC48CB00"/>
@@ -46,6 +46,8 @@
                     <Image Source="Images/View.ico" />
                 </DockPanel>
             </Button>
+            <TextBox x:Name="txtSearch" HorizontalAlignment="Left" Height="14" Margin="99,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="605" FontFamily="Segoe UI" TextChanged="txtSearch_TextChanged" Grid.ColumnSpan="2"/>
+            <Label Content="Search:" HorizontalAlignment="Left" Height="31" Margin="10,10,0,0" VerticalAlignment="Top" Width="84" FontSize="18"/>
         </Grid>
         <Grid HorizontalAlignment="Left" Height="74" VerticalAlignment="Top" Width="749" Background="#7F48CB00" Margin="0,0,-31,0" Grid.ColumnSpan="2">
             <Image HorizontalAlignment="Left" Height="74" VerticalAlignment="Top" Width="97" Source="Images/Manage.ico"/>

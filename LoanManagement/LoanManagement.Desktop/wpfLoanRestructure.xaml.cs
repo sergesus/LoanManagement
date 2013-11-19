@@ -82,7 +82,7 @@ namespace LoanManagement.Desktop
                     ctx.SaveChanges();
                     var lon = ctx.Loans.Find(lId);
                     Double Amt = Convert.ToDouble(txtAmt.Text);
-                    //lblPrincipal.Content = Amt.ToString("N2");
+                    lblPrincipal.Content = Amt.ToString("N2");
                     //txtAmt.Text = Amt.ToString("N2");
                     //txtAmt.SelectionStart = txtAmt.Text.Length - 3;
                     Double TotalInt = Convert.ToDouble(txtInt.Text) * Convert.ToInt32(txtTerm.Text);
@@ -178,6 +178,7 @@ namespace LoanManagement.Desktop
                         textarray[ctr].Height = 25;
                         textarray[ctr].Width = 300;
                         textarray[ctr].FontSize = 16;
+                        textarray[ctr].MaxLength = 6;
                         sp[ctr] = new StackPanel();
                         sp[ctr].Width = 300;
                         sp[ctr].Height = 60;

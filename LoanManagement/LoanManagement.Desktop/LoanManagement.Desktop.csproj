@@ -119,6 +119,9 @@
     <Compile Include="wpfAppliedLoanInfo.xaml.cs">
       <DependentUpon>wpfAppliedLoanInfo.xaml</DependentUpon>
     </Compile>
+    <Compile Include="wpfAudtiTrail.xaml.cs">
+      <DependentUpon>wpfAudtiTrail.xaml</DependentUpon>
+    </Compile>
     <Compile Include="wpfBackUp.xaml.cs">
       <DependentUpon>wpfBackUp.xaml</DependentUpon>
     </Compile>
@@ -250,6 +253,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="wpfAppliedLoanInfo.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="wpfAudtiTrail.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

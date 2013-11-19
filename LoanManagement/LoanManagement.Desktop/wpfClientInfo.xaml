@@ -56,11 +56,11 @@
                                     <RadioButton x:Name="rdOwned2" Content="Owned(Mortgage)" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="1.482,7" Margin="0,16,0,0" FontSize="18"/>
                                     <RadioButton x:Name="rdUsed" Content="Used Free" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="1.482,7" Margin="0,31,0,0" FontSize="18"/>
                                     <RadioButton x:Name="rdRented" Content="Rented/Mo." HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="1.482,7" Margin="0,47,0,0" FontSize="18"/>
-                                    <Label x:Name="lblRented" Content="**" HorizontalAlignment="Left" Height="23" Margin="242,40,0,0" VerticalAlignment="Top" Width="34" Foreground="Red"/>
+                                    <Label x:Name="lblRented" Content="**" HorizontalAlignment="Left" Height="23" Margin="242,40,0,0" VerticalAlignment="Top" Width="34" Foreground="Red" Visibility="Hidden"/>
                                 </Grid>
                                 <Label Content="Length of stay:" HorizontalAlignment="Left" Height="44" Margin="425,0,0,0" VerticalAlignment="Top" Width="138" RenderTransformOrigin="0.37,1.448" Foreground="Black" FontSize="18"/>
                                 <TextBox x:Name="txtHLength" HorizontalAlignment="Left" Height="29" Margin="560,3,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="270" FontSize="18" LostFocus="txtHLength_LostFocus"/>
-                                <TextBox x:Name="txtRentedVal" HorizontalAlignment="Left" Height="24" Margin="129,171,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="125" FontSize="18"/>
+                                <TextBox x:Name="txtRentedVal" HorizontalAlignment="Left" Height="24" Margin="129,171,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="125" FontSize="18" Text="0" Visibility="Hidden"/>
                                 <Label Content="*" HorizontalAlignment="Left" Height="31" Margin="53,0,0,0" VerticalAlignment="Top" Width="16" Foreground="Red"/>
                                 <Label Content="*" HorizontalAlignment="Left" Height="31" Margin="74,25,0,0" VerticalAlignment="Top" Width="16" Foreground="Red"/>
                                 <Label Content="*" HorizontalAlignment="Left" Height="31" Margin="36,51,0,0" VerticalAlignment="Top" Width="16" Foreground="Red"/>
@@ -232,7 +232,7 @@
                         <Label Content="Suffix:" HorizontalAlignment="Left" Height="31" Margin="14,112,0,0" VerticalAlignment="Top" Width="79" Foreground="Black" FontSize="18" Grid.ColumnSpan="2"/>
                         <Label Content="Birthday:" HorizontalAlignment="Left" Height="31" Margin="14,143,0,0" VerticalAlignment="Top" Width="79" Foreground="Black" FontSize="18" RenderTransformOrigin="0.506,3.129" Grid.ColumnSpan="2"/>
                         <DatePicker x:Name="dtSBday" HorizontalAlignment="Left" Height="26" Margin="123,148,0,0" VerticalAlignment="Top" Width="331" Grid.ColumnSpan="4" FontSize="18"/>
-                        <Grid Grid.Column="3" HorizontalAlignment="Left" Height="401" Margin="196,14,0,0" VerticalAlignment="Top" Width="426">
+                        <Grid x:Name="grdSpouseWork" Grid.Column="3" HorizontalAlignment="Left" Height="401" Margin="196,14,0,0" VerticalAlignment="Top" Width="426">
                             <Label Content="Street:" HorizontalAlignment="Left" Height="29" VerticalAlignment="Top" Width="67" RenderTransformOrigin="0.37,1.448" Foreground="Black" Margin="3,65,0,0" FontSize="18"/>
                             <TextBox x:Name="txtSStreet" HorizontalAlignment="Left" Height="24" Margin="120,70,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="280" FontSize="18"/>
                             <Label Content="Province:" HorizontalAlignment="Left" Height="29" Margin="3,94,0,0" VerticalAlignment="Top" Width="80" RenderTransformOrigin="0.37,1.448" Foreground="Black" FontSize="18"/>

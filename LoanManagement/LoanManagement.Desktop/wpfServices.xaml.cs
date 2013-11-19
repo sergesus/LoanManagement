@@ -59,6 +59,7 @@ namespace LoanManagement.Desktop
             try
             {
                 wpfServiceInfo frm = new wpfServiceInfo();
+                frm.UserID = UserID;
                 frm.status = "Add";
                 frm.ShowDialog();
             }
@@ -75,12 +76,13 @@ namespace LoanManagement.Desktop
             {
                 wpfServiceInfo frm = new wpfServiceInfo();
                 frm.status = "View";
+                frm.UserID = UserID;
                 frm.sId = Convert.ToInt32(getRow(dgServ, 0));
                 frm.ShowDialog();
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                //System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
         }
@@ -136,6 +138,8 @@ namespace LoanManagement.Desktop
                     {
                         var agt = ctx.Services.Find(n);
                         agt.Active = true;
+                        AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Retrieved Service " + getRow(dgServ,1) };
+                        ctx.AuditTrails.Add(at);
                         ctx.SaveChanges();
                         System.Windows.MessageBox.Show("Retreived");
                         resetGrid();

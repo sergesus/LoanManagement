@@ -363,6 +363,7 @@ namespace LoanManagement.Desktop
                         }*/
                         wpfCheckout frm = new wpfCheckout();
                         frm.lId = lId;
+                        frm.UserID = UserID;
                         frm.status = "Holding";
                         frm.ShowDialog();
 
@@ -371,6 +372,7 @@ namespace LoanManagement.Desktop
                 else if (status == "Adjustment")
                 {
                     wpfPaymentAdjustment frm = new wpfPaymentAdjustment();
+                    frm.UserID = UserID;
                     frm.lId = lId;
                     this.Close();
                     frm.ShowDialog();
@@ -379,6 +381,7 @@ namespace LoanManagement.Desktop
                 {
                     wpfLoanRestructure frm = new wpfLoanRestructure();
                     frm.lId = lId;
+                    frm.UserID = UserID;
                     this.Close();
                     frm.ShowDialog();
                 }

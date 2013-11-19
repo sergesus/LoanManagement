@@ -81,6 +81,13 @@ namespace LoanManagement.Desktop
                     sp[ctr].Children.Add(labelarray[ctr]);
                     sp[ctr].Children.Add(textarray[ctr]);
                     stck.Children.Add(sp[ctr]);
+                    if (status == "Releasing")
+                    {
+                        if (ctr == 0)
+                        {
+                            textarray[0].LostFocus += new RoutedEventHandler(txt_LostFocus);   
+                        }
+                    }
 
                 }
             }
@@ -90,6 +97,23 @@ namespace LoanManagement.Desktop
                 return;
             }
 
+        }
+
+        private void txt_LostFocus(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                int srs = Convert.ToInt32(textarray[0].Text);
+                for (int x = 1; x < myNum;x++ )
+                {
+                    srs++;
+                    textarray[x].Text = srs.ToString();
+                }
+            }
+            catch (Exception)
+            {
+                return;
+            }
         }
 
         private void refr()
@@ -177,20 +201,30 @@ namespace LoanManagement.Desktop
 
                         dt = DateAndTime.DateAdd(dInt, Interval, dt);
                         int num = 1;
-                        while (Remaining >= 0)
+                        while (Remaining > -1)
                         {
-                            //System.Windows.MessageBox.Show(num.ToString());
                             Remaining = Remaining - Payment;
                             GenSOA soa = new GenSOA { Amount = Payment.ToString("N2"), PaymentDate = dt, PaymentNumber = num, RemainingBalance = Remaining.ToString("N2") };
                             ctx.GenSOA.Add(soa);
                             num++;
                             dt = DateAndTime.DateAdd(dInt, Interval, dt);
                             myNum++;
-                            if (Remaining <= 0)
+                            if (Remaining <= Payment)
                             {
-                                Remaining = -1;
+                                Payment = Remaining;
+                                if (Payment < 1)
+                                {
+                                    goto a;
+                                }
+                                GenSOA soa1 = new GenSOA { Amount = Payment.ToString("N2"), PaymentDate = dt, PaymentNumber = num, RemainingBalance = "0.00" };
+                                ctx.GenSOA.Add(soa1);
+                                num++;
+                                myNum++;
+                                goto a;
                             }
+                             
                         }
+                    a:
                         lblMonthly.Content = Payment.ToString("N2");
                         ctx.SaveChanges();
                         var gen = from ge in ctx.GenSOA
@@ -620,7 +654,7 @@ namespace LoanManagement.Desktop
                                 ctx.FPaymentInfo.Add(fp);
                                 y++;
                             }
-                            AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Released loan (" + lon.Service.Name + ") for client + " + lon.Client.FirstName + " " + lon.Client.MiddleName + " " + lon.Client.LastName + " " + lon.Client.Suffix };
+                            AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Released loan (" + lon.Service.Name + ") for client " + lon.Client.FirstName + " " + lon.Client.MiddleName + " " + lon.Client.LastName + " " + lon.Client.Suffix };
                             ctx.AuditTrails.Add(at);
                             ctx.SaveChanges();
                             printSOA();
@@ -647,7 +681,7 @@ namespace LoanManagement.Desktop
                         int bId = bk.BankID;
                         lon.BankID = bId;
 
-                        AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Updated Released loan (" + lon.Service.Name + ") for client + " + lon.Client.FirstName + " " + lon.Client.MiddleName + " " + lon.Client.LastName + " " + lon.Client.Suffix };
+                        AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Updated Released loan (" + lon.Service.Name + ") for client " + lon.Client.FirstName + " " + lon.Client.MiddleName + " " + lon.Client.LastName + " " + lon.Client.Suffix };
                         ctx.AuditTrails.Add(at);
                         ctx.SaveChanges();
                         MessageBox.Show("Updated");

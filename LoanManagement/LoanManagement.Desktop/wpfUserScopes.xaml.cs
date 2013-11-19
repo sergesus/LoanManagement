@@ -49,6 +49,7 @@ namespace LoanManagement.Desktop
                     cServices.IsChecked = sc.ServiceM;
                     cBanks.IsChecked = sc.BankM;
                     cEmployee.IsChecked = sc.EmployeeM;
+                    cPosition.IsChecked = sc.PositionM;
 
                     cApplication.IsChecked = sc.Application;
                     cApproval.IsChecked = sc.Approval;
@@ -86,6 +87,7 @@ namespace LoanManagement.Desktop
                     sc.ServiceM = Convert.ToBoolean(cServices.IsChecked);
                     sc.BankM = Convert.ToBoolean(cBanks.IsChecked);
                     sc.EmployeeM = Convert.ToBoolean(cEmployee.IsChecked);
+                    sc.PositionM = Convert.ToBoolean(cEmployee.IsChecked);
 
                     sc.Application = Convert.ToBoolean(cApplication.IsChecked);
                     sc.Approval = Convert.ToBoolean(cApproval.IsChecked);

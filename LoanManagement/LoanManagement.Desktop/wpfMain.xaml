@@ -346,13 +346,13 @@
                                 <ListBoxItem x:Name="itm33" Content="Loan Re-structure" FontSize="25" Foreground="#FF32AFD4" MouseUp="itm11_MouseUp"/>
                                 <ListBoxItem x:Name="itm34" Content="Payment Adjustment" FontSize="25" Foreground="#FF32AFD4" MouseUp="itm13_MouseUp"/>
                             </ListBox>
-                            <Button x:Name="btnClients_Copy9" HorizontalAlignment="Left" Height="118" Margin="10,10,0,0" VerticalAlignment="Top" Width="128" BorderBrush="#FF4AEE0D" BorderThickness="4" Click="btnClients_Click" Grid.ColumnSpan="2">
+                            <Button x:Name="btnClients_Copy9" HorizontalAlignment="Left" Height="118" Margin="10,10,0,0" VerticalAlignment="Top" Width="128" BorderBrush="#FF4AEE0D" BorderThickness="4" Click="btnClients_Copy9_Click" Grid.ColumnSpan="2">
                                 <DockPanel LastChildFill="True">
                                     <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom" Foreground="#FF343434" Content="Audit Trail"/>
                                     <Image Source="Images/Audit.ico" />
                                 </DockPanel>
                             </Button>
-                            <Button x:Name="btnUBackUp" HorizontalAlignment="Left" Height="118" Margin="79,10,0,0" VerticalAlignment="Top" Width="128" BorderBrush="#FF4AEE0D" BorderThickness="4" Click="btnClients_Click" Grid.Column="1">
+                            <Button x:Name="btnUBackUp" HorizontalAlignment="Left" Height="118" Margin="79,10,0,0" VerticalAlignment="Top" Width="128" BorderBrush="#FF4AEE0D" BorderThickness="4" Grid.Column="1">
                                 <DockPanel LastChildFill="True">
                                     <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom" Foreground="#FF343434" Content="Back Up &amp; Restore"/>
                                     <Image Source="Images/Save.ico" />

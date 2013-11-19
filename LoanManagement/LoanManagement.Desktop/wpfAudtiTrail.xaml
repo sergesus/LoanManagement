@@ -1,0 +1,29 @@
+﻿<Controls:MetroWindow x:Name="wdw1" x:Class="LoanManagement.Desktop.wpfAudtiTrail"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"              
+        Title="wpfAudtiTrail" Height="566.526" Width="615.805" Loaded="MetroWindow_Loaded_1" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Green.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedTabControl.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid>
+        <DataGrid x:Name="dg" HorizontalAlignment="Left" Height="420" Margin="10,108,0,0" VerticalAlignment="Top" Width="590"/>
+        <Grid HorizontalAlignment="Left" Height="74" VerticalAlignment="Top" Width="914" Background="#7F48CB00" Margin="0,0,-52,0">
+            <Image HorizontalAlignment="Left" Height="74" VerticalAlignment="Top" Width="97" Source="Images/Lock.ico"/>
+            <Label Content="Audit Trail" HorizontalAlignment="Left" Height="54" Margin="87,10,0,0" VerticalAlignment="Top" Width="285" FontSize="30"/>
+        </Grid>
+        <DatePicker x:Name="dt" HorizontalAlignment="Left" Height="24" Margin="10,79,0,0" VerticalAlignment="Top" Width="279" CalendarClosed="DatePicker_CalendarClosed_1" MouseDown="dt_MouseDown"/>
+
+    </Grid>
+</Controls:MetroWindow>

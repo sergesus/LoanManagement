@@ -129,6 +129,19 @@ namespace LoanManagement.Desktop
                 wdw1.Background = myBrush;
                 resetGrid();
 
+                using (var ctx = new iContext())
+                {
+                    var usr = ctx.Scopes.Find(UserID);
+                    if (usr.Scopes == true)
+                    {
+                        btnScope.IsEnabled = true;
+                    }
+                    else
+                    {
+                        btnScope.IsEnabled = false;
+                    }
+                }
+
             }
             catch (Exception ex)
             {
@@ -162,7 +175,7 @@ namespace LoanManagement.Desktop
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                //System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
         }
@@ -196,6 +209,25 @@ namespace LoanManagement.Desktop
                         frm.eID = n;
                         frm.ShowDialog();
                     }
+                }
+            }
+            catch (Exception ex)
+            {
+                //System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                using (var ctx = new iContext())
+                {
+                    var emp = from em in ctx.Users 
+                              where em.Employee.Active == true && em.Username.Contains(txtSearch.Text)
+                              select new { EmployeeID = em.EmployeeID, Name = em.Employee.FirstName + " " + em.Employee.MI + " " + em.Employee.LastName, Username = em.Username };
+                    dgEmp.ItemsSource = emp.ToList();
                 }
             }
             catch (Exception ex)

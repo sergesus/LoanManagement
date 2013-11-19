@@ -24,7 +24,7 @@
         </Grid.ColumnDefinitions>
         <Grid HorizontalAlignment="Left" Height="74" VerticalAlignment="Top" Width="720" Background="#7F48CB00" Grid.ColumnSpan="2" Margin="0,0,-19,0">
             <Image HorizontalAlignment="Left" Height="74" VerticalAlignment="Top" Width="97" Source="Images/Search.ico"/>
-            <Label Content="Client Search" HorizontalAlignment="Left" Height="54" Margin="87,10,0,0" VerticalAlignment="Top" Width="285" FontSize="30"/>
+            <Label Content="Search" HorizontalAlignment="Left" Height="54" Margin="87,10,0,0" VerticalAlignment="Top" Width="285" FontSize="30"/>
         </Grid>
         <DataGrid x:Name="dgClient" HorizontalAlignment="Left" Height="323" Margin="10,79,-72,-16" VerticalAlignment="Top" Width="682" CanUserAddRows="False" CanUserDeleteRows="False" FontSize="18" GridLinesVisibility="None" Grid.ColumnSpan="2" BorderBrush="#CC48CB00" BorderThickness="2" Background="#7FF0F0F0">
             <DataGrid.Resources>

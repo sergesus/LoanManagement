@@ -389,6 +389,7 @@ namespace LoanManagement.Desktop
                     FPaymentInfo fp = ctx.FPaymentInfo.Where(x => x.LoanID == id && x.PaymentNumber == num).First();
                     DepositedCheque dp = ctx.DepositedCheques.Find(fp.FPaymentInfoID);
                     wpfNewCheque frm = new wpfNewCheque();
+                    frm.UserID = UserID;
                     frm.fId = fp.FPaymentInfoID;
                     frm.ShowDialog();
                     //frm.dId = dp.FPaymentInfoID;

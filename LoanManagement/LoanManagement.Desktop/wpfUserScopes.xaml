@@ -31,6 +31,7 @@
                     <CheckBox x:Name="cAgents" Grid.ColumnSpan="4" Content="Agents" HorizontalAlignment="Left" Height="26" Margin="10,62,0,0" VerticalAlignment="Top" Width="166" FontSize="18"/>
                     <CheckBox x:Name="cBanks" Grid.ColumnSpan="4" Content="Banks" HorizontalAlignment="Left" Height="26" Margin="10,88,0,0" VerticalAlignment="Top" Width="166" FontSize="18"/>
                     <CheckBox x:Name="cEmployee" Grid.ColumnSpan="4" Content="Employee" HorizontalAlignment="Left" Height="26" Margin="10,114,0,0" VerticalAlignment="Top" Width="166" FontSize="18"/>
+                    <CheckBox x:Name="cPosition" Grid.ColumnSpan="4" Content="Position" HorizontalAlignment="Left" Height="26" Margin="10,140,0,0" VerticalAlignment="Top" Width="166" FontSize="18"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Transaction" FontSize="16" Margin="-2,-2,-2,0">

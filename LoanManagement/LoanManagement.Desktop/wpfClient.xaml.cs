@@ -91,7 +91,7 @@ namespace LoanManagement.Desktop
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                //System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
         }
@@ -195,6 +195,8 @@ namespace LoanManagement.Desktop
                     {
                         var agt = ctx.Clients.Find(n);
                         agt.Active = true;
+                        AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Retrieved Client " + agt.FirstName + " " + agt.MiddleName + " " + agt.LastName + " " + agt.Suffix };
+                        ctx.AuditTrails.Add(at);
                         ctx.SaveChanges();
                         System.Windows.MessageBox.Show("Retreived");
                         resetGrid();
@@ -231,6 +233,34 @@ namespace LoanManagement.Desktop
             catch (Exception ex)
             {
                 //System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                using (var ctx = new iContext())
+                {
+                    int n;
+                    try
+                    {
+                        n = Convert.ToInt16(txtSearch.Text);
+                    }
+                    catch (Exception)
+                    {
+                        n = 0;
+                    }
+                    var clt = from cl in ctx.Clients
+                              where (cl.Active == status) && ((cl.FirstName + cl.LastName + cl.MiddleName + cl.Suffix).Contains(txtSearch.Text) || cl.ClientID==n)
+                              select new { ClientID = cl.ClientID, FirstName = cl.FirstName, MiddleName = cl.MiddleName, LastName = cl.LastName, Suffix = cl.Suffix, Birthday = cl.Birthday };
+                    dgClient.ItemsSource = clt.ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
         }

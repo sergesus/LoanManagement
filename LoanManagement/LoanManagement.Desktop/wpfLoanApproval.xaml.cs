@@ -109,7 +109,7 @@ namespace LoanManagement.Desktop
                             lon.Status = "Approved";
                             ApprovedLoan al = new ApprovedLoan { AmountApproved = Convert.ToDouble(txtAmt.Text), DateApproved = DateTime.Today.Date, ReleaseDate = dtDate.SelectedDate.Value.Date };
                             lon.ApprovedLoan = al;
-                            AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Processed approval for loan (" + lon.Service.Name + ") for client + " + lon.Client.FirstName + " " + lon.Client.MiddleName + " " + lon.Client.LastName + " " + lon.Client.Suffix };
+                            AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Processed approval for loan (" + lon.Service.Name + ") for client " + lon.Client.FirstName + " " + lon.Client.MiddleName + " " + lon.Client.LastName + " " + lon.Client.Suffix };
                             ctx.AuditTrails.Add(at);
                             ctx.SaveChanges();
                             System.Windows.MessageBox.Show("Loan Approved");
@@ -119,7 +119,7 @@ namespace LoanManagement.Desktop
                             lon.ApprovedLoan.AmountApproved = Convert.ToDouble(txtAmt.Text);
                             lon.ApprovedLoan.DateApproved = DateTime.Today.Date;
                             lon.ApprovedLoan.ReleaseDate = dtDate.SelectedDate.Value.Date;
-                            AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Updated approval for loan (" + lon.Service.Name + ") for client + " + lon.Client.FirstName + " " + lon.Client.MiddleName + " " + lon.Client.LastName + " " + lon.Client.Suffix };
+                            AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Updated approval for loan (" + lon.Service.Name + ") for client " + lon.Client.FirstName + " " + lon.Client.MiddleName + " " + lon.Client.LastName + " " + lon.Client.Suffix };
                             ctx.AuditTrails.Add(at);
                             ctx.SaveChanges();
                             System.Windows.MessageBox.Show("Loan Updated");
@@ -368,12 +368,12 @@ namespace LoanManagement.Desktop
 
         private void btnFull_Click(object sender, RoutedEventArgs e)
         {
-            wpfClientInfo frm = new wpfClientInfo();
-            frm.status = "View";
+            wpfViewClientInfo frm = new wpfViewClientInfo();
+            frm.status = "View2";
             using (var ctx = new iContext())
             {
                 var lon = ctx.Loans.Find(lId);
-                frm.cId = lon.ClientID;
+                frm.cID = lon.ClientID;
             }
             frm.ShowDialog();
         }
