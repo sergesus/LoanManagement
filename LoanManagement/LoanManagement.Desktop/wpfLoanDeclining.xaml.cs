@@ -60,7 +60,7 @@ namespace LoanManagement.Desktop
 
                 if (cb1.IsChecked == false && cb2.IsChecked == false && cb3.IsChecked == false && cbOthers.IsChecked == false)
                 {
-                    MessageBox.Show("Select at least one(1) reason");
+                    MessageBox.Show("Select at least one(1) reason", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                     return;
                 }
 
@@ -71,7 +71,7 @@ namespace LoanManagement.Desktop
                     DeclinedLoan dl = new DeclinedLoan { DateDeclined = DateTime.Today.Date, Reason = str };
                     lon.DeclinedLoan = dl;
                     ctx.SaveChanges();
-                    MessageBox.Show("Loan successfully declined");
+                    MessageBox.Show("Loan has been successfully declined", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                     try
                     {
                         if (cbSend.IsChecked == true)
@@ -89,7 +89,7 @@ namespace LoanManagement.Desktop
                             smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
                             smtp.Credentials = new NetworkCredential("aldrinarciga@gmail.com", "312231212131");
                             smtp.Send(msg);
-                            MessageBox.Show("Message successfuly sent.");
+                            MessageBox.Show("Message successfuly sent", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                         }
                     }
                     catch (Exception ex)

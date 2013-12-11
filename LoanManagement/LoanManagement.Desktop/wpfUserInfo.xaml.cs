@@ -66,7 +66,7 @@ namespace LoanManagement.Desktop
             {
                 if (txtPassword.Password != txtConfirm.Password)
                 {
-                    MessageBox.Show("Password doesn't match");
+                    MessageBox.Show("Password doesn't match", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                     txtPassword.Password = "";
                     txtConfirm.Password = "";
                     return;
@@ -78,7 +78,7 @@ namespace LoanManagement.Desktop
                         var u = ctx.Users.Where(x => x.Username == txtUserName.Text).Count();
                         if (u > 0)
                         {
-                            MessageBox.Show("Username already exists");
+                            MessageBox.Show("Username already exists", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                             txtUserName.Text = "";
                             return;
                         }
@@ -92,7 +92,7 @@ namespace LoanManagement.Desktop
                         ctx.AuditTrails.Add(at);
 
                         ctx.SaveChanges();
-                        MessageBox.Show("Okay");
+                        MessageBox.Show("User has been successfully added", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                         this.Close();
                     }
                 }
@@ -105,7 +105,7 @@ namespace LoanManagement.Desktop
                         AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Updated User Account " + txtUserName.Text };
                         ctx.AuditTrails.Add(at);
                         ctx.SaveChanges();
-                        MessageBox.Show("Okay");
+                        MessageBox.Show("User has been successfully updated", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                         this.Close();
                     }
                 }

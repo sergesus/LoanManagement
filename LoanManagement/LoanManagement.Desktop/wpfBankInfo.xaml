@@ -27,7 +27,7 @@
             <ColumnDefinition Width="32*"/>
         </Grid.ColumnDefinitions>
         <TabControl HorizontalAlignment="Left" Height="451" VerticalAlignment="Top" Width="775" Margin="10,90,0,-41" Grid.ColumnSpan="2" Grid.RowSpan="2">
-            <TabItem Header="Address" FontSize="16" Margin="155,0,-155,0">
+            <TabItem x:Name="tbAddress" Header="Address" FontSize="16" Margin="155,0,-155,0">
                 <Grid Background="#FFE5E5E5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0*"/>

@@ -68,7 +68,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                MessageBoxResult mr = MessageBox.Show("You sure?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxResult mr = MessageBox.Show("Are you sure you want to proceed?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (mr == MessageBoxResult.Yes)
                 {
                     if (rdDaif.IsChecked == true)
@@ -84,7 +84,7 @@ namespace LoanManagement.Desktop
                             ctx.AuditTrails.Add(at);
 
                             ctx.SaveChanges();
-                            MessageBox.Show("Okay");
+                            MessageBox.Show("Okay", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                             this.Close();
                         }
                     }
@@ -110,7 +110,7 @@ namespace LoanManagement.Desktop
                             ctx.AuditTrails.Add(at);
 
                             ctx.SaveChanges();
-                            MessageBox.Show("Okay");
+                            MessageBox.Show("Transaction has been successfully processed", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                             this.Close();
                         }
                     }

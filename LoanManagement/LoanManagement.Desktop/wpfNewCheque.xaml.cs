@@ -57,7 +57,7 @@ namespace LoanManagement.Desktop
             {
                 FPaymentInfo fp = ctx.FPaymentInfo.Find(fId);
                 DepositedCheque dp = ctx.DepositedCheques.Find(fId);
-                MessageBoxResult mr = MessageBox.Show("You sure?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                MessageBoxResult mr = MessageBox.Show("Are you sure you want to process this transaction?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (mr == MessageBoxResult.Yes)
                 {
                     AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Changed Cheque "+ fp.ChequeInfo +" to "+ txtId.Text +"" };
@@ -68,7 +68,7 @@ namespace LoanManagement.Desktop
                     ctx.SaveChanges();
 
 
-                    MessageBox.Show("Okay");
+                    MessageBox.Show("Transaction has been successfully processed", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                     this.Close();
                 }
             }

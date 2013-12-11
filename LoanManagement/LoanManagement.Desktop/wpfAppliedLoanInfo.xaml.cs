@@ -245,7 +245,7 @@ namespace LoanManagement.Desktop
                 }
                 else if (status == "UApproval")
                 {
-                    System.Windows.MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure?", "Question", MessageBoxButton.YesNo);
+                    System.Windows.MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure you want to update this loan?", "Question", MessageBoxButton.YesNo);
                     if (mr == System.Windows.MessageBoxResult.Yes)
                     {
                         using (var ctx = new iContext())
@@ -254,7 +254,7 @@ namespace LoanManagement.Desktop
                             var ctr = ctx.Loans.Where(x => x.ClientID == lon.ClientID && (x.Status == "Applied" || x.Status == "Released" || x.Status == "Closed Account" || x.Status == "Approved") && x.LoanID != lon.LoanID).Count();
                             if (ctr > 0)
                             {
-                                System.Windows.MessageBox.Show("Client cannot have more than one(1) application/Loan");
+                                System.Windows.MessageBox.Show("Client cannot have more than one(1) application/Loan", "Notice", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                                 return;
                             }
                             if (lon.Status == "Approved")
@@ -267,7 +267,7 @@ namespace LoanManagement.Desktop
                             }
                             lon.Status = "Applied";
                             ctx.SaveChanges();
-                            System.Windows.MessageBox.Show("Transaction has been voided");
+                            System.Windows.MessageBox.Show("Transaction has been voided","Information",MessageBoxButton.OK,MessageBoxImage.Information);
                             this.Close();
                         }
                     }

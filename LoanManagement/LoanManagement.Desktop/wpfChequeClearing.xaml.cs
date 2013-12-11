@@ -182,7 +182,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-            MessageBoxResult mr = MessageBox.Show("You sure?","Question",MessageBoxButton.YesNo);
+            MessageBoxResult mr = MessageBox.Show("Are you sure you want to clear the selected cheque(s)?","Question",MessageBoxButton.YesNo);
             if (mr == MessageBoxResult.Yes)
             {
                 using (var ctx = new iContext())
@@ -206,7 +206,7 @@ namespace LoanManagement.Desktop
                     ctx.AuditTrails.Add(at);
 
                     ctx.SaveChanges();
-                    MessageBox.Show("Okay");
+                    MessageBox.Show("Cheque(s) has/have been successfully cleared", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                     this.Close();
                 }
             }

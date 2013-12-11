@@ -160,7 +160,7 @@ namespace LoanManagement.Desktop
                     var emp = ctx.Employees.Find(n);
                     if (emp.Position.PositionName == "Administrator")
                     {
-                        System.Windows.MessageBox.Show("Unable to edit Administrator");
+                        System.Windows.MessageBox.Show("Unable to edit Administrator", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                         return;
                     }
                     else
@@ -198,7 +198,7 @@ namespace LoanManagement.Desktop
                     var emp = ctx.Employees.Find(n);
                     if (emp.Position.PositionName == "Administrator")
                     {
-                        System.Windows.MessageBox.Show("Unable to edit Administrator");
+                        System.Windows.MessageBox.Show("Unable to edit Administrator", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                         return;
                     }
                     else

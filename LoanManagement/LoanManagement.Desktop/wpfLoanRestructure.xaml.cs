@@ -81,7 +81,7 @@ namespace LoanManagement.Desktop
             {
                 if (Convert.ToInt16(txtTerm.Text) < 1)
                 {
-                    System.Windows.MessageBox.Show("Incorrect Format for term");
+                    System.Windows.MessageBox.Show("Incorrect Format for term", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                     return;
                 }
 
@@ -209,6 +209,11 @@ namespace LoanManagement.Desktop
                         sp[ctr].Children.Add(textarray[ctr]);
                         stck.Children.Add(sp[ctr]);
 
+                        if (ctr == 0)
+                        {
+                            textarray[0].LostFocus += new RoutedEventHandler(txt_LostFocus);
+                        }
+
                     }
                     return;
                 }
@@ -216,6 +221,23 @@ namespace LoanManagement.Desktop
             catch (Exception ex)
             {
                 System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void txt_LostFocus(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                int srs = Convert.ToInt32(textarray[0].Text);
+                for (int x = 1; x < myNum; x++)
+                {
+                    srs++;
+                    textarray[x].Text = srs.ToString();
+                }
+            }
+            catch (Exception)
+            {
                 return;
             }
         }
@@ -351,7 +373,7 @@ namespace LoanManagement.Desktop
                 {
                     if (i.Text.Length != 6)
                     {
-                        System.Windows.MessageBox.Show("Please input all cheque numbers");
+                        System.Windows.MessageBox.Show("Please input all cheque numbers", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                         return;
                     }
                     bool err;
@@ -371,13 +393,13 @@ namespace LoanManagement.Desktop
                     {
                         if (textarray[x].Text == textarray[y].Text)
                         {
-                            System.Windows.MessageBox.Show("No duplications of cheque numbers");
+                            System.Windows.MessageBox.Show("No duplications of cheque numbers", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                             return;
                         }
                     }
                 }
 
-                MessageBoxResult mr = MessageBox.Show("Sure?", "Question", MessageBoxButton.YesNo);
+                MessageBoxResult mr = MessageBox.Show("Are you sure you want to process this transaction?", "Question", MessageBoxButton.YesNo);
                 if (mr == MessageBoxResult.Yes)
                 {
                     using (var ctx = new iContext())
@@ -391,7 +413,7 @@ namespace LoanManagement.Desktop
                     }
                     if (cont != true)
                     {
-                        MessageBox.Show("Please pay restructure fee first");
+                        MessageBox.Show("Please pay restructure fee first", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                         return;
                     }
 
@@ -431,7 +453,8 @@ namespace LoanManagement.Desktop
                         RestructuredLoan rln = new RestructuredLoan { LoanID = lId, NewLoanID = l.LoanID, DateRestructured = DateTime.Today, Fee = Convert.ToDouble(txtAmt.Text) * (lon.Service.RestructureFee / 100) };
                         ctx.RestructuredLoans.Add(rln);
                         ctx.SaveChanges();
-                        MessageBox.Show("Okay");
+                        printSOP();
+                        MessageBox.Show("Transaction has been successfully processed", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                         this.Close();
                     }
                 }
@@ -458,6 +481,123 @@ namespace LoanManagement.Desktop
         private void txtTerm_TextChanged(object sender, TextChangedEventArgs e)
         {
 
+        }
+
+        private void printSOP()
+        {
+            try
+            {
+                PdfDocument document = new PdfDocument();
+                document.Info.Title = "Statement Of Account";
+
+                PdfPage page = document.AddPage();
+                page.Orientation = PageOrientation.Landscape;
+                String imagePath = AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\GFC.jpg";
+                XImage xImage = XImage.FromFile(imagePath);
+                XGraphics gfx = XGraphics.FromPdfPage(page);
+                XFont font = new XFont("Verdana", 20, XFontStyle.BoldItalic);
+                //Header Start
+                //gfx.DrawString("Guahan Financing Corporation", font, XBrushes.Black, new XRect(0, 0, page.Width, 80), XStringFormats.Center);
+                //System.Windows.MessageBox.Show(xImage.Width.ToString());
+                gfx.DrawImage(xImage, 40, 10, xImage.Width - 260, xImage.Height / 3);
+                font = new XFont("Verdana", 18, XFontStyle.Italic);
+                gfx.DrawString("Preview of Payment Schedule", font, XBrushes.Black, new XRect(0, 0, page.Width, 220), XStringFormats.Center);
+                using (var ctx = new iContext())
+                {
+                    font = new XFont("Verdana", 10, XFontStyle.Italic);
+                    var lon = ctx.Loans.Find(lId);
+                    //System.Windows.MessageBox.Show(str);
+                    //gfx.DrawString(str, font, XBrushes.Black, new XRect(100,100,1000,248), XStringFormats.Center);
+                    gfx.DrawString("Client: : " + lon.Client.LastName + ", " + lon.Client.FirstName + " " + lon.Client.MiddleName + " " + lon.Client.Suffix, font, XBrushes.Black, new XRect(0, 0, 269, 250), XStringFormats.Center);
+                    gfx.DrawString("Type Of Loan : " + lon.Service.Name, font, XBrushes.Black, new XRect(0, 0, 247, 280), XStringFormats.Center);
+                    gfx.DrawString("Service Type : " + lon.Service.Type, font, XBrushes.Black, new XRect(0, 0, 241, 310), XStringFormats.Center);
+                    gfx.DrawString("Principal Amount : " + txtAmt.Text, font, XBrushes.Black, new XRect(0, 0, 250, 340), XStringFormats.Center);
+                    gfx.DrawString("Monthly Payment : " + lblMonthly.Content, font, XBrushes.Black, new XRect(0, 0, 240, 370), XStringFormats.Center);
+
+                    gfx.DrawString("Term : " + lon.Term, font, XBrushes.Black, new XRect(0, 0, 1183, 250), XStringFormats.Center);
+                }
+                //font = new XFont("Verdana", 10, XFontStyle.Italic);
+                //gfx.DrawString("As of " + DateTime.Today.Date.ToString().Split(' ')[0], font, XBrushes.Black, new XRect(0, 0, page.Width, 250), XStringFormats.Center);
+                //Header End
+
+                //ColumnHeader Start
+                font = new XFont("Verdana", 10, XFontStyle.Bold);
+                gfx.DrawString("No.", font, XBrushes.Black, new XRect(0, 0, 200, 430), XStringFormats.Center);
+                gfx.DrawString("Cheque Number", font, XBrushes.Black, new XRect(0, 0, 420, 430), XStringFormats.Center);
+                gfx.DrawString("Amount", font, XBrushes.Black, new XRect(0, 0, 620, 430), XStringFormats.Center);
+                gfx.DrawString("Balance", font, XBrushes.Black, new XRect(0, 0, 850, 430), XStringFormats.Center);
+                gfx.DrawString("Payment Date", font, XBrushes.Black, new XRect(0, 0, 1057, 430), XStringFormats.Center);
+                //ColumnHeader End
+
+                int n = 460;
+                int p = 1;
+                font = new XFont("Verdana", 10, XFontStyle.Regular);
+                using (var ctx = new iContext())
+                {
+                    var clt = from cl in ctx.GenSOA
+                              select cl;
+                    int iNum = 0;
+                    foreach (var i in clt)
+                    {
+                        font = new XFont("Verdana", 10, XFontStyle.Regular);
+                        gfx.DrawString((iNum + 1).ToString(), font, XBrushes.Black, new XRect(0, 0, 200, n), XStringFormats.Center);
+                        gfx.DrawString(textarray[iNum].Text, font, XBrushes.Black, new XRect(0, 0, 420, n), XStringFormats.Center);
+                        gfx.DrawString(i.Amount, font, XBrushes.Black, new XRect(0, 0, 620, n), XStringFormats.Center);
+                        gfx.DrawString(i.RemainingBalance, font, XBrushes.Black, new XRect(0, 0, 850, n), XStringFormats.Center);
+                        gfx.DrawString(i.PaymentDate.ToString().Split(' ')[0], font, XBrushes.Black, new XRect(0, 0, 1050, n), XStringFormats.Center);
+                        iNum++;
+                        n += 30;
+                        if (n >= 1000)
+                        {
+                            gfx.DrawString("Page " + p.ToString(), font, XBrushes.Black, new XRect(0, 0, 1500, 1150), XStringFormats.Center); ;
+                            page = document.AddPage();
+                            page.Orientation = PageOrientation.Landscape;
+                            gfx = XGraphics.FromPdfPage(page);
+                            font = new XFont("Verdana", 20, XFontStyle.BoldItalic);
+                            gfx.DrawImage(xImage, 40, 10, xImage.Width - 260, xImage.Height / 3);
+                            font = new XFont("Verdana", 18, XFontStyle.Italic);
+                            gfx.DrawString("Statement Of Account", font, XBrushes.Black, new XRect(0, 0, page.Width, 220), XStringFormats.Center);
+                            font = new XFont("Verdana", 10, XFontStyle.Italic);
+                            //gfx.DrawString("As of " + DateTime.Today.Date.ToString().Split(' ')[0], font, XBrushes.Black, new XRect(0, 0, page.Width, 250), XStringFormats.Center);
+                            //ColumnHeader Start
+                            font = new XFont("Verdana", 10, XFontStyle.Bold);
+                            gfx.DrawString("No.", font, XBrushes.Black, new XRect(0, 0, 200, 270), XStringFormats.Center);
+                            gfx.DrawString("Cheque Number", font, XBrushes.Black, new XRect(0, 0, 420, 270), XStringFormats.Center);
+                            gfx.DrawString("Amount", font, XBrushes.Black, new XRect(0, 0, 620, 270), XStringFormats.Center);
+                            gfx.DrawString("Balance", font, XBrushes.Black, new XRect(0, 0, 850, 270), XStringFormats.Center);
+                            gfx.DrawString("Payment Date", font, XBrushes.Black, new XRect(0, 0, 1057, 270), XStringFormats.Center);
+                            //ColumnHeader End
+                            n = 300;
+                            p++;
+                        }
+                    }
+                    if (n < 1000)
+                    {
+                        gfx.DrawString("Page " + p.ToString(), font, XBrushes.Black, new XRect(0, 0, 1500, 1150), XStringFormats.Center);
+                    }
+                }
+
+                //Footer Start
+                font = new XFont("Verdana", 10, XFontStyle.Italic);
+                string user = "";
+                using (var ctx = new iContext())
+                {
+                    var usr = ctx.Employees.Find(UserID);
+                    user = usr.LastName + ", " + usr.FirstName + " " + usr.MI + " " + usr.Suffix;
+                }
+                gfx.DrawString("Prepared By: " + user, font, XBrushes.Black, new XRect(0, 0, 200, 1150), XStringFormats.Center);
+                //Footer End
+
+
+                const string filename = "iSOA.pdf";
+                document.Save(filename);
+                Process.Start(filename);
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         private void btnPrev_Click(object sender, RoutedEventArgs e)

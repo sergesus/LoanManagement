@@ -476,7 +476,7 @@ namespace LoanManagement.Desktop
                 }
                 if (cmbServices.Text == "" || cmbMode.Text == "" || txtAmt.Text == "" || txtTerm.Text == "")
                 {
-                    System.Windows.MessageBox.Show("Please complete the required information");
+                    System.Windows.MessageBox.Show("Please complete the required information", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                     return;
                 }
                 if (cboxAgent.IsChecked == true && txtAgent.Text == "")
@@ -490,19 +490,19 @@ namespace LoanManagement.Desktop
                     var ser = ctx.Services.Find(servId);
                     if (ser.Type == "Non Collateral" && txtID.Text == "")
                     {
-                        System.Windows.MessageBox.Show("Please select the Co-Borrower");
+                        System.Windows.MessageBox.Show("Please select the Co-Borrower", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                         return;
                     }
                     double val = Convert.ToDouble(txtAmt.Text);
                     if (val > ser.MaxValue || val < ser.MinValue)
                     {
-                        System.Windows.MessageBox.Show("Invalid loan ammount");
+                        System.Windows.MessageBox.Show("Invalid loan ammount", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                         return;
                     }
                     val = Convert.ToDouble(txtTerm.Text);
                     if (val > ser.MaxTerm || val < ser.MinTerm)
                     {
-                        System.Windows.MessageBox.Show("Invalid desired term");
+                        System.Windows.MessageBox.Show("Invalid desired term", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                     }
 
                 }
@@ -544,13 +544,13 @@ namespace LoanManagement.Desktop
 
                         ctx.Loans.Add(loan);
                         ctx.SaveChanges();
-                        System.Windows.MessageBox.Show("Loan Successfuly Applied");
+                        System.Windows.MessageBox.Show("Loan has been successfuly applied", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                         this.Close();
                     }
                     else
                     {
 
-                        System.Windows.Forms.DialogResult dr = System.Windows.Forms.MessageBox.Show("Are you sure you want to update?", "Question", MessageBoxButtons.YesNo);
+                        System.Windows.Forms.DialogResult dr = System.Windows.Forms.MessageBox.Show("Are you sure you want to update this loan?", "Question", MessageBoxButtons.YesNo);
 
                         if (dr == System.Windows.Forms.DialogResult.Yes)
                         {
@@ -576,7 +576,7 @@ namespace LoanManagement.Desktop
                             //ctx.AuditTrails.Add(at);
 
                             ctx.SaveChanges();
-                            System.Windows.MessageBox.Show("Record updated");
+                            System.Windows.MessageBox.Show("Record has been successfully updated", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                             this.Close();
                         }
                     }

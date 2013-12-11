@@ -51,7 +51,7 @@ namespace LoanManagement.Desktop
 
                     using (var ctx = new iContext())
                     {
-                        MessageBoxResult mr = System.Windows.MessageBox.Show("You sure?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                        MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure you want to process this transaction?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
                         if (mr == MessageBoxResult.Yes)
                         {
                             var dts = ctx.FPaymentInfo.Where(x => x.LoanID == lId && (x.PaymentStatus == "Pending" || x.PaymentStatus == "On Hold")).First();
@@ -65,7 +65,7 @@ namespace LoanManagement.Desktop
                             //reset();
                             AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Processed Holding for cheque "+ dts.ChequeInfo +""};
                             ctx.AuditTrails.Add(at);
-                            System.Windows.MessageBox.Show("Transaction Finished");
+                            System.Windows.MessageBox.Show("Transaction has been successfully processed", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
 
                             this.Close();
                         }
@@ -73,7 +73,7 @@ namespace LoanManagement.Desktop
                 }
                 else if (status == "Adjustment")
                 {
-                    MessageBoxResult mr = MessageBox.Show("Sure?", "Question", MessageBoxButton.YesNo);
+                    MessageBoxResult mr = MessageBox.Show("Are you sure you want to process this transaction?", "Question", MessageBoxButton.YesNo);
                     if (mr == MessageBoxResult.Yes)
                     {
                         using (var ctx = new iContext())
@@ -91,20 +91,20 @@ namespace LoanManagement.Desktop
                             AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Processed Adjustment for Loan " + lId + "" };
                             ctx.AuditTrails.Add(at);
 
-                            MessageBox.Show("Transaction Finished");
+                            System.Windows.MessageBox.Show("Transaction has been successfully processed", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                             this.Close();
                         }
                     }
                 }
                 else if (status == "Restructure")
                 {
-                    MessageBoxResult mr = MessageBox.Show("Sure?", "Question", MessageBoxButton.YesNo);
+                    MessageBoxResult mr = MessageBox.Show("Are you sure you want to process this transaction?", "Question", MessageBoxButton.YesNo);
                     if (mr == MessageBoxResult.Yes)
                     {
                         var ctr = Application.Current.Windows.Count;
                         var frm = Application.Current.Windows[ctr - 2] as wpfLoanRestructure;
                         frm.cont=true;
-                        MessageBox.Show("Transaction Finished. Restructure will now be processed.");
+                        MessageBox.Show("Transaction has been successfully processed. Restructure will now be processed.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                         this.Close();
                     }
                 }

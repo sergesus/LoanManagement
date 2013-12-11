@@ -76,7 +76,7 @@ namespace LoanManagement.Desktop
 
         private void btnCont_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult mr = MessageBox.Show("Sure?", "Q", MessageBoxButton.YesNo);
+            MessageBoxResult mr = MessageBox.Show("Are you sure you want to save this record", "Question", MessageBoxButton.YesNo);
             if (mr == MessageBoxResult.Yes)
             {
                 using (var ctx = new iContext())
@@ -105,7 +105,7 @@ namespace LoanManagement.Desktop
                     sc.Scopes = Convert.ToBoolean(cUserScopes.IsChecked);
 
                     ctx.SaveChanges();
-                    MessageBox.Show("Okay");
+                    MessageBox.Show("Receord has been successfully saved", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                     this.Close();
                 }
             }

@@ -23,7 +23,7 @@
             <Image HorizontalAlignment="Left" Height="74" VerticalAlignment="Top" Width="97" Source="Images/Lock.ico"/>
             <Label Content="Audit Trail" HorizontalAlignment="Left" Height="54" Margin="87,10,0,0" VerticalAlignment="Top" Width="285" FontSize="30"/>
         </Grid>
-        <DatePicker x:Name="dt" HorizontalAlignment="Left" Height="24" Margin="10,79,0,0" VerticalAlignment="Top" Width="279" CalendarClosed="DatePicker_CalendarClosed_1" MouseDown="dt_MouseDown"/>
+        <DatePicker x:Name="dt" HorizontalAlignment="Left" Height="29" Margin="10,79,0,0" VerticalAlignment="Top" Width="280" CalendarClosed="DatePicker_CalendarClosed_1" MouseDown="dt_MouseDown"/>
 
     </Grid>
 </Controls:MetroWindow>

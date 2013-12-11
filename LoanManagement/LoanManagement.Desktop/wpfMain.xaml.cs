@@ -833,10 +833,10 @@ namespace LoanManagement.Desktop
                 //ColumnHeader Start
                 font = new XFont("Verdana", 10, XFontStyle.Bold);
                 gfx.DrawString("Name", font, XBrushes.Black, new XRect(0, 0, 200, 350), XStringFormats.Center);
-                gfx.DrawString("Gender", font, XBrushes.Black, new XRect(0, 0, 420, 350), XStringFormats.Center);
-                gfx.DrawString("Status", font, XBrushes.Black, new XRect(0, 0, 620, 350), XStringFormats.Center);
-                gfx.DrawString("Email", font, XBrushes.Black, new XRect(0, 0, 850, 350), XStringFormats.Center);
-                gfx.DrawString("Contact", font, XBrushes.Black, new XRect(0, 0, 1057, 350), XStringFormats.Center);
+                gfx.DrawString("Gender", font, XBrushes.Black, new XRect(0, 0, 520, 350), XStringFormats.Center);
+                gfx.DrawString("Status", font, XBrushes.Black, new XRect(0, 0, 720, 350), XStringFormats.Center);
+                gfx.DrawString("Email", font, XBrushes.Black, new XRect(0, 0, 950, 350), XStringFormats.Center);
+                gfx.DrawString("Contact", font, XBrushes.Black, new XRect(0, 0, 1157, 350), XStringFormats.Center);
                 //ColumnHeader End
 
                 int n = 380;
@@ -850,16 +850,21 @@ namespace LoanManagement.Desktop
 
                     foreach (var i in clt)
                     {
-                        gfx.DrawString(i.LastName + ", " + i.FirstName + " " + i.MiddleName + " " + i.Suffix, font, XBrushes.Black, new XRect(0, 0, 200, n), XStringFormats.Center);
-                        gfx.DrawString(i.Sex, font, XBrushes.Black, new XRect(0, 0, 420, n), XStringFormats.Center);
-                        gfx.DrawString(i.Status, font, XBrushes.Black, new XRect(0, 0, 620, n), XStringFormats.Center);
-                        gfx.DrawString(i.Email, font, XBrushes.Black, new XRect(0, 0, 850, n), XStringFormats.Center);
+                        //LEFT ALIGN
+                        XStringFormat xt = new XStringFormat();
+                        xt.Alignment = XStringAlignment.Near;
+                        xt.LineAlignment = XLineAlignment.Center;
+                        //
+                        gfx.DrawString("\t" + i.LastName + ", " + i.FirstName + " " + i.MiddleName + " " + i.Suffix, font, XBrushes.Black, new XRect(1,1,200,n),xt);
+                        gfx.DrawString(i.Sex, font, XBrushes.Black, new XRect(0, 0, 520, n), XStringFormats.Center);
+                        gfx.DrawString(i.Status, font, XBrushes.Black, new XRect(0, 0, 720, n), XStringFormats.Center);
+                        gfx.DrawString(i.Email, font, XBrushes.Black, new XRect(0, 0, 950, n), XStringFormats.Center);
                         var ctr = ctx.ClientContacts.Where(x => x.ClientID == i.ClientID).Count();
                         if (ctr > 0)
                         {
                             var em = ctx.ClientContacts.Where(x => x.ClientID == i.ClientID).First();
                             String str = em.Contact.ToString();
-                            gfx.DrawString(str, font, XBrushes.Black, new XRect(0, 0, 1050, n), XStringFormats.Center);
+                            gfx.DrawString(str, font, XBrushes.Black, new XRect(0, 0, 1150, n), XStringFormats.Center);
                         }
                         n += 30;
                         if (n >= 1150)

@@ -70,7 +70,7 @@ namespace LoanManagement.Desktop
                     var ctr = ctx.Positions.Where(x => x.PositionName == txtPosition.Text).Count();
                     if (ctr > 0)
                     {
-                        MessageBox.Show("Position already exists.");
+                        MessageBox.Show("Position already exists.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                         return;
                     }
                     Domain.Position pos = new Domain.Position { PositionName = txtPosition.Text, Description = txtDesc.Text };
@@ -80,7 +80,7 @@ namespace LoanManagement.Desktop
                     ctx.AuditTrails.Add(at);
 
                     ctx.SaveChanges();
-                    MessageBox.Show("Okay");
+                    MessageBox.Show("Record has been successfully added", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                     this.Close();
                 }
             }
@@ -94,7 +94,7 @@ namespace LoanManagement.Desktop
                     AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Updated Position " + txtPosition.Text };
                     ctx.AuditTrails.Add(at);
                     ctx.SaveChanges();
-                    MessageBox.Show("Okay");
+                    MessageBox.Show("Record has been successfully updated", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                     this.Close();
                 }
             }

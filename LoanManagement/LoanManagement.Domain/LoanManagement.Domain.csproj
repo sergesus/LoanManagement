@@ -81,6 +81,10 @@
     <Compile Include="Migrations\201309290057572_AddedPosScope.Designer.cs">
       <DependentUpon>201309290057572_AddedPosScope.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201312110129488_AddedCredentials.cs" />
+    <Compile Include="Migrations\201312110129488_AddedCredentials.Designer.cs">
+      <DependentUpon>201312110129488_AddedCredentials.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemData.cs" />
@@ -116,6 +120,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201309290057572_AddedPosScope.resx">
       <DependentUpon>201309290057572_AddedPosScope.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201312110129488_AddedCredentials.resx">
+      <DependentUpon>201312110129488_AddedCredentials.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

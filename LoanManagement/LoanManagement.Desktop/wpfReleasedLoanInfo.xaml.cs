@@ -399,7 +399,7 @@ namespace LoanManagement.Desktop
             {
                 if (status == "UReleasing")
                 {
-                    MessageBoxResult mr = System.Windows.MessageBox.Show("You sure?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure you want to process this tranction?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
                     if (mr == MessageBoxResult.Yes)
                     {
                         using (var ctx = new iContext())
@@ -416,7 +416,7 @@ namespace LoanManagement.Desktop
                             }
                             ctx.SaveChanges();
                             this.Close();
-                            System.Windows.MessageBox.Show("Okay");
+                            System.Windows.MessageBox.Show("Transaction has been successfully processed", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                             
                         }
                     }
@@ -432,7 +432,7 @@ namespace LoanManagement.Desktop
                             return;
                         }
                         //var dts = ctx.FPaymentInfo.Where(x => x.LoanID == lId && x.PaymentStatus == "Pending").First();
-                        MessageBoxResult mr = System.Windows.MessageBox.Show("You sure?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                        MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure you want to process this transaction?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
                         if (mr == MessageBoxResult.Yes)
                         {
                             var dts = ctx.FPaymentInfo.Where(x => x.LoanID == lId && (x.PaymentStatus == "Pending" || x.PaymentStatus == "On Hold")).First();
@@ -443,7 +443,7 @@ namespace LoanManagement.Desktop
                             ctx.SaveChanges();
                             reset();
 
-                            System.Windows.MessageBox.Show("Okay");
+                            System.Windows.MessageBox.Show("Transaction has been successfully processed", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
 
 
                         }
@@ -452,7 +452,7 @@ namespace LoanManagement.Desktop
                 }
                 else if (status == "Adjustment")
                 {
-                    MessageBoxResult mr = System.Windows.MessageBox.Show("Sure?", "Question", MessageBoxButton.YesNo);
+                    MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure you want to process this transaction?", "Question", MessageBoxButton.YesNo);
                     if (mr == MessageBoxResult.Yes)
                     {
                         using (var ctx = new iContext())
@@ -468,7 +468,7 @@ namespace LoanManagement.Desktop
                             }
                             ctx.AdjustedLoans.Remove(al);
                             ctx.SaveChanges();
-                            System.Windows.MessageBox.Show("Okay");
+                            System.Windows.MessageBox.Show("Transaction has been successfully processed", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                             this.Close();
                         }
                     }

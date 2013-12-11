@@ -33,9 +33,9 @@ namespace LoanManagement.Desktop
             using (var ctx = new iContext())
             {
                 var adt = from ad in ctx.AuditTrails
-                          //where ad.DateAndTime == dt.SelectedDate
+                          where ad.DateAndTime >= dt.SelectedDate 
                           select new { Action = ad.Employee.FirstName + " " + ad.Employee.MI + " " + ad.Employee.LastName + " -> " + ad.Action, DateAndTime = ad.DateAndTime};
-                dg.ItemsSource = adt.ToList();
+                dg.ItemsSource = adt.ToList().OrderByDescending(x=> x.DateAndTime);
             }
         }
 

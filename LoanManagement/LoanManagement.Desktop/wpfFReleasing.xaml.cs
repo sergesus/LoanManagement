@@ -122,7 +122,7 @@ namespace LoanManagement.Desktop
             {
                 if (Convert.ToInt16(txtTerm.Text) < 1)
                 {
-                    System.Windows.MessageBox.Show("Incorrect Format for term");
+                    System.Windows.MessageBox.Show("Incorrect Format for term", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                     return;
                 }
 
@@ -601,7 +601,7 @@ namespace LoanManagement.Desktop
                     {
                         if (i.Text.Length != 6)
                         {
-                            System.Windows.MessageBox.Show("Please input all cheque numbers");
+                            System.Windows.MessageBox.Show("Please input all cheque numbers", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                             return;
                         }
                         bool err;
@@ -610,7 +610,7 @@ namespace LoanManagement.Desktop
                         err = int.TryParse(str, out res);
                         if (err == false)
                         {
-                            System.Windows.MessageBox.Show("Please input the correct format for cheque numbers(Strictly numbers only.)");
+                            System.Windows.MessageBox.Show("Please input the correct format for cheque numbers(Strictly numbers only.)", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                             return;
                         }
                     }
@@ -621,13 +621,13 @@ namespace LoanManagement.Desktop
                         {
                             if (textarray[x].Text == textarray[y].Text)
                             {
-                                System.Windows.MessageBox.Show("No duplications of cheque numbers");
+                                System.Windows.MessageBox.Show("No duplications of cheque numbers", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                                 return;
                             }
                         }
                     }
 
-                    MessageBoxResult mr = MessageBox.Show("Are you sure?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    MessageBoxResult mr = MessageBox.Show("Are you sure you want to process this transaction?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
                     if (mr == MessageBoxResult.Yes)
                     {
                         using (var ctx = new iContext())
@@ -658,7 +658,7 @@ namespace LoanManagement.Desktop
                             ctx.AuditTrails.Add(at);
                             ctx.SaveChanges();
                             printSOA();
-                            MessageBox.Show("Okay");
+                            MessageBox.Show("Transaction has been successfully processed", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                             this.Close();
                         }
                     }
@@ -684,7 +684,7 @@ namespace LoanManagement.Desktop
                         AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Updated Released loan (" + lon.Service.Name + ") for client " + lon.Client.FirstName + " " + lon.Client.MiddleName + " " + lon.Client.LastName + " " + lon.Client.Suffix };
                         ctx.AuditTrails.Add(at);
                         ctx.SaveChanges();
-                        MessageBox.Show("Updated");
+                        MessageBox.Show("Transaction has been successfully updated", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                         this.Close();
                     }
                 }

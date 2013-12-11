@@ -107,7 +107,7 @@ namespace LoanManagement.Desktop
                 }
 
 
-                System.Windows.MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                System.Windows.MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure you want to process this transaction?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (mr == System.Windows.MessageBoxResult.Yes)
                 {
                     using (var ctx = new iContext())
@@ -122,7 +122,7 @@ namespace LoanManagement.Desktop
                             AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Processed approval for loan (" + lon.Service.Name + ") for client " + lon.Client.FirstName + " " + lon.Client.MiddleName + " " + lon.Client.LastName + " " + lon.Client.Suffix };
                             ctx.AuditTrails.Add(at);
                             ctx.SaveChanges();
-                            System.Windows.MessageBox.Show("Loan Approved");
+                            System.Windows.MessageBox.Show("Loan has been successfully approved", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                         }
                         else
                         {
@@ -152,7 +152,7 @@ namespace LoanManagement.Desktop
                                 smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
                                 smtp.Credentials = new NetworkCredential("aldrinarciga@gmail.com", "312231212131");
                                 smtp.Send(msg);
-                                System.Windows.MessageBox.Show("Message successfuly sent.");
+                                System.Windows.MessageBox.Show("Message successfuly sent", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                             }
                         }
                         catch (Exception ex)

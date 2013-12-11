@@ -131,7 +131,7 @@ namespace LoanManagement.Desktop
             try
             {
                 int n = Convert.ToInt32(getRow(dgServ, 0));
-                MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure?", "Question", MessageBoxButton.YesNo);
+                MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure you want to retreive this record?", "Question", MessageBoxButton.YesNo);
                 if (mr == MessageBoxResult.Yes)
                 {
                     using (var ctx = new iContext())
@@ -141,7 +141,7 @@ namespace LoanManagement.Desktop
                         AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Retrieved Service " + getRow(dgServ,1) };
                         ctx.AuditTrails.Add(at);
                         ctx.SaveChanges();
-                        System.Windows.MessageBox.Show("Retreived");
+                        System.Windows.MessageBox.Show("Record has been successfully retreived", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                         resetGrid();
                     }
                 }

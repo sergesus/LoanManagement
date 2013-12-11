@@ -105,7 +105,7 @@ namespace LoanManagement.Desktop
                 int n = Convert.ToInt32(getRow(dgBank, 0));
                 if (n == 1)
                 {
-                    MessageBox.Show("Unable");
+                    MessageBox.Show("Unable to process", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                     return;
                 }
                 wpfPositionInfo frm = new wpfPositionInfo();

@@ -202,7 +202,7 @@ namespace LoanManagement.Desktop
             try
             {
                 int n= Convert.ToInt32(getRow(dgEmp, 0));
-                MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure?","Question",MessageBoxButton.YesNo);
+                MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure you want to retrive this record?","Question",MessageBoxButton.YesNo);
                 if (mr == MessageBoxResult.Yes)
                 {
                     using (var ctx = new iContext())
@@ -212,7 +212,7 @@ namespace LoanManagement.Desktop
                         AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Retrieved Agent " + agt.FirstName + " " + agt.MI + " " + agt.LastName + " " + agt.Suffix };
                         ctx.AuditTrails.Add(at);
                         ctx.SaveChanges();
-                        System.Windows.MessageBox.Show("Retreived");
+                        System.Windows.MessageBox.Show("Record has been successfully retreived", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                         resetGrid();
                     }
                 }

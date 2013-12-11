@@ -240,7 +240,7 @@ namespace LoanManagement.Desktop
                         int num = ctx.FPaymentInfo.Where(x => x.LoanID == n && x.PaymentStatus == "Deposited").Count();
                         if (num > 0)
                         {
-                            MessageBox.Show("Unable to void payment due to deposited cheque");
+                            MessageBox.Show("Unable to void payment due to deposited cheque", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                             return;
                         }
                         num = ctx.FPaymentInfo.Where(x => x.LoanID == n && x.PaymentStatus == "Cleared").Count();
@@ -261,7 +261,7 @@ namespace LoanManagement.Desktop
                             }
                             //var fp = ctx.FPaymentInfo.Where(x => x.LoanID == n && x.PaymentStatus == "Cleared").Last();
                             MessageBox.Show("The last payment has the following info: \n No :" + fp.PaymentNumber + " \n ChequeNumber: " + fp.ChequeInfo + " \n Amount: " + fp.Amount.ToString("N2") + "");
-                            MessageBoxResult mr = MessageBox.Show("You sure?", "Question", MessageBoxButton.YesNo);
+                            MessageBoxResult mr = MessageBox.Show("Are you sure you want to process this transaction?", "Question", MessageBoxButton.YesNo);
                             if (mr == MessageBoxResult.Yes)
                             {
                                 fp.PaymentStatus = "Deposited";
@@ -270,19 +270,19 @@ namespace LoanManagement.Desktop
                                 AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Voided Payment for Cheque " + fp.ChequeInfo };
                                 ctx.AuditTrails.Add(at);
                                 ctx.SaveChanges();
-                                MessageBox.Show("Okay");
+                                MessageBox.Show("Transaction has been successfully processed", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                             }
                         }
                         else
                         {
-                            MessageBox.Show("No payments to void");
+                            MessageBox.Show("No payments to void", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                         }
                     }
                 }
                 else if (status == "VoidClosed")
                 {
                     int n = Convert.ToInt32(getRow(dgLoan, 0));
-                    MessageBoxResult mr = MessageBox.Show("You sure?", "Question", MessageBoxButton.YesNo);
+                    MessageBoxResult mr = MessageBox.Show("Are you sure you want to process this transaction?", "Question", MessageBoxButton.YesNo);
                     if (mr == MessageBoxResult.Yes)
                     {
 
@@ -324,7 +324,7 @@ namespace LoanManagement.Desktop
                             AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Voided Closed Account for Loan " + lon.LoanID };
                             ctx.AuditTrails.Add(at);
                             ctx.SaveChanges();
-                            MessageBox.Show("Okay");
+                            MessageBox.Show("Transaction has been successfully processed", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                             return;
                         }
                     }

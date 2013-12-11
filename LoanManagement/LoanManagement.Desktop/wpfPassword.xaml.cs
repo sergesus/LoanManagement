@@ -74,7 +74,7 @@ namespace LoanManagement.Desktop
                         }
                         else
                         {
-                            MessageBox.Show("Incorrect Password");
+                            MessageBox.Show("Incorrect Password", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                             txtPassword.Password = "";
                             return;
                         }
@@ -94,7 +94,7 @@ namespace LoanManagement.Desktop
                         }
                         else
                         {
-                            MessageBox.Show("Incorrect Password");
+                            MessageBox.Show("Incorrect Password", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                             txtPassword.Password = "";
                             return;
                         }

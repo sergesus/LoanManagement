@@ -63,6 +63,10 @@ namespace LoanManagement.Desktop
                         sp[ctr].Children.Add(labelarray[ctr]);
                         sp[ctr].Children.Add(textarray[ctr]);
                         stck.Children.Add(sp[ctr]);
+                        if (ctr == 0)
+                        {
+                            textarray[0].LostFocus += new RoutedEventHandler(txt_LostFocus);
+                        }
                     }
                     var ch = from c in ctx.FPaymentInfo
                              where c.LoanID == lId && c.PaymentStatus == "Void"
@@ -87,6 +91,23 @@ namespace LoanManagement.Desktop
             catch (Exception ex)
             {
                 System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void txt_LostFocus(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                int srs = Convert.ToInt32(textarray[0].Text);
+                for (int x = 1; x < myNum; x++)
+                {
+                    srs++;
+                    textarray[x].Text = srs.ToString();
+                }
+            }
+            catch (Exception)
+            {
                 return;
             }
         }
@@ -119,7 +140,7 @@ namespace LoanManagement.Desktop
                 {
                     if (i.Text.Length != 6)
                     {
-                        System.Windows.MessageBox.Show("Please input all cheque numbers");
+                        System.Windows.MessageBox.Show("Please input all cheque numbers", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                         return;
                     }
                     bool err;
@@ -128,7 +149,7 @@ namespace LoanManagement.Desktop
                     err = int.TryParse(str, out res);
                     if (err == false)
                     {
-                        System.Windows.MessageBox.Show("Please input the correct format for cheque numbers(Strictly numbers only.)");
+                        System.Windows.MessageBox.Show("Please input the correct format for cheque numbers(Strictly numbers only.)", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                         return;
                     }
                 }
@@ -139,7 +160,7 @@ namespace LoanManagement.Desktop
                     {
                         if (textarray[x].Text == textarray[y].Text)
                         {
-                            System.Windows.MessageBox.Show("No duplications of cheque numbers");
+                            System.Windows.MessageBox.Show("No duplications of cheque numbers", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                             return;
                         }
                     }
@@ -147,7 +168,7 @@ namespace LoanManagement.Desktop
 
 
 
-                MessageBoxResult mr = MessageBox.Show("You sure?", "Question", MessageBoxButton.YesNo);
+                MessageBoxResult mr = MessageBox.Show("Are you sure you want to process this transaction?", "Question", MessageBoxButton.YesNo);
                 if (mr == MessageBoxResult.Yes)
                 {
                     using (var ctx = new iContext())
@@ -209,7 +230,7 @@ namespace LoanManagement.Desktop
                         ctx.AuditTrails.Add(at);
 
                         ctx.SaveChanges();
-                        MessageBox.Show("Okay");
+                        MessageBox.Show("Transaction has been successfully processed", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                         this.Close();
                     }
                 }

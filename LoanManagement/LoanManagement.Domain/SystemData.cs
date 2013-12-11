@@ -371,6 +371,10 @@ namespace LoanManagement.Domain
         public bool Active { get; set; }
         public byte[] Photo { get; set; }
 
+        public String Username { get; set; }
+        public String Password { get; set; }
+        public bool isConfirmed { get; set; }
+
         public ICollection<HomeAddress> HomeAddress { get; set; }
         public ICollection<ClientContact> ClientContact { get; set; }
         public ICollection<Dependent> Dependent { get; set; }

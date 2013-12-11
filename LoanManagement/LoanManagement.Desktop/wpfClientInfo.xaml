@@ -24,7 +24,7 @@
         </Grid.ColumnDefinitions>
         <Grid HorizontalAlignment="Left" Height="419" Margin="445,34,0,0" VerticalAlignment="Top" Width="400" Grid.ColumnSpan="2">
             <TabControl HorizontalAlignment="Left" Height="477" VerticalAlignment="Top" Width="908" Margin="-445,40,-63,-98">
-                <TabItem Header="Address" Margin="154,0,-152,-2" FontSize="16">
+                <TabItem x:Name="tbAddress" Header="Address" Margin="154,0,-152,-2" FontSize="16">
                     <Grid Background="#FFE5E5E5" Margin="0,0,-2,-1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0*"/>
@@ -76,7 +76,7 @@
                         </Grid>
                     </Grid>
                 </TabItem>
-                <TabItem Header="Contact" Margin="156,0,-156,-2" FontSize="16" HorizontalAlignment="Left" Width="106">
+                <TabItem x:Name="tbContact" Header="Contact" Margin="156,0,-156,-2" FontSize="16" HorizontalAlignment="Left" Width="106">
                     <Grid Background="#FFE5E5E5">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="11*"/>
@@ -89,7 +89,7 @@
                         <DataGrid x:Name="dgContact" HorizontalAlignment="Left" Height="168" Margin="83,10,0,0" VerticalAlignment="Top" Width="724" RenderTransformOrigin="0.283,-0.065" Grid.Column="2" GridLinesVisibility="None"/>
                         <Grid x:Name="grpContact" HorizontalAlignment="Left" Height="222" Margin="83,183,0,0" VerticalAlignment="Top" Width="724" Grid.Column="2">
                             <Label Content="Contact:" HorizontalAlignment="Left" Height="29" Margin="7,5,0,0" VerticalAlignment="Top" Width="77" RenderTransformOrigin="0.37,1.448" Foreground="#FF060606" FontSize="18"/>
-                            <TextBox x:Name="txtContact" HorizontalAlignment="Left" Height="24" Margin="158,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="347" FontSize="18" LostFocus="txtContact_LostFocus"/>
+                            <TextBox x:Name="txtContact" HorizontalAlignment="Left" Height="24" Margin="158,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="347" FontSize="18" LostFocus="txtContact_LostFocus" TextChanged="txtContact_TextChanged"/>
                             <Label Content="*" HorizontalAlignment="Left" Height="31" Margin="75,5,0,0" VerticalAlignment="Top" Width="16" Foreground="Red"/>
                             <Label x:Name="lblContact" Content="" HorizontalAlignment="Left" Height="34" Margin="505,0,0,0" VerticalAlignment="Top" Width="34" Foreground="Red"/>
                             <Label Content="* Required Field(s)" HorizontalAlignment="Left" Height="30" Margin="546,152,0,0" VerticalAlignment="Top" Width="168" Foreground="Red" FontSize="13"/>
@@ -97,7 +97,7 @@
                         </Grid>
                     </Grid>
                 </TabItem>
-                <TabItem Header="Dependents" Margin="158,0,-158,-2" FontSize="16">
+                <TabItem x:Name="tbDep" Header="Dependents" Margin="158,0,-158,-2" FontSize="16">
                     <Grid Background="#FFE5E5E5" Margin="0,0,0,-1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0*"/>
@@ -136,7 +136,7 @@
                         <DataGrid x:Name="dgDependents" HorizontalAlignment="Left" Height="168" Margin="167,10,0,0" VerticalAlignment="Top" Width="724" RenderTransformOrigin="0.283,-0.065" Grid.Column="1" GridLinesVisibility="None" Grid.ColumnSpan="3"/>
                     </Grid>
                 </TabItem>
-                <TabItem Header="Work Info" Margin="160,0,-159,-2" HorizontalAlignment="Left" Width="134" FontSize="16">
+                <TabItem x:Name="tbWork" Header="Work Info" Margin="160,0,-159,-2" HorizontalAlignment="Left" Width="134" FontSize="16">
                     <Grid Background="#FFE5E5E5" Margin="0,0,-2,-1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0*"/>
@@ -276,7 +276,7 @@
                         <Label x:Name="lblSSuffix" Content="" HorizontalAlignment="Left" Height="31" Margin="173,112,0,0" VerticalAlignment="Top" Width="34" Foreground="Red" Grid.Column="1"/>
                     </Grid>
                 </TabItem>
-                <TabItem Header="Reference" Margin="0,0,-58,-2" HorizontalAlignment="Right" Width="134" FontSize="16">
+                <TabItem x:Name="tbRef" Header="Reference" Margin="0,0,-58,-2" HorizontalAlignment="Right" Width="134" FontSize="16">
                     <Grid Background="#FFE5E5E5" Margin="0,0,0,-1">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0*"/>
@@ -336,7 +336,7 @@
                             <Label Content="Sex:" HorizontalAlignment="Left" Height="31" Margin="0,265,0,0" VerticalAlignment="Top" Width="74" Foreground="Black" FontSize="18" RenderTransformOrigin="0.506,3.129"/>
                             <TextBox x:Name="txtEmail" HorizontalAlignment="Left" Height="27" Margin="132,421,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="280" FontSize="18"/>
                             <Label Content="Email:" HorizontalAlignment="Left" Height="31" Margin="10,416,0,0" VerticalAlignment="Top" Width="79" Foreground="Black" FontSize="18"/>
-                            <DatePicker x:Name="dtBDay" HorizontalAlignment="Left" Height="31" Margin="590,231,0,0" VerticalAlignment="Top" Width="280" FontSize="18" TabIndex="5"/>
+                            <DatePicker x:Name="dtBDay" HorizontalAlignment="Left" Height="31" Margin="590,231,0,0" VerticalAlignment="Top" Width="280" FontSize="18" TabIndex="5" CalendarClosed="dtBDay_CalendarClosed"/>
                             <Label Content="Status:" HorizontalAlignment="Left" Height="31" Margin="483,258,0,0" VerticalAlignment="Top" Width="74" Foreground="Black" FontSize="18" RenderTransformOrigin="0.506,3.129"/>
                             <ComboBox x:Name="cmbStatus" HorizontalAlignment="Left" Height="31" Margin="590,265,0,0" VerticalAlignment="Top" Width="280" SelectionChanged="cmbStatus_SelectionChanged" FontSize="18" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" TabIndex="7">
                                 <ComboBoxItem Content="Single"/>
@@ -345,17 +345,17 @@
                                 <ComboBoxItem Content="Widowed"/>
                             </ComboBox>
                             <Label Content="SSS:" HorizontalAlignment="Left" Height="31" Margin="0,301,0,0" VerticalAlignment="Top" Width="79" Foreground="Black" FontSize="18"/>
-                            <TextBox x:Name="txtTIN" HorizontalAlignment="Left" Height="31" Margin="590,299,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="280" FontSize="18" MaxLines="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch" LostFocus="txtTIN_LostFocus" TabIndex="9"/>
+                            <TextBox x:Name="txtTIN" HorizontalAlignment="Left" Height="31" Margin="590,299,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="258" FontSize="18" MaxLines="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch" LostFocus="txtTIN_LostFocus" TabIndex="9"/>
                             <Label Content="TIN:" HorizontalAlignment="Left" Height="31" Margin="485,294,0,0" VerticalAlignment="Top" Width="79" Foreground="Black" FontSize="18"/>
                             <TextBox x:Name="txtSSS" HorizontalAlignment="Left" Height="31" Margin="122,296,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="280" FontSize="18" MaxLines="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch" LostFocus="txtSSS_LostFocus" TabIndex="8"/>
                             <Label Content="Middle Name:" HorizontalAlignment="Left" Height="30" Margin="480,130,0,0" VerticalAlignment="Top" Width="126" Foreground="Black" FontSize="18"/>
-                            <Label x:Name="lblSSS" Content="" HorizontalAlignment="Left" Height="31" Margin="399,296,0,0" VerticalAlignment="Top" Width="34" Foreground="Red"/>
-                            <Label x:Name="lblEmail" Content="" HorizontalAlignment="Left" Height="31" Margin="456,222,0,0" VerticalAlignment="Top" Width="34" Foreground="Red"/>
-                            <Label x:Name="lblFName" Content="" HorizontalAlignment="Left" Height="29" Margin="455,166,0,0" VerticalAlignment="Top" Width="34" Foreground="Red"/>
-                            <Label x:Name="lblLName" Content="" HorizontalAlignment="Left" Height="28" Margin="456,133,0,0" VerticalAlignment="Top" Width="34" Foreground="Red"/>
-                            <Label x:Name="lblSuff" Content="" HorizontalAlignment="Left" Height="32" Margin="168,196,0,0" VerticalAlignment="Top" Width="34" Foreground="Red"/>
-                            <Label x:Name="lblMName" Content="" HorizontalAlignment="Left" Height="33" Margin="863,127,-9,0" VerticalAlignment="Top" Width="34" Foreground="Red"/>
-                            <Label x:Name="lblTIN" Content="" HorizontalAlignment="Left" Height="29" Margin="867,296,-13,0" VerticalAlignment="Top" Width="34" Foreground="Red"/>
+                            <Label x:Name="lblSSS" Content="" HorizontalAlignment="Left" Height="31" Margin="402,290,0,0" VerticalAlignment="Top" Width="34" Foreground="Red" FontSize="18"/>
+                            <Label x:Name="lblEmail" Content="" HorizontalAlignment="Left" Height="31" Margin="461,227,0,0" VerticalAlignment="Top" Width="34" Foreground="Red" FontSize="18"/>
+                            <Label x:Name="lblFName" Content="" HorizontalAlignment="Left" Height="29" Margin="461,167,0,0" VerticalAlignment="Top" Width="34" Foreground="Red" FontSize="18"/>
+                            <Label x:Name="lblLName" Content="" HorizontalAlignment="Left" Height="31" Margin="461,134,0,0" VerticalAlignment="Top" Width="34" Foreground="Red" FontSize="18"/>
+                            <Label x:Name="lblSuff" Content="" HorizontalAlignment="Left" Height="32" Margin="172,195,0,0" VerticalAlignment="Top" Width="34" Foreground="Red" FontSize="18"/>
+                            <Label x:Name="lblMName" Content="" HorizontalAlignment="Left" Height="33" Margin="854,134,0,0" VerticalAlignment="Top" Width="34" Foreground="Red" FontSize="18"/>
+                            <Label x:Name="lblTIN" Content="" HorizontalAlignment="Left" Height="29" Margin="848,295,0,0" VerticalAlignment="Top" Width="34" Foreground="Red" FontSize="18"/>
                             <ComboBox x:Name="cmbSex" HorizontalAlignment="Left" Height="31" Margin="122,264,0,0" VerticalAlignment="Top" Width="157" SelectionChanged="cmbSex_SelectionChanged" FontSize="18" TabIndex="6">
                                 <ComboBoxItem Content="Male"/>
                                 <ComboBoxItem Content="Female"/>
@@ -377,7 +377,7 @@
                             </Label.RenderTransform>
                         </Label>
                         <Label Content="Last Name:" HorizontalAlignment="Left" Height="32" Margin="10,142,0,0" VerticalAlignment="Top" Width="104" Foreground="#FF060606" FontSize="18" Grid.ColumnSpan="2"/>
-                        <TextBox x:Name="txtMName" HorizontalAlignment="Left" Height="31" Margin="348,148,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="256" FontSize="18" Grid.Column="3" LostFocus="txtMName_LostFocus" MaxLines="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch" TabIndex="2"/>
+                        <TextBox x:Name="txtMName" HorizontalAlignment="Left" Height="31" Margin="348,148,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="242" FontSize="18" Grid.Column="3" LostFocus="txtMName_LostFocus" MaxLines="1" VerticalContentAlignment="Center" HorizontalContentAlignment="Stretch" TabIndex="2"/>
                         <Label Content="Suffix:" HorizontalAlignment="Left" Height="31" Margin="10,205,0,0" VerticalAlignment="Top" Width="79" Foreground="Black" FontSize="18" Grid.ColumnSpan="2"/>
                         <Label Content="Email:" HorizontalAlignment="Left" Height="31" Margin="10,236,0,0" VerticalAlignment="Top" Width="79" Foreground="Black" FontSize="18" Grid.ColumnSpan="2"/>
                         <Label Content="*" HorizontalAlignment="Left" Height="31" Margin="100,141,0,0" VerticalAlignment="Top" Width="16" Foreground="Red" Grid.ColumnSpan="2"/>

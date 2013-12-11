@@ -37,6 +37,11 @@ namespace LoanManagement.Desktop
         {
             try
             {
+                if (txt.Text == "")
+                {
+                    lbl.Content = "";
+                    return;
+                }
                 bool err = false;
                 int res;
                 String str = txt.Text;
@@ -50,13 +55,17 @@ namespace LoanManagement.Desktop
 
                 if (err == true)
                 {
-                    lbl.Content = "**";
-                    lbl.Foreground = Brushes.Red;
+
+                    lbl.Content = "?";
+                    lbl.ToolTip = "Please enter numeric values only";
+                    lbl.Focus();
+                    lbl.Foreground = System.Windows.Media.Brushes.Red;
+                    lbl.FontWeight = FontWeights.ExtraBold;
                 }
                 else
                 {
                     lbl.Content = "✔";
-                    lbl.Foreground = Brushes.Green;
+                    lbl.Foreground = System.Windows.Media.Brushes.Green;
                 }
             }
             catch (Exception ex)
@@ -69,6 +78,11 @@ namespace LoanManagement.Desktop
         {
             try
             {
+                if (txt.Text == "")
+                {
+                    lbl.Content = "";
+                    return;
+                }
                 bool err = false;
                 double res;
                 String str = txt.Text;
@@ -82,13 +96,16 @@ namespace LoanManagement.Desktop
 
                 if (err == true)
                 {
-                    lbl.Content = "**";
-                    lbl.Foreground = Brushes.Red;
+                    lbl.Content = "?";
+                    lbl.ToolTip = "Please enter numeric values only";
+                    lbl.Focus();
+                    lbl.Foreground = System.Windows.Media.Brushes.Red;
+                    lbl.FontWeight = FontWeights.ExtraBold;
                 }
                 else
                 {
                     lbl.Content = "✔";
-                    lbl.Foreground = Brushes.Green;
+                    lbl.Foreground = System.Windows.Media.Brushes.Green;
                 }
             }
             catch (Exception ex)
@@ -101,6 +118,11 @@ namespace LoanManagement.Desktop
         {
             try
             {
+                if (txt.Text == "")
+                {
+                    lbl.Content = "";
+                    return;
+                }
                 bool err = false;
                 String str = txt.Text;
                 str = str.Replace(" ", "");
@@ -118,13 +140,16 @@ namespace LoanManagement.Desktop
 
                 if (err == true)
                 {
-                    lbl.Content = "**";
-                    lbl.Foreground = Brushes.Red;
+                    lbl.Content = "?";
+                    lbl.ToolTip = "Please enter the correct email format(yourname@site.com)";
+                    lbl.Focus();
+                    lbl.Foreground = System.Windows.Media.Brushes.Red;
+                    lbl.FontWeight = FontWeights.ExtraBold;
                 }
                 else
                 {
                     lbl.Content = "✔";
-                    lbl.Foreground = Brushes.Green;
+                    lbl.Foreground = System.Windows.Media.Brushes.Green;
                 }
             }
             catch (Exception ex)
@@ -137,6 +162,11 @@ namespace LoanManagement.Desktop
         {
             try
             {
+                if (txt.Text == "")
+                {
+                    lbl.Content = "";
+                    return;
+                }
                 bool err = false;
                 String str = txt.Text;
                 str = System.Text.RegularExpressions.Regex.Replace(str, @"\s+", " ");
@@ -155,13 +185,19 @@ namespace LoanManagement.Desktop
 
                 if (err == true)
                 {
-                    lbl.Content = "**";
-                    lbl.Foreground = Brushes.Red;
+
+                    lbl.Content = "?";
+                    lbl.ToolTip = "Please enter alphabetic values only";
+                    lbl.Focus();
+                    lbl.Foreground = System.Windows.Media.Brushes.Red;
+                    lbl.FontWeight = FontWeights.ExtraBold;
                 }
                 else
                 {
                     lbl.Content = "✔";
-                    lbl.Foreground = Brushes.Green;
+                    lbl.ToolTip = "Correct Format";
+                    lbl.Foreground = System.Windows.Media.Brushes.Green;
+                    lbl.FontWeight = FontWeights.Normal;
                 }
             }
             catch (Exception ex)
@@ -174,6 +210,11 @@ namespace LoanManagement.Desktop
         {
             try
             {
+                if (txt.Text == "")
+                {
+                    lbl.Content = "";
+                    return;
+                }
                 bool err = false;
                 String str = txt.Text;
                 str = System.Text.RegularExpressions.Regex.Replace(str, @"\s+", " ");
@@ -192,13 +233,16 @@ namespace LoanManagement.Desktop
 
                 if (err == true)
                 {
-                    lbl.Content = "**";
-                    lbl.Foreground = Brushes.Red;
+                    lbl.Content = "?";
+                    lbl.ToolTip = "Please enter alphanumeric & symbol values only";
+                    lbl.Focus();
+                    lbl.Foreground = System.Windows.Media.Brushes.Red;
+                    lbl.FontWeight = FontWeights.ExtraBold;
                 }
                 else
                 {
                     lbl.Content = "✔";
-                    lbl.Foreground = Brushes.Green;
+                    lbl.Foreground = System.Windows.Media.Brushes.Green;
                 }
             }
             catch (Exception ex)
@@ -227,6 +271,23 @@ namespace LoanManagement.Desktop
         {
             try
             {
+                lblReqDesc.Content = "";
+                lblReqName.Content = "";
+                lblDedName.Content = "";
+                lblDedPerc.Content = "";
+                lblPenAdj.Content = "";
+                lblPenCA.Content = "";
+                lblPenDaif.Content = "";
+                lblPenHolding.Content = "";
+                lblPenIn.Content = "";
+                lblPenLate.Content = "";
+                lblPenRes.Content = "";
+
+                tbDed.IsEnabled = !false;
+                tbInfo.IsEnabled = !false;
+                tbPen.IsEnabled = !false;
+                tbReq.IsEnabled = !false;
+
                 btnAddReq.Content = "Add";
                 btnEdtReq.Content = "Edit";
                 dgReq.IsEnabled = true;
@@ -292,10 +353,10 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                if (lblName.Content == "**" || lblMinTerm.Content == "**" || lblMaxTerm.Content == "**" || lblMinVal.Content == "**" || lblMaxVal.Content == "**" || lblInterest.Content == "**" || lblDesc.Content == "**"
+                if (lblName.Content == "?" || lblMinTerm.Content == "?" || lblMaxTerm.Content == "?" || lblMinVal.Content == "?" || lblMaxVal.Content == "?" || lblInterest.Content == "?" || lblDesc.Content == "?"
                     || String.IsNullOrWhiteSpace(txtName.Text) || String.IsNullOrWhiteSpace(txtMinTerm.Text) || String.IsNullOrWhiteSpace(txtMaxTerm.Text) || String.IsNullOrWhiteSpace(txtMinVal.Text) || String.IsNullOrWhiteSpace(txtMaxVal.Text) || String.IsNullOrWhiteSpace(txtInterest.Text) || String.IsNullOrWhiteSpace(txtDesc.Text))
                 {
-                    System.Windows.MessageBox.Show("Please input correct format and/or fill all required fields");
+                    System.Windows.MessageBox.Show("Please input correct format and/or fill all required fields", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                     return;
                 }
 
@@ -341,7 +402,7 @@ namespace LoanManagement.Desktop
 
                         ctx.Services.Add(ser);
                         ctx.SaveChanges();
-                        MessageBox.Show("Service added");
+                        MessageBox.Show("Service has been successfully added", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                         this.Close();
                     }
                 }
@@ -385,7 +446,7 @@ namespace LoanManagement.Desktop
                         AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Updated Service " + txtName.Text };
                         ctx.AuditTrails.Add(at);
                         ctx.SaveChanges();
-                        MessageBox.Show("Service updated");
+                        MessageBox.Show("Service has been successfully updated", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                         this.Close();
                     }
                 }
@@ -406,7 +467,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure?", "Question", MessageBoxButton.YesNo);
+                MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure you want to delete this record?", "Question", MessageBoxButton.YesNo);
                 if (mr == MessageBoxResult.Yes)
                 {
                     using (var ctx = new iContext())
@@ -414,7 +475,7 @@ namespace LoanManagement.Desktop
                         var agt = ctx.Services.Find(sId);
                         agt.Active = false;
                         ctx.SaveChanges();
-                        System.Windows.MessageBox.Show("Deleted");
+                        System.Windows.MessageBox.Show("Record has been successfully deleted", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                         this.Close();
                     }
                 }
@@ -509,13 +570,16 @@ namespace LoanManagement.Desktop
                     btnEdtDed.Content = "Cancel";
                     btnEdtDed.IsEnabled = true;
                     btnDelDed.Visibility = Visibility.Hidden;
-
+                    tbDed.IsEnabled = false;
+                    tbInfo.IsEnabled = false;
+                    tbPen.IsEnabled = false;
+                    tbReq.IsEnabled = false;
                 }
                 else if (btnAddDed.Content.ToString() == "Save")
                 {
-                    if (txtDedName.Text == "" || txtDedPerc.Text == "")
+                    if (txtDedName.Text == "" || txtDedPerc.Text == "" || txtDedName.Text == "?" || txtDedPerc.Text == "?")
                     {
-                        System.Windows.MessageBox.Show("Please complete the required information", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        System.Windows.MessageBox.Show("Please enter the correct format and/or complete the required information", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
 
@@ -604,9 +668,9 @@ namespace LoanManagement.Desktop
             {
                 if (btnAddReq.Content.ToString() != "Add")
                 {
-                    if (lblReqName.Content == "**" || lblReqDesc.Content == "**" || String.IsNullOrWhiteSpace(txtReqName.Text) || String.IsNullOrWhiteSpace(txtReqDesc.Text))
+                    if (lblReqName.Content == "?" || lblReqDesc.Content == "?" || String.IsNullOrWhiteSpace(txtReqName.Text) || String.IsNullOrWhiteSpace(txtReqDesc.Text))
                     {
-                        System.Windows.MessageBox.Show("Please input correct format and/or fill all required fields");
+                        System.Windows.MessageBox.Show("Please input correct format and/or fill all required fields", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                         return;
                     }
                 }
@@ -619,6 +683,10 @@ namespace LoanManagement.Desktop
                     btnEdtReq.IsEnabled = true;
                     btnDelReq.Visibility = Visibility.Hidden;
 
+                    tbDed.IsEnabled = false;
+                    tbInfo.IsEnabled = false;
+                    tbPen.IsEnabled = false;
+                    tbReq.IsEnabled = false;
                 }
                 else if (btnAddReq.Content.ToString() == "Save")
                 {
@@ -717,7 +785,10 @@ namespace LoanManagement.Desktop
                     dgReq.IsEnabled = false;
                     btnDelReq.Visibility = Visibility.Hidden;
                     grpReq.Visibility = Visibility.Visible;
-
+                    tbDed.IsEnabled = false;
+                    tbInfo.IsEnabled = false;
+                    tbPen.IsEnabled = false;
+                    tbReq.IsEnabled = false;
                     //for view
                     if (status == "View")
                     {
@@ -821,7 +892,10 @@ namespace LoanManagement.Desktop
                     dgDed.IsEnabled = false;
                     btnDelDed.Visibility = Visibility.Hidden;
                     grpDed.Visibility = Visibility.Visible;
-
+                    tbDed.IsEnabled = false;
+                    tbInfo.IsEnabled = false;
+                    tbPen.IsEnabled = false;
+                    tbReq.IsEnabled = false;
                     //for view
                     if (status == "View")
                     {
@@ -930,8 +1004,8 @@ namespace LoanManagement.Desktop
                 {
                     lblMaxTerm.Foreground = Brushes.Red;
                     lblMinTerm.Foreground = Brushes.Red;
-                    lblMaxTerm.Content = "**";
-                    lblMinTerm.Content = "**";
+                    lblMaxTerm.Content = "?";
+                    lblMinTerm.Content = "?";
                 }
                 else
                 {
@@ -945,8 +1019,8 @@ namespace LoanManagement.Desktop
             {
                 lblMaxTerm.Foreground = Brushes.Red;
                 lblMinTerm.Foreground = Brushes.Red;
-                lblMaxTerm.Content = "**";
-                lblMinTerm.Content = "**";
+                lblMaxTerm.Content = "?";
+                lblMinTerm.Content = "?";
             }
         }
 
@@ -959,8 +1033,8 @@ namespace LoanManagement.Desktop
                 {
                     lblMaxTerm.Foreground = Brushes.Red;
                     lblMinTerm.Foreground = Brushes.Red;
-                    lblMaxTerm.Content = "**";
-                    lblMinTerm.Content = "**";
+                    lblMaxTerm.Content = "?";
+                    lblMinTerm.Content = "?";
                 }
                 else
                 {
@@ -974,8 +1048,8 @@ namespace LoanManagement.Desktop
             {
                 lblMaxTerm.Foreground = Brushes.Red;
                 lblMinTerm.Foreground = Brushes.Red;
-                lblMaxTerm.Content = "**";
-                lblMinTerm.Content = "**";
+                lblMaxTerm.Content = "?";
+                lblMinTerm.Content = "?";
             }
         }
 
@@ -988,8 +1062,8 @@ namespace LoanManagement.Desktop
                 {
                     lblMaxVal.Foreground = Brushes.Red;
                     lblMinVal.Foreground = Brushes.Red;
-                    lblMinVal.Content = "**";
-                    lblMaxVal.Content = "**";
+                    lblMinVal.Content = "?";
+                    lblMaxVal.Content = "?";
                 }
                 else
                 {
@@ -1003,8 +1077,8 @@ namespace LoanManagement.Desktop
             {
                 lblMaxVal.Foreground = Brushes.Red;
                 lblMinVal.Foreground = Brushes.Red;
-                lblMinVal.Content = "**";
-                lblMaxVal.Content = "**";
+                lblMinVal.Content = "?";
+                lblMaxVal.Content = "?";
             }
         }
 
@@ -1017,8 +1091,8 @@ namespace LoanManagement.Desktop
                 {
                     lblMaxVal.Foreground = Brushes.Red;
                     lblMinVal.Foreground = Brushes.Red;
-                    lblMinVal.Content = "**";
-                    lblMaxVal.Content = "**";
+                    lblMinVal.Content = "?";
+                    lblMaxVal.Content = "?";
                 }
                 else
                 {
@@ -1032,8 +1106,8 @@ namespace LoanManagement.Desktop
             {
                 lblMaxVal.Foreground = Brushes.Red;
                 lblMinVal.Foreground = Brushes.Red;
-                lblMinVal.Content = "**";
-                lblMaxVal.Content = "**";
+                lblMinVal.Content = "?";
+                lblMaxVal.Content = "?";
             }
         }
 
@@ -1085,6 +1159,56 @@ namespace LoanManagement.Desktop
                 System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
+        }
+
+        private void txtCom_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkDouble(txtCom, lblCom, true);
+        }
+
+        private void txtDedName_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkName(txtDedName, lblDedName, true);
+        }
+
+        private void txtDedPerc_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkDouble(txtDedPerc, lblDedPerc, true);
+        }
+
+        private void txtHolding_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkDouble(txtHolding, lblPenHolding, true);
+        }
+
+        private void txtAdjust_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkDouble(txtAdjust, lblPenAdj, true);
+        }
+
+        private void txtDaif_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkDouble(txtDaif, lblPenDaif, true);
+        }
+
+        private void txtClosed_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkDouble(txtClosed, lblPenCA, true);
+        }
+
+        private void txtResFee_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkDouble(txtResFee, lblPenRes, true);
+        }
+
+        private void txtResInt_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkDouble(txtResInt, lblPenIn, true);
+        }
+
+        private void txtLtPen_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkDouble(txtLtPen, lblPenLate, true);
         }
 
     }

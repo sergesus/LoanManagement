@@ -47,7 +47,7 @@ namespace LoanManagement.Desktop
         {
             error = false;
             this.Focus();
-            if (lblFName.Content == "**" || lblMName.Content == "**" || lblLName.Content == "**" || lblSuff.Content == "**" || lblEmail.Content == "**" || lblSSS.Content == "**" || lblTIN.Content == "**" || String.IsNullOrWhiteSpace(cmbSex.Text) || String.IsNullOrWhiteSpace(cmbStatus.Text))
+            if (lblFName.Content == "?" || lblMName.Content == "?" || lblLName.Content == "?" || lblSuff.Content == "?" || lblEmail.Content == "?" || lblSSS.Content == "?" || lblTIN.Content == "?" || String.IsNullOrWhiteSpace(cmbSex.Text) || String.IsNullOrWhiteSpace(cmbStatus.Text))
                 error = true;
         }
 
@@ -55,10 +55,15 @@ namespace LoanManagement.Desktop
         {
             try
             {
+                if (txt.Text == "")
+                {
+                    lbl.Content = "";
+                    return;
+                }
                 bool err = false;
                 int res;
                 String str = txt.Text;
-                err = int.TryParse(str, out res);
+                err = !int.TryParse(str, out res);
 
                 if (isRequired == true)
                 {
@@ -66,10 +71,14 @@ namespace LoanManagement.Desktop
                         err = true;
                 }
 
-                if (err == false)
+                if (err == true)
                 {
-                    lbl.Content = "**";
+
+                    lbl.Content = "?";
+                    lbl.ToolTip = "Please enter numeric values only";
+                    lbl.Focus();
                     lbl.Foreground = System.Windows.Media.Brushes.Red;
+                    lbl.FontWeight = FontWeights.ExtraBold;
                 }
                 else
                 {
@@ -87,10 +96,15 @@ namespace LoanManagement.Desktop
         {
             try
             {
+                if (txt.Text == "")
+                {
+                    lbl.Content = "";
+                    return;
+                }
                 bool err = false;
                 double res;
                 String str = txt.Text;
-                err = double.TryParse(str,out res);
+                err = !double.TryParse(str, out res);
 
                 if (isRequired == true)
                 {
@@ -98,10 +112,13 @@ namespace LoanManagement.Desktop
                         err = true;
                 }
 
-                if (err == false)
+                if (err == true)
                 {
-                    lbl.Content = "**";
+                    lbl.Content = "?";
+                    lbl.ToolTip = "Please enter numeric values only";
+                    lbl.Focus();
                     lbl.Foreground = System.Windows.Media.Brushes.Red;
+                    lbl.FontWeight = FontWeights.ExtraBold;
                 }
                 else
                 {
@@ -119,6 +136,11 @@ namespace LoanManagement.Desktop
         {
             try
             {
+                if (txt.Text == "")
+                {
+                    lbl.Content = "";
+                    return;
+                }
                 bool err = false;
                 String str = txt.Text;
                 str = str.Replace(" ", "");
@@ -136,8 +158,11 @@ namespace LoanManagement.Desktop
 
                 if (err == true)
                 {
-                    lbl.Content = "**";
+                    lbl.Content = "?";
+                    lbl.ToolTip = "Please enter the correct email format(yourname@site.com)";
+                    lbl.Focus();
                     lbl.Foreground = System.Windows.Media.Brushes.Red;
+                    lbl.FontWeight = FontWeights.ExtraBold;
                 }
                 else
                 {
@@ -155,6 +180,11 @@ namespace LoanManagement.Desktop
         {
             try
             {
+                if (txt.Text == "")
+                {
+                    lbl.Content = "";
+                    return;
+                }
                 bool err = false;
                 String str = txt.Text;
                 str = System.Text.RegularExpressions.Regex.Replace(str, @"\s+", " ");
@@ -173,18 +203,24 @@ namespace LoanManagement.Desktop
 
                 if (err == true)
                 {
-                    lbl.Content = "**";
+
+                    lbl.Content = "?";
+                    lbl.ToolTip = "Please enter alphabetic values only";
+                    lbl.Focus();
                     lbl.Foreground = System.Windows.Media.Brushes.Red;
+                    lbl.FontWeight = FontWeights.ExtraBold;
                 }
                 else
                 {
                     lbl.Content = "✔";
+                    lbl.ToolTip = "Correct Format";
                     lbl.Foreground = System.Windows.Media.Brushes.Green;
+                    lbl.FontWeight = FontWeights.Normal;
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                
+
             }
         }
 
@@ -192,6 +228,11 @@ namespace LoanManagement.Desktop
         {
             try
             {
+                if (txt.Text == "")
+                {
+                    lbl.Content = "";
+                    return;
+                }
                 bool err = false;
                 String str = txt.Text;
                 str = System.Text.RegularExpressions.Regex.Replace(str, @"\s+", " ");
@@ -210,8 +251,11 @@ namespace LoanManagement.Desktop
 
                 if (err == true)
                 {
-                    lbl.Content = "**";
+                    lbl.Content = "?";
+                    lbl.ToolTip = "Please enter alphanumeric & symbol values only";
+                    lbl.Focus();
                     lbl.Foreground = System.Windows.Media.Brushes.Red;
+                    lbl.FontWeight = FontWeights.ExtraBold;
                 }
                 else
                 {
@@ -229,6 +273,49 @@ namespace LoanManagement.Desktop
         {
             try
             {
+                lblContact.Content = "";
+                lblDFName.Content = "";
+                lblDLName.Content = "";
+                lblDMI.Content = "";
+                lblDSchool.Content = "";
+                lblDSuffix.Content = "";
+                lblHCity.Content = "";
+                lblHLength.Content = "";
+                lblHProvince.Content = "";
+                lblHStreet.Content = "";
+                lblRCity.Content = "";
+                lblRContact.Content = "";
+                lblRented.Content = "";
+                lblRFName.Content = "";
+                lblRLName.Content = "";
+                lblRMI.Content = "";
+                lblRProvince.Content = "";
+                lblRStreet.Content = "";
+                lblRSuffix.Content = "";
+                lblSFName.Content = "";
+                lblSLName.Content = "";
+                lblSMName.Content = "";
+                lblSSuffix.Content = "";
+                lblWBsNumber.Content = "";
+                lblWCity.Content = "";
+                lblWDTI.Content = "";
+                lblWIncome.Content = "";
+                lblWLength.Content = "";
+                lblWName.Content = "";
+                lblWPLNumber.Content = "";
+                lblWPosition.Content = "";
+                lblWProvince.Content = "";
+                lblWStreet.Content = "";
+
+                tbAddress.IsEnabled = !false;
+                tbContact.IsEnabled = !false;
+                tbDep.IsEnabled = !false;
+                tbInfo.IsEnabled = !false;
+                tbRef.IsEnabled = !false;
+                tbSps.IsEnabled = !false;
+                tbWork.IsEnabled = !false;
+
+
                 //address
                 btnAddAddress.Content = "Add";
                 btnEdtAddress.Content = "Edit";
@@ -620,10 +707,10 @@ namespace LoanManagement.Desktop
             {
                 if (btnAddAddress.Content.ToString() != "Add")
                 {
-                    if (lblHCity.Content == "**" || lblHLength.Content == "**" || lblHProvince.Content == "**" || lblHStreet.Content == "**"
+                    if (lblHCity.Content == "?" || lblHLength.Content == "?" || lblHProvince.Content == "?" || lblHStreet.Content == "?"
                         || String.IsNullOrWhiteSpace(txtHCity.Text) || String.IsNullOrWhiteSpace(txtHLength.Text) || String.IsNullOrWhiteSpace(txtHProvince.Text) || String.IsNullOrWhiteSpace(txtHStreet.Text))
                     {
-                        System.Windows.MessageBox.Show("Please input correct format and/or fill all required fields");
+                        System.Windows.MessageBox.Show("Please input correct format and/or fill all required fields", "Error", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                         return;
                     }
                 }
@@ -642,6 +729,14 @@ namespace LoanManagement.Desktop
                     btnEdtAddress.IsEnabled = true;
                     btnDelAddress.Visibility = Visibility.Hidden;
                     lblHStreet.Focus();
+
+                    tbAddress.IsEnabled = false;
+                    tbContact.IsEnabled = false;
+                    tbDep.IsEnabled = false;
+                    tbInfo.IsEnabled = false;
+                    tbRef.IsEnabled = false;
+                    tbSps.IsEnabled = false;
+                    tbWork.IsEnabled = false;
                 }
                 else if (btnAddAddress.Content.ToString() == "Save")
                 {
@@ -827,6 +922,13 @@ namespace LoanManagement.Desktop
                     dgAddress.IsEnabled = false;
                     btnDelAddress.Visibility = Visibility.Hidden;
                     grpAddress.Visibility = Visibility.Visible;
+                    tbAddress.IsEnabled = false;
+                    tbContact.IsEnabled = false;
+                    tbDep.IsEnabled = false;
+                    tbInfo.IsEnabled = false;
+                    tbRef.IsEnabled = false;
+                    tbSps.IsEnabled = false;
+                    tbWork.IsEnabled = false;
 
                     //for view
                     if (status == "View")
@@ -966,9 +1068,9 @@ namespace LoanManagement.Desktop
             {
                 if (btnAddContact.Content.ToString() != "Add")
                 {
-                    if (lblContact.Content == "**" || String.IsNullOrWhiteSpace(txtContact.Text))
+                    if (lblContact.Content == "?" || String.IsNullOrWhiteSpace(txtContact.Text))
                     {
-                        System.Windows.MessageBox.Show("Please input correct format and/or fill all required fields");
+                        System.Windows.MessageBox.Show("Please input correct format and/or fill all required fields", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                         return;
                     }
                 }
@@ -980,6 +1082,13 @@ namespace LoanManagement.Desktop
                     btnEdtContact.IsEnabled = true;
                     btnDelContact.Visibility = Visibility.Hidden;
 
+                    tbAddress.IsEnabled = false;
+                    tbContact.IsEnabled = false;
+                    tbDep.IsEnabled = false;
+                    tbInfo.IsEnabled = false;
+                    tbRef.IsEnabled = false;
+                    tbSps.IsEnabled = false;
+                    tbWork.IsEnabled = false;
                 }
                 else if (btnAddContact.Content.ToString() == "Save")
                 {
@@ -1091,7 +1200,13 @@ namespace LoanManagement.Desktop
                     dgContact.IsEnabled = false;
                     btnDelContact.Visibility = Visibility.Hidden;
                     grpContact.Visibility = Visibility.Visible;
-
+                    tbAddress.IsEnabled = false;
+                    tbContact.IsEnabled = false;
+                    tbDep.IsEnabled = false;
+                    tbInfo.IsEnabled = false;
+                    tbRef.IsEnabled = false;
+                    tbSps.IsEnabled = false;
+                    tbWork.IsEnabled = false;
                     //for view
                     if (status == "View")
                     {
@@ -1191,10 +1306,10 @@ namespace LoanManagement.Desktop
             {
                 if (btnAddDep.Content.ToString() != "Add")
                 {
-                    if (lblDFName.Content == "**" || lblDLName.Content == "**" || lblDMI.Content == "**" || lblDSchool.Content == "**" || lblDSuffix.Content == "**"
+                    if (lblDFName.Content == "?" || lblDLName.Content == "?" || lblDMI.Content == "?" || lblDSchool.Content == "?" || lblDSuffix.Content == "?"
                         || String.IsNullOrWhiteSpace(txtDFName.Text) || String.IsNullOrWhiteSpace(txtDLName.Text) || String.IsNullOrWhiteSpace(txtDSchool.Text))
                     {
-                        System.Windows.MessageBox.Show("Please input correct format and/or fill all required fields");
+                        System.Windows.MessageBox.Show("Please input correct format and/or fill all required fields", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                         return;
                     }
                 }
@@ -1206,6 +1321,13 @@ namespace LoanManagement.Desktop
                     btnEdtDep.Content = "Cancel";
                     btnEdtDep.IsEnabled = true;
                     btnDelDep.Visibility = Visibility.Hidden;
+                    tbAddress.IsEnabled = false;
+                    tbContact.IsEnabled = false;
+                    tbDep.IsEnabled = false;
+                    tbInfo.IsEnabled = false;
+                    tbRef.IsEnabled = false;
+                    tbSps.IsEnabled = false;
+                    tbWork.IsEnabled = false;
 
                 }
                 else if (btnAddDep.Content.ToString() == "Save")
@@ -1318,7 +1440,13 @@ namespace LoanManagement.Desktop
                     dgDependents.IsEnabled = false;
                     btnDelDep.Visibility = Visibility.Hidden;
                     grpDependents.Visibility = Visibility.Visible;
-
+                    tbAddress.IsEnabled = false;
+                    tbContact.IsEnabled = false;
+                    tbDep.IsEnabled = false;
+                    tbInfo.IsEnabled = false;
+                    tbRef.IsEnabled = false;
+                    tbSps.IsEnabled = false;
+                    tbWork.IsEnabled = false;
                     //for view
                     if (status == "View")
                     {
@@ -1428,11 +1556,11 @@ namespace LoanManagement.Desktop
             {
                 if (btnAddWork.Content.ToString() != "Add")
                 {
-                    if (lblWBsNumber.Content == "**" || lblWCity.Content == "**" || lblWDTI.Content == "**" || lblWIncome.Content == "**" || lblWLength.Content == "**" || lblWName.Content == "**" || lblWPLNumber.Content == "**" || lblWPosition.Content == "**" || lblWProvince.Content == "**" || lblWStreet.Content == "**"
+                    if (lblWBsNumber.Content == "?" || lblWCity.Content == "?" || lblWDTI.Content == "?" || lblWIncome.Content == "?" || lblWLength.Content == "?" || lblWName.Content == "?" || lblWPLNumber.Content == "?" || lblWPosition.Content == "?" || lblWProvince.Content == "?" || lblWStreet.Content == "?"
                         || String.IsNullOrWhiteSpace(txtWBsNumber.Text) || String.IsNullOrWhiteSpace(txtWCity.Text) || String.IsNullOrWhiteSpace(txtWDTI.Text) || String.IsNullOrWhiteSpace(txtWIncome.Text) || String.IsNullOrWhiteSpace(txtWLength.Text) || String.IsNullOrWhiteSpace(txtWName.Text) || String.IsNullOrWhiteSpace(txtWPLNumber.Text)
                         || String.IsNullOrWhiteSpace(txtWPosition.Text) || String.IsNullOrWhiteSpace(txtWProvince.Text) || String.IsNullOrWhiteSpace(txtWStreet.Text))
                     {
-                        System.Windows.MessageBox.Show("Please input correct format and/or fill all required fields");
+                        System.Windows.MessageBox.Show("Please input correct format and/or fill all required fields", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                         return;
                     }
                 }
@@ -1444,6 +1572,13 @@ namespace LoanManagement.Desktop
                     btnEdtWork.IsEnabled = true;
                     btnDelWork.Visibility = Visibility.Hidden;
 
+                    tbAddress.IsEnabled = false;
+                    tbContact.IsEnabled = false;
+                    tbDep.IsEnabled = false;
+                    tbInfo.IsEnabled = false;
+                    tbRef.IsEnabled = false;
+                    tbSps.IsEnabled = false;
+                    tbWork.IsEnabled = false;
                 }
                 else if (btnAddWork.Content.ToString() == "Save")
                 {
@@ -1567,7 +1702,13 @@ namespace LoanManagement.Desktop
                     dgWork.IsEnabled = false;
                     btnDelWork.Visibility = Visibility.Hidden;
                     grpWork.Visibility = Visibility.Visible;
-
+                    tbAddress.IsEnabled = false;
+                    tbContact.IsEnabled = false;
+                    tbDep.IsEnabled = false;
+                    tbInfo.IsEnabled = false;
+                    tbRef.IsEnabled = false;
+                    tbSps.IsEnabled = false;
+                    tbWork.IsEnabled = false;
                     //for view
                     if (status == "View")
                     {
@@ -1694,10 +1835,10 @@ namespace LoanManagement.Desktop
             {
                 if (btnAddRef.Content.ToString() != "Add")
                 {
-                    if (lblRCity.Content == "**" || lblRContact.Content == "**" || lblRFName.Content == "**" || lblRLName.Content == "**" || lblRMI.Content == "**" || lblRProvince.Content == "**" || lblRStreet.Content == "**" || lblRSuffix.Content == "**"
+                    if (lblRCity.Content == "?" || lblRContact.Content == "?" || lblRFName.Content == "?" || lblRLName.Content == "?" || lblRMI.Content == "?" || lblRProvince.Content == "?" || lblRStreet.Content == "?" || lblRSuffix.Content == "?"
                         || String.IsNullOrWhiteSpace(txtRCity.Text) || String.IsNullOrWhiteSpace(txtRLName.Text) || String.IsNullOrWhiteSpace(txtFName.Text) || String.IsNullOrWhiteSpace(txtRStreet.Text) || String.IsNullOrWhiteSpace(txtRProvince.Text) || String.IsNullOrWhiteSpace(txtRContact.Text))
                     {
-                        System.Windows.MessageBox.Show("Please input correct format and/or fill all required fields");
+                        System.Windows.MessageBox.Show("Please input correct format and/or fill all required fields", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                         return;
                     }
                 }
@@ -1709,7 +1850,13 @@ namespace LoanManagement.Desktop
                     btnEdtRef.Content = "Cancel";
                     btnEdtRef.IsEnabled = true;
                     btnDelRef.Visibility = Visibility.Hidden;
-
+                    tbAddress.IsEnabled = false;
+                    tbContact.IsEnabled = false;
+                    tbDep.IsEnabled = false;
+                    tbInfo.IsEnabled = false;
+                    tbRef.IsEnabled = false;
+                    tbSps.IsEnabled = false;
+                    tbWork.IsEnabled = false;
                 }
                 else if (btnAddRef.Content.ToString() == "Save")
                 {
@@ -1825,7 +1972,13 @@ namespace LoanManagement.Desktop
                     dgReference.IsEnabled = false;
                     btnDelRef.Visibility = Visibility.Hidden;
                     grpReference.Visibility = Visibility.Visible;
-
+                    tbAddress.IsEnabled = false;
+                    tbContact.IsEnabled = false;
+                    tbDep.IsEnabled = false;
+                    tbInfo.IsEnabled = false;
+                    tbRef.IsEnabled = false;
+                    tbSps.IsEnabled = false;
+                    tbWork.IsEnabled = false;
                     //for view
                     if (status == "View")
                     {
@@ -1950,7 +2103,7 @@ namespace LoanManagement.Desktop
                 }*/
                 if(error == true)
                 {
-                    System.Windows.MessageBox.Show("Please input correct format and/or fill all required fields");
+                    System.Windows.MessageBox.Show("Please input correct format and/or fill all required fields", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                     return;
                 }
 
@@ -1962,16 +2115,36 @@ namespace LoanManagement.Desktop
                         return;
                     }
 
+                    try
+                    {
+                        string age = "0";
+                        int years = DateTime.Now.Year - dtBDay.SelectedDate.Value.Year;
+                        if (dtBDay.SelectedDate.Value.AddYears(years) > DateTime.Now) ;
+                        years--;
+
+                        age = years.ToString();
+                        int iAge = Convert.ToInt32(age);
+                        if (iAge < 18 || iAge > 65)
+                        {
+                            System.Windows.MessageBox.Show("Client's age must be between 18 and 65");
+                            return;
+                        }
+                    }
+                    catch
+                    { 
+                    
+                    }
+
                     using (var ctx = new iContext())
                     {
                         var num = ctx.Clients.Where(x => x.FirstName == txtFName.Text && x.LastName == txtLName.Text && x.MiddleName == txtMName.Text && x.Birthday == dtBDay.SelectedDate).Count();
                         if (num > 0)
                         {
-                            System.Windows.MessageBox.Show("Client already exists");
+                            System.Windows.MessageBox.Show("Client already exists", "Information", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                             return;
                         }
 
-                        Client clt = new Client { Birthday = Convert.ToDateTime(dtBDay.SelectedDate).Date, Active = true, MiddleName = txtMName.Text, LastName = txtLName.Text, FirstName = txtFName.Text, Email = txtEmail_Copy.Text, Sex = cmbSex.Text, SSS = txtSSS.Text, Suffix = txtSuffix.Text, TIN = txtTIN.Text, Status = cmbStatus.Text, Photo = ConvertImageToByteArray(selectedFileName) };
+                        Client clt = new Client { Birthday = Convert.ToDateTime(dtBDay.SelectedDate).Date, Active = true, MiddleName = txtMName.Text, LastName = txtLName.Text, FirstName = txtFName.Text, Email = txtEmail_Copy.Text, Sex = cmbSex.Text, SSS = txtSSS.Text, Suffix = txtSuffix.Text, TIN = txtTIN.Text, Status = cmbStatus.Text, Photo = ConvertImageToByteArray(selectedFileName), isConfirmed=true };
 
                         var ads = from ad in ctx.TempHomeAddresses
                                   select ad;
@@ -2023,7 +2196,7 @@ namespace LoanManagement.Desktop
 
                         ctx.Clients.Add(clt);
                         ctx.SaveChanges();
-                        System.Windows.MessageBox.Show("Client successfuly added");
+                        System.Windows.MessageBox.Show("Client successfuly added", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                         this.Close();
                     }
                 }
@@ -2063,7 +2236,7 @@ namespace LoanManagement.Desktop
                         AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Updated Client " + txtFName.Text + " " + txtMName.Text + " " + txtLName.Text + " " + txtSuffix.Text };
                         ctx.AuditTrails.Add(at);
                         ctx.SaveChanges();
-                        System.Windows.MessageBox.Show("User Updated", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                        System.Windows.MessageBox.Show("User has been updated", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                         this.Close();
                     }
                 }
@@ -2146,7 +2319,7 @@ namespace LoanManagement.Desktop
 
         private void btnDel_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure?", "Question", MessageBoxButton.YesNo);
+            MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure you want to delete this record?", "Question", MessageBoxButton.YesNo);
             if (mr == MessageBoxResult.Yes)
             {
                 using (var ctx = new iContext())
@@ -2154,7 +2327,7 @@ namespace LoanManagement.Desktop
                     var agt = ctx.Clients.Find(cId);
                     agt.Active = false;
                     ctx.SaveChanges();
-                    System.Windows.MessageBox.Show("Deleted");
+                    System.Windows.MessageBox.Show("Client record has been successfully deleted", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                     this.Close();
                 }
             }
@@ -2218,6 +2391,16 @@ namespace LoanManagement.Desktop
         private void txtContact_LostFocus(object sender, RoutedEventArgs e)
         {
             checkNumeric(txtContact, lblContact, true);
+            if (txtContact.Text.Length!=11)
+            {
+                lblContact.Content = "?";
+                lblContact.Foreground = System.Windows.Media.Brushes.Red;
+            }
+            else
+            {
+                lblContact.Content = "✔";
+                lblContact.Foreground = System.Windows.Media.Brushes.Green;
+            }
         }
 
         private void txtDLName_LostFocus(object sender, RoutedEventArgs e)
@@ -2333,6 +2516,34 @@ namespace LoanManagement.Desktop
         private void txtRContact_LostFocus(object sender, RoutedEventArgs e)
         {
             checkNumeric(txtRContact, lblRContact, true);
+        }
+
+        private void txtContact_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void dtBDay_CalendarClosed(object sender, RoutedEventArgs e)
+        {
+            try
+                    {
+                        string age = "0";
+                        int years = DateTime.Now.Year - dtBDay.SelectedDate.Value.Year;
+                        if (dtBDay.SelectedDate.Value.AddYears(years) > DateTime.Now) ;
+                        years--;
+
+                        age = years.ToString();
+                        int iAge = Convert.ToInt32(age);
+                        if (iAge < 18 || iAge > 65)
+                        {
+                            System.Windows.MessageBox.Show("Client's age must be between 18 and 65", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                            return;
+                        }
+                    }
+                    catch
+                    { 
+                    
+                    }
         }
 
 

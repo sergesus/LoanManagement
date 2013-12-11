@@ -64,7 +64,7 @@ namespace LoanManagement.Desktop
 
                 if (Convert.ToInt32(txtDays.Text) > 14)
                 {
-                    MessageBox.Show("Maximum of 14 days only");
+                    MessageBox.Show("Maximum of 14 days only", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                     return;
                 }
                 wpfCheckout frm = new wpfCheckout();
@@ -90,7 +90,16 @@ namespace LoanManagement.Desktop
                 using (var ctx = new iContext())
                 {
                     var lon = ctx.Loans.Find(lId);
-                    Double fee = lon.ReleasedLoan.MonthlyPayment * (lon.Service.AdjustmentFee / 100);
+                    double rem = 0;
+                    var re = from r in ctx.FPaymentInfo
+                             where r.LoanID == lId && r.PaymentStatus == "Pending"
+                             select r;
+
+                    foreach (var item in re)
+                    {
+                        rem = rem + item.Amount;
+                    }
+                    Double fee = rem * (lon.Service.AdjustmentFee / 100);
                     //MessageBox.Show(fee.ToString());
                     lblFee.Content = fee.ToString("N2");
                 }

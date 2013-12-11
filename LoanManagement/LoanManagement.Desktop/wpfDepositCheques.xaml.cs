@@ -209,7 +209,7 @@ namespace LoanManagement.Desktop
                 {
                     if (state == "Dep")
                     {
-                        MessageBoxResult mr = MessageBox.Show("You sure?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                        MessageBoxResult mr = MessageBox.Show("Are you sure you want to deposit the selected cheque(s)?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
                         if (mr == MessageBoxResult.Yes)
                         {
                             using (var ctx = new iContext())
@@ -242,7 +242,7 @@ namespace LoanManagement.Desktop
                                 ctx.AuditTrails.Add(at);
 
                                 ctx.SaveChanges();
-                                MessageBox.Show("Okay");
+                                MessageBox.Show("Transaction has been successfully processed", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                                 rg();
                             }
                         }
@@ -255,13 +255,13 @@ namespace LoanManagement.Desktop
                             int num = Convert.ToInt32(getRow(dg, 1));
                             FPaymentInfo fp = ctx.FPaymentInfo.Where(x => x.LoanID == id && x.PaymentNumber == num).First();
                             DepositedCheque dp = ctx.DepositedCheques.Find(fp.FPaymentInfoID);
-                            MessageBoxResult mr = MessageBox.Show("You sure?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                            MessageBoxResult mr = MessageBox.Show("Are you sure you want to void this transaction?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
                             if (mr == MessageBoxResult.Yes)
                             {
                                 fp.PaymentStatus = "Due";
                                 ctx.DepositedCheques.Remove(dp);
                                 ctx.SaveChanges();
-                                MessageBox.Show("Okay");
+                                MessageBox.Show("Transaction has been successfully processed", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                                 checkDue();
                                 rg();
                                 rdDue.IsChecked = true;
@@ -276,7 +276,7 @@ namespace LoanManagement.Desktop
                             int num = Convert.ToInt32(getRow(dg, 1));
                             FPaymentInfo fp = ctx.FPaymentInfo.Where(x => x.LoanID == id && x.PaymentNumber == num).First();
                             DepositedCheque dp = ctx.DepositedCheques.Find(fp.FPaymentInfoID);
-                            MessageBoxResult mr = MessageBox.Show("You sure?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                            MessageBoxResult mr = MessageBox.Show("Are you sure you want to redeposit this cheque?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
                             if (mr == MessageBoxResult.Yes)
                             {
                                 fp.PaymentStatus = "Deposited";
@@ -284,7 +284,7 @@ namespace LoanManagement.Desktop
                                 AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Redeposit cheque " + fp.ChequeInfo };
                                 ctx.AuditTrails.Add(at);
                                 ctx.SaveChanges();
-                                MessageBox.Show("Okay");
+                                MessageBox.Show("Transaction has been successfully processed.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                                 checkDue();
                                 rg();
                                 //rdDue.IsChecked = true;
@@ -306,7 +306,7 @@ namespace LoanManagement.Desktop
 
                             if (ctr > 0)
                             {
-                                MessageBox.Show("Cheque has already been returned once");
+                                MessageBox.Show("Cheque has already been returned once", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                                 return;
                             }
 
@@ -327,7 +327,7 @@ namespace LoanManagement.Desktop
                             fp.PaymentStatus = "Deposited";
                             ctx.ReturnedCheques.Remove(rc);
                             ctx.SaveChanges();
-                            MessageBox.Show("Okay");
+                            MessageBox.Show("Transaction has been successfully processed", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                         }
                     }
                 }
