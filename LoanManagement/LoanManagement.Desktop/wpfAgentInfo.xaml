@@ -33,22 +33,21 @@
                         <Button x:Name="btnAddAddress" Content="Add" HorizontalAlignment="Left" Height="24" Margin="10,10,0,0" VerticalAlignment="Top" Width="153" RenderTransformOrigin="1.635,0.625" Grid.Column="1" Click="btnAddAddress_Click"/>
                         <Button x:Name="btnEdtAddress" Content="Edit" HorizontalAlignment="Left" Height="24" Margin="10,40,0,0" VerticalAlignment="Top" Width="153" Grid.Column="1" RenderTransformOrigin="-0.635,0.375" Click="btnEdtAddress_Click"/>
                         <Button x:Name="btnDelAddress" Content="Delete" HorizontalAlignment="Left" Height="24" Margin="10,70,0,0" VerticalAlignment="Top" Width="153" RenderTransformOrigin="1.635,0.625" Grid.Column="1" Click="btnDelAddress_Click"/>
-                        <Grid Grid.ColumnSpan="4" HorizontalAlignment="Left" Height="153" Margin="20,178,0,0" VerticalAlignment="Top" Width="360"/>
                         <Grid x:Name="grpAddress" Grid.ColumnSpan="4" HorizontalAlignment="Left" Height="219" Margin="10,183,0,0" VerticalAlignment="Top" Width="750">
-                            <Label Content="Street:" HorizontalAlignment="Left" Height="29" Margin="2,7,0,0" VerticalAlignment="Top" Width="69" RenderTransformOrigin="0.37,1.448" Foreground="Black" FontSize="18"/>
-                            <TextBox x:Name="txtStreet" HorizontalAlignment="Left" Height="24" Margin="157,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="545" FontSize="18" LostFocus="txtStreet_LostFocus"/>
-                            <Label Content="Province:" HorizontalAlignment="Left" Height="29" Margin="2,38,0,0" VerticalAlignment="Top" Width="82" RenderTransformOrigin="0.37,1.448" Foreground="Black" FontSize="18"/>
-                            <TextBox x:Name="txtProvince" HorizontalAlignment="Left" Height="24" Margin="157,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="545" FontSize="18" LostFocus="txtProvince_LostFocus"/>
-                            <Label Content="City:" HorizontalAlignment="Left" Height="36" Margin="2,67,0,0" VerticalAlignment="Top" Width="69" RenderTransformOrigin="0.37,1.448" Foreground="Black" FontSize="18"/>
-                            <TextBox x:Name="txtCity" HorizontalAlignment="Left" Height="24" Margin="157,72,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="545" FontSize="18" LostFocus="txtCity_LostFocus"/>
-                            <Label Content="*" HorizontalAlignment="Left" Height="31" Margin="55,7,0,0" VerticalAlignment="Top" Width="16" Foreground="Red"/>
+                            <Label Content="Street:" HorizontalAlignment="Left" Height="29" Margin="160,10,0,0" VerticalAlignment="Top" Width="69" RenderTransformOrigin="0.37,1.448" Foreground="Black" FontSize="18"/>
+                            <TextBox x:Name="txtStreet" HorizontalAlignment="Left" Height="31" Margin="249,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="453" FontSize="18" LostFocus="txtStreet_LostFocus"/>
+                            <Label Content="Province:" HorizontalAlignment="Left" Height="29" Margin="160,41,0,0" VerticalAlignment="Top" Width="82" RenderTransformOrigin="0.37,1.448" Foreground="Black" FontSize="18"/>
+                            <TextBox x:Name="txtProvince" HorizontalAlignment="Left" Height="31" Margin="249,46,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="453" FontSize="18" LostFocus="txtProvince_LostFocus"/>
+                            <Label Content="City:" HorizontalAlignment="Left" Height="36" Margin="160,70,0,0" VerticalAlignment="Top" Width="69" RenderTransformOrigin="0.37,1.448" Foreground="Black" FontSize="18"/>
+                            <TextBox x:Name="txtCity" HorizontalAlignment="Left" Height="31" Margin="249,82,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="453" FontSize="18" LostFocus="txtCity_LostFocus"/>
+                            <Label Content="*" HorizontalAlignment="Left" Height="31" Margin="213,10,0,0" VerticalAlignment="Top" Width="16" Foreground="Red"/>
                             <Label x:Name="lblStreet" Content="" HorizontalAlignment="Left" Height="36" Margin="702,0,0,0" VerticalAlignment="Top" Width="34" Foreground="Red"/>
-                            <Label Content="*" HorizontalAlignment="Left" Height="31" Margin="76,38,0,0" VerticalAlignment="Top" Width="16" Foreground="Red"/>
-                            <Label Content="*" HorizontalAlignment="Left" Height="31" Margin="39,67,0,0" VerticalAlignment="Top" Width="16" Foreground="Red"/>
-                            <Label x:Name="lblProvince" Content="" HorizontalAlignment="Left" Height="34" Margin="702,33,0,0" VerticalAlignment="Top" Width="34" Foreground="Red"/>
-                            <Label x:Name="lblCity" Content="" HorizontalAlignment="Left" Height="35" Margin="702,63,0,0" VerticalAlignment="Top" Width="34" Foreground="Red"/>
+                            <Label Content="*" HorizontalAlignment="Left" Height="31" Margin="234,41,0,0" VerticalAlignment="Top" Width="16" Foreground="Red"/>
+                            <Label Content="*" HorizontalAlignment="Left" Height="31" Margin="197,70,0,0" VerticalAlignment="Top" Width="16" Foreground="Red"/>
+                            <Label x:Name="lblProvince" Content="" HorizontalAlignment="Left" Height="34" Margin="702,38,0,0" VerticalAlignment="Top" Width="34" Foreground="Red"/>
+                            <Label x:Name="lblCity" Content="" HorizontalAlignment="Left" Height="35" Margin="702,77,0,0" VerticalAlignment="Top" Width="34" Foreground="Red"/>
                             <Label Content="* Required Field(s)" HorizontalAlignment="Left" Height="31" Margin="534,153,0,0" VerticalAlignment="Top" Width="168" Foreground="Red" FontSize="13"/>
-                            <Label Content="** Incorrect Format" HorizontalAlignment="Left" Height="31" Margin="534,178,0,0" VerticalAlignment="Top" Width="168" Foreground="Red" FontSize="13"/>
+                            <Label Content="? Incorrect Format" HorizontalAlignment="Left" Height="31" Margin="534,178,0,0" VerticalAlignment="Top" Width="168" Foreground="Red" FontSize="13"/>
                         </Grid>
                     </Grid>
                 </TabItem>
@@ -64,12 +63,12 @@
                         <Button x:Name="btnDelContact" Content="Delete" HorizontalAlignment="Left" Height="24" Margin="10,70,0,0" VerticalAlignment="Top" Width="153" RenderTransformOrigin="1.635,0.625" Click="btnDelContact_Click" Grid.ColumnSpan="3"/>
                         <DataGrid x:Name="dgContact" HorizontalAlignment="Left" Height="168" Margin="95,10,0,0" VerticalAlignment="Top" Width="592" RenderTransformOrigin="0.283,-0.065" Grid.Column="2" GridLinesVisibility="None"/>
                         <Grid x:Name="grpContact" Grid.ColumnSpan="3" HorizontalAlignment="Left" Height="222" Margin="10,183,0,0" VerticalAlignment="Top" Width="750">
-                            <Label Content="Contact:" HorizontalAlignment="Left" Height="29" Margin="7,5,0,0" VerticalAlignment="Top" Width="77" RenderTransformOrigin="0.37,1.448" Foreground="#FF060606" FontSize="18"/>
-                            <TextBox x:Name="txtContact" HorizontalAlignment="Left" Height="24" Margin="158,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="347" FontSize="18" LostFocus="txtContact_LostFocus"/>
-                            <Label Content="*" HorizontalAlignment="Left" Height="31" Margin="75,5,0,0" VerticalAlignment="Top" Width="16" Foreground="Red"/>
-                            <Label x:Name="lblContact" Content="" HorizontalAlignment="Left" Height="36" Margin="505,0,0,0" VerticalAlignment="Top" Width="34" Foreground="Red"/>
+                            <Label Content="Contact:" HorizontalAlignment="Left" Height="29" Margin="163,5,0,0" VerticalAlignment="Top" Width="77" RenderTransformOrigin="0.37,1.448" Foreground="#FF060606" FontSize="18"/>
+                            <TextBox x:Name="txtContact" HorizontalAlignment="Left" Height="31" Margin="314,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="347" FontSize="18" LostFocus="txtContact_LostFocus"/>
+                            <Label Content="*" HorizontalAlignment="Left" Height="31" Margin="231,5,0,0" VerticalAlignment="Top" Width="16" Foreground="Red"/>
+                            <Label x:Name="lblContact" Content="" HorizontalAlignment="Left" Height="36" Margin="661,0,0,0" VerticalAlignment="Top" Width="34" Foreground="Red"/>
                             <Label Content="* Required Field(s)" HorizontalAlignment="Left" Height="31" Margin="572,156,0,0" VerticalAlignment="Top" Width="168" Foreground="Red" FontSize="13"/>
-                            <Label Content="** Incorrect Format" HorizontalAlignment="Left" Height="31" Margin="572,181,0,0" VerticalAlignment="Top" Width="168" Foreground="Red" FontSize="13"/>
+                            <Label Content="? Incorrect Format" HorizontalAlignment="Left" Height="31" Margin="572,181,0,0" VerticalAlignment="Top" Width="168" Foreground="Red" FontSize="13"/>
                         </Grid>
                     </Grid>
                 </TabItem>
@@ -85,8 +84,8 @@
                                 <RowDefinition Height="283*"/>
                             </Grid.RowDefinitions>
                             <Image x:Name="img" HorizontalAlignment="Left" Height="120" Margin="10,10,0,0" VerticalAlignment="Top" Width="120" Grid.RowSpan="2"/>
-                            <TextBox x:Name="txtFName" HorizontalAlignment="Left" Height="26" Margin="128,84,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="339" FontSize="18" ToolTip="" Grid.Row="1" Grid.ColumnSpan="2" LostFocus="txtFName_LostFocus"/>
-                            <Label Content="First Name:" HorizontalAlignment="Left" Height="31" Margin="10,81,0,0" VerticalAlignment="Top" Width="104" Foreground="#FF060606" FontSize="18" Grid.Row="1" RenderTransformOrigin="0.462,0.484">
+                            <TextBox x:Name="txtFName" HorizontalAlignment="Left" Height="31" Margin="128,89,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="339" FontSize="18" ToolTip="" Grid.Row="1" Grid.ColumnSpan="2" LostFocus="txtFName_LostFocus"/>
+                            <Label Content="First Name:" HorizontalAlignment="Left" Height="31" Margin="11,86,0,0" VerticalAlignment="Top" Width="104" Foreground="#FF060606" FontSize="18" Grid.Row="1" RenderTransformOrigin="0.462,0.484">
                                 <Label.RenderTransform>
                                     <TransformGroup>
                                         <ScaleTransform/>
@@ -96,24 +95,24 @@
                                     </TransformGroup>
                                 </Label.RenderTransform>
                             </Label>
-                            <TextBox x:Name="txtLName" HorizontalAlignment="Left" Height="26" Margin="128,53,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="339" FontSize="18" Grid.Row="1" Grid.ColumnSpan="2" LostFocus="txtLName_LostFocus" GotFocus="txtLName_GotFocus"/>
-                            <Label Content="Last Name:" HorizontalAlignment="Left" Height="32" Margin="10,47,0,0" VerticalAlignment="Top" Width="104" Foreground="#FF060606" FontSize="18" Grid.Row="1"/>
-                            <TextBox x:Name="txtMI" HorizontalAlignment="Left" Height="26" Margin="364,53,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" FontSize="18" Grid.Row="1" Grid.Column="1" LostFocus="txtMI_LostFocus"/>
+                            <TextBox x:Name="txtLName" HorizontalAlignment="Left" Height="31" Margin="128,53,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="339" FontSize="18" Grid.Row="1" Grid.ColumnSpan="2" LostFocus="txtLName_LostFocus" GotFocus="txtLName_GotFocus"/>
+                            <Label Content="Last Name:" HorizontalAlignment="Left" Height="32" Margin="10,52,0,0" VerticalAlignment="Top" Width="104" Foreground="#FF060606" FontSize="18" Grid.Row="1"/>
+                            <TextBox x:Name="txtMI" HorizontalAlignment="Left" Height="31" Margin="364,53,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" FontSize="18" Grid.Row="1" Grid.Column="1" LostFocus="txtMI_LostFocus"/>
                             <Label Content="MI:" HorizontalAlignment="Left" Height="31" Margin="324,46,0,0" VerticalAlignment="Top" Width="79" Foreground="Black" FontSize="18" Grid.Row="1" Grid.Column="1" LostFocus="Label_LostFocus_1"/>
-                            <TextBox x:Name="txtSuffix" HorizontalAlignment="Left" Height="26" Margin="128,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" FontSize="18" Grid.Row="1" LostFocus="txtSuffix_LostFocus"/>
-                            <Label Content="Suffix:" HorizontalAlignment="Left" Height="31" Margin="10,110,0,0" VerticalAlignment="Top" Width="79" Foreground="Black" FontSize="18" Grid.Row="1"/>
-                            <TextBox x:Name="txtEmail" HorizontalAlignment="Left" Height="26" Margin="127,146,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="340" FontSize="18" Grid.Row="1" Grid.ColumnSpan="2" LostFocus="txtEmail_LostFocus"/>
-                            <Label Content="Email:" HorizontalAlignment="Left" Height="31" Margin="10,141,0,0" VerticalAlignment="Top" Width="79" Foreground="Black" FontSize="18" Grid.Row="1"/>
+                            <TextBox x:Name="txtSuffix" HorizontalAlignment="Left" Height="31" Margin="128,125,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" FontSize="18" Grid.Row="1" LostFocus="txtSuffix_LostFocus"/>
+                            <Label Content="Suffix:" HorizontalAlignment="Left" Height="31" Margin="10,125,0,0" VerticalAlignment="Top" Width="79" Foreground="Black" FontSize="18" Grid.Row="1"/>
+                            <TextBox x:Name="txtEmail" HorizontalAlignment="Left" Height="31" Margin="128,161,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="340" FontSize="18" Grid.Row="1" Grid.ColumnSpan="2" LostFocus="txtEmail_LostFocus"/>
+                            <Label Content="Email:" HorizontalAlignment="Left" Height="31" Margin="10,161,0,0" VerticalAlignment="Top" Width="79" Foreground="Black" FontSize="18" Grid.Row="1"/>
                             <Button x:Name="btnBrowse" Content="Browse.." HorizontalAlignment="Left" Height="26" Margin="135,2,0,0" VerticalAlignment="Top" Width="84" Click="btnBrowse_Click" Grid.Row="1" Grid.ColumnSpan="2"/>
-                            <Label Content="*" HorizontalAlignment="Left" Height="31" Margin="110,77,0,0" Grid.Row="1" VerticalAlignment="Top" Width="16" Foreground="Red"/>
-                            <Label x:Name="lblFName" Content="" HorizontalAlignment="Left" Height="31" Margin="281,77,0,0" Grid.Row="1" VerticalAlignment="Top" Width="34" Foreground="Red" Grid.Column="1"/>
+                            <Label Content="*" HorizontalAlignment="Left" Height="31" Margin="109,79,0,0" Grid.Row="1" VerticalAlignment="Top" Width="16" Foreground="Red"/>
+                            <Label x:Name="lblFName" Content="" HorizontalAlignment="Left" Height="31" Margin="276,84,0,0" Grid.Row="1" VerticalAlignment="Top" Width="34" Foreground="Red" Grid.Column="1"/>
                             <Label Content="* Required Field(s)" HorizontalAlignment="Left" Height="31" Margin="381,262,0,0" Grid.Row="1" VerticalAlignment="Top" Width="168" Foreground="Red" FontSize="13" Grid.Column="1"/>
                             <Label Content="? Incorrect Format" HorizontalAlignment="Left" Height="31" Margin="381,287,0,0" Grid.Row="1" VerticalAlignment="Top" Width="168" Foreground="Red" FontSize="13" Grid.Column="1"/>
                             <Label Content="*" HorizontalAlignment="Left" Height="31" Margin="109,46,0,0" Grid.Row="1" VerticalAlignment="Top" Width="16" Foreground="Red"/>
                             <Label x:Name="lblMI" Content="" HorizontalAlignment="Left" Height="32" Margin="414,47,0,0" Grid.Row="1" VerticalAlignment="Top" Width="34" Foreground="Red" Grid.Column="1"/>
-                            <Label x:Name="lblLName" Content="" HorizontalAlignment="Left" Height="31" Margin="281,46,0,0" Grid.Row="1" VerticalAlignment="Top" Width="34" Foreground="Red" Grid.Column="1"/>
-                            <Label x:Name="lblSuffix" Content="" HorizontalAlignment="Left" Height="31" Margin="178,110,0,0" Grid.Row="1" VerticalAlignment="Top" Width="34" Foreground="Red" Grid.ColumnSpan="2"/>
-                            <Label x:Name="lblEmail" Content="" HorizontalAlignment="Left" Height="31" Margin="281,141,0,0" VerticalAlignment="Top" Width="34" Foreground="Red" Grid.Row="1" Grid.Column="1"/>
+                            <Label x:Name="lblLName" Content="" HorizontalAlignment="Left" Height="31" Margin="276,46,0,0" Grid.Row="1" VerticalAlignment="Top" Width="34" Foreground="Red" Grid.Column="1"/>
+                            <Label x:Name="lblSuffix" Content="" HorizontalAlignment="Left" Height="31" Margin="178,120,0,0" Grid.Row="1" VerticalAlignment="Top" Width="34" Foreground="Red" Grid.ColumnSpan="2"/>
+                            <Label x:Name="lblEmail" Content="" HorizontalAlignment="Left" Height="31" Margin="276,151,0,0" VerticalAlignment="Top" Width="34" Foreground="Red" Grid.Row="1" Grid.Column="1"/>
                         </Grid>
                     </Grid>
                 </TabItem>

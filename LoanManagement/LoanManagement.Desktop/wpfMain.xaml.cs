@@ -1256,6 +1256,13 @@ namespace LoanManagement.Desktop
             frm.ShowDialog();
         }
 
+        private void btnVAging_Click(object sender, RoutedEventArgs e)
+        {
+            wpfLoanSearch frm = new wpfLoanSearch();
+            frm.status = "Aging";
+            frm.ShowDialog();
+        }
+
 
 
 

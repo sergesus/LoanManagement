@@ -190,16 +190,7 @@ namespace LoanManagement.Desktop
                 using (var ctx = new iContext())
                 {
                     var clt = ctx.Clients.Find(cId);
-                    txtLName.Text = clt.LastName;
-                    txtFName.Text = clt.FirstName;
-                    txtMName.Text = clt.MiddleName;
-                    txtSuffix.Text = clt.Suffix;
-                    txtSex.Text = clt.Sex;
-                    txtSSS.Text = clt.SSS;
-                    txtTIN.Text = clt.TIN;
-                    txtEmail.Text = clt.Email;
-                    dtBDay.SelectedDate = clt.Birthday;
-                    txtStatus.Text = clt.Status;
+                    
 
                     byte[] imageArr;
                     imageArr = clt.Photo;
@@ -212,7 +203,33 @@ namespace LoanManagement.Desktop
                     img.Source = bi;
 
 
+                    lblBday.Content = clt.Birthday.ToString().Split(' ')[0];
+                    var ctr = ctx.ClientContacts.Where(x => x.ClientID == clt.ClientID).Count();
+                    if (ctr > 0)
+                    {
+                        ctr = ctx.ClientContacts.Where(x => x.ClientID == clt.ClientID && x.Primary == true).Count();
+                        if (ctr > 0)
+                        {
+                            var con = ctx.ClientContacts.Where(x => x.ClientID == clt.ClientID && x.Primary == true).First();
+                            lblContact.Content = con.Contact;
+                        }
+                        else
+                        {
+                            var con = ctx.ClientContacts.Where(x => x.ClientID == clt.ClientID).First();
+                            lblContact.Content = con.Contact;
+                        }
+                    }
+                    else
+                    {
+                        lblContact.Content = "N/A";
+                    }
 
+                    lblEmail.Content = clt.Email;
+                    lblGender.Content = clt.Sex;
+                    lblName.Content = clt.LastName + ", " + clt.FirstName + " " + clt.MiddleName + " " + clt.Suffix;
+                    lblSSS.Content = clt.SSS;
+                    lblStatus.Content = clt.Status;
+                    lblTIN.Content = clt.TIN;
 
                 }
             }

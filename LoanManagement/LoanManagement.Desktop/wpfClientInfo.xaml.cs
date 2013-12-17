@@ -2115,6 +2115,18 @@ namespace LoanManagement.Desktop
                         return;
                     }
 
+                    using (var ctx = new iContext())
+                    {
+                        var ads = ctx.TempHomeAddresses.Count();
+                        var con = ctx.TempClientContacts.Count();
+
+                        if (ads == 0 || con == 0)
+                        {
+                            System.Windows.MessageBox.Show("Please input at least one address and one contact number", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                            return;
+                        }
+                    }
+
                     try
                     {
                         string age = "0";
@@ -2207,6 +2219,19 @@ namespace LoanManagement.Desktop
                     {
                         return;
                     }
+
+                    using (var ctx = new iContext())
+                    {
+                        var ads = ctx.HomeAddresses.Where(x=> x.ClientID == cId).Count();
+                        var con = ctx.ClientContacts.Where(x => x.ClientID == cId).Count();
+
+                        if (ads == 0 || con == 0)
+                        {
+                            System.Windows.MessageBox.Show("Please input at least one address and one contact number", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                            return;
+                        }
+                    }
+
                     using (var ctx = new iContext())
                     {
                         var clt = ctx.Clients.Find(cId);

@@ -52,13 +52,22 @@ namespace LoanManagement.Desktop
         {
             try
             {
+                int n = 0;
+                try 
+                {
+                    n = Convert.ToInt32(txtSearch.Text);
+                }
+                catch(Exception)
+                {
+                    n = 0;
+                }
                 if (status == "UApproval")
                 {
                     using (var ctx = new iContext())
                     {
                         var lon = from ln in ctx.Loans
-                                  where (ln.Status == "Approved" || ln.Status == "Declined") && ln.Service.Department == iDept
-                                  select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
+                                  where (ln.Status == "Approved" || ln.Status == "Declined") && ln.Service.Department == iDept && (ln.LoanID == n || ln.Service.Name.Contains(txtSearch.Text) || (ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName).Replace(" ","").Contains(txtSearch.Text.Replace(" ","")))
+                                  select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, ClientName = ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName };
                         dgLoan.ItemsSource = lon.ToList();
 
                     }
@@ -68,8 +77,8 @@ namespace LoanManagement.Desktop
                     using (var ctx = new iContext())
                     {
                         var lon = from ln in ctx.Loans
-                                  where ln.Status == "Applied" && ln.Service.Department == iDept
-                                  select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
+                                  where ln.Status == "Applied" && ln.Service.Department == iDept && (ln.LoanID == n || ln.Service.Name.Contains(txtSearch.Text) || (ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName).Replace(" ","").Contains(txtSearch.Text.Replace(" ","")))
+                                  select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, ClientName = ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName };
                         dgLoan.ItemsSource = lon.ToList();
 
                     }
@@ -79,8 +88,8 @@ namespace LoanManagement.Desktop
                     using (var ctx = new iContext())
                     {
                         var lon = from ln in ctx.Loans
-                                  where ln.Status == "Approved" && ln.Service.Department == iDept
-                                  select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
+                                  where ln.Status == "Approved" && ln.Service.Department == iDept && (ln.LoanID == n || ln.Service.Name.Contains(txtSearch.Text) || (ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName).Replace(" ","").Contains(txtSearch.Text.Replace(" ","")))
+                                  select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, ClientName = ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName };
                         dgLoan.ItemsSource = lon.ToList();
 
                     }
@@ -90,8 +99,8 @@ namespace LoanManagement.Desktop
                     using (var ctx = new iContext())
                     {
                         var lon = from ln in ctx.Loans
-                                  where ln.Status == "Released" && ln.Service.Department == iDept && ln.FPaymentInfo.Where(x=> x.PaymentStatus!="Pending").Count() == 0
-                                  select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
+                                  where ln.Status == "Released" && ln.Service.Department == iDept && ln.FPaymentInfo.Where(x => x.PaymentStatus != "Pending").Count() == 0 && (ln.LoanID == n || ln.Service.Name.Contains(txtSearch.Text) || (ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName).Replace(" ","").Contains(txtSearch.Text.Replace(" ","")))
+                                  select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, ClientName = ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName };
                         dgLoan.ItemsSource = lon.ToList();
 
                     }
@@ -101,8 +110,8 @@ namespace LoanManagement.Desktop
                     using (var ctx = new iContext())
                     {
                         var lon = from ln in ctx.Loans
-                                  where (ln.Status == "Released" || ln.Status == "Active") && ln.Service.Department == iDept
-                                  select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
+                                  where (ln.Status == "Released" || ln.Status == "Active") && ln.Service.Department == iDept && (ln.LoanID == n || ln.Service.Name.Contains(txtSearch.Text) || (ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName).Replace(" ","").Contains(txtSearch.Text.Replace(" ","")))
+                                  select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, ClientName = ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName };
                         dgLoan.ItemsSource = lon.ToList();
 
                     }
@@ -112,8 +121,8 @@ namespace LoanManagement.Desktop
                     using (var ctx = new iContext())
                     {
                         var lon = from ln in ctx.Loans
-                                  where (ln.Status == "Released" || ln.Status == "Active") && ln.Service.Department == iDept
-                                  select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
+                                  where (ln.Status == "Released" || ln.Status == "Active") && ln.Service.Department == iDept && (ln.LoanID == n || ln.Service.Name.Contains(txtSearch.Text) || (ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName).Replace(" ","").Contains(txtSearch.Text.Replace(" ","")))
+                                  select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, ClientName = ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName };
                         dgLoan.ItemsSource = lon.ToList();
                         btnView.Content = "Void last payment";
                     }
@@ -123,8 +132,8 @@ namespace LoanManagement.Desktop
                     using (var ctx = new iContext())
                     {
                         var lon = from ln in ctx.Loans
-                                  where ln.Status == "Closed Account" && ln.Service.Department == iDept
-                                  select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
+                                  where ln.Status == "Closed Account" && ln.Service.Department == iDept && (ln.LoanID == n || ln.Service.Name.Contains(txtSearch.Text) || (ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName).Replace(" ","").Contains(txtSearch.Text.Replace(" ","")))
+                                  select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, ClientName = ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName };
                         dgLoan.ItemsSource = lon.ToList();
                         btnView.Content = "Void Closed Account";
                     }
@@ -134,8 +143,8 @@ namespace LoanManagement.Desktop
                     using (var ctx = new iContext())
                     {
                         var lon = from ln in ctx.Loans
-                                  where ln.Status == "Closed Account" && ln.Service.Department == iDept
-                                  select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
+                                  where ln.Status == "Closed Account" && ln.Service.Department == iDept && (ln.LoanID == n || ln.Service.Name.Contains(txtSearch.Text) || (ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName).Replace(" ","").Contains(txtSearch.Text.Replace(" ","")))
+                                  select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, ClientName = ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName };
                         dgLoan.ItemsSource = lon.ToList();
                         btnView.Content = "Renew Closed Account";
                     }
@@ -145,8 +154,8 @@ namespace LoanManagement.Desktop
                     using (var ctx = new iContext())
                     {
                         var lon = from ln in ctx.Loans
-                                  where (ln.Status == "Released" || ln.Status == "Active") && (ln.FPaymentInfo.Where(x => x.PaymentStatus == "Due" || x.PaymentStatus == "On Hold" || x.PaymentStatus == "Due" || x.PaymentStatus == "Due/Pending").Count() < 1) && ln.Service.Department == iDept
-                                  select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
+                                  where (ln.Status == "Released" || ln.Status == "Active") && (ln.FPaymentInfo.Where(x => x.PaymentStatus == "Due" || x.PaymentStatus == "On Hold" || x.PaymentStatus == "Due" || x.PaymentStatus == "Due/Pending").Count() < 1) && ln.Service.Department == iDept && (ln.LoanID == n || ln.Service.Name.Contains(txtSearch.Text) || (ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName).Replace(" ","").Contains(txtSearch.Text.Replace(" ","")))
+                                  select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, ClientName = ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName };
                         dgLoan.ItemsSource = lon.ToList();
                         btnView.Content = "Adjust Payment Date";
                     }
@@ -156,8 +165,8 @@ namespace LoanManagement.Desktop
                     using (var ctx = new iContext())
                     {
                         var lon = from ln in ctx.Loans
-                                  where ((ln.Status == "Released" || ln.Status == "Active") && (ln.FPaymentInfo.Where(x => x.PaymentStatus == "Cleared").Count() >= 3)) || (ln.Status == "Closed Account") && ln.Service.Department == iDept
-                                  select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
+                                  where ((ln.Status == "Released" || ln.Status == "Active") && (ln.FPaymentInfo.Where(x => x.PaymentStatus == "Cleared").Count() >= 3)) || (ln.Status == "Closed Account") && ln.Service.Department == iDept && (ln.LoanID == n || ln.Service.Name.Contains(txtSearch.Text) || (ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName).Replace(" ","").Contains(txtSearch.Text.Replace(" ","")))
+                                  select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, ClientName = ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName };
                         dgLoan.ItemsSource = lon.ToList();
                         btnView.Content = "View";
                     }
@@ -167,9 +176,22 @@ namespace LoanManagement.Desktop
                     using (var ctx = new iContext())
                     {
                         var lon = from ln in ctx.Loans
-                                  select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, FirstName = ln.Client.FirstName, MiddleName = ln.Client.MiddleName, LastName = ln.Client.LastName };
+                                  where (ln.LoanID == n || ln.Service.Name.Contains(txtSearch.Text) || (ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName).Replace(" ","").Contains(txtSearch.Text.Replace(" ","")))
+                                  select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, ClientName = ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName };
                         dgLoan.ItemsSource = lon.ToList();
                         btnView.Content = "View";
+                    }
+                }
+                else if (status == "Aging")
+                {
+                    using (var ctx = new iContext())
+                    {
+                        //var ctr = ctx.Loans.Where(x=> x.LoanID == 5)
+                        var lon = from ln in ctx.Loans
+                                  where (ln.FPaymentInfo.Where(x=> x.PaymentStatus.Contains("Due")).Count() >= 2 ) && (ln.Status == "Released" || ln.Status == "Active") && (ln.LoanID == n || ln.Service.Name.Contains(txtSearch.Text) || (ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName).Replace(" ", "").Contains(txtSearch.Text.Replace(" ", "")))
+                                  select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, NumberOfMonthsUnpaid = ln.FPaymentInfo.Where(x=> x.PaymentStatus.Contains("Due")).Count(), ClientName = ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName };
+                        dgLoan.ItemsSource = lon.ToList();
+                        btnView.Content = "View Loan Options";
                     }
                 }
             }
@@ -380,6 +402,15 @@ namespace LoanManagement.Desktop
                         frm.ShowDialog();
                     }
                 }
+                else if (status == "Aging")
+                {
+                    wpfLoanInfo frm = new wpfLoanInfo();
+                    int num = Convert.ToInt32(getRow(dgLoan, 0));
+                    frm.lId = num;
+                    frm.name = getRow(dgLoan, 4);
+                    frm.UserID = UserID;
+                    frm.ShowDialog();
+                }
                 else
                 {
                     wpfAppliedLoanInfo frm = new wpfAppliedLoanInfo();
@@ -399,6 +430,19 @@ namespace LoanManagement.Desktop
         }
 
         private void wdw1_Activated(object sender, EventArgs e)
+        {
+            try
+            {
+                rg();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
             {

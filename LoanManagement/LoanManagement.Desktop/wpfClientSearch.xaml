@@ -26,7 +26,7 @@
             <Image HorizontalAlignment="Left" Height="74" VerticalAlignment="Top" Width="97" Source="Images/Search.ico"/>
             <Label Content="Search" HorizontalAlignment="Left" Height="54" Margin="87,10,0,0" VerticalAlignment="Top" Width="285" FontSize="30"/>
         </Grid>
-        <DataGrid x:Name="dgClient" HorizontalAlignment="Left" Height="323" Margin="10,79,-72,-16" VerticalAlignment="Top" Width="682" CanUserAddRows="False" CanUserDeleteRows="False" FontSize="18" GridLinesVisibility="None" Grid.ColumnSpan="2" BorderBrush="#CC48CB00" BorderThickness="2" Background="#7FF0F0F0">
+        <DataGrid x:Name="dgClient" HorizontalAlignment="Left" Height="287" Margin="10,115,0,0" VerticalAlignment="Top" Width="682" CanUserAddRows="False" CanUserDeleteRows="False" FontSize="18" GridLinesVisibility="None" BorderBrush="#CC48CB00" BorderThickness="2" Background="#7FF0F0F0">
             <DataGrid.Resources>
                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" 
         			Color="#CC48CB00"/>
@@ -38,6 +38,8 @@
                 <Image Source="Images/Employee.ico" />
             </DockPanel>
         </Button>
+        <TextBox x:Name="txtSearch" HorizontalAlignment="Left" Height="31" Margin="79,79,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="611" FontFamily="Segoe UI" FontSize="18" TextChanged="txtSearch_TextChanged"/>
+        <Label Content="Search:" HorizontalAlignment="Left" Height="54" Margin="10,74,0,0" VerticalAlignment="Top" Width="69" FontSize="18"/>
 
     </Grid>
 </Controls:MetroWindow>

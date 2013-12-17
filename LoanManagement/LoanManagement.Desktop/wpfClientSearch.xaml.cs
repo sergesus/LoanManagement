@@ -71,14 +71,36 @@ namespace LoanManagement.Desktop
         {
             try
             {
+                int n = 0;
+                try
+                {
+                    n = Convert.ToInt32(txtSearch.Text);
+                }
+                catch (Exception)
+                {
+                    n = 0;
+                }
                 if (status == "Client")
                 {
-                    using (var ctx = new iContext())
+                    if (txtSearch.Text == "")
                     {
-                        var clt = from cl in ctx.Clients
-                                  where cl.Active == true && cl.ClientID != cId
-                                  select new { ClientID = cl.ClientID, FirstName = cl.FirstName, MiddleName = cl.MiddleName, LastName = cl.LastName, Suffix = cl.Suffix };
-                        dgClient.ItemsSource = clt.ToList();
+                        using (var ctx = new iContext())
+                        {
+                            var clt = from cl in ctx.Clients
+                                      where cl.Active == true && cl.ClientID != cId 
+                                      select new { ClientID = cl.ClientID, Name = cl.FirstName + " " + cl.MiddleName + " " + cl.LastName + " " + cl.Suffix };
+                            dgClient.ItemsSource = clt.ToList();
+                        }
+                    }
+                    else
+                    {
+                        using (var ctx = new iContext())
+                        {
+                            var clt = from cl in ctx.Clients
+                                      where cl.Active == true && cl.ClientID != cId && (cl.ClientID == n || (cl.FirstName + cl.MiddleName + cl.LastName).Contains(txtSearch.Text.Replace(" ", "")))
+                                      select new { ClientID = cl.ClientID, Name = cl.FirstName + " " + cl.MiddleName + " " + cl.LastName + " " + cl.Suffix };
+                            dgClient.ItemsSource = clt.ToList();
+                        }
                     }
                 }
                 else if (status == "Agent")
@@ -86,7 +108,7 @@ namespace LoanManagement.Desktop
                     using (var ctx = new iContext())
                     {
                         var agt = from ag in ctx.Agents
-                                  where ag.Active == true
+                                  where ag.Active == true && (ag.FirstName + " " + ag.MI + " " + ag.LastName).Replace(" ", "").Contains(txtSearch.Text.Replace(" ", ""))
                                   select new { AgentID = ag.AgentID, FirstName = ag.FirstName, MiddleName = ag.MI, LastName = ag.LastName, Suffix = ag.Suffix };
                         dgClient.ItemsSource = agt.ToList();
                     }
@@ -96,7 +118,7 @@ namespace LoanManagement.Desktop
                     using (var ctx = new iContext())
                     {
                         var agt = from ag in ctx.Employees
-                                  where ag.Active == true
+                                  where ag.Active == true && (ag.FirstName + " " + ag.MI + " " + ag.LastName).Replace(" ", "").Contains(txtSearch.Text.Replace(" ", ""))
                                   select new { AgentID = ag.EmployeeID, FirstName = ag.FirstName, MI = ag.MI, LastName = ag.LastName, Suffix = ag.Suffix };
                         dgClient.ItemsSource = agt.ToList();
                     }
@@ -106,7 +128,7 @@ namespace LoanManagement.Desktop
                     using (var ctx = new iContext())
                     {
                         var agt = from ag in ctx.Employees
-                                  where ag.Active == true && (from a in ctx.Users where a.EmployeeID==ag.EmployeeID select a).Count()==0
+                                  where ag.Active == true && (ag.FirstName + " " + ag.MI + " " + ag.LastName).Replace(" ", "").Contains(txtSearch.Text.Replace(" ", ""))
                                   select new { EmployeeID = ag.EmployeeID, FirstName = ag.FirstName, MI = ag.MI, LastName = ag.LastName, Suffix = ag.Suffix };
                         dgClient.ItemsSource = agt.ToList();
                     }
@@ -205,6 +227,18 @@ namespace LoanManagement.Desktop
         private void btnAdd_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            try
+            {
+                resetGrid();
+            }
+            catch (Exception)
+            {
+                return;
+            }
         }
 
     }
