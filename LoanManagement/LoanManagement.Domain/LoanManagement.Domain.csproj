@@ -89,6 +89,10 @@
     <Compile Include="Migrations\201312170111509_AddedTracking.Designer.cs">
       <DependentUpon>201312170111509_AddedTracking.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201312190158042_AddedHoliday.cs" />
+    <Compile Include="Migrations\201312190158042_AddedHoliday.Designer.cs">
+      <DependentUpon>201312190158042_AddedHoliday.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemData.cs" />
@@ -130,6 +134,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201312170111509_AddedTracking.resx">
       <DependentUpon>201312170111509_AddedTracking.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201312190158042_AddedHoliday.resx">
+      <DependentUpon>201312190158042_AddedHoliday.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

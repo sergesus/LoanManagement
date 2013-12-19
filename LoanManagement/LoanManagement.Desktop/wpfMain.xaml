@@ -471,10 +471,5 @@
                 </TabControl>
             </TabItem>
         </TabControl>
-        <Grid Grid.Column="1" HorizontalAlignment="Left" Height="780" Margin="624,0,-335,-262" Grid.RowSpan="2" VerticalAlignment="Top" Width="335" OpacityMask="#FFE45151">
-            <Border BorderBrush="#FF4AEE0D" BorderThickness="8" HorizontalAlignment="Left" Height="694" VerticalAlignment="Top" Width="263">
-                <Grid Margin="0,0,0,2" Background="White"/>
-            </Border>
-        </Grid>
     </Grid>
 </Controls:MetroWindow>

@@ -63,6 +63,8 @@ namespace LoanManagement.Domain
         public DbSet<PaidLoan> PaidLoans { get; set; }
         public DbSet<ViewLoan> ViewLoans { get; set; }
         public DbSet<AuditTrail> AuditTrails { get; set; }
+        public DbSet<TemporaryLoanApplication> TemporaryLoanApplications { get; set; }
+        public DbSet<Holiday> Holidays { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -817,6 +819,28 @@ namespace LoanManagement.Domain
         public DateTime DateAndTime { get; set; }
 
         public virtual Employee Employee { get; set; }
+    }
+
+
+    public class TemporaryLoanApplication
+    {
+        public int TemporaryLoanApplicationID { get; set; }
+        public double AmountApplied { get; set; }
+        public int Term { get; set; } //Ilang months
+        public string Mode { get; set; } // KUng monthly/Semi
+        public DateTime DateApplied { get; set; }
+        public DateTime ExpirationDate { get; set; }
+        public int ServiceID { get; set; }
+        public int ClientID { get; set; }
+    }
+
+    public class Holiday
+    {
+        public int HolidayID { get; set; }
+        public string HolidayName { get; set; }
+        public string Description { get; set; }
+        public bool isYearly { get; set; }
+        public DateTime Date { get; set; }
     }
 
 }

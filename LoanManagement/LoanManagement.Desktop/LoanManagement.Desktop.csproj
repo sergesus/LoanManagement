@@ -161,6 +161,12 @@
     <Compile Include="wpfFReleasing.xaml.cs">
       <DependentUpon>wpfFReleasing.xaml</DependentUpon>
     </Compile>
+    <Compile Include="wpfHoliday.xaml.cs">
+      <DependentUpon>wpfHoliday.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="wpfHolidayInfo.xaml.cs">
+      <DependentUpon>wpfHolidayInfo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="wpfLoanApplication.xaml.cs">
       <DependentUpon>wpfLoanApplication.xaml</DependentUpon>
     </Compile>
@@ -309,6 +315,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="wpfFReleasing.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="wpfHoliday.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="wpfHolidayInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

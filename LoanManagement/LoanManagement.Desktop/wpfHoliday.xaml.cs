@@ -19,14 +19,15 @@ using MahApps.Metro.Controls;
 namespace LoanManagement.Desktop
 {
     /// <summary>
-    /// Interaction logic for wpfBranch.xaml
+    /// Interaction logic for wpfHoliday.xaml
     /// </summary>
-    public partial class wpfBank : MetroWindow
+    public partial class wpfHoliday : MetroWindow
     {
+
         public bool status;
         public int UserID;
 
-        public wpfBank()
+        public wpfHoliday()
         {
             InitializeComponent();
         }
@@ -57,14 +58,6 @@ namespace LoanManagement.Desktop
                 myBrush.ImageSource = image.Source;
                 wdw1.Background = myBrush;
                 resetGrid();
-
-                if (status == false)//maintenance
-                {
-                    btnView.Visibility = Visibility.Hidden;
-                    btnAdd.Visibility = Visibility.Hidden;
-                    btnRet.Visibility = Visibility.Visible;
-                    myLbL.Content = "Bank Retreival";
-                }
             }
             catch (Exception ex)
             {
@@ -77,13 +70,35 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new iContext())
+                int n;
+                try
                 {
-                    var bank = from bn in ctx.Banks
-                               where bn.Active == status
-                               select new { BankID = bn.BankID, BankName = bn.BankName, Description = bn.Description };
-                    dgBank.ItemsSource = bank.ToList();
+                    n = Convert.ToInt16(txtSearch.Text);
+                }
+                catch (Exception)
+                {
+                    n = 0;
+                }
+                if (txtSearch.Text != "")
+                {
+                    using (var ctx = new iContext())
+                    {
+                        var bank = from h in ctx.Holidays
+                                   where h.HolidayID == n || h.HolidayName.Contains(txtSearch.Text)
+                                   select h;
+                        dgBank.ItemsSource = bank.ToList();
 
+                    }
+                }
+                else
+                {
+                    using (var ctx = new iContext())
+                    {
+                        var bank = from h in ctx.Holidays
+                                   select h;
+                        dgBank.ItemsSource = bank.ToList();
+
+                    }
                 }
             }
             catch (Exception ex)
@@ -97,7 +112,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                wpfBranchInfo frm = new wpfBranchInfo();
+                wpfHolidayInfo frm = new wpfHolidayInfo();
                 frm.status = "Add";
                 frm.UserID = UserID;
                 frm.ShowDialog();
@@ -113,20 +128,22 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                wpfBranchInfo frm = new wpfBranchInfo();
+                wpfHolidayInfo frm = new wpfHolidayInfo();
                 frm.status = "View";
                 frm.UserID = UserID;
-                frm.bId = Convert.ToInt32(getRow(dgBank, 0));
+                frm.hId = Convert.ToInt32(getRow(dgBank, 0));
                 frm.txtDesc.Text = getRow(dgBank, 2);
                 frm.txtName.Text = getRow(dgBank, 1);
+                frm.dt.SelectedDate = Convert.ToDateTime(getRow(dgBank, 4));
+                //frm.isYearly.IsChecked = Convert.ToBoolean(getRow(dgBank, 3));
                 frm.ShowDialog();
             }
             catch (Exception ex)
             {
-                //System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
-            
+
         }
 
         private void Window_Activated_1(object sender, EventArgs e)
@@ -142,54 +159,12 @@ namespace LoanManagement.Desktop
             }
         }
 
-        private void btnRet_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                int n = Convert.ToInt32(getRow(dgBank, 0));
-                MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure you want to retreive this record?", "Question", MessageBoxButton.YesNo);
-                if (mr == MessageBoxResult.Yes)
-                {
-                    using (var ctx = new iContext())
-                    {
-                        var agt = ctx.Banks.Find(n);
-                        agt.Active = true;
-                        AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Retrieved Bank " + getRow(dgBank,1) };
-                        ctx.AuditTrails.Add(at);
-                        ctx.SaveChanges();
-                        System.Windows.MessageBox.Show("Record has been successfully retreived", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
-                        resetGrid();
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-        }
 
         private void txtSearch_TextChanged(object sender, TextChangedEventArgs e)
         {
             try
             {
-                using (var ctx = new iContext())
-                {
-                    int n;
-                    try
-                    {
-                        n = Convert.ToInt16(txtSearch.Text);
-                    }
-                    catch (Exception)
-                    {
-                        n = 0;
-                    }
-                    var bank = from bn in ctx.Banks
-                               where (bn.Active == status) && (bn.BankName.Contains(txtSearch.Text) || bn.BankID == n)
-                               select new { BankID = bn.BankID, BankName = bn.BankName, Description = bn.Description };
-                    dgBank.ItemsSource = bank.ToList();
-
-                }
+                resetGrid();
             }
             catch (Exception ex)
             {
@@ -198,6 +173,10 @@ namespace LoanManagement.Desktop
             }
         }
 
-        
+        private void wdw1_Activated(object sender, EventArgs e)
+        {
+            resetGrid();
+        }
     }
+
 }

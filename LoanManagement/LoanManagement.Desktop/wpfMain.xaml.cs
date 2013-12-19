@@ -261,7 +261,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                wpfBranch frm = new wpfBranch();
+                wpfBank frm = new wpfBank();
                 frm.ShowDialog();
             }
             catch (Exception ex)
@@ -529,7 +529,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                wpfBranch frm = new wpfBranch();
+                wpfBank frm = new wpfBank();
                 frm.UserID = UserID;
                 frm.status = true;
                 frm.ShowDialog();
@@ -759,7 +759,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                wpfBranch frm = new wpfBranch();
+                wpfBank frm = new wpfBank();
                 frm.status = false;
                 frm.ShowDialog();
             }
@@ -1230,7 +1230,7 @@ namespace LoanManagement.Desktop
 
         private void btnPosition_Click(object sender, RoutedEventArgs e)
         {
-            wpfPosition frm = new wpfPosition();
+            wpfHoliday frm = new wpfHoliday();
             frm.UserID = UserID;
             frm.ShowDialog();
         }
