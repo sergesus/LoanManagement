@@ -378,6 +378,7 @@ namespace LoanManagement.Desktop
             try
             {
                 wpfClientSearch frm = new wpfClientSearch();
+                frm.UserID = UserID;
                 frm.status = "Agent";
                 frm.ShowDialog();
             }
@@ -458,9 +459,10 @@ namespace LoanManagement.Desktop
             try
             {
                 wpfClientSearch frm = new wpfClientSearch();
-                frm.status = "Client";
+                frm.status = "Employee";
                 frm.status2 = "LoanApplication";
                 frm.cId = cId;
+                frm.UserID = UserID;
                 frm.ShowDialog();
             }
             catch (Exception ex)
@@ -612,6 +614,7 @@ namespace LoanManagement.Desktop
             try
             {
                 wpfClientSearch frm = new wpfClientSearch();
+                frm.UserID = UserID;
                 frm.status = "CI";
                 frm.ShowDialog();
             }

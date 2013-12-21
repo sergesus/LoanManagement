@@ -32,6 +32,7 @@ namespace LoanManagement.Desktop
         public int lId;
         public string status;
         public int UserID;
+        public string iDept;
 
         public wpfReleasedLoanInfo()
         {
@@ -73,7 +74,7 @@ namespace LoanManagement.Desktop
                     }
 
                     var lons = from lo in ctx.Loans
-                               where lo.Status == "Released"
+                               where lo.Status == "Released" && lo.Service.Department == "Financing"
                                select lo;
 
                     foreach (var item in lons)
@@ -253,32 +254,43 @@ namespace LoanManagement.Desktop
                                select new { No = ge.PaymentNumber, ChequeID = ge.ChequeInfo, TotalPayment = ge.Amount, ChequeDueDate = ge.ChequeDueDate, PaymentDate = ge.PaymentDate, Status = ge.PaymentStatus, DateCleared = ge.ClearCheque.DateCleared };
 
                     ctx.Database.ExecuteSqlCommand("delete from dbo.ViewLoans");
-                    foreach (var i in chqs)
+
+                    if (iDept == "Financing")
                     {
-                        string s;
-                        string[] dtCleared=null;
-                        string myStr;
-                        if (i.DateCleared != null)
+                        foreach (var i in chqs)
                         {
-                            s = i.DateCleared.ToString();
-                            dtCleared = s.Split(' ');
-                            myStr = dtCleared[0];
+                            string s;
+                            string[] dtCleared = null;
+                            string myStr;
+                            if (i.DateCleared != null)
+                            {
+                                s = i.DateCleared.ToString();
+                                dtCleared = s.Split(' ');
+                                myStr = dtCleared[0];
+                            }
+                            else
+                            {
+                                myStr = "";
+                            }
+                            s = i.PaymentDate.ToString();
+                            string[] dtPayment = s.Split(' ');
+                            s = i.ChequeDueDate.ToString();
+                            string[] dtDue = s.Split(' ');
+                            ViewLoan vl = new ViewLoan { DateCleared = myStr, DueDate = dtDue[0], PaymentDate = dtPayment[0], PaymentInfo = i.ChequeID, PaymentNumber = i.No, Status = i.Status, TotalPayment = i.TotalPayment.ToString("N2") };
+                            ctx.ViewLoans.Add(vl);
                         }
-                        else
-                        {
-                            myStr = "";
-                        }
-                        s = i.PaymentDate.ToString();
-                        string[] dtPayment = s.Split(' ');
-                        s = i.ChequeDueDate.ToString();
-                        string[] dtDue = s.Split(' ');
-                        ViewLoan vl = new ViewLoan { DateCleared = myStr, DueDate = dtDue[0], PaymentDate= dtPayment[0], PaymentInfo= i.ChequeID, PaymentNumber=i.No, Status=i.Status, TotalPayment=i.TotalPayment.ToString("N2")};
-                        ctx.ViewLoans.Add(vl);
+                        ctx.SaveChanges();
+                        var chqs1 = from ge in ctx.ViewLoans
+                                    select new { No = ge.PaymentNumber, ChequeID = ge.PaymentInfo, TotalPayment = ge.TotalPayment, ChequeDueDate = ge.DueDate, PaymentDate = ge.PaymentDate, Status = ge.Status, DateCleared = ge.DateCleared };
+                        dg.ItemsSource = chqs1.ToList();
                     }
-                    ctx.SaveChanges();
-                    var chqs1 = from ge in ctx.ViewLoans
-                               select new { No = ge.PaymentNumber, ChequeID = ge.PaymentInfo, TotalPayment = ge.TotalPayment, ChequeDueDate = ge.DueDate, PaymentDate = ge.PaymentDate, Status = ge.Status, DateCleared = ge.DateCleared };
-                    dg.ItemsSource = chqs1.ToList();
+                    else
+                    {
+                        var pys = from p in ctx.MPaymentInfoes
+                                  where p.LoanID == lId
+                                  select new { No = p.PaymentNumber, Amount = p.Amount, PrevBalance = p.PreviousBalance, PrevBalanceInterest = p.BalanceInterest, TotalBalance = p.TotalBalance, TotalAmount = p.TotalAmount, DueDate = p.DueDate, RemaingBalance = p.RemainingLoanBalance, Status = p.PaymentStatus };
+                        dg.ItemsSource = pys.ToList();
+                    }
 
                     if (status == "View")
                     {
@@ -327,12 +339,24 @@ namespace LoanManagement.Desktop
             {
                 if (status == "UReleasing")
                 {
-                    wpfFReleasing frm = new wpfFReleasing();
-                    frm.status = "UReleasing";
-                    frm.UserID = UserID;
-                    frm.lId = lId;
-                    this.Close();
-                    frm.ShowDialog();
+                    if (iDept == "Financing")
+                    {
+                        wpfFReleasing frm = new wpfFReleasing();
+                        frm.status = "UReleasing";
+                        frm.UserID = UserID;
+                        frm.lId = lId;
+                        this.Close();
+                        frm.ShowDialog();
+                    }
+                    else
+                    {
+                        wpfMReleasing frm = new wpfMReleasing();
+                        frm.status = "UReleasing";
+                        frm.UserID = UserID;
+                        frm.lId = lId;
+                        this.Close();
+                        frm.ShowDialog();
+                    }
                 }
                 else if (status == "Holding")
                 {
@@ -402,22 +426,45 @@ namespace LoanManagement.Desktop
                     MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure you want to process this tranction?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
                     if (mr == MessageBoxResult.Yes)
                     {
-                        using (var ctx = new iContext())
+                        if (iDept == "Financing")
                         {
-                            var lon = ctx.Loans.Find(lId);
-                            lon.Status = "Approved";
-                            ctx.ReleasedLoans.Remove(lon.ReleasedLoan);
-                            var lons = from lo in ctx.FPaymentInfo
-                                       where lo.LoanID == lId
-                                       select lo;
-                            foreach (var item in lons)
+                            using (var ctx = new iContext())
                             {
-                                ctx.FPaymentInfo.Remove(item);
+                                var lon = ctx.Loans.Find(lId);
+                                lon.Status = "Approved";
+                                ctx.ReleasedLoans.Remove(lon.ReleasedLoan);
+                                var lons = from lo in ctx.FPaymentInfo
+                                           where lo.LoanID == lId
+                                           select lo;
+                                foreach (var item in lons)
+                                {
+                                    ctx.FPaymentInfo.Remove(item);
+                                }
+                                ctx.SaveChanges();
+                                this.Close();
+                                System.Windows.MessageBox.Show("Transaction has been successfully processed", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+
                             }
-                            ctx.SaveChanges();
-                            this.Close();
-                            System.Windows.MessageBox.Show("Transaction has been successfully processed", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
-                            
+                        }
+                        else
+                        {
+                            using (var ctx = new iContext())
+                            {
+                                var lon = ctx.Loans.Find(lId);
+                                lon.Status = "Approved";
+                                ctx.ReleasedLoans.Remove(lon.ReleasedLoan);
+                                var lons = from lo in ctx.MPaymentInfoes
+                                           where lo.LoanID == lId
+                                           select lo;
+                                foreach (var item in lons)
+                                {
+                                    ctx.MPaymentInfoes.Remove(item);
+                                }
+                                ctx.SaveChanges();
+                                this.Close();
+                                System.Windows.MessageBox.Show("Transaction has been successfully processed", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                            }
                         }
                     }
                 }

@@ -158,7 +158,7 @@ namespace LoanManagement.Desktop
                     }
 
                     var lons = from lo in ctx.Loans
-                               where lo.Status == "Released"
+                               where lo.Status == "Released" && lo.Service.Department == "Financing"
                                select lo;
 
                     foreach (var item in lons)

@@ -215,12 +215,30 @@ namespace LoanManagement.Desktop
                 }
                 else if (status == "Releasing")
                 {
-                    wpfFReleasing frm = new wpfFReleasing();
-                    frm.status = status;
-                    frm.UserID = UserID;
-                    frm.lId = lId;
-                    this.Close();
-                    frm.ShowDialog();
+                    String iDept = "";
+                    using (var ctx = new iContext())
+                    {
+                        var ln = ctx.Loans.Find(lId);
+                        iDept = ln.Service.Department;
+                    }
+                    if (iDept == "Financing")
+                    {
+                        wpfFReleasing frm = new wpfFReleasing();
+                        frm.status = status;
+                        frm.UserID = UserID;
+                        frm.lId = lId;
+                        this.Close();
+                        frm.ShowDialog();
+                    }
+                    else
+                    {
+                        wpfMReleasing frm = new wpfMReleasing();
+                        frm.status = status;
+                        frm.UserID = UserID;
+                        frm.lId = lId;
+                        this.Close();
+                        frm.ShowDialog();
+                    }
                 }
             }
             catch (Exception ex)

@@ -96,13 +96,27 @@ namespace LoanManagement.Desktop
                 }
                 else if (status == "UReleasing")
                 {
-                    using (var ctx = new iContext())
+                    if (iDept == "Financing")
                     {
-                        var lon = from ln in ctx.Loans
-                                  where ln.Status == "Released" && ln.Service.Department == iDept && ln.FPaymentInfo.Where(x => x.PaymentStatus != "Pending").Count() == 0 && (ln.LoanID == n || ln.Service.Name.Contains(txtSearch.Text) || (ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName).Replace(" ","").Contains(txtSearch.Text.Replace(" ","")))
-                                  select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, ClientName = ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName };
-                        dgLoan.ItemsSource = lon.ToList();
+                        using (var ctx = new iContext())
+                        {
+                            var lon = from ln in ctx.Loans
+                                      where ln.Status == "Released" && ln.Service.Department == iDept && ln.FPaymentInfo.Where(x => x.PaymentStatus != "Pending").Count() == 0 && (ln.LoanID == n || ln.Service.Name.Contains(txtSearch.Text) || (ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName).Replace(" ", "").Contains(txtSearch.Text.Replace(" ", "")))
+                                      select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, ClientName = ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName };
+                            dgLoan.ItemsSource = lon.ToList();
 
+                        }
+                    }
+                    else
+                    {
+                        using (var ctx = new iContext())
+                        {
+                            var lon = from ln in ctx.Loans
+                                      where ln.Status == "Released" && ln.Service.Department == iDept && (ln.LoanID == n || ln.Service.Name.Contains(txtSearch.Text) || (ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName).Replace(" ", "").Contains(txtSearch.Text.Replace(" ", "")))
+                                      select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, ClientName = ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName };
+                            dgLoan.ItemsSource = lon.ToList();
+
+                        }
                     }
                 }
                 else if (status == "Holding")
@@ -243,6 +257,7 @@ namespace LoanManagement.Desktop
                     frm.lId = num;
                     frm.UserID = UserID;
                     frm.status = status;
+                    frm.iDept = iDept;
                     frm.ShowDialog();
                 }
                 else if (status == "Holding")

@@ -979,7 +979,7 @@ namespace LoanManagement.Desktop
                         var emp = ctx.Employees.Find(uId);
                         emp.FirstName = txtFName.Text;
                         emp.LastName = txtLName.Text;
-                        emp.Position.PositionID = pID;
+                        emp.PositionID = pID;
                         emp.Suffix = txtSuffix.Text;
                         emp.MI = txtMI.Text;
                         emp.Department = cmbDept.Text;

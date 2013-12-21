@@ -105,32 +105,94 @@ namespace LoanManagement.Desktop
                 }
                 else if (status == "Agent")
                 {
-                    using (var ctx = new iContext())
+                    if (txtSearch.Text == "")
                     {
-                        var agt = from ag in ctx.Agents
-                                  where ag.Active == true && (ag.FirstName + " " + ag.MI + " " + ag.LastName).Replace(" ", "").Contains(txtSearch.Text.Replace(" ", ""))
-                                  select new { AgentID = ag.AgentID, FirstName = ag.FirstName, MiddleName = ag.MI, LastName = ag.LastName, Suffix = ag.Suffix };
-                        dgClient.ItemsSource = agt.ToList();
+                        using (var ctx = new iContext())
+                        {
+                            var agt = from ag in ctx.Agents
+                                      where ag.Active == true
+                                      select new { AgentID = ag.AgentID, FirstName = ag.FirstName, MiddleName = ag.MI, LastName = ag.LastName, Suffix = ag.Suffix };
+                            dgClient.ItemsSource = agt.ToList();
+                        }
+                    }
+                    else
+                    {
+                        using (var ctx = new iContext())
+                        {
+                            var agt = from ag in ctx.Agents
+                                      where ag.Active == true && (ag.FirstName + " " + ag.MI + " " + ag.LastName).Replace(" ", "").Contains(txtSearch.Text.Replace(" ", ""))
+                                      select new { AgentID = ag.AgentID, FirstName = ag.FirstName, MiddleName = ag.MI, LastName = ag.LastName, Suffix = ag.Suffix };
+                            dgClient.ItemsSource = agt.ToList();
+                        }
                     }
                 }
                 else if (status == "CI")
                 {
-                    using (var ctx = new iContext())
+                    if (txtSearch.Text == "")
                     {
-                        var agt = from ag in ctx.Employees
-                                  where ag.Active == true && (ag.FirstName + " " + ag.MI + " " + ag.LastName).Replace(" ", "").Contains(txtSearch.Text.Replace(" ", ""))
-                                  select new { AgentID = ag.EmployeeID, FirstName = ag.FirstName, MI = ag.MI, LastName = ag.LastName, Suffix = ag.Suffix };
-                        dgClient.ItemsSource = agt.ToList();
+                        using (var ctx = new iContext())
+                        {
+                            var agt = from ag in ctx.Employees
+                                      where ag.Active == true
+                                      select new { EmployeeID = ag.EmployeeID, FirstName = ag.FirstName, MI = ag.MI, LastName = ag.LastName, Suffix = ag.Suffix };
+                            dgClient.ItemsSource = agt.ToList();
+                        }
+                    }
+                    else
+                    {
+                        using (var ctx = new iContext())
+                        {
+                            var agt = from ag in ctx.Employees
+                                      where ag.Active == true && (ag.FirstName + " " + ag.MI + " " + ag.LastName).Replace(" ", "").Contains(txtSearch.Text.Replace(" ", ""))
+                                      select new { EmployeeID = ag.EmployeeID, FirstName = ag.FirstName, MI = ag.MI, LastName = ag.LastName, Suffix = ag.Suffix };
+                            dgClient.ItemsSource = agt.ToList();
+                        }
+                    }
+                }
+                else if (status == "Collector")
+                {
+                    if (txtSearch.Text == "")
+                    {
+                        using (var ctx = new iContext())
+                        {
+                            var agt = from ag in ctx.Employees
+                                      where ag.Active == true && ag.Position.PositionName.Contains("Collector")
+                                      select new { EmployeeID = ag.EmployeeID, FirstName = ag.FirstName, MI = ag.MI, LastName = ag.LastName, Suffix = ag.Suffix };
+                            dgClient.ItemsSource = agt.ToList();
+                        }
+                    }
+                    else
+                    {
+                        using (var ctx = new iContext())
+                        {
+                            var agt = from ag in ctx.Employees
+                                      where ag.Active == true && (ag.FirstName + " " + ag.MI + " " + ag.LastName).Replace(" ", "").Contains(txtSearch.Text.Replace(" ", "")) && ag.Position.PositionName.Contains("Collector")
+                                      select new { EmployeeID = ag.EmployeeID, FirstName = ag.FirstName, MI = ag.MI, LastName = ag.LastName, Suffix = ag.Suffix };
+                            dgClient.ItemsSource = agt.ToList();
+                        }
                     }
                 }
                 else if (status == "Employee")
                 {
-                    using (var ctx = new iContext())
+                    if (txtSearch.Text == "")
                     {
-                        var agt = from ag in ctx.Employees
-                                  where ag.Active == true && (ag.FirstName + " " + ag.MI + " " + ag.LastName).Replace(" ", "").Contains(txtSearch.Text.Replace(" ", ""))
-                                  select new { EmployeeID = ag.EmployeeID, FirstName = ag.FirstName, MI = ag.MI, LastName = ag.LastName, Suffix = ag.Suffix };
-                        dgClient.ItemsSource = agt.ToList();
+                        using (var ctx = new iContext())
+                        {
+                            var agt = from ag in ctx.Employees
+                                      where ag.Active == true
+                                      select new { EmployeeID = ag.EmployeeID, FirstName = ag.FirstName, MI = ag.MI, LastName = ag.LastName, Suffix = ag.Suffix };
+                            dgClient.ItemsSource = agt.ToList();
+                        }
+                    }
+                    else
+                    {
+                        using (var ctx = new iContext())
+                        {
+                            var agt = from ag in ctx.Employees
+                                      where ag.Active == true && (ag.FirstName + " " + ag.MI + " " + ag.LastName).Replace(" ", "").Contains(txtSearch.Text.Replace(" ", ""))
+                                      select new { EmployeeID = ag.EmployeeID, FirstName = ag.FirstName, MI = ag.MI, LastName = ag.LastName, Suffix = ag.Suffix };
+                            dgClient.ItemsSource = agt.ToList();
+                        }
                     }
                 }
             }
@@ -207,6 +269,21 @@ namespace LoanManagement.Desktop
                     }
                     this.Close();
                 }
+                else if (status == "Collector")
+                {
+                    var ctr = Application.Current.Windows.Count;
+                    var frm = Application.Current.Windows[ctr - 2] as wpfMReleasing;
+                    frm.UserID = UserID;
+                    int num = Convert.ToInt32(getRow(dgClient, 0));
+                    frm.ciId = num;
+                    using (var ctx = new iContext())
+                    {
+                        var agt = ctx.Employees.Find(num);
+                        String str = "(" + num + ")" + agt.FirstName + " " + agt.MI + " " + agt.LastName;
+                        frm.txtCI.Text = str;
+                    }
+                    this.Close();
+                }
                 else if (status == "Employee")
                 {
                     int num = Convert.ToInt32(getRow(dgClient, 0));
@@ -219,7 +296,7 @@ namespace LoanManagement.Desktop
             }
             catch (Exception ex)
             {
-                //System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
         }

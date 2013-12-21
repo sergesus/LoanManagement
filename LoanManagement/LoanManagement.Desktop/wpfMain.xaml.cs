@@ -88,7 +88,7 @@ namespace LoanManagement.Desktop
                     }
 
                     var lons = from lo in ctx.Loans
-                               where lo.Status == "Released"
+                               where lo.Status == "Released" && lo.Service.Department == "Financing"
                                select lo;
 
                     foreach (var item in lons)
@@ -220,6 +220,8 @@ namespace LoanManagement.Desktop
                 //grdLo.Background = myBrush;
                 //grdM.Background = myBrush;
                 //grdBG.Background = myBrush;
+
+                //System.Windows.MessageBox.Show(DateTime.Now.DayOfWeek.ToString());
             }
             catch (Exception ex)
             {
@@ -711,6 +713,7 @@ namespace LoanManagement.Desktop
                 wpfSelectApplication frm = new wpfSelectApplication();
                 frm.status = "Approval";
                 frm.iDept = "Micro Business";
+                frm.UserID = UserID;
                 frm.ShowDialog();
             }
             catch (Exception ex)
@@ -1230,7 +1233,7 @@ namespace LoanManagement.Desktop
 
         private void btnPosition_Click(object sender, RoutedEventArgs e)
         {
-            wpfHoliday frm = new wpfHoliday();
+            wpfPosition frm = new wpfPosition();
             frm.UserID = UserID;
             frm.ShowDialog();
         }
@@ -1260,6 +1263,30 @@ namespace LoanManagement.Desktop
         {
             wpfLoanSearch frm = new wpfLoanSearch();
             frm.status = "Aging";
+            frm.ShowDialog();
+        }
+
+        private void btnMReleasing_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                wpfSelectApplication frm = new wpfSelectApplication();
+                frm.status = "Releasing";
+                frm.UserID = UserID;
+                frm.iDept = "Micro Business";
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void btnHoliday_Click(object sender, RoutedEventArgs e)
+        {
+            wpfHoliday frm = new wpfHoliday();
+            frm.UserID = UserID;
             frm.ShowDialog();
         }
 

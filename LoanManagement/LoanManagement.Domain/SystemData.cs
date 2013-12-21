@@ -65,6 +65,7 @@ namespace LoanManagement.Domain
         public DbSet<AuditTrail> AuditTrails { get; set; }
         public DbSet<TemporaryLoanApplication> TemporaryLoanApplications { get; set; }
         public DbSet<Holiday> Holidays { get; set; }
+        public DbSet<MPaymentInfo> MPaymentInfoes { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -621,6 +622,7 @@ namespace LoanManagement.Domain
 
         public int ServiceID { get; set; }
         public int ClientID { get; set; }
+        public int CollectortID { get; set; }
         public int AgentID { get; set; }
         public int BankID { get; set; }
         public virtual Client Client { get; set; }
@@ -634,6 +636,7 @@ namespace LoanManagement.Domain
         public virtual PaidLoan PaidLoan { get; set; }
         public virtual RestructuredLoan RestructuredLoan { get; set; }
         public ICollection<FPaymentInfo> FPaymentInfo { get; set; }
+        public ICollection<MPaymentInfo> MPaymentInfo { get; set; }
         public ICollection<ClosedAccount> ClosedAccount { get; set; }
     }
 
@@ -841,6 +844,24 @@ namespace LoanManagement.Domain
         public string Description { get; set; }
         public bool isYearly { get; set; }
         public DateTime Date { get; set; }
+    }
+
+    public class MPaymentInfo
+    {
+        public int MPaymentInfoID { get; set; }
+        public int PaymentNumber { get; set; }
+        public double Amount { get; set; } // Min Amt
+        public double PreviousBalance { get; set; } // Unpdaid Amount
+        public double BalanceInterest { get; set; } // Interest of Unpaid Amount
+        public double TotalBalance { get; set; } // PrevBal + BalInterest
+        public double TotalAmount { get; set; } // Amout + Total Balance
+        public DateTime DueDate { get; set; }
+        public DateTime? PaymentDate { get; set; }
+        public double RemainingLoanBalance { get; set; }
+        public string PaymentStatus { get; set; }
+
+        public int LoanID { get; set; }
+        public virtual Loan Loan { get; set; }
     }
 
 }

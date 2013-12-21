@@ -109,7 +109,7 @@
                                         <Image Source="Images/Manage.ico" />
                                     </DockPanel>
                                 </Button>
-                                <Button x:Name="btnHoliday" HorizontalAlignment="Left" Height="118" Margin="10,256,0,0" VerticalAlignment="Top" Width="128" BorderBrush="#FF4AEE0D" BorderThickness="4" Click="btnPosition_Click" Grid.ColumnSpan="2">
+                                <Button x:Name="btnHoliday" HorizontalAlignment="Left" Height="118" Margin="10,256,0,0" VerticalAlignment="Top" Width="128" BorderBrush="#FF4AEE0D" BorderThickness="4" Grid.ColumnSpan="2" Click="btnHoliday_Click">
                                     <DockPanel LastChildFill="True">
                                         <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom" Foreground="#FF343434" Content="Holiday"/>
                                         <Image Source="Images/Manage.ico" />
@@ -237,7 +237,7 @@
                                     <Image Source="Images/Approval.ico" />
                                 </DockPanel>
                             </Button>
-                            <Button x:Name="btnMReleasing" HorizontalAlignment="Left" Height="118" Margin="10,256,0,0" VerticalAlignment="Top" Width="128" BorderBrush="#FF4AEE0D" BorderThickness="4" Click="btnClients_Copy2_Click" Grid.ColumnSpan="2">
+                            <Button x:Name="btnMReleasing" HorizontalAlignment="Left" Height="118" Margin="10,256,0,0" VerticalAlignment="Top" Width="128" BorderBrush="#FF4AEE0D" BorderThickness="4" Click="btnMReleasing_Click" Grid.ColumnSpan="2">
                                 <DockPanel LastChildFill="True">
                                     <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom" Foreground="#FF343434" Content="Releasing"/>
                                     <Image Source="Images/Releasing.ico" />

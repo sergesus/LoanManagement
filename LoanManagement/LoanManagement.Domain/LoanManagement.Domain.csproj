@@ -93,6 +93,14 @@
     <Compile Include="Migrations\201312190158042_AddedHoliday.Designer.cs">
       <DependentUpon>201312190158042_AddedHoliday.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201312210934399_AddedMPaymentInfo.cs" />
+    <Compile Include="Migrations\201312210934399_AddedMPaymentInfo.Designer.cs">
+      <DependentUpon>201312210934399_AddedMPaymentInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201312211006284_AddedCollectorID.cs" />
+    <Compile Include="Migrations\201312211006284_AddedCollectorID.Designer.cs">
+      <DependentUpon>201312211006284_AddedCollectorID.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemData.cs" />
@@ -137,6 +145,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201312190158042_AddedHoliday.resx">
       <DependentUpon>201312190158042_AddedHoliday.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201312210934399_AddedMPaymentInfo.resx">
+      <DependentUpon>201312210934399_AddedMPaymentInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201312211006284_AddedCollectorID.resx">
+      <DependentUpon>201312211006284_AddedCollectorID.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

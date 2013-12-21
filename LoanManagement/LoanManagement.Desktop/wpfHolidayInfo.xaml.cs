@@ -306,6 +306,9 @@ namespace LoanManagement.Desktop
                 {
                     using (var ctx = new iContext())
                     {
+                        //if(isYearly.IsChecked == true)
+
+
                         var num = ctx.Holidays.Where(x => x.HolidayName == txtName.Text).Count();
                         if (num > 0)
                         {

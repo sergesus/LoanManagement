@@ -195,6 +195,9 @@
     <Compile Include="wpfMain.xaml.cs">
       <DependentUpon>wpfMain.xaml</DependentUpon>
     </Compile>
+    <Compile Include="wpfMReleasing.xaml.cs">
+      <DependentUpon>wpfMReleasing.xaml</DependentUpon>
+    </Compile>
     <Compile Include="wpfNewCheque.xaml.cs">
       <DependentUpon>wpfNewCheque.xaml</DependentUpon>
     </Compile>
@@ -355,6 +358,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="wpfMain.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="wpfMReleasing.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

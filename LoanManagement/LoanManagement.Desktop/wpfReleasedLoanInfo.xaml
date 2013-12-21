@@ -57,7 +57,7 @@
         <Label Content="Holding Fee:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="73,233,0,0" Width="150" FontSize="16" Foreground="#CC48CB00" Grid.Column="1" FontWeight="Bold"/>
         <Label x:Name="lblHF" Content="(type)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="223,233,0,0" Width="182" FontSize="16" Foreground="Black" Grid.Column="1"/>
         <Label Content="Payment Info:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="16,269,0,0" Width="150" FontSize="16" Foreground="#CC48CB00" Grid.ColumnSpan="2" FontWeight="Bold"/>
-        <DataGrid x:Name="dg" HorizontalAlignment="Left" Height="206" Margin="16,302,0,0" VerticalAlignment="Top" Width="785" Grid.ColumnSpan="2" FontSize="18">
+        <DataGrid x:Name="dg" HorizontalAlignment="Left" Height="206" Margin="16,302,0,0" VerticalAlignment="Top" Width="785" Grid.ColumnSpan="2" FontSize="18" CanUserAddRows="False">
             <DataGrid.Resources>
                 <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" 
     					Color="#CC48CB00"/>
