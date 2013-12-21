@@ -18,7 +18,7 @@ using System.Windows.Forms;
 using MahApps.Metro.Controls;
 using System.Text.RegularExpressions;
 
-
+using Microsoft.VisualBasic;
 
 namespace LoanManagement.Desktop
 {
@@ -306,7 +306,68 @@ namespace LoanManagement.Desktop
                 {
                     using (var ctx = new iContext())
                     {
-                        //if(isYearly.IsChecked == true)
+                        //if (isYearly.IsChecked == true)
+                        //{
+                            var mC = ctx.MPaymentInfoes.Where(x => x.DueDate.Month == dt.SelectedDate.Value.Month && x.DueDate.Day == dt.SelectedDate.Value.Day).Count();
+                            if (mC > 0)
+                            {
+                                System.Windows.MessageBox.Show("Payments on the given day will be automatically adjusted", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                                var ps = from x in ctx.MPaymentInfoes
+                                         select x;
+
+                                DateTime idt1 = dt.SelectedDate.Value;
+                                DateTime idt = DateAndTime.DateAdd(DateInterval.Day, 1, idt1);
+
+                                bool isHoliday = true;
+                                while (isHoliday == true || idt.Date.DayOfWeek.ToString() == "Saturday" || idt.Date.DayOfWeek.ToString() == "Sunday")
+                                {
+                                    if (idt.Date.DayOfWeek.ToString() == "Saturday")
+                                    {
+                                        idt = DateAndTime.DateAdd(DateInterval.Day, 2, idt);
+                                    }
+                                    else if (idt.Date.DayOfWeek.ToString() == "Sunday")
+                                    {
+                                        idt = DateAndTime.DateAdd(DateInterval.Day, 1, idt);
+                                    }
+                                    var myC = ctx.Holidays.Where(x => x.Date.Month == idt.Date.Month && x.Date.Day == idt.Date.Day && x.isYearly == true).Count();
+                                    if (myC > 0)
+                                    {
+                                        idt = DateAndTime.DateAdd(DateInterval.Day, 1, idt);
+                                        isHoliday = true;
+                                    }
+                                    else
+                                    {
+                                        myC = ctx.Holidays.Where(x => x.Date.Month == idt.Date.Month && x.Date.Day == idt.Date.Day && x.Date.Year == idt.Date.Year && x.isYearly == !true).Count();
+                                        if (myC > 0)
+                                        {
+                                            idt = DateAndTime.DateAdd(DateInterval.Day, 1, idt);
+                                            isHoliday = true;
+                                        }
+                                        else
+                                        {
+                                            isHoliday = false;
+                                        }
+                                    }
+                                }
+                                foreach (var x in ps)
+                                {
+                                    if (isYearly.IsChecked == true)
+                                    {
+                                        if (x.DueDate.Month == idt1.Date.Month && x.DueDate.Day == idt1.Date.Day)
+                                        {
+                                            x.DueDate = idt;
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if (x.DueDate.Month == idt1.Date.Month && x.DueDate.Day == idt1.Date.Day && x.DueDate.Year == idt1.Date.Year)
+                                        {
+                                            x.DueDate = idt;
+                                        }
+                                    }
+                                }
+                            }
+                       // }
 
 
                         var num = ctx.Holidays.Where(x => x.HolidayName == txtName.Text).Count();
@@ -335,6 +396,67 @@ namespace LoanManagement.Desktop
                         h.Date = dt.SelectedDate.Value;
                         h.isYearly = Convert.ToBoolean(isYearly.IsChecked);
                         h.Description = txtDesc.Text;
+
+                        var mC = ctx.MPaymentInfoes.Where(x => x.DueDate.Month == dt.SelectedDate.Value.Month && x.DueDate.Day == dt.SelectedDate.Value.Day).Count();
+                        if (mC > 0)
+                        {
+                            System.Windows.MessageBox.Show("Payments on the given day will be automatically adjusted", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                            var ps = from x in ctx.MPaymentInfoes
+                                     select x;
+
+                            DateTime idt1 = dt.SelectedDate.Value;
+                            DateTime idt = DateAndTime.DateAdd(DateInterval.Day, 1, idt1);
+
+                            bool isHoliday = true;
+                            while (isHoliday == true || idt.Date.DayOfWeek.ToString() == "Saturday" || idt.Date.DayOfWeek.ToString() == "Sunday")
+                            {
+                                if (idt.Date.DayOfWeek.ToString() == "Saturday")
+                                {
+                                    idt = DateAndTime.DateAdd(DateInterval.Day, 2, idt);
+                                }
+                                else if (idt.Date.DayOfWeek.ToString() == "Sunday")
+                                {
+                                    idt = DateAndTime.DateAdd(DateInterval.Day, 1, idt);
+                                }
+                                var myC = ctx.Holidays.Where(x => x.Date.Month == idt.Date.Month && x.Date.Day == idt.Date.Day && x.isYearly == true).Count();
+                                if (myC > 0)
+                                {
+                                    idt = DateAndTime.DateAdd(DateInterval.Day, 1, idt);
+                                    isHoliday = true;
+                                }
+                                else
+                                {
+                                    myC = ctx.Holidays.Where(x => x.Date.Month == idt.Date.Month && x.Date.Day == idt.Date.Day && x.Date.Year == idt.Date.Year && x.isYearly == !true).Count();
+                                    if (myC > 0)
+                                    {
+                                        idt = DateAndTime.DateAdd(DateInterval.Day, 1, idt);
+                                        isHoliday = true;
+                                    }
+                                    else
+                                    {
+                                        isHoliday = false;
+                                    }
+                                }
+                            }
+                            foreach (var x in ps)
+                            {
+                                if (isYearly.IsChecked == true)
+                                {
+                                    if (x.DueDate.Month == idt1.Date.Month && x.DueDate.Day == idt1.Date.Day)
+                                    {
+                                        x.DueDate = idt;
+                                    }
+                                }
+                                else
+                                {
+                                    if (x.DueDate.Month == idt1.Date.Month && x.DueDate.Day == idt1.Date.Day && x.DueDate.Year == idt1.Date.Year)
+                                    {
+                                        x.DueDate = idt;
+                                    }
+                                }
+                            }
+                        }
+
                         AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Updated Holiday " + txtName.Text };
                         ctx.AuditTrails.Add(at);
                         ctx.SaveChanges();
