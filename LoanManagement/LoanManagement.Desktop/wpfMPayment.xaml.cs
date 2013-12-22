@@ -119,6 +119,7 @@ namespace LoanManagement.Desktop
 
                         lblCurrentPayment.Content = mp.Amount.ToString("N2");
                         lblExcessive.Content = mp.ExcessBalance.ToString("N2");
+                        
                         lblTotalLoan.Content = mp.RemainingLoanBalance.ToString("N2");
                         lblLateInterest.Content = mp.BalanceInterest.ToString("N2");
                         lblPrevBalance.Content = mp.PreviousBalance.ToString("N2");
@@ -153,12 +154,13 @@ namespace LoanManagement.Desktop
 
         private void btnRecord_Click(object sender, RoutedEventArgs e)
         {
-            try
-            { 
+            //try
+            //{ 
                 double amt = 0;
                 try
                 {
                     amt = Convert.ToDouble(txtAmt.Text);
+                    amt = Convert.ToDouble(amt.ToString("N2"));
                 }
                 catch(Exception)
                 {
@@ -175,8 +177,17 @@ namespace LoanManagement.Desktop
                     return;
                 }
 
+                double cPayment = (Convert.ToDouble(lblTotalLoan.Content) - Convert.ToDouble(lblExcessive.Content));
+
+                if (amt > cPayment )
+                {
+                    System.Windows.MessageBox.Show("Amount must not be greater that the remaining amount", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
                 if (amt <= Convert.ToDouble(lblTotal.Content))
                 {
+                    //System.Windows.MessageBox.Show("Dito");
                     using (var ctx = new iContext())
                     {
                         int lID = Convert.ToInt32(txtID.Text);
@@ -246,15 +257,31 @@ namespace LoanManagement.Desktop
                         double total = Convert.ToDouble((totalBal + py.Amount).ToString("N2"));
                         double rem = Convert.ToDouble((py.RemainingLoanBalance - payment).ToString("N2"));
 
+                        
+
                         py.TotalPayment = amt;
                         py.PaymentDate = DateTime.Now.Date;
                         py.PaymentStatus = "Paid";
 
                         int n = py.PaymentNumber + 1;
 
+                        
+                        if ((amt == Convert.ToDouble(lblTotal.Content) && rem <= py.Amount))
+                        {
+                            System.Windows.MessageBox.Show("The Loan has been successfully finished!", "Information", MessageBoxButton.OK, MessageBoxImage.Error);
+                            var lon = ctx.Loans.Find(lID);
+                            lon.Status = "Paid";
+                            py.TotalPayment = amt;
+                            py.PaymentDate = DateTime.Now.Date;
+                            py.PaymentStatus = "Paid";
+                            py.RemainingLoanBalance = 0;
+                            PaidLoan pl = new PaidLoan { LoanID = lID, DateFinished = DateTime.Today.Date };
+                            ctx.PaidLoans.Add(pl);
+                            goto here;
+                        }
                         MPaymentInfo mp = new MPaymentInfo { Amount = py.Amount, BalanceInterest = balInt, DueDate = dt, ExcessBalance = 0, LoanID = lID, PaymentNumber = n, PaymentStatus = "Pending", PreviousBalance = pbal, RemainingLoanBalance = rem, TotalAmount = total, TotalBalance = totalBal };
                         ctx.MPaymentInfoes.Add(mp);
-
+                    here:
                         ctx.SaveChanges();
                         
                         txtID.Text = "";
@@ -336,44 +363,74 @@ namespace LoanManagement.Desktop
                             double ex2 = ex - py.Amount;
                             string st = "";
                             int n = py.PaymentNumber + 1;
+                            //System.Windows.MessageBox.Show(rem.ToString());
+                            
                             MPaymentInfo mp = new MPaymentInfo();
                             if (total < 0)
                             {
                                 total = py.Amount;
                                 st = "Pending";
-                                mp = new MPaymentInfo { Amount = py.Amount, BalanceInterest = 0, DueDate = dt, ExcessBalance = ex, LoanID = lID, PaymentNumber = n, PaymentStatus = st, PreviousBalance = 0, RemainingLoanBalance = rem, TotalAmount = total, TotalBalance = 0, PaymentDate=DateTime.Now.Date };
+                                n = py.PaymentNumber;
+                                mp = new MPaymentInfo { Amount = py.Amount, BalanceInterest = 0, DueDate = dt, ExcessBalance = Convert.ToDouble(ex.ToString("N2")), LoanID = lID, PaymentNumber = n, PaymentStatus = st, PreviousBalance = 0, RemainingLoanBalance = rem, TotalAmount = total, TotalBalance = 0, PaymentDate = DateTime.Now.Date };
                             }
                             else
                             {
                                 st = "Pending";
-                                mp = new MPaymentInfo { Amount = py.Amount, BalanceInterest = 0, DueDate = dt, ExcessBalance = ex, LoanID = lID, PaymentNumber = n, PaymentStatus = st, PreviousBalance = 0, RemainingLoanBalance = rem, TotalAmount = total, TotalBalance = 0 };
+                                mp = new MPaymentInfo { Amount = py.Amount, BalanceInterest = 0, DueDate = dt, ExcessBalance = Convert.ToDouble(ex.ToString("N2")), LoanID = lID, PaymentNumber = n, PaymentStatus = st, PreviousBalance = 0, RemainingLoanBalance = rem, TotalAmount = total, TotalBalance = 0 };
                             }
-
+                            if (rem <= py.Amount && ex>=py.Amount )
+                            {
+                                System.Windows.MessageBox.Show("The Loan has been successfully finished!", "Information", MessageBoxButton.OK, MessageBoxImage.Error);
+                                var lon = ctx.Loans.Find(lID);
+                                lon.Status = "Paid";
+                                py.TotalPayment = amt;
+                                py.PaymentDate = DateTime.Now.Date;
+                                py.PaymentStatus = "Paid";
+                                PaidLoan pl = new PaidLoan { LoanID = lID, DateFinished = DateTime.Today.Date };
+                                ctx.PaidLoans.Add(pl);
+                                mp.PaymentStatus = "Paid";
+                                mp.TotalAmount = py.Amount;
+                                mp.ExcessBalance =  py.Amount;
+                                mp.RemainingLoanBalance = 0;
+                                mp.PaymentDate = DateTime.Now.Date;
+                                mp.TotalPayment = py.Amount;
+                                goto here;
+                            }
+                            //System.Windows.MessageBox.Show(ex.ToString("N2"));
 
                             py.TotalPayment = amt;
                             py.PaymentDate = DateTime.Now.Date;
                             py.PaymentStatus = "Paid";
 
-                            amt = ex;
-                            
+                            amt = Convert.ToDouble(ex.ToString("N2"));
 
+                        
                             
+                            
+                        here:
                             ctx.MPaymentInfoes.Add(mp);
                             ctx.SaveChanges();
 
                             txtID.Text = "";
                             txtID.Focus();
-                            py = ctx.MPaymentInfoes.Where(x => x.LoanID == lID && x.PaymentStatus == "Pending").First();
+                            try
+                            {
+                                py = ctx.MPaymentInfoes.Where(x => x.LoanID == lID && x.PaymentStatus == "Pending").First();
+                            }
+                            catch (Exception)
+                            {
+                                return;
+                            }
                             ex = ex2;
                         }
                     }
                 }
-            }
+            /*}
             catch (Exception ex)
             {
                 System.Windows.MessageBox.Show("Runtime Error:" + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
-            }
+            }*/
         }
     }
 }

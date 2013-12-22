@@ -30,7 +30,7 @@
                 <Image Source="Images/Return.ico" />
             </DockPanel>
         </Button>
-        <Button x:Name="btnVoid" HorizontalAlignment="Left" Height="46" Margin="11,113,0,0" VerticalAlignment="Top" Width="289" BorderBrush="#FF4AEE0D">
+        <Button x:Name="btnVoid" HorizontalAlignment="Left" Height="46" Margin="11,113,0,0" VerticalAlignment="Top" Width="289" BorderBrush="#FF4AEE0D" Click="btnVoid_Click">
             <DockPanel LastChildFill="True">
                 <Label x:Name="lbl5" HorizontalContentAlignment="Center" DockPanel.Dock="Right" Foreground="#FF343434" Height="31" FontSize="16" Content="Void Payments"/>
                 <Image Source="Images/Void.ico" />

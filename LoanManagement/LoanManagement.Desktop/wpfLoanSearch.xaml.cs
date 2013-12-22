@@ -135,7 +135,7 @@ namespace LoanManagement.Desktop
                     using (var ctx = new iContext())
                     {
                         var lon = from ln in ctx.Loans
-                                  where (ln.Status == "Released" || ln.Status == "Active") && ln.Service.Department == iDept && (ln.LoanID == n || ln.Service.Name.Contains(txtSearch.Text) || (ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName).Replace(" ","").Contains(txtSearch.Text.Replace(" ","")))
+                                  where (ln.Status == "Released" || ln.Status == "Active" || ln.Status=="Paid") && ln.Service.Department == iDept && (ln.LoanID == n || ln.Service.Name.Contains(txtSearch.Text) || (ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName).Replace(" ","").Contains(txtSearch.Text.Replace(" ","")))
                                   select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, ClientName = ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName };
                         dgLoan.ItemsSource = lon.ToList();
                         btnView.Content = "Void last payment";
@@ -271,48 +271,122 @@ namespace LoanManagement.Desktop
                 }
                 else if (status == "Voiding")
                 {
-                    using (var ctx = new iContext())
+                    if (iDept == "Financing")
                     {
-                        int n = Convert.ToInt32(getRow(dgLoan, 0));
-                        int num = ctx.FPaymentInfo.Where(x => x.LoanID == n && x.PaymentStatus == "Deposited").Count();
-                        if (num > 0)
+                        using (var ctx = new iContext())
                         {
-                            MessageBox.Show("Unable to void payment due to deposited cheque", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
-                            return;
-                        }
-                        num = ctx.FPaymentInfo.Where(x => x.LoanID == n && x.PaymentStatus == "Cleared").Count();
-                        if (num > 0)
-                        {
-                            var fp1 = from f in ctx.FPaymentInfo
-                                      where f.LoanID == n && f.PaymentStatus == "Cleared"
-                                      select f;
-                            int x = 0;
-                            FPaymentInfo fp = null;
-                            foreach (var item in fp1)
+                            int n = Convert.ToInt32(getRow(dgLoan, 0));
+                            int num = ctx.FPaymentInfo.Where(x => x.LoanID == n && x.PaymentStatus == "Deposited").Count();
+                            if (num > 0)
                             {
-                                if (x == num - 1)
+                                MessageBox.Show("Unable to void payment due to deposited cheque", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                                return;
+                            }
+                            num = ctx.FPaymentInfo.Where(x => x.LoanID == n && x.PaymentStatus == "Cleared").Count();
+                            if (num > 0)
+                            {
+                                var fp1 = from f in ctx.FPaymentInfo
+                                          where f.LoanID == n && f.PaymentStatus == "Cleared"
+                                          select f;
+                                int x = 0;
+                                FPaymentInfo fp = null;
+                                foreach (var item in fp1)
                                 {
-                                    fp = item;
+                                    if (x == num - 1)
+                                    {
+                                        fp = item;
+                                    }
+                                    x++;
                                 }
-                                x++;
+                                //var fp = ctx.FPaymentInfo.Where(x => x.LoanID == n && x.PaymentStatus == "Cleared").Last();
+                                MessageBox.Show("The last payment has the following info: \n No :" + fp.PaymentNumber + " \n ChequeNumber: " + fp.ChequeInfo + " \n Amount: " + fp.Amount.ToString("N2") + "");
+                                MessageBoxResult mr = MessageBox.Show("Are you sure you want to process this transaction?", "Question", MessageBoxButton.YesNo);
+                                if (mr == MessageBoxResult.Yes)
+                                {
+                                    fp.PaymentStatus = "Deposited";
+                                    ClearedCheque cc = ctx.ClearedCheques.Find(fp.ClearCheque.FPaymentInfoID);
+                                    ctx.ClearedCheques.Remove(cc);
+                                    AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Voided Payment for Cheque " + fp.ChequeInfo };
+                                    ctx.AuditTrails.Add(at);
+                                    ctx.SaveChanges();
+                                    MessageBox.Show("Transaction has been successfully processed", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                                }
                             }
-                            //var fp = ctx.FPaymentInfo.Where(x => x.LoanID == n && x.PaymentStatus == "Cleared").Last();
-                            MessageBox.Show("The last payment has the following info: \n No :" + fp.PaymentNumber + " \n ChequeNumber: " + fp.ChequeInfo + " \n Amount: " + fp.Amount.ToString("N2") + "");
-                            MessageBoxResult mr = MessageBox.Show("Are you sure you want to process this transaction?", "Question", MessageBoxButton.YesNo);
-                            if (mr == MessageBoxResult.Yes)
+                            else
                             {
-                                fp.PaymentStatus = "Deposited";
-                                ClearedCheque cc = ctx.ClearedCheques.Find(fp.ClearCheque.FPaymentInfoID);
-                                ctx.ClearedCheques.Remove(cc);
-                                AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Voided Payment for Cheque " + fp.ChequeInfo };
-                                ctx.AuditTrails.Add(at);
-                                ctx.SaveChanges();
-                                MessageBox.Show("Transaction has been successfully processed", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                                MessageBox.Show("No payments to void", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                             }
                         }
-                        else
+                    }
+                    else
+                    {
+                        using (var ctx = new iContext())
                         {
-                            MessageBox.Show("No payments to void", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                            int n = Convert.ToInt32(getRow(dgLoan, 0));
+                            int num = ctx.MPaymentInfoes.Where(x => x.LoanID == n && x.PaymentStatus == "Paid").Count();
+                            if (num > 0)
+                            {
+                                var fp1 = from f in ctx.MPaymentInfoes
+                                          where f.LoanID == n && f.PaymentStatus == "Paid"
+                                          select f;
+                                int x = 0;
+                                MPaymentInfo fp = null;
+                                foreach (var item in fp1)
+                                {
+                                    if (x == num - 1)
+                                    {
+                                        fp = item;
+                                    }
+                                    x++;
+                                }
+                                //var fp = ctx.FPaymentInfo.Where(x => x.LoanID == n && x.PaymentStatus == "Cleared").Last();
+                                var mp = ctx.MPaymentInfoes.Where(m => m.LoanID == n && m.PaymentNumber == fp.PaymentNumber).First();
+                                MessageBox.Show("The last payment has the following info: \n No :" + mp.PaymentNumber + "\n Total Payment: " + mp.TotalPayment.ToString("N2") + "");
+                                MessageBoxResult mr = MessageBox.Show("Are you sure you want to process this transaction?", "Question", MessageBoxButton.YesNo);
+                                if (mr == MessageBoxResult.Yes)
+                                {
+                                    try
+                                    {
+                                        var m2 = ctx.MPaymentInfoes.Where(m => m.LoanID == n && m.PaymentStatus == "Pending").First();
+                                        ctx.MPaymentInfoes.Remove(m2);
+                                    }
+                                    catch (Exception)
+                                    { 
+                                        
+                                    }
+                                    mp.PaymentStatus = "Pending";
+                                    mp.TotalPayment=0;
+                                    mp.PaymentDate = null;
+
+                                    x=1;
+                                    var mps = from m in ctx.MPaymentInfoes
+                                              where m.PaymentNumber == mp.PaymentNumber
+                                              select m;
+
+                                    foreach (var itm in mps)
+                                    { 
+                                        if(x!=1)
+                                            ctx.MPaymentInfoes.Remove(itm);
+                                        x++;
+                                    }
+                                    var lon = ctx.Loans.Find(n);
+                                    if (lon.Status == "Paid")
+                                    {
+                                        lon.Status = "Released";
+                                        var pl = ctx.PaidLoans.Find(n);
+                                        ctx.PaidLoans.Remove(pl);
+                                    }
+                                    
+                                    AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Voided Payment for Payment Number " + fp.PaymentNumber + " for Loan " + n };
+                                    ctx.AuditTrails.Add(at);
+                                    ctx.SaveChanges();
+                                    MessageBox.Show("Transaction has been successfully processed", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                                }
+                            }
+                            else
+                            {
+                                MessageBox.Show("No payments to void", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                            }
                         }
                     }
                 }

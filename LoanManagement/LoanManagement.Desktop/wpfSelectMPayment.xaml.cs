@@ -59,5 +59,23 @@ namespace LoanManagement.Desktop
             this.Close();
             frm.ShowDialog();
         }
+
+        private void btnVoid_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                wpfLoanSearch frm = new wpfLoanSearch();
+                frm.status = "Voiding";
+                frm.UserID = UserID;
+                frm.iDept = "Micro Business";
+                this.Close();
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
     }
 }

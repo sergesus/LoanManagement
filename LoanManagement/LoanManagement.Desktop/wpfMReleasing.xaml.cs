@@ -114,6 +114,7 @@ namespace LoanManagement.Desktop
 
                         dt = DateAndTime.DateAdd(dInt, Interval, dt);
                         int num = 1;
+                        double p2 = Payment;
                         while (Remaining > -1)
                         {
                             Remaining = Remaining - Payment;
@@ -132,6 +133,9 @@ namespace LoanManagement.Desktop
                                 num++;
                                 goto a;
                             }
+
+                            
+
                             dt = DateAndTime.DateAdd(dInt, Interval, dt);
                             bool isHoliday = true;
                             while (isHoliday == true || dt.Date.DayOfWeek.ToString() == "Saturday" || dt.Date.DayOfWeek.ToString() == "Sunday")
@@ -171,6 +175,10 @@ namespace LoanManagement.Desktop
                         var gen = from ge in ctx.GenSOA
                                   select new { PaymentNumber = ge.PaymentNumber, TotalPayment = ge.Amount, PaymentDate = ge.PaymentDate, RemainingBalance = ge.RemainingBalance };
                         dgSOA.ItemsSource = gen.ToList();
+                        var c1 = ctx.GenSOA.Count();
+                        p2 = Convert.ToDouble(p2.ToString("N2"));
+                        //System.Windows.MessageBox.Show(p2.ToString());
+                        lblInt.Content = (p2 * c1).ToString("N2");
                         return;
                     }
                 }
