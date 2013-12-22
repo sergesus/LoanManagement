@@ -395,7 +395,7 @@
             <Image HorizontalAlignment="Left" Height="74" VerticalAlignment="Top" Width="97" Source="Images/Clients.ico"/>
             <Label x:Name="myLbL" Content="Client Information" HorizontalAlignment="Left" Height="54" Margin="87,10,0,0" VerticalAlignment="Top" Width="285" FontSize="30"/>
         </Grid>
-        <Button x:Name="btnSave" HorizontalAlignment="Left" Height="38" Margin="8,558,0,0" VerticalAlignment="Top" Width="164" BorderBrush="#CC48CB00" BorderThickness="2" Background="#7F48CB00" Click="btnSave_Click">
+        <Button x:Name="btnSave" HorizontalAlignment="Left" Height="38" Margin="8,558,0,0" VerticalAlignment="Top" Width="164" BorderBrush="#CC48CB00" BorderThickness="2" Background="#7F48CB00" Click="btnSave_Click" IsDefault="True">
             <DockPanel LastChildFill="True">
                 <Label x:Name="lblAdd" HorizontalContentAlignment="Center" DockPanel.Dock="Right" Foreground="#FF343434" Height="28" FontSize="16" Content="Save"/>
                 <Image Source="Images/Save.ico" />

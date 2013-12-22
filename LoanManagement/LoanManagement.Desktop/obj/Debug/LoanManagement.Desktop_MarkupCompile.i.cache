@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\App.xaml
-46-119907175
+48-428767058
 
-541172922741
+56-870086632
 37-1939623996
-wpfActivate.xaml;wpfAgent.xaml;wpfAgentInfo.xaml;wpfAppliedLoanInfo.xaml;wpfAudtiTrail.xaml;wpfBackUp.xaml;wpfBank.xaml;wpfBankInfo.xaml;wpfCheckout.xaml;wpfChequeClearing.xaml;wpfChequeReturning.xaml;wpfClient.xaml;wpfClientInfo.xaml;wpfClientSearch.xaml;wpfDepositCheques.xaml;wpfEmployee.xaml;wpfEmployeeInfo.xaml;wpfFReleasing.xaml;wpfHoliday.xaml;wpfHolidayInfo.xaml;wpfLoanApplication.xaml;wpfLoanApproval.xaml;wpfLoanDeclining.xaml;wpfLoanInfo.xaml;wpfLoanRestructure.xaml;wpfLoanSearch.xaml;wpfLogin.xaml;wpfMain.xaml;wpfMReleasing.xaml;wpfNewCheque.xaml;wpfPassword.xaml;wpfPaymentAdjustment.xaml;wpfPosition.xaml;wpfPositionInfo.xaml;wpfReleasedLoanInfo.xaml;wpfRenewClosed.xaml;wpfSelectApplication.xaml;wpfSelectClient.xaml;wpfSelectClosed.xaml;wpfSelectPayment.xaml;wpfServiceInfo.xaml;wpfServices.xaml;wpfUserInfo.xaml;wpfUsers.xaml;wpfUserScopes.xaml;wpfViewClientInfo.xaml;
+wpfActivate.xaml;wpfAgent.xaml;wpfAgentInfo.xaml;wpfAppliedLoanInfo.xaml;wpfAudtiTrail.xaml;wpfBackUp.xaml;wpfBank.xaml;wpfBankInfo.xaml;wpfCheckout.xaml;wpfChequeClearing.xaml;wpfChequeReturning.xaml;wpfClient.xaml;wpfClientInfo.xaml;wpfClientSearch.xaml;wpfDepositCheques.xaml;wpfEmployee.xaml;wpfEmployeeInfo.xaml;wpfFReleasing.xaml;wpfHoliday.xaml;wpfHolidayInfo.xaml;wpfLoanApplication.xaml;wpfLoanApproval.xaml;wpfLoanDeclining.xaml;wpfLoanInfo.xaml;wpfLoanRestructure.xaml;wpfLoanSearch.xaml;wpfLogin.xaml;wpfMain.xaml;wpfMPayment.xaml;wpfMReleasing.xaml;wpfNewCheque.xaml;wpfPassword.xaml;wpfPaymentAdjustment.xaml;wpfPosition.xaml;wpfPositionInfo.xaml;wpfReleasedLoanInfo.xaml;wpfRenewClosed.xaml;wpfSelectApplication.xaml;wpfSelectClient.xaml;wpfSelectClosed.xaml;wpfSelectMPayment.xaml;wpfSelectPayment.xaml;wpfServiceInfo.xaml;wpfServices.xaml;wpfUserInfo.xaml;wpfUsers.xaml;wpfUserScopes.xaml;wpfViewClientInfo.xaml;
 
 False
 

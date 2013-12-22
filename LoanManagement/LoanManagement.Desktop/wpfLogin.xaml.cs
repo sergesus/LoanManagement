@@ -127,8 +127,8 @@ namespace LoanManagement.Desktop
 
         private void checkDue()
         {
-            //try
-            //{
+            try
+            {
                 using (var ctx = new iContext())
                 {
                     var lon = from lo in ctx.FPaymentInfo
@@ -207,7 +207,7 @@ namespace LoanManagement.Desktop
                                 cRem = cRem - itm.TotalPayment;
                             }
                         }*/
-                        
+
                         double ciRate = ser.LatePaymentPenalty / 100;
                         double ctRate = itm.TotalAmount * ciRate;
                         double ctBalance = itm.TotalAmount + ctRate;
@@ -269,7 +269,7 @@ namespace LoanManagement.Desktop
                                     }
                                 }
                             }
-                            
+
                             String str = "";
 
                             double tRate = ctRate;
@@ -288,7 +288,7 @@ namespace LoanManagement.Desktop
                             ctBalance = tAmount;
                             ctRate = ctBalance * ciRate;
 
-                            
+
 
                             double tRem = cRem + tRate;
                             str = tRem.ToString("N2");
@@ -311,12 +311,12 @@ namespace LoanManagement.Desktop
 
                     ctx.SaveChanges();
                 }
-            /*}
+            }
             catch (Exception ex)
             {
                 System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
-            }*/
+            }
         }
         
 

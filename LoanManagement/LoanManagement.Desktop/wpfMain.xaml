@@ -243,7 +243,7 @@
                                     <Image Source="Images/Releasing.ico" />
                                 </DockPanel>
                             </Button>
-                            <Button x:Name="btnMPayments" HorizontalAlignment="Left" Height="118" Margin="18,10,0,0" VerticalAlignment="Top" Width="128" BorderBrush="#FF4AEE0D" BorderThickness="4" Click="btnClients_Copy3_Click" Grid.Column="1" Grid.ColumnSpan="2">
+                            <Button x:Name="btnMPayments" HorizontalAlignment="Left" Height="118" Margin="18,10,0,0" VerticalAlignment="Top" Width="128" BorderBrush="#FF4AEE0D" BorderThickness="4" Click="btnMPayments_Click" Grid.Column="1" Grid.ColumnSpan="2">
                                 <DockPanel LastChildFill="True">
                                     <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom" Foreground="#FF343434" Content="Payments"/>
                                     <Image Source="Images/Payment.ico" />
@@ -254,7 +254,15 @@
                     </TabItem>
                 </TabControl>
             </TabItem>
-            <TabItem x:Name="tb3" Header="">
+            <TabItem x:Name="tb3" Header="" RenderTransformOrigin="0.5,0.5">
+                <TabItem.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform AngleY="4.764"/>
+                        <RotateTransform/>
+                        <TranslateTransform Y="-0.417"/>
+                    </TransformGroup>
+                </TabItem.RenderTransform>
                 <TabControl HorizontalAlignment="Left" Height="461" VerticalAlignment="Top" Width="1231" Margin="0,2,-48,0">
                     <TabItem Header="Archive" BorderBrush="{x:Null}" Background="Black" Foreground="Black" MouseUp="TabItem_MouseUp_2">
                         <Grid x:Name="grdArchive" Margin="0,0,0,-12">

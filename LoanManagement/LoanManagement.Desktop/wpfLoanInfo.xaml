@@ -24,13 +24,13 @@
         <Grid Height="32" Margin="165,138,-7,0" VerticalAlignment="Top" Background="#FFDEDDDD"/>
         <Image x:Name="img" HorizontalAlignment="Left" Height="130" Margin="12,113,0,0" VerticalAlignment="Top" Width="130"/>
         <Label Content="LOAN INFORMATION:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="165,108,0,0" Width="179" FontSize="16" Foreground="#CC48CB00" FontWeight="Bold"/>
-        <Label Content="Type of Loan:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="165,138,0,0" Width="104" FontSize="16" Foreground="#CC48CB00" FontWeight="Bold"/>
-        <Label Content="Service Type:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="165,170,0,0" Width="104" FontSize="16" Foreground="#CC48CB00" FontWeight="Bold"/>
-        <Label Content="Mode Of Payment:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="165,262,0,0" Width="150" FontSize="16" Foreground="#CC48CB00" FontWeight="Bold"/>
-        <Label Content="Last Payment:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="497,138,0,0" Width="121" FontSize="16" Foreground="#CC48CB00" FontWeight="Bold"/>
-        <Label Content="Monthly Payment:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="497,170,0,0" Width="144" FontSize="16" Foreground="#CC48CB00" FontWeight="Bold"/>
-        <Label Content="Remaining:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="497,200,0,0" Width="104" FontSize="16" Foreground="#CC48CB00" FontWeight="Bold"/>
-        <Label x:Name="lblRes2" Content="Amount Released:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="165,200,0,0" Width="150" FontSize="16" Foreground="#CC48CB00" FontWeight="Bold"/>
+        <Label Content="Type of Loan:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="165,138,0,0" Width="120" FontSize="16" Foreground="#CC48CB00" FontStyle="Italic" FontWeight="Bold"/>
+        <Label Content="Service Type:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="165,170,0,0" Width="120" FontSize="16" Foreground="#CC48CB00" FontStyle="Italic" FontWeight="Bold"/>
+        <Label Content="Mode Of Payment:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="165,262,0,0" Width="150" FontSize="16" Foreground="#CC48CB00" FontStyle="Italic" FontWeight="Bold"/>
+        <Label Content="Last Payment:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="497,138,0,0" Width="121" FontSize="16" Foreground="#CC48CB00" FontStyle="Italic" FontWeight="Bold"/>
+        <Label Content="Monthly Payment:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="497,170,0,0" Width="144" FontSize="16" Foreground="#CC48CB00" FontStyle="Italic" FontWeight="Bold"/>
+        <Label Content="Remaining:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="497,200,0,0" Width="104" FontSize="16" Foreground="#CC48CB00" FontStyle="Italic" FontWeight="Bold"/>
+        <Label x:Name="lblRes2" Content="Amount Released:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="165,200,0,0" Width="150" FontSize="16" Foreground="#CC48CB00" FontStyle="Italic" FontWeight="Bold"/>
         <Label x:Name="lblTOL" Content="(type)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="315,138,0,0" Width="222" FontSize="16" Foreground="Black"/>
         <Label x:Name="lblType" Content="(type)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="315,170,0,0" Width="222" FontSize="16" Foreground="Black"/>
         <Label x:Name="lblAmt" Content="(type)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="315,200,0,0" Width="222" FontSize="16" Foreground="Black"/>
@@ -47,9 +47,9 @@
         </Label>
         <Label x:Name="lblPayment" Content="(type)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="641,170,-5,0" Width="169" FontSize="16" Foreground="Black"/>
         <Label x:Name="lblRemaining" Content="(type)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="641,201,0,0" Width="164" FontSize="16" Foreground="Black"/>
-        <Label Content="Date Released:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="165,232,0,0" Width="150" FontSize="16" Foreground="#CC48CB00" FontWeight="Bold"/>
+        <Label Content="Date Released:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="165,232,0,0" Width="150" FontSize="16" Foreground="#CC48CB00" FontStyle="Italic" FontWeight="Bold"/>
         <Label x:Name="lblDt" Content="(type)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="315,232,0,0" Width="222" FontSize="16" Foreground="Black"/>
-        <Label Content="No. Of Unpaid Chqs:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="497,231,0,0" Width="166" FontSize="16" Foreground="#CC48CB00" FontWeight="Bold"/>
+        <Label Content="No. Of Unpaid Chqs:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="497,231,0,0" Width="166" FontSize="16" Foreground="#CC48CB00" FontStyle="Italic" FontWeight="Bold"/>
         <Label x:Name="lblHF" Content="(type)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="668,231,0,0" Width="136" FontSize="16" Foreground="Black"/>
         <Grid HorizontalAlignment="Left" Height="36" VerticalAlignment="Top" Width="838" Background="#7F48CB00" Margin="2,74,-35,0">
             <Label x:Name="lblName" Content="(name)" HorizontalAlignment="Left" VerticalAlignment="Top" Height="36" Width="582" FontSize="20"/>
@@ -70,7 +70,7 @@
                 <Image Source="Images/Add.ico" />
             </DockPanel>
         </Button>
-        <Label Content="Total Balance:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="497,262,0,0" Width="121" FontSize="16" Foreground="#CC48CB00" FontWeight="Bold"/>
+        <Label Content="Total Balance:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="497,262,0,0" Width="121" FontSize="16" Foreground="#CC48CB00" FontStyle="Italic" FontWeight="Bold"/>
         <Label x:Name="lblBal" Content="(type)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="641,262,-1,0" Width="164" FontSize="16" Foreground="Black"/>
     </Grid>
 </Controls:MetroWindow>

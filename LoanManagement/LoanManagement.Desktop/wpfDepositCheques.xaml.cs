@@ -99,10 +99,35 @@ namespace LoanManagement.Desktop
                     {
                         dt = itm.DueDate;
                         itm.PaymentStatus = "Unpaid";
+                        itm.TotalPayment = 0;
+                        var ser = ctx.Services.Find(itm.Loan.ServiceID);
+
+                        //var ln = ctx.Loans.Find(itm.LoanID);
+
+                        double cRem = itm.RemainingLoanBalance;
+
+                        /*var rc = ctx.MPaymentInfoes.Where(x => x.LoanID == itm.LoanID && x.PaymentStatus == "Paid").Count();
+                        if (rc > 0)
+                        {
+                            var re = from x in ctx.MPaymentInfoes
+                                     where x.LoanID == itm.LoanID && x.PaymentStatus == "Paid"
+                                     select x;
+                            foreach (var item in re)
+                            {
+                                cRem = cRem - itm.TotalPayment;
+                            }
+                        }*/
+
+                        double ciRate = ser.LatePaymentPenalty / 100;
+                        double ctRate = itm.TotalAmount * ciRate;
+                        double ctBalance = itm.TotalAmount + ctRate;
+
+                        //System.Windows.MessageBox.Show(ciRate.ToString());
+                        //System.Windows.MessageBox.Show(ctRate.ToString());
+
+                        int n = itm.PaymentNumber;
                         while (dt < DateTime.Today.Date)
                         {
-                            MicroPayment mp = new MicroPayment { MPaymentInfoID = itm.MPaymentInfoID, Amount = 0 };
-                            ctx.MicroPayments.Add(mp);
                             String value = itm.Loan.Mode;
                             if (value == "Semi-Monthly")
                             {
@@ -154,17 +179,40 @@ namespace LoanManagement.Desktop
                                     }
                                 }
                             }
-                            var ser = ctx.Services.Find(itm.Loan.ServiceID);
-                            double iRate = ser.LatePaymentPenalty / 100;
-                            double tRate = itm.TotalAmount * iRate;
-                            double tBalance = itm.TotalAmount + tRate;
-                            double tAmount = itm.Amount + tBalance;
-                            double tRem = itm.RemainingLoanBalance - tAmount;
+
+                            String str = "";
+
+                            double tRate = ctRate;
+                            str = tRate.ToString("N2");
+                            tRate = Convert.ToDouble(str);
+                            //System.Windows.MessageBox.Show(tRate.ToString());
+
+                            double tBalance = ctBalance + tRate;
+                            str = tBalance.ToString("N2");
+                            tBalance = Convert.ToDouble(str);
+
+                            double tAmount = itm.Amount + ctBalance;
+                            str = tAmount.ToString("N2");
+                            tAmount = Convert.ToDouble(str);
+
+                            ctBalance = tAmount;
+                            ctRate = ctBalance * ciRate;
+
+
+
+                            double tRem = cRem + tRate;
+                            str = tRem.ToString("N2");
+                            tRem = Convert.ToDouble(str);
+
+                            cRem = tRem;
+
                             dt2 = DateAndTime.DateAdd(dInt, Interval, dt);
                             String st = "Unpaid";
-                            if(dt2>=DateTime.Today.Date)
-                                st="Pending";
-                            MPaymentInfo mpi = new MPaymentInfo { PaymentNumber = itm.PaymentNumber + 1, Amount = itm.Amount, TotalBalance = tBalance, BalanceInterest = tRate, DueDate = dt, ExcessBalance = 0, LoanID = itm.LoanID, PaymentStatus = st, TotalAmount = tAmount, RemainingLoanBalance = tRem, PreviousBalance = itm.TotalAmount };
+                            if (dt2 > DateTime.Today.Date)
+                                st = "Pending";
+
+                            MPaymentInfo mpi = new MPaymentInfo { PaymentNumber = n + 1, Amount = itm.Amount, TotalBalance = tBalance, BalanceInterest = tRate, DueDate = dt, ExcessBalance = 0, LoanID = itm.LoanID, PaymentStatus = st, TotalAmount = tAmount, RemainingLoanBalance = tRem, PreviousBalance = itm.TotalAmount };
+                            n++;
                             ctx.MPaymentInfoes.Add(mpi);
                         }
 

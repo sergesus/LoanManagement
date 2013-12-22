@@ -1111,5 +1111,18 @@ namespace LoanManagement.Desktop
             
         }
 
+        private void Grid_PreviewKeyDown_1(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            var uie = e.OriginalSource as UIElement;
+
+            if (e.Key == Key.Enter)
+            {
+                e.Handled = true;
+                uie.MoveFocus(
+                new TraversalRequest(
+                FocusNavigationDirection.Next));
+            }
+        }
+
     }
 }

@@ -195,6 +195,9 @@
     <Compile Include="wpfMain.xaml.cs">
       <DependentUpon>wpfMain.xaml</DependentUpon>
     </Compile>
+    <Compile Include="wpfMPayment.xaml.cs">
+      <DependentUpon>wpfMPayment.xaml</DependentUpon>
+    </Compile>
     <Compile Include="wpfMReleasing.xaml.cs">
       <DependentUpon>wpfMReleasing.xaml</DependentUpon>
     </Compile>
@@ -227,6 +230,9 @@
     </Compile>
     <Compile Include="wpfSelectClosed.xaml.cs">
       <DependentUpon>wpfSelectClosed.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="wpfSelectMPayment.xaml.cs">
+      <DependentUpon>wpfSelectMPayment.xaml</DependentUpon>
     </Compile>
     <Compile Include="wpfSelectPayment.xaml.cs">
       <DependentUpon>wpfSelectPayment.xaml</DependentUpon>
@@ -361,6 +367,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="wpfMPayment.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="wpfMReleasing.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -402,6 +412,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="wpfSelectClosed.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="wpfSelectMPayment.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
