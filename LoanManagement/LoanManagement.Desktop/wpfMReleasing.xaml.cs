@@ -361,7 +361,7 @@ namespace LoanManagement.Desktop
                             lon.ReleasedLoan = rl;
                             var lo = ctx.GenSOA.Where(x => x.PaymentNumber == 1).First();
                             int y = 0;
-                            MPaymentInfo py = new MPaymentInfo { Amount = Convert.ToDouble(lo.Amount), BalanceInterest = 0, DueDate = lo.PaymentDate, LoanID = lId, PaymentNumber = 1, PaymentStatus = "Pending", PreviousBalance = 0, RemainingLoanBalance = Convert.ToDouble(lo.RemainingBalance), TotalAmount = Convert.ToDouble(lo.Amount), TotalBalance = 0 };
+                            MPaymentInfo py = new MPaymentInfo { Amount = Convert.ToDouble(lo.Amount), BalanceInterest = 0, DueDate = lo.PaymentDate, LoanID = lId, PaymentNumber = 1, PaymentStatus = "Pending", PreviousBalance = 0, RemainingLoanBalance = Convert.ToDouble(lblInt.Content), TotalAmount = Convert.ToDouble(lo.Amount), TotalBalance = 0 };
                             ctx.MPaymentInfoes.Add(py);
                             AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Released loan (" + lon.Service.Name + ") for client " + lon.Client.FirstName + " " + lon.Client.MiddleName + " " + lon.Client.LastName + " " + lon.Client.Suffix };
                             ctx.AuditTrails.Add(at);

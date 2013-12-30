@@ -66,6 +66,7 @@ namespace LoanManagement.Domain
         public DbSet<TemporaryLoanApplication> TemporaryLoanApplications { get; set; }
         public DbSet<Holiday> Holidays { get; set; }
         public DbSet<MPaymentInfo> MPaymentInfoes { get; set; }
+        public DbSet<MicroPayment> MicroPayments { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -159,6 +160,9 @@ namespace LoanManagement.Domain
             modelBuilder.Entity<iText>()
                 .HasKey(x => x.FPaymentInfoID)
                 .HasRequired(x => x.FPaymentInfo);
+            modelBuilder.Entity<MicroPayment>()
+                .HasKey(x => x.MPaymentInfoID)
+                .HasRequired(x => x.MPaymentInfo);
                 
         }
     }
@@ -854,14 +858,26 @@ namespace LoanManagement.Domain
         public double PreviousBalance { get; set; } // Unpdaid Amount
         public double BalanceInterest { get; set; } // Interest of Unpaid Amount
         public double TotalBalance { get; set; } // PrevBal + BalInterest
-        public double TotalAmount { get; set; } // Amout + Total Balance
+        public double ExcessBalance { get; set; }
+        public double TotalAmount { get; set; } // (Amout + Total Balance) - ExcessBalance
         public DateTime DueDate { get; set; }
         public DateTime? PaymentDate { get; set; }
         public double RemainingLoanBalance { get; set; }
         public string PaymentStatus { get; set; }
+        public double TotalPayment { get; set; }
 
         public int LoanID { get; set; }
         public virtual Loan Loan { get; set; }
+        public virtual MicroPayment MicroPayment { get; set; }
+    }
+
+    public class MicroPayment
+    {
+        public int MPaymentInfoID { get; set; }
+        public double Amount { get; set; }
+        public DateTime? DatePaid { get; set; }
+
+        public virtual MPaymentInfo MPaymentInfo { get; set; }
     }
 
 }

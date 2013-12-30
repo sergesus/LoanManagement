@@ -101,6 +101,14 @@
     <Compile Include="Migrations\201312211006284_AddedCollectorID.Designer.cs">
       <DependentUpon>201312211006284_AddedCollectorID.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201312220023410_AddedMicroPayments.cs" />
+    <Compile Include="Migrations\201312220023410_AddedMicroPayments.Designer.cs">
+      <DependentUpon>201312220023410_AddedMicroPayments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201401070100450_AddedMPayment.cs" />
+    <Compile Include="Migrations\201401070100450_AddedMPayment.Designer.cs">
+      <DependentUpon>201401070100450_AddedMPayment.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemData.cs" />
@@ -151,6 +159,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201312211006284_AddedCollectorID.resx">
       <DependentUpon>201312211006284_AddedCollectorID.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201312220023410_AddedMicroPayments.resx">
+      <DependentUpon>201312220023410_AddedMicroPayments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201401070100450_AddedMPayment.resx">
+      <DependentUpon>201401070100450_AddedMPayment.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

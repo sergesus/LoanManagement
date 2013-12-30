@@ -255,7 +255,14 @@ namespace LoanManagement.Desktop
 
                     ctx.Database.ExecuteSqlCommand("delete from dbo.ViewLoans");
 
-                    if (iDept == "Financing")
+                    if (iDept == "Micro Business")
+                    {
+                        var pys = from p in ctx.MPaymentInfoes
+                                  where p.LoanID == lId
+                                  select new { No = p.PaymentNumber, Amount = p.Amount, PrevBalance = p.PreviousBalance, PrevBalanceInterest = p.BalanceInterest, TotalBalance = p.TotalBalance, TotalAmount = p.TotalAmount, DueDate = p.DueDate, RemaingBalance = p.RemainingLoanBalance, Status = p.PaymentStatus };
+                        dg.ItemsSource = pys.ToList();
+                    }
+                    else
                     {
                         foreach (var i in chqs)
                         {
@@ -283,13 +290,6 @@ namespace LoanManagement.Desktop
                         var chqs1 = from ge in ctx.ViewLoans
                                     select new { No = ge.PaymentNumber, ChequeID = ge.PaymentInfo, TotalPayment = ge.TotalPayment, ChequeDueDate = ge.DueDate, PaymentDate = ge.PaymentDate, Status = ge.Status, DateCleared = ge.DateCleared };
                         dg.ItemsSource = chqs1.ToList();
-                    }
-                    else
-                    {
-                        var pys = from p in ctx.MPaymentInfoes
-                                  where p.LoanID == lId
-                                  select new { No = p.PaymentNumber, Amount = p.Amount, PrevBalance = p.PreviousBalance, PrevBalanceInterest = p.BalanceInterest, TotalBalance = p.TotalBalance, TotalAmount = p.TotalAmount, DueDate = p.DueDate, RemaingBalance = p.RemainingLoanBalance, Status = p.PaymentStatus };
-                        dg.ItemsSource = pys.ToList();
                     }
 
                     if (status == "View")
@@ -323,6 +323,8 @@ namespace LoanManagement.Desktop
                 {
                     var lon = ctx.Loans.Find(lId);
                     lblName.Content = lon.Client.LastName + ", " + lon.Client.FirstName + " " + lon.Client.MiddleName;
+
+                    iDept = lon.Service.Department;
                 }
                 reset();
             }

@@ -15,6 +15,8 @@ using System.Windows.Shapes;
 using MahApps.Metro.Controls;
 using System.Data.Entity;
 using LoanManagement.Domain;
+using Microsoft.VisualBasic;
+
 //using LoanManagement.Domain;
 
 namespace LoanManagement.Desktop
@@ -81,6 +83,91 @@ namespace LoanManagement.Desktop
                             PaidLoan pl = new PaidLoan { LoanID = item.LoanID, DateFinished = DateTime.Today.Date };
                             ctx.PaidLoans.Add(pl);
                         }
+                    }
+
+                    //MICRO
+
+                    var mLoans = from m in ctx.MPaymentInfoes
+                                 where m.DueDate < DateTime.Today.Date && m.PaymentStatus == "Pending"
+                                 select m;
+
+                    DateTime dt;
+                    DateTime dt2;
+                    int Interval = 0;
+                    DateInterval dInt = DateInterval.Day;
+                    foreach (var itm in mLoans)
+                    {
+                        dt = itm.DueDate;
+                        itm.PaymentStatus = "Unpaid";
+                        while (dt < DateTime.Today.Date)
+                        {
+                            MicroPayment mp = new MicroPayment { MPaymentInfoID = itm.MPaymentInfoID, Amount = 0 };
+                            ctx.MicroPayments.Add(mp);
+                            String value = itm.Loan.Mode;
+                            if (value == "Semi-Monthly")
+                            {
+                                Interval = 15;
+                                dInt = DateInterval.Day;
+                            }
+                            else if (value == "Weekly")
+                            {
+                                Interval = 7;
+                                dInt = DateInterval.Day;
+                            }
+                            else if (value == "Daily")
+                            {
+                                Interval = 1;
+                                dInt = DateInterval.Day;
+                            }
+
+
+                            dt = DateAndTime.DateAdd(dInt, Interval, dt);
+
+                            bool isHoliday = true;
+                            while (isHoliday == true || dt.Date.DayOfWeek.ToString() == "Saturday" || dt.Date.DayOfWeek.ToString() == "Sunday")
+                            {
+                                if (dt.Date.DayOfWeek.ToString() == "Saturday")
+                                {
+                                    dt = DateAndTime.DateAdd(DateInterval.Day, 2, dt);
+                                }
+                                else if (dt.Date.DayOfWeek.ToString() == "Sunday")
+                                {
+                                    dt = DateAndTime.DateAdd(DateInterval.Day, 1, dt);
+                                }
+                                var myC = ctx.Holidays.Where(x => x.Date.Month == dt.Date.Month && x.Date.Day == dt.Date.Day && x.isYearly == true).Count();
+                                if (myC > 0)
+                                {
+                                    dt = DateAndTime.DateAdd(DateInterval.Day, 1, dt);
+                                    isHoliday = true;
+                                }
+                                else
+                                {
+                                    myC = ctx.Holidays.Where(x => x.Date.Month == dt.Date.Month && x.Date.Day == dt.Date.Day && x.Date.Year == dt.Date.Year && x.isYearly == !true).Count();
+                                    if (myC > 0)
+                                    {
+                                        dt = DateAndTime.DateAdd(DateInterval.Day, 1, dt);
+                                        isHoliday = true;
+                                    }
+                                    else
+                                    {
+                                        isHoliday = false;
+                                    }
+                                }
+                            }
+                            var ser = ctx.Services.Find(itm.Loan.ServiceID);
+                            double iRate = ser.LatePaymentPenalty / 100;
+                            double tRate = itm.TotalAmount * iRate;
+                            double tBalance = itm.TotalAmount + tRate;
+                            double tAmount = itm.Amount + tBalance;
+                            double tRem = itm.RemainingLoanBalance - tAmount;
+                            dt2 = DateAndTime.DateAdd(dInt, Interval, dt);
+                            String st = "Unpaid";
+                            if(dt2>=DateTime.Today.Date)
+                                st="Pending";
+                            MPaymentInfo mpi = new MPaymentInfo { PaymentNumber = itm.PaymentNumber + 1, Amount = itm.Amount, TotalBalance = tBalance, BalanceInterest = tRate, DueDate = dt, ExcessBalance = 0, LoanID = itm.LoanID, PaymentStatus = st, TotalAmount = tAmount, RemainingLoanBalance = tRem, PreviousBalance = itm.TotalAmount };
+                            ctx.MPaymentInfoes.Add(mpi);
+                        }
+
                     }
 
 
