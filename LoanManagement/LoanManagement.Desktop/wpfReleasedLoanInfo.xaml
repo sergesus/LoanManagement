@@ -93,6 +93,12 @@
                     <Image Source="Images/View.ico" />
                 </DockPanel>
             </Button>
+            <Button x:Name="btnFolder" HorizontalAlignment="Left" Height="36" Margin="482,0,0,0" VerticalAlignment="Top" Width="164" BorderBrush="#CC48CB00" BorderThickness="2" Background="#7F48CB00" Click="btnFolder_Click">
+                <DockPanel LastChildFill="True">
+                    <Label HorizontalContentAlignment="Center" DockPanel.Dock="Right" Foreground="#FF343434" Height="28" FontSize="16" Content="View Folder"/>
+                    <Image Source="Images/View.ico" />
+                </DockPanel>
+            </Button>
         </Grid>
         <Grid HorizontalAlignment="Left" Height="74" VerticalAlignment="Top" Width="863" Background="#7F48CB00" Margin="0,-60,0,0" Grid.ColumnSpan="3">
             <Image HorizontalAlignment="Left" Height="74" VerticalAlignment="Top" Width="97" Source="Images/Information.ico"/>

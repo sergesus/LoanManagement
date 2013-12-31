@@ -74,6 +74,7 @@
     </Content>
     <Content Include="Calculator.aspx" />
     <Content Include="Confirmation.aspx" />
+    <Content Include="Downloads.aspx" />
     <Content Include="images\contact_icon.png" />
     <Content Include="images\GFC.jpg" />
     <Content Include="images\home_icon.png" />
@@ -103,6 +104,7 @@
     <Content Include="RegisterClient.aspx" />
     <Content Include="RegisterUser.aspx" />
     <Content Include="RegistrationSuccess.aspx" />
+    <Content Include="Services.aspx" />
     <Content Include="templatemo_style.css" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -145,6 +147,13 @@
     <Compile Include="Confirmation.aspx.designer.cs">
       <DependentUpon>Confirmation.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Downloads.aspx.cs">
+      <DependentUpon>Downloads.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Downloads.aspx.designer.cs">
+      <DependentUpon>Downloads.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Login.aspx.cs">
       <DependentUpon>Login.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -180,6 +189,13 @@
     </Compile>
     <Compile Include="RegistrationSuccess.aspx.designer.cs">
       <DependentUpon>RegistrationSuccess.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Services.aspx.cs">
+      <DependentUpon>Services.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Services.aspx.designer.cs">
+      <DependentUpon>Services.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>

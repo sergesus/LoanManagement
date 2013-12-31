@@ -11,7 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
-
+using System.Diagnostics;
 using System.IO;
 using LoanManagement.Domain;
 using System.Windows.Forms;
@@ -344,6 +344,19 @@ namespace LoanManagement.Desktop
         private void wdw1_Activated(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnFolder_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                Process.Start(@"F:\Loan Files\Loan " + lId.ToString());
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
     }

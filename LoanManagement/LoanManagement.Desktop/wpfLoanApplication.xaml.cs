@@ -563,6 +563,21 @@ namespace LoanManagement.Desktop
 
                         ctx.Loans.Add(loan);
                         ctx.SaveChanges();
+
+                        string folderName = @"F:\Loan Files";
+                        string pathString = System.IO.Path.Combine(folderName, "Loan " + loan.LoanID.ToString());
+                        if (!Directory.Exists(pathString))
+                        {
+                            System.IO.Directory.CreateDirectory(pathString);
+                        }
+                        else
+                        {
+                            Directory.Delete(pathString, true);
+                            System.IO.Directory.CreateDirectory(pathString);
+                        }
+                        
+
+
                         System.Windows.MessageBox.Show("Loan has been successfuly applied", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                         this.Close();
                     }
