@@ -59,7 +59,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newContext())
+                using (var ctx = new newerContext())
                 {
                     var lon = from lo in ctx.FPaymentInfo
                               where lo.PaymentDate <= DateTime.Today.Date && (lo.PaymentStatus == "Pending" || lo.PaymentStatus == "On Hold")
@@ -1049,7 +1049,7 @@ namespace LoanManagement.Desktop
 
                 int y = 13;
 
-                using (var ctx = new newContext())
+                using (var ctx = new newerContext())
                 {
                     var ser = from se in ctx.Clients
                               where se.Active == true
@@ -1241,7 +1241,7 @@ namespace LoanManagement.Desktop
 
                 int y = 13;
 
-                using (var ctx = new newContext())
+                using (var ctx = new newerContext())
                 {
                     var ser = from se in ctx.Services
                               where se.Active == true
@@ -1393,7 +1393,7 @@ namespace LoanManagement.Desktop
 
                 int y = 13;
 
-                using (var ctx = new newContext())
+                using (var ctx = new newerContext())
                 {
                     var ser = from se in ctx.Employees
                               where se.Active == true
@@ -1556,7 +1556,7 @@ namespace LoanManagement.Desktop
 
                 int y = 13;
 
-                using (var ctx = new newContext())
+                using (var ctx = new newerContext())
                 {
                     var ser = from se in ctx.Agents
                               where se.Active == true
@@ -1680,6 +1680,7 @@ namespace LoanManagement.Desktop
         {
             wpfLoanSearch frm = new wpfLoanSearch();
             frm.status = "View";
+            frm.UserID = UserID;
             frm.ShowDialog();
         }
 
@@ -1687,6 +1688,7 @@ namespace LoanManagement.Desktop
         {
             wpfClientSearch frm = new wpfClientSearch();
             frm.status = "Client";
+            frm.UserID = UserID;
             frm.status2 = "View1";
             frm.ShowDialog();
         }
@@ -1701,6 +1703,7 @@ namespace LoanManagement.Desktop
         {
             wpfLoanSearch frm = new wpfLoanSearch();
             frm.status = "Aging";
+            frm.UserID = UserID;
             frm.ShowDialog();
         }
 
@@ -1798,7 +1801,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newContext())
+                using (var ctx = new newerContext())
                 {
                     string dept = "";
                     ComboBoxItem typeItem = (ComboBoxItem)cmbDept.SelectedItem;
@@ -1913,7 +1916,7 @@ namespace LoanManagement.Desktop
                 double unp = 0;
                 double exp = 0;
 
-                using (var ctx = new newContext())
+                using (var ctx = new newerContext())
                 { 
                     DateTime endOfMonth = new DateTime(dt.Year, dt.Month, DateTime.DaysInMonth(dt.Year, dt.Month));
                     var lns = from ln in ctx.ReleasedLoans

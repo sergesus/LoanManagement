@@ -104,7 +104,7 @@ $.extend($.fn, {
             return valid;
         }
     },
-	// attributes: space seperated list of attributes to retrieve and remove
+	// attributes: space seperated list of attributes to if (!Regex.IsMatch(str, @"^[a-zA-Z0-9 @.]*$")) and remove
 	removeAttrs: function(attributes) {
 		var result = {},
 			$element = this;

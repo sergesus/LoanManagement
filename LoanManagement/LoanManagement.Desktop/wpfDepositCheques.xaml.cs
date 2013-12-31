@@ -39,7 +39,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newContext())
+                using (var ctx = new newerContext())
                 {
                     var lon = from lo in ctx.FPaymentInfo
                               where lo.PaymentDate <= DateTime.Today.Date && (lo.PaymentStatus == "Pending" || lo.PaymentStatus == "On Hold")
@@ -273,7 +273,7 @@ namespace LoanManagement.Desktop
             {
                 if (rdDue.IsChecked == true)
                 {
-                    using (var ctx = new newContext())
+                    using (var ctx = new newerContext())
                     {
                         lblDep.Content = "Deposit";
                         var chq = from ch in ctx.FPaymentInfo
@@ -293,7 +293,7 @@ namespace LoanManagement.Desktop
                 }
                 else if (rdDeposited.IsChecked == true)
                 {
-                    using (var ctx = new newContext())
+                    using (var ctx = new newerContext())
                     {
                         var chq = from ch in ctx.FPaymentInfo
                                   where ch.PaymentStatus == "Deposited"
@@ -310,7 +310,7 @@ namespace LoanManagement.Desktop
                 }
                 else
                 {
-                    using (var ctx = new newContext())
+                    using (var ctx = new newerContext())
                     {
                         var chq = from ch in ctx.FPaymentInfo
                                   where ch.PaymentStatus == "Returned"
@@ -370,7 +370,7 @@ namespace LoanManagement.Desktop
                         MessageBoxResult mr = MessageBox.Show("Are you sure you want to deposit the selected cheque(s)?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
                         if (mr == MessageBoxResult.Yes)
                         {
-                            using (var ctx = new newContext())
+                            using (var ctx = new newerContext())
                             {
                                 var chq = from ch in ctx.FPaymentInfo
                                           where ch.PaymentStatus == "Due"
@@ -407,7 +407,7 @@ namespace LoanManagement.Desktop
                     }
                     else if (state == "Undep")
                     {
-                        using (var ctx = new newContext())
+                        using (var ctx = new newerContext())
                         {
                             int id = Convert.ToInt32(getRow(dg, 0));
                             int num = Convert.ToInt32(getRow(dg, 1));
@@ -428,7 +428,7 @@ namespace LoanManagement.Desktop
                     }
                     else if (state == "Redep")
                     {
-                        using (var ctx = new newContext())
+                        using (var ctx = new newerContext())
                         {
                             int id = Convert.ToInt32(getRow(dg, 0));
                             int num = Convert.ToInt32(getRow(dg, 1));
@@ -456,7 +456,7 @@ namespace LoanManagement.Desktop
                     {
                         int id = Convert.ToInt32(getRow(dg, 0));
                         int num = Convert.ToInt32(getRow(dg, 1));
-                        using (var ctx = new newContext())
+                        using (var ctx = new newerContext())
                         {
                             FPaymentInfo fp = ctx.FPaymentInfo.Where(x => x.LoanID == id && x.PaymentNumber == num).First();
 
@@ -478,7 +478,7 @@ namespace LoanManagement.Desktop
                     {
                         int id = Convert.ToInt32(getRow(dg, 0));
                         int num = Convert.ToInt32(getRow(dg, 1));
-                        using (var ctx = new newContext())
+                        using (var ctx = new newerContext())
                         {
                             FPaymentInfo fp = ctx.FPaymentInfo.Where(x => x.LoanID == id && x.PaymentNumber == num).First();
                             ReturnedCheque rc = ctx.ReturnedCheques.Find(fp.FPaymentInfoID);
@@ -540,7 +540,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newContext())
+                using (var ctx = new newerContext())
                 {
                     int id = Convert.ToInt32(getRow(dg, 0));
                     int num = Convert.ToInt32(getRow(dg, 1));
@@ -564,7 +564,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newContext())
+                using (var ctx = new newerContext())
                 {
                     int id = Convert.ToInt32(getRow(dg, 0));
                     int num = Convert.ToInt32(getRow(dg, 1));

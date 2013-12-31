@@ -89,7 +89,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newContext())
+                using (var ctx = new newerContext())
                 {
                     int cid = Convert.ToInt32(txtID.Text);
                     var ctr = ctx.Clients.Where(x => x.ClientID == cid).Count();

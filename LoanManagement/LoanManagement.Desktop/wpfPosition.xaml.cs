@@ -48,7 +48,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newContext())
+                using (var ctx = new newerContext())
                 {
                     var post = from ps in ctx.Positions
                                select new { PositionID = ps.PositionID, Position = ps.PositionName, Description = ps.Description };
@@ -129,7 +129,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newContext())
+                using (var ctx = new newerContext())
                 {
                     int n;
                     try

@@ -55,7 +55,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newContext())
+                using (var ctx = new newerContext())
                 {
                     if (rdAdd.IsChecked == true)
                     {
@@ -105,7 +105,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newContext())
+                using (var ctx = new newerContext())
                 {
                     var clt = ctx.Clients.Find(cID);
                     byte[] imageArr;
@@ -201,7 +201,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newContext())
+                using (var ctx = new newerContext())
                 {
                     int n = Convert.ToInt32(getRow(dgLoans, 0));
                     var lon = ctx.Loans.Find(n);
@@ -210,6 +210,7 @@ namespace LoanManagement.Desktop
                         wpfAppliedLoanInfo frm = new wpfAppliedLoanInfo();
                         frm.lId = n;
                         frm.status = "View";
+                        frm.UserID = UserID;
                         frm.Height = 605.5;
                         frm.ShowDialog();
                     }
@@ -217,6 +218,7 @@ namespace LoanManagement.Desktop
                     {
                         wpfReleasedLoanInfo frm = new wpfReleasedLoanInfo();
                         frm.lId = n;
+                        frm.UserID = UserID;
                         frm.status = "View";
                         frm.Height = 605.5;
                         frm.ShowDialog();

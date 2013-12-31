@@ -45,22 +45,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\201312250013368_AddedCancelledLoan.cs" />
-    <Compile Include="Migrations\201312250013368_AddedCancelledLoan.Designer.cs">
-      <DependentUpon>201312250013368_AddedCancelledLoan.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201312250015308_AddedCancelledLoan2.cs" />
-    <Compile Include="Migrations\201312250015308_AddedCancelledLoan2.Designer.cs">
-      <DependentUpon>201312250015308_AddedCancelledLoan2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201401230610229_UpdatedCollector.cs" />
-    <Compile Include="Migrations\201401230610229_UpdatedCollector.Designer.cs">
-      <DependentUpon>201401230610229_UpdatedCollector.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201402230656503_AddedCollectionInfo.cs" />
-    <Compile Include="Migrations\201402230656503_AddedCollectionInfo.Designer.cs">
-      <DependentUpon>201402230656503_AddedCollectionInfo.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemData.cs" />
@@ -68,20 +52,6 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Migrations\201312250013368_AddedCancelledLoan.resx">
-      <DependentUpon>201312250013368_AddedCancelledLoan.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201312250015308_AddedCancelledLoan2.resx">
-      <DependentUpon>201312250015308_AddedCancelledLoan2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201401230610229_UpdatedCollector.resx">
-      <DependentUpon>201401230610229_UpdatedCollector.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201402230656503_AddedCollectionInfo.resx">
-      <DependentUpon>201402230656503_AddedCollectionInfo.cs</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

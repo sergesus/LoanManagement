@@ -51,8 +51,8 @@
         </Grid>
         <Button x:Name="btnRet" HorizontalAlignment="Left" Height="39" Margin="10,407,0,0" VerticalAlignment="Top" Width="164" BorderBrush="#CC48CB00" BorderThickness="2" Background="#7F48CB00" Click="btnRet_Click" Visibility="Hidden">
             <DockPanel LastChildFill="True">
-                <Label x:Name="lblAdd1" HorizontalContentAlignment="Center" DockPanel.Dock="Right" Foreground="#FF343434" Height="28" FontSize="16" Content="Retreive"/>
-                <Image Source="Images/Retreive.png" />
+                <Label x:Name="lblAdd1" HorizontalContentAlignment="Center" DockPanel.Dock="Right" Foreground="#FF343434" Height="28" FontSize="16" Content="Retrieve"/>
+                <Image Source="Images/Retrieve.png" />
             </DockPanel>
         </Button>
     </Grid>

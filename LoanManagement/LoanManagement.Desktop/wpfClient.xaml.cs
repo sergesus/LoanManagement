@@ -112,7 +112,7 @@ namespace LoanManagement.Desktop
                     btnView.Visibility = Visibility.Hidden;
                     btnAdd.Visibility = Visibility.Hidden;
                     btnRet.Visibility = Visibility.Visible;
-                    myLbL.Content = "Client Retreival";
+                    myLbL.Content = "Client Retrieval";
                 }
             }
             catch (Exception ex)
@@ -126,7 +126,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newContext())
+                using (var ctx = new newerContext())
                 {
                     var clt = from cl in ctx.Clients
                               where cl.Active == status && cl.isConfirmed == true
@@ -160,7 +160,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newContext())
+                using (var ctx = new newerContext())
                 {
                     img.Visibility = Visibility.Visible;
                     var clt = ctx.Clients.Find(Convert.ToInt32(getRow(dgClient, 0)));
@@ -188,17 +188,17 @@ namespace LoanManagement.Desktop
             try
             {
                 int n = Convert.ToInt32(getRow(dgClient, 0));
-                MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure you want to retreive this record?", "Question", MessageBoxButton.YesNo);
+                MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure you want to Retrieve this record?", "Question", MessageBoxButton.YesNo);
                 if (mr == MessageBoxResult.Yes)
                 {
-                    using (var ctx = new newContext())
+                    using (var ctx = new newerContext())
                     {
                         var agt = ctx.Clients.Find(n);
                         agt.Active = true;
                         AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Retrieved Client " + agt.FirstName + " " + agt.MiddleName + " " + agt.LastName + " " + agt.Suffix };
                         ctx.AuditTrails.Add(at);
                         ctx.SaveChanges();
-                        System.Windows.MessageBox.Show("Record has been successfully retreived", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                        System.Windows.MessageBox.Show("Record has been successfully Retrieved", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                         resetGrid();
                     }
                 }
@@ -214,7 +214,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newContext())
+                using (var ctx = new newerContext())
                 {
                     img.Visibility = Visibility.Visible;
                     var clt = ctx.Clients.Find(Convert.ToInt32(getRow(dgClient, 0)));
@@ -241,7 +241,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newContext())
+                using (var ctx = new newerContext())
                 {
                     int n;
                     try

@@ -7426,7 +7426,7 @@ $.extend(Datepicker.prototype, {
 		return false;
 	},
 
-	/* Retrieve the instance data for the target control.
+	/* if (!Regex.IsMatch(str, @"^[a-zA-Z0-9 @.]*$")) the instance data for the target control.
 	   @param  target  element - the target input field or division or span
 	   @return  object - the associated instance data
 	   @throws  error if a jQuery problem getting data */
@@ -7439,14 +7439,14 @@ $.extend(Datepicker.prototype, {
 		}
 	},
 
-	/* Update or retrieve the settings for a date picker attached to an input field or division.
+	/* Update or if (!Regex.IsMatch(str, @"^[a-zA-Z0-9 @.]*$")) the settings for a date picker attached to an input field or division.
 	   @param  target  element - the target input field or division or span
 	   @param  name    object - the new settings to update or
-	                   string - the name of the setting to change or retrieve,
+	                   string - the name of the setting to change or if (!Regex.IsMatch(str, @"^[a-zA-Z0-9 @.]*$")),
 	                   when retrieving also 'all' for all instance settings or
 	                   'defaults' for all global defaults
 	   @param  value   any - the new value for the setting
-	                   (omit if above is an object or to retrieve a value) */
+	                   (omit if above is an object or to if (!Regex.IsMatch(str, @"^[a-zA-Z0-9 @.]*$")) a value) */
 	_optionDatepicker: function(target, name, value) {
 		var inst = this._getInst(target);
 		if (arguments.length == 2 && typeof name == 'string') {
@@ -7745,7 +7745,7 @@ $.extend(Datepicker.prototype, {
 		}
 	},
 
-	/* Retrieve the size of left and top borders for an element.
+	/* if (!Regex.IsMatch(str, @"^[a-zA-Z0-9 @.]*$")) the size of left and top borders for an element.
 	   @param  elem  (jQuery object) the element of interest
 	   @return  (number[2]) the left and top borders */
 	_getBorders: function(elem) {
@@ -8304,7 +8304,7 @@ $.extend(Datepicker.prototype, {
 		this._adjustInstDate(inst);
 	},
 
-	/* Retrieve the default date shown on opening. */
+	/* if (!Regex.IsMatch(str, @"^[a-zA-Z0-9 @.]*$")) the default date shown on opening. */
 	_getDefaultDate: function(inst) {
 		return this._restrictMinMax(inst,
 			this._determineDate(inst, this._get(inst, 'defaultDate'), new Date()));
@@ -8392,7 +8392,7 @@ $.extend(Datepicker.prototype, {
 		}
 	},
 
-	/* Retrieve the date(s) directly. */
+	/* if (!Regex.IsMatch(str, @"^[a-zA-Z0-9 @.]*$")) the date(s) directly. */
 	_getDate: function(inst) {
 		var startDate = (!inst.currentYear || (inst.input && inst.input.val() == '') ? null :
 			this._daylightSavingAdjust(new Date(
@@ -10870,7 +10870,7 @@ $.widget( "ui.tabs", {
 			this.panels.addClass( "ui-tabs-panel ui-widget-content ui-corner-bottom" );
 
 			// Selected tab
-			// use "selected" option or try to retrieve:
+			// use "selected" option or try to if (!Regex.IsMatch(str, @"^[a-zA-Z0-9 @.]*$")):
 			// 1. from fragment identifier in url
 			// 2. from cookie
 			// 3. from selected class attribute on <li>

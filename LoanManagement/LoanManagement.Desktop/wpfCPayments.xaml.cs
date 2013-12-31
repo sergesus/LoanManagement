@@ -65,7 +65,7 @@ namespace LoanManagement.Desktop
             }
             try
             {
-                using (var ctx = new newContext())
+                using (var ctx = new newerContext())
                 {
                     var ctr = ctx.Loans.Where(x => x.LoanID == lID && x.Status == "Under Collection").Count();
                     if (ctr > 0)
@@ -134,7 +134,7 @@ namespace LoanManagement.Desktop
                 lID = 0;
             }
 
-            using (var ctx = new newContext())
+            using (var ctx = new newerContext())
             {
                 CollectionInfo ci = new CollectionInfo { LoanID = lID, DateCollected = DateTime.Today.Date, TotalCollection = amt };
                 var r = ctx.PassedToCollectors.Find(lID);

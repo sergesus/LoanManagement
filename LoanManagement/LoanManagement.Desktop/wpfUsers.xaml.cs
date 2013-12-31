@@ -58,7 +58,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newContext())
+                using (var ctx = new newerContext())
                 {
                     var emp = from em in ctx.Users where em.Employee.Active == true select new { EmployeeID= em.EmployeeID, Name = em.Employee.FirstName + " " + em.Employee.MI + " " + em.Employee.LastName, Username = em.Username };
                     dgEmp.ItemsSource = emp.ToList();
@@ -75,7 +75,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newContext())
+                using (var ctx = new newerContext())
                 {
                     img.Visibility = Visibility.Visible;
                     var emp = ctx.Employees.Find(Convert.ToInt32(getRow(dgEmp, 0)));
@@ -129,7 +129,7 @@ namespace LoanManagement.Desktop
                 wdw1.Background = myBrush;
                 resetGrid();
 
-                using (var ctx = new newContext())
+                using (var ctx = new newerContext())
                 {
                     var usr = ctx.Scopes.Find(UserID);
                     if (usr.Scopes == true)
@@ -154,7 +154,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newContext())
+                using (var ctx = new newerContext())
                 { 
                     int n = Convert.ToInt32(getRow(dgEmp,0));
                     var emp = ctx.Employees.Find(n);
@@ -192,7 +192,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newContext())
+                using (var ctx = new newerContext())
                 {
                     int n = Convert.ToInt32(getRow(dgEmp, 0));
                     var emp = ctx.Employees.Find(n);
@@ -222,7 +222,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newContext())
+                using (var ctx = new newerContext())
                 {
                     var emp = from em in ctx.Users 
                               where em.Employee.Active == true && em.Username.Contains(txtSearch.Text)

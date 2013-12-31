@@ -79,7 +79,7 @@ namespace LoanManagement.Desktop
             }
             try
             {
-                using (var ctx = new newContext())
+                using (var ctx = new newerContext())
                 {
                     var ctr = ctx.Loans.Where(x => x.LoanID == lID && x.Service.Department == "Micro Business" && x.Status=="Released").Count();
                     if (ctr > 0)
@@ -188,7 +188,7 @@ namespace LoanManagement.Desktop
                 if (amt <= Convert.ToDouble(lblTotal.Content))
                 {
                     //System.Windows.MessageBox.Show("Dito");
-                    using (var ctx = new newContext())
+                    using (var ctx = new newerContext())
                     {
                         int lID = Convert.ToInt32(txtID.Text);
                         var py = ctx.MPaymentInfoes.Where(x => x.LoanID == lID && x.PaymentStatus == "Pending").First();
@@ -291,7 +291,7 @@ namespace LoanManagement.Desktop
                 }
                 else
                 {
-                    using (var ctx = new newContext())
+                    using (var ctx = new newerContext())
                     {
                         int lID = Convert.ToInt32(txtID.Text);
                         var py = ctx.MPaymentInfoes.Where(x => x.LoanID == lID && x.PaymentStatus == "Pending").First();

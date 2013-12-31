@@ -30,7 +30,7 @@ namespace LoanManagement.Desktop
 
         private void rg()
         {
-            using (var ctx = new newContext())
+            using (var ctx = new newerContext())
             {
                 var adt = from ad in ctx.AuditTrails
                           where ad.DateAndTime >= dt.SelectedDate 

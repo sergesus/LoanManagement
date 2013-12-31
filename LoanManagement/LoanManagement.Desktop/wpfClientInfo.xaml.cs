@@ -21,6 +21,9 @@ using System.Drawing;
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 
+using System.Net;
+using System.Net.Mail;
+
 using MahApps.Metro.Controls;
 
 namespace LoanManagement.Desktop
@@ -390,7 +393,7 @@ namespace LoanManagement.Desktop
                 int num5 = 0;
                 if (status == "Add")
                 {
-                    using (var ctx = new newContext())
+                    using (var ctx = new newerContext())
                     {
                         num1 = ctx.TempHomeAddresses.Count();
                         num2 = ctx.TempClientContacts.Count();
@@ -402,7 +405,7 @@ namespace LoanManagement.Desktop
                 }
                 else
                 {
-                    using (var ctx = new newContext())
+                    using (var ctx = new newerContext())
                     {
                         num1 = ctx.HomeAddresses.Where(x => x.ClientID == cId).Count();
                         num2 = ctx.ClientContacts.Where(x => x.ClientID == cId).Count();
@@ -584,7 +587,7 @@ namespace LoanManagement.Desktop
 
                 if (status == "Add")
                 {
-                    using (var ctx = new newContext())
+                    using (var ctx = new newerContext())
                     {
                         ctx.Database.ExecuteSqlCommand("delete from dbo.TempHomeAddresses");
                         ctx.Database.ExecuteSqlCommand("delete from dbo.TempClientContacts");
@@ -602,7 +605,7 @@ namespace LoanManagement.Desktop
                 }
                 else
                 {
-                    using (var ctx = new newContext())
+                    using (var ctx = new newerContext())
                     {
                         var ctr = ctx.Loans.Where(x => x.ClientID == cId && x.Status == "Released").Count();
                         if (ctr > 0)
@@ -766,7 +769,7 @@ namespace LoanManagement.Desktop
                             ownership = "Rented";
                             val = Convert.ToDouble(txtRentedVal.Text);
                         }
-                        using (var ctx = new newContext())
+                        using (var ctx = new newerContext())
                         {
                             var ctr = ctx.HomeAddresses.Where(x => x.ClientID == cId).Count() + 1;
 
@@ -807,7 +810,7 @@ namespace LoanManagement.Desktop
 
 
 
-                    using (var ctx = new newContext())
+                    using (var ctx = new newerContext())
                     {
                         var ctr = ctx.TempHomeAddresses.Count() + 1;
 
@@ -849,7 +852,7 @@ namespace LoanManagement.Desktop
                     //for view
                     if (status == "View")
                     {
-                        using (var ctx = new newContext())
+                        using (var ctx = new newerContext())
                         {
                             int num = Convert.ToInt32(getRow(dgAddress, 0));
                             var tr = ctx.HomeAddresses.Where(x => x.AddressNumber == num && x.ClientID == cId).First();
@@ -886,7 +889,7 @@ namespace LoanManagement.Desktop
                         val = Convert.ToDouble(txtRentedVal.Text);
                     }
 
-                    using (var ctx = new newContext())
+                    using (var ctx = new newerContext())
                     {
                         int num = Convert.ToInt32(getRow(dgAddress, 0));
                         var tr = ctx.TempHomeAddresses.Where(x => x.AddressNumber == num).First();
@@ -933,7 +936,7 @@ namespace LoanManagement.Desktop
                     //for view
                     if (status == "View")
                     {
-                        using (var ctx = new newContext())
+                        using (var ctx = new newerContext())
                         {
                             int num = Convert.ToInt32(getRow(dgAddress, 0));
                             var tr = ctx.HomeAddresses.Where(x => x.AddressNumber == num && x.ClientID == cId).First();
@@ -964,7 +967,7 @@ namespace LoanManagement.Desktop
 
                     }
 
-                    using (var ctx = new newContext())
+                    using (var ctx = new newerContext())
                     {
                         int num = Convert.ToInt32(getRow(dgAddress, 0));
                         var tr = ctx.TempHomeAddresses.Where(x => x.AddressNumber == num).First();
@@ -1005,7 +1008,7 @@ namespace LoanManagement.Desktop
 
         private void btnDelAddress_Click(object sender, RoutedEventArgs e)
         {
-            using (var ctx = new newContext())
+            using (var ctx = new newerContext())
             {
                 try
                 {
@@ -1102,7 +1105,7 @@ namespace LoanManagement.Desktop
                     if (status == "View")
                     {
 
-                        using (var ctx = new newContext())
+                        using (var ctx = new newerContext())
                         {
                             var ctr = ctx.ClientContacts.Where(x => x.ClientID == cId).Count() + 1;
                             bool pr = false;
@@ -1126,7 +1129,7 @@ namespace LoanManagement.Desktop
                     }
 
 
-                    using (var ctx = new newContext())
+                    using (var ctx = new newerContext())
                     {
                         var ctr = ctx.TempClientContacts.Count() + 1;
                         bool pr = false;
@@ -1153,7 +1156,7 @@ namespace LoanManagement.Desktop
                     //for view
                     if (status == "View")
                     {
-                        using (var ctx = new newContext())
+                        using (var ctx = new newerContext())
                         {
                             int num = Convert.ToInt32(getRow(dgContact, 0));
                             var tc = ctx.ClientContacts.Where(x => x.ContactNumber == num && x.ClientID == cId).First();
@@ -1169,7 +1172,7 @@ namespace LoanManagement.Desktop
                     }
 
 
-                    using (var ctx = new newContext())
+                    using (var ctx = new newerContext())
                     {
                         int num = Convert.ToInt32(getRow(dgContact, 0));
                         var tc = ctx.TempClientContacts.Where(x => x.ContactNumber == num).First();
@@ -1210,7 +1213,7 @@ namespace LoanManagement.Desktop
                     //for view
                     if (status == "View")
                     {
-                        using (var ctx = new newContext())
+                        using (var ctx = new newerContext())
                         {
                             int num = Convert.ToInt32(getRow(dgContact, 0));
                             var tc = ctx.ClientContacts.Where(x => x.ContactNumber == num && x.ClientID == cId).First();
@@ -1221,7 +1224,7 @@ namespace LoanManagement.Desktop
 
                     }
 
-                    using (var ctx = new newContext())
+                    using (var ctx = new newerContext())
                     {
                         int num = Convert.ToInt32(getRow(dgContact, 0));
                         var tc = ctx.TempClientContacts.Where(x => x.ContactNumber == num).First();
@@ -1242,7 +1245,7 @@ namespace LoanManagement.Desktop
 
         private void btnDelContact_Click(object sender, RoutedEventArgs e)
         {
-            using (var ctx = new newContext())
+            using (var ctx = new newerContext())
             {
                 try
                 {
@@ -1342,7 +1345,7 @@ namespace LoanManagement.Desktop
                     if (status == "View")
                     {
 
-                        using (var ctx = new newContext())
+                        using (var ctx = new newerContext())
                         {
                             var ctr = ctx.Dependents.Where(x => x.ClientID == cId).Count() + 1;
 
@@ -1361,7 +1364,7 @@ namespace LoanManagement.Desktop
                     }
 
 
-                    using (var ctx = new newContext())
+                    using (var ctx = new newerContext())
                     {
                         var ctr = ctx.TempDependents.Count() + 1;
 
@@ -1383,7 +1386,7 @@ namespace LoanManagement.Desktop
                     //for view
                     if (status == "View")
                     {
-                        using (var ctx = new newContext())
+                        using (var ctx = new newerContext())
                         {
                             int num = Convert.ToInt32(getRow(dgDependents, 0));
                             var td = ctx.Dependents.Where(x => x.DependentNumber == num && x.ClientID == cId).First();
@@ -1404,7 +1407,7 @@ namespace LoanManagement.Desktop
                     }
 
 
-                    using (var ctx = new newContext())
+                    using (var ctx = new newerContext())
                     {
                         int num = Convert.ToInt32(getRow(dgDependents, 0));
                         var td = ctx.TempDependents.Where(x => x.DependentNumber == num).First();
@@ -1450,7 +1453,7 @@ namespace LoanManagement.Desktop
                     //for view
                     if (status == "View")
                     {
-                        using (var ctx = new newContext())
+                        using (var ctx = new newerContext())
                         {
                             int num = Convert.ToInt32(getRow(dgDependents, 0));
                             var td = ctx.Dependents.Where(x => x.DependentNumber == num && x.ClientID == cId).First();
@@ -1466,7 +1469,7 @@ namespace LoanManagement.Desktop
 
                     }
 
-                    using (var ctx = new newContext())
+                    using (var ctx = new newerContext())
                     {
                         int num = Convert.ToInt32(getRow(dgDependents, 0));
                         var td = ctx.TempDependents.Where(x => x.DependentNumber == num).First();
@@ -1492,7 +1495,7 @@ namespace LoanManagement.Desktop
 
         private void btnDelDep_Click(object sender, RoutedEventArgs e)
         {
-            using (var ctx = new newContext())
+            using (var ctx = new newerContext())
             {
                 try
                 {
@@ -1592,7 +1595,7 @@ namespace LoanManagement.Desktop
                     if (status == "View")
                     {
 
-                        using (var ctx = new newContext())
+                        using (var ctx = new newerContext())
                         {
                             var ctr = ctx.Works.Where(x => x.ClientID == cId).Count() + 1;
 
@@ -1611,7 +1614,7 @@ namespace LoanManagement.Desktop
                     }
 
 
-                    using (var ctx = new newContext())
+                    using (var ctx = new newerContext())
                     {
                         var ctr = ctx.TempWorks.Count() + 1;
 
@@ -1633,7 +1636,7 @@ namespace LoanManagement.Desktop
                     //for view
                     if (status == "View")
                     {
-                        using (var ctx = new newContext())
+                        using (var ctx = new newerContext())
                         {
                             int num = Convert.ToInt32(getRow(dgWork, 0));
                             var tw = ctx.Works.Where(x => x.WorkNumber == num && x.ClientID == cId).First();
@@ -1660,7 +1663,7 @@ namespace LoanManagement.Desktop
                     }
 
 
-                    using (var ctx = new newContext())
+                    using (var ctx = new newerContext())
                     {
                         int num = Convert.ToInt32(getRow(dgWork, 0));
                         var tw = ctx.TempWorks.Where(x => x.WorkNumber == num).First();
@@ -1712,7 +1715,7 @@ namespace LoanManagement.Desktop
                     //for view
                     if (status == "View")
                     {
-                        using (var ctx = new newContext())
+                        using (var ctx = new newerContext())
                         {
                             int num = Convert.ToInt32(getRow(dgWork, 0));
                             var tw = ctx.Works.Where(x => x.WorkNumber == num && x.ClientID == cId).First();
@@ -1734,7 +1737,7 @@ namespace LoanManagement.Desktop
 
                     }
 
-                    using (var ctx = new newContext())
+                    using (var ctx = new newerContext())
                     {
                         int num = Convert.ToInt32(getRow(dgWork, 0));
                         var tw = ctx.TempWorks.Where(x => x.WorkNumber == num).First();
@@ -1766,7 +1769,7 @@ namespace LoanManagement.Desktop
 
         private void btnDelWork_Click(object sender, RoutedEventArgs e)
         {
-            using (var ctx = new newContext())
+            using (var ctx = new newerContext())
             {
                 try
                 {
@@ -1869,7 +1872,7 @@ namespace LoanManagement.Desktop
                     //for view
                     if (status == "View")
                     {
-                        using (var ctx = new newContext())
+                        using (var ctx = new newerContext())
                         {
                             var ctr = ctx.References.Where(x => x.ClientID == cId).Count() + 1;
 
@@ -1889,7 +1892,7 @@ namespace LoanManagement.Desktop
                     }
 
 
-                    using (var ctx = new newContext())
+                    using (var ctx = new newerContext())
                     {
                         var ctr = ctx.TempReferences.Count() + 1;
 
@@ -1911,7 +1914,7 @@ namespace LoanManagement.Desktop
                     //for view
                     if (status == "View")
                     {
-                        using (var ctx = new newContext())
+                        using (var ctx = new newerContext())
                         {
                             int num = Convert.ToInt32(getRow(dgReference, 0));
                             var tr = ctx.References.Where(x => x.ReferenceNumber == num && x.ClientID == cId).First();
@@ -1934,7 +1937,7 @@ namespace LoanManagement.Desktop
                     }
 
 
-                    using (var ctx = new newContext())
+                    using (var ctx = new newerContext())
                     {
                         int num = Convert.ToInt32(getRow(dgReference, 0));
                         var tr = ctx.TempReferences.Where(x => x.ReferenceNumber == num).First();
@@ -1982,7 +1985,7 @@ namespace LoanManagement.Desktop
                     //for view
                     if (status == "View")
                     {
-                        using (var ctx = new newContext())
+                        using (var ctx = new newerContext())
                         {
                             int num = Convert.ToInt32(getRow(dgReference, 0));
                             var tr = ctx.References.Where(x => x.ReferenceNumber == num && x.ClientID == cId).First();
@@ -2000,7 +2003,7 @@ namespace LoanManagement.Desktop
 
                     }
 
-                    using (var ctx = new newContext())
+                    using (var ctx = new newerContext())
                     {
                         int num = Convert.ToInt32(getRow(dgReference, 0));
                         var tr = ctx.TempReferences.Where(x => x.ReferenceNumber == num).First();
@@ -2028,7 +2031,7 @@ namespace LoanManagement.Desktop
 
         private void btnDelRef_Click(object sender, RoutedEventArgs e)
         {
-            using (var ctx = new newContext())
+            using (var ctx = new newerContext())
             {
                 try
                 {
@@ -2115,7 +2118,7 @@ namespace LoanManagement.Desktop
                         return;
                     }
 
-                    using (var ctx = new newContext())
+                    using (var ctx = new newerContext())
                     {
                         var ads = ctx.TempHomeAddresses.Count();
                         var con = ctx.TempClientContacts.Count();
@@ -2147,7 +2150,7 @@ namespace LoanManagement.Desktop
                     
                     }
 
-                    using (var ctx = new newContext())
+                    using (var ctx = new newerContext())
                     {
                         var num = ctx.Clients.Where(x => x.FirstName == txtFName.Text && x.LastName == txtLName.Text && x.MiddleName == txtMName.Text && x.Birthday == dtBDay.SelectedDate).Count();
                         if (num > 0)
@@ -2155,8 +2158,50 @@ namespace LoanManagement.Desktop
                             System.Windows.MessageBox.Show("Client already exists", "Information", MessageBoxButton.OK, MessageBoxImage.Exclamation);
                             return;
                         }
+                        var result = "asd";
+                        if (txtEmail_Copy.Text != "")
+                        {
+                            var c = ctx.Clients.Where(x => x.Email == txtEmail_Copy.Text).Count();
+                            if (c > 0)
+                            {
+                                System.Windows.MessageBox.Show("Email has been already used", "Information", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                                return;
+                            }
+                            
+                            do
+                            {
+                                var chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+                                var random = new Random();
+                                result = new string(
+                                    Enumerable.Repeat(chars, 15)
+                                              .Select(s => s[random.Next(s.Length)])
+                                              .ToArray());
+                                c = ctx.Clients.Where(x => x.TrackingNumber == result).Count();
+                            } while (c > 0);
+                            try
+                            {
+                                string email = txtEmail_Copy.Text;
+                                string link = "http://localhost:7234/RegisterUser.aspx?id=" + result;
+                                string message = "You have to click the following link in order to create your account to use our online features: " + link + "\n OR use the Tracking number below: \n " + result;
 
-                        Client clt = new Client { Birthday = Convert.ToDateTime(dtBDay.SelectedDate).Date, Active = true, MiddleName = txtMName.Text, LastName = txtLName.Text, FirstName = txtFName.Text, Email = txtEmail_Copy.Text, Sex = cmbSex.Text, SSS = txtSSS.Text, Suffix = txtSuffix.Text, TIN = txtTIN.Text, Status = cmbStatus.Text, Photo = ConvertImageToByteArray(selectedFileName), isConfirmed=true };
+                                MailMessage msg = new MailMessage();
+                                msg.To.Add(email);
+                                msg.From = new MailAddress("aldrinarciga@gmail.com"); //See the note afterwards...
+                                msg.Body = message;
+                                SmtpClient smtp = new SmtpClient("smtp.gmail.com");
+                                smtp.EnableSsl = true;
+                                smtp.Port = 587;
+                                smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                                smtp.Credentials = new NetworkCredential("aldrinarciga@gmail.com", "312231212131");
+                                smtp.Send(msg);
+                            }
+                            catch (Exception)
+                            {
+
+                            }
+                        }
+
+                        Client clt = new Client { Birthday = Convert.ToDateTime(dtBDay.SelectedDate).Date, Active = true, MiddleName = txtMName.Text, LastName = txtLName.Text, FirstName = txtFName.Text, Email = txtEmail_Copy.Text, Sex = cmbSex.Text, SSS = txtSSS.Text, Suffix = txtSuffix.Text, TIN = txtTIN.Text, Status = cmbStatus.Text, Photo = ConvertImageToByteArray(selectedFileName), isConfirmed=true, isRegistered=false, TrackingNumber = result };
 
                         var ads = from ad in ctx.TempHomeAddresses
                                   select ad;
@@ -2220,7 +2265,7 @@ namespace LoanManagement.Desktop
                         return;
                     }
 
-                    using (var ctx = new newContext())
+                    using (var ctx = new newerContext())
                     {
                         var ads = ctx.HomeAddresses.Where(x=> x.ClientID == cId).Count();
                         var con = ctx.ClientContacts.Where(x => x.ClientID == cId).Count();
@@ -2232,9 +2277,43 @@ namespace LoanManagement.Desktop
                         }
                     }
 
-                    using (var ctx = new newContext())
+                    using (var ctx = new newerContext())
                     {
+                        
                         var clt = ctx.Clients.Find(cId);
+                        if (txtEmail_Copy.Text != clt.Email && clt.isRegistered == false)
+                        {
+                            var c = ctx.Clients.Where(x => x.Email == txtEmail_Copy.Text).Count();
+                            if (c > 0)
+                            {
+                                System.Windows.MessageBox.Show("Email has been already used", "Information", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                                return;
+                            }
+                            else
+                            {
+                                try
+                                {
+                                    string email = txtEmail_Copy.Text;
+                                    string link = "http://localhost:7234/RegisterUser.aspx?id=" + clt.TrackingNumber;
+                                    string message = "You have to click the following link in order to create your account to use our online features: " + link + "\n OR use the Tracking number below: \n " + clt.TrackingNumber;
+
+                                    MailMessage msg = new MailMessage();
+                                    msg.To.Add(email);
+                                    msg.From = new MailAddress("aldrinarciga@gmail.com"); //See the note afterwards...
+                                    msg.Body = message;
+                                    SmtpClient smtp = new SmtpClient("smtp.gmail.com");
+                                    smtp.EnableSsl = true;
+                                    smtp.Port = 587;
+                                    smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                                    smtp.Credentials = new NetworkCredential("aldrinarciga@gmail.com", "312231212131");
+                                    smtp.Send(msg);
+                                }
+                                catch (Exception)
+                                { 
+                                
+                                }
+                            }
+                        }
                         clt.Birthday = Convert.ToDateTime(dtBDay.SelectedDate).Date;
                         clt.MiddleName = txtMName.Text;
                         clt.LastName = txtLName.Text;
@@ -2279,7 +2358,7 @@ namespace LoanManagement.Desktop
             {
                 if (status == "Add")
                 {
-                    using (var ctx = new newContext())
+                    using (var ctx = new newerContext())
                     {
                         if (ctx.TempClientContacts.Count() < 2)
                         {
@@ -2311,7 +2390,7 @@ namespace LoanManagement.Desktop
                 else
                 {
                     int n = Convert.ToInt32(getRow(dgContact, 0));
-                    using (var ctx = new newContext())
+                    using (var ctx = new newerContext())
                     {
                         var cts = from ct in ctx.ClientContacts
                                   where ct.ClientID == cId
@@ -2347,7 +2426,7 @@ namespace LoanManagement.Desktop
             MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure you want to delete this record?", "Question", MessageBoxButton.YesNo);
             if (mr == MessageBoxResult.Yes)
             {
-                using (var ctx = new newContext())
+                using (var ctx = new newerContext())
                 {
                     var agt = ctx.Clients.Find(cId);
                     agt.Active = false;

@@ -69,7 +69,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newContext())
+                using (var ctx = new newerContext())
                 {
                     var emp = from em in ctx.Employees where em.Active == status select new { em.EmployeeID, em.FirstName, em.MI, em.LastName, em.Suffix, em.Position.PositionName };
                     dgEmp.ItemsSource = emp.ToList();
@@ -101,7 +101,7 @@ namespace LoanManagement.Desktop
                     btnView.Visibility = Visibility.Hidden;
                     btnAdd.Visibility = Visibility.Hidden;
                     btnRet.Visibility = Visibility.Visible;
-                    myLbL.Content = "Employee Retreival";
+                    myLbL.Content = "Employee Retrieval";
                 }
             }
             catch (Exception ex)
@@ -116,7 +116,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newContext())
+                using (var ctx = new newerContext())
                 {
                     img.Visibility = Visibility.Visible;
                     var emp = ctx.Employees.Find(Convert.ToInt32(getRow(dgEmp, 0)));
@@ -202,17 +202,17 @@ namespace LoanManagement.Desktop
             try
             {
                 int n = Convert.ToInt32(getRow(dgEmp, 0));
-                MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure you want to retreive this record?", "Question", MessageBoxButton.YesNo);
+                MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure you want to Retrieve this record?", "Question", MessageBoxButton.YesNo);
                 if (mr == MessageBoxResult.Yes)
                 {
-                    using (var ctx = new newContext())
+                    using (var ctx = new newerContext())
                     {
                         var agt = ctx.Employees.Find(n);
                         agt.Active = true;
                         AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Retrieved Employee " + agt.FirstName + " " + agt.MI + " " + agt.LastName + " " + agt.Suffix };
                         ctx.AuditTrails.Add(at);
                         ctx.SaveChanges();
-                        System.Windows.MessageBox.Show("Record has been successfully retreived", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                        System.Windows.MessageBox.Show("Record has been successfully Retrieved", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                         resetGrid();
                     }
                 }
@@ -228,7 +228,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newContext())
+                using (var ctx = new newerContext())
                 {
                     img.Visibility = Visibility.Visible;
                     var emp = ctx.Employees.Find(Convert.ToInt32(getRow(dgEmp, 0)));
@@ -257,7 +257,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newContext())
+                using (var ctx = new newerContext())
                 {
                     int n;
                     try

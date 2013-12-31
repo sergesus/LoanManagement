@@ -9,7 +9,7 @@ using System.Data.Entity;
 namespace LoanManagement.Domain
 {
 
-    public class newContext : DbContext
+    public class newerContext : DbContext
     {
         public DbSet<State> State { get; set; }
         public DbSet<User> Users { get; set; }
@@ -71,6 +71,7 @@ namespace LoanManagement.Domain
         public DbSet<PassedToCollector> PassedToCollectors { get; set; }
         public DbSet<CollectionInfo> CollectionInfoes { get; set; }
         //public DbSet<CancelledLoan> CancelledLoans { get; set; }
+        public DbSet<iClientExpiration> iClientExpirations { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -170,9 +171,12 @@ namespace LoanManagement.Domain
             modelBuilder.Entity<PassedToCollector>()
                 .HasKey(x => x.LoanID)
                 .HasRequired(x => x.Loan);
-            //modelBuilder.Entity<CancelledLoan>()
-            //    .HasKey(x => x.LoanID)
-            //    .HasRequired(x => x.Loan);
+            modelBuilder.Entity<CancelledLoan>()
+                .HasKey(x => x.LoanID)
+                .HasRequired(x => x.Loan);
+            modelBuilder.Entity<iClientExpiration>()
+                .HasKey(x => x.ClientID)
+                .HasRequired(x => x.Client);
         }
     }
 
@@ -389,7 +393,8 @@ namespace LoanManagement.Domain
 
         public String Username { get; set; }
         public String Password { get; set; }
-        public bool isConfirmed { get; set; }
+        public bool isConfirmed { get; set; } //backend
+        public bool isRegistered { get; set; } //registered
 
         public String TrackingNumber { get; set; }
 
@@ -399,6 +404,8 @@ namespace LoanManagement.Domain
         public ICollection<Work> Work { get; set; }
         public ICollection<Spouse> Spouse { get; set; }
         public ICollection<Reference> Reference { get; set; }
+
+        public virtual iClientExpiration iClientExpiration { get; set; }
     }
 
     public class HomeAddress
@@ -631,6 +638,7 @@ namespace LoanManagement.Domain
         public int CoBorrower { get; set; }
         public string Mode { get; set; }
         public string Status { get; set; }
+        public string ApplicationType { get; set; }
         public int CI { get; set; }
 
         public int ServiceID { get; set; }
@@ -665,13 +673,13 @@ namespace LoanManagement.Domain
         public virtual Loan Loan { get; set; }
     }
 
-    //public class CancelledLoan
-    //{
-    //    public int LoanID { get; set; }
-    //    public DateTime DateClosed { get; set; }
+    public class CancelledLoan
+    {
+        public int LoanID { get; set; }
+        public DateTime DateClosed { get; set; }
 
-    //    public virtual Loan Loan { get; set; }
-    //}
+        public virtual Loan Loan { get; set; }
+    }
 
     public class DeclinedLoan
     {
@@ -927,6 +935,14 @@ namespace LoanManagement.Domain
 
         public int LoanID { get; set; }
         public virtual Loan Loan { get; set; }
+    }
+
+    public class iClientExpiration
+    {
+        public int ClientID { get; set; }
+        public DateTime ExpirationDate { get; set; }
+
+        public virtual Client Client { get; set; }
     }
 
 }

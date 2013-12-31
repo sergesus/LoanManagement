@@ -48,7 +48,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newContext())
+                using (var ctx = new newerContext())
                 {
                     DateTime dt = DateTime.Today.Date.AddDays(7);
                     var lons = from lo in ctx.FPaymentInfo
@@ -105,7 +105,7 @@ namespace LoanManagement.Desktop
 
         private void checkState()
         {
-            using (var ctx = new newContext())
+            using (var ctx = new newerContext())
             {
                 var st = ctx.State.Find(1);
                 if (st.iState > 2)
@@ -129,7 +129,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newContext())
+                using (var ctx = new newerContext())
                 {
                     var lon = from lo in ctx.FPaymentInfo
                               where lo.PaymentDate <= DateTime.Today.Date && (lo.PaymentStatus == "Pending" || lo.PaymentStatus == "On Hold")
@@ -352,7 +352,7 @@ namespace LoanManagement.Desktop
                 checkDue();
                 remind();
                 /*
-                using (var ctx = new newContext())
+                using (var ctx = new newerContext())
                 {
                     Domain.Position pos = new Domain.Position { PositionName = "Administrator", Description = "ForAdmins" };
                     ctx.SaveChanges();
@@ -417,7 +417,7 @@ namespace LoanManagement.Desktop
 
 
 
-                using (var ctx = new newContext())
+                using (var ctx = new newerContext())
                 {
                     var count = ctx.Users.Where(x => x.Username == txtUsername.Text && x.Password == txtPassword.Password).Count();
                     if (count > 0)
@@ -513,7 +513,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newContext())
+                using (var ctx = new newerContext())
                 {
                     var ctr = ctx.Users.Where(x => x.Username == txtUsername.Text).Count();
                     if (ctr > 0)
@@ -552,7 +552,7 @@ namespace LoanManagement.Desktop
             int ascii = Convert.ToInt16(e.Key);
             if (ascii == 2)
             {
-                using (var ctx = new newContext())
+                using (var ctx = new newerContext())
                 {
                     var st = ctx.State.Find(1);
                     if (st.iState > 2)

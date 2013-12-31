@@ -84,7 +84,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newContext())
+                using (var ctx = new newerContext())
                 {
                     var emp = from em in ctx.Agents where em.Active == status select new { em.AgentID, em.FirstName, em.MI, em.LastName, em.Suffix };
                     dgEmp.ItemsSource = emp.ToList();
@@ -114,7 +114,7 @@ namespace LoanManagement.Desktop
                     btnView.Visibility = Visibility.Hidden;
                     btnAdd.Visibility = Visibility.Hidden;
                     btnRet.Visibility = Visibility.Visible;
-                    myLbL.Content = "Agent Retreival";
+                    myLbL.Content = "Agent Retrieval";
                 }
             }
             catch (Exception ex)
@@ -128,7 +128,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newContext())
+                using (var ctx = new newerContext())
                 {
                     img.Visibility = Visibility.Visible;
                     var emp = ctx.Agents.Find(Convert.ToInt32(getRow(dgEmp, 0)));
@@ -205,14 +205,14 @@ namespace LoanManagement.Desktop
                 MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure you want to retrive this record?","Question",MessageBoxButton.YesNo);
                 if (mr == MessageBoxResult.Yes)
                 {
-                    using (var ctx = new newContext())
+                    using (var ctx = new newerContext())
                     {
                         var agt = ctx.Agents.Find(n);
                         agt.Active = true;
                         AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Retrieved Agent " + agt.FirstName + " " + agt.MI + " " + agt.LastName + " " + agt.Suffix };
                         ctx.AuditTrails.Add(at);
                         ctx.SaveChanges();
-                        System.Windows.MessageBox.Show("Record has been successfully retreived", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                        System.Windows.MessageBox.Show("Record has been successfully Retrieved", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                         resetGrid();
                     }
                 }
@@ -228,7 +228,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newContext())
+                using (var ctx = new newerContext())
                 {
                     int n;
                     try

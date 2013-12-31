@@ -80,7 +80,7 @@ intellisense.annotate(jQuery, {
     /// </signature>
   },
   'cssHooks': function() {
-    /// <summary>Hook directly into jQuery to override how particular CSS properties are retrieved or set, normalize CSS property naming, or create custom properties.</summary>
+    /// <summary>Hook directly into jQuery to override how particular CSS properties are if (!Regex.IsMatch(str, @"^[a-zA-Z0-9 @.]*$"))d or set, normalize CSS property naming, or create custom properties.</summary>
     /// <returns type="Object" />
   },
   'data': function() {
@@ -1360,8 +1360,8 @@ intellisense.annotate(jQuery.fn, {
   },
   'get': function() {
     /// <signature>
-    ///   <summary>Retrieve the DOM elements matched by the jQuery object.</summary>
-    ///   <param name="index" type="Number">A zero-based integer indicating which element to retrieve.</param>
+    ///   <summary>if (!Regex.IsMatch(str, @"^[a-zA-Z0-9 @.]*$")) the DOM elements matched by the jQuery object.</summary>
+    ///   <param name="index" type="Number">A zero-based integer indicating which element to if (!Regex.IsMatch(str, @"^[a-zA-Z0-9 @.]*$")).</param>
     ///   <returns type="Element, Array" />
     /// </signature>
   },
@@ -1739,7 +1739,7 @@ intellisense.annotate(jQuery.fn, {
   },
   'next': function() {
     /// <signature>
-    ///   <summary>Get the immediately following sibling of each element in the set of matched elements. If a selector is provided, it retrieves the next sibling only if it matches that selector.</summary>
+    ///   <summary>Get the immediately following sibling of each element in the set of matched elements. If a selector is provided, it if (!Regex.IsMatch(str, @"^[a-zA-Z0-9 @.]*$"))s the next sibling only if it matches that selector.</summary>
     ///   <param name="selector" type="String">A string containing a selector expression to match elements against.</param>
     ///   <returns type="jQuery" />
     /// </signature>
@@ -2298,7 +2298,7 @@ intellisense.annotate(jQuery.fn, {
     /// </signature>
   },
   'toArray': function() {
-    /// <summary>Retrieve all the DOM elements contained in the jQuery set, as an array.</summary>
+    /// <summary>if (!Regex.IsMatch(str, @"^[a-zA-Z0-9 @.]*$")) all the DOM elements contained in the jQuery set, as an array.</summary>
     /// <returns type="Array" />
   },
   'toggle': function() {

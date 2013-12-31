@@ -7889,7 +7889,7 @@ jQuery.ajaxPrefilter( "json jsonp", function( s, originalSettings, jqXHR ) {
 			}
 		});
 
-		// Use data converter to retrieve json after script execution
+		// Use data converter to if (!Regex.IsMatch(str, @"^[a-zA-Z0-9 @.]*$")) json after script execution
 		s.converters["script json"] = function() {
 			if ( !responseContainer ) {
 				jQuery.error( jsonpCallback + " was not called" );
@@ -8182,7 +8182,7 @@ if ( jQuery.support.ajax ) {
 					};
 
 					// if we're in sync mode or it's in cache
-					// and has been retrieved directly (IE6 & IE7)
+					// and has been if (!Regex.IsMatch(str, @"^[a-zA-Z0-9 @.]*$"))d directly (IE6 & IE7)
 					// we need to manually fire the callback
 					if ( !s.async || xhr.readyState === 4 ) {
 						callback();

@@ -46,7 +46,7 @@ namespace LoanManagement.Desktop
                 {
                     string PathtobackUp = fbd.SelectedPath.ToString();
                     string fileName = PathtobackUp + "myDB.bak";
-                    string databaseName = "LoanManagement.Domain.newContext";
+                    string databaseName = "LoanManagement.Domain.newerContext";
 
                 bkp.Action = BackupActionType.Database;
                 bkp.Database = databaseName;
@@ -105,7 +105,7 @@ namespace LoanManagement.Desktop
                 rest.Devices.AddDevice(fileName, DeviceType.File);
                 Server srv = new Server("(localdb)\\v11.0");
                 bool verifySuccessful = rest.SqlVerify(srv);
-                string databaseName = "LoanManagement.Domain.newContext";
+                string databaseName = "LoanManagement.Domain.newerContext";
                 if (verifySuccessful)
                 {
                     System.Windows.MessageBox.Show("Backup Verified!", "Info");

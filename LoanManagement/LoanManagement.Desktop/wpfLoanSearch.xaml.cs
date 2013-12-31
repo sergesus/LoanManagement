@@ -63,7 +63,7 @@ namespace LoanManagement.Desktop
                 }
                 if (status == "UApproval")
                 {
-                    using (var ctx = new newContext())
+                    using (var ctx = new newerContext())
                     {
                         var lon = from ln in ctx.Loans
                                   where (ln.Status == "Approved" || ln.Status == "Declined") && ln.Service.Department == iDept && (ln.LoanID == n || ln.Service.Name.Contains(txtSearch.Text) || (ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName).Replace(" ","").Contains(txtSearch.Text.Replace(" ","")))
@@ -74,7 +74,7 @@ namespace LoanManagement.Desktop
                 }
                 else if (status == "Approval" || status == "Application")
                 {
-                    using (var ctx = new newContext())
+                    using (var ctx = new newerContext())
                     {
                         var lon = from ln in ctx.Loans
                                   where ln.Status == "Applied" && ln.Service.Department == iDept && (ln.LoanID == n || ln.Service.Name.Contains(txtSearch.Text) || (ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName).Replace(" ","").Contains(txtSearch.Text.Replace(" ","")))
@@ -85,7 +85,7 @@ namespace LoanManagement.Desktop
                 }
                 else if (status == "Releasing")
                 {
-                    using (var ctx = new newContext())
+                    using (var ctx = new newerContext())
                     {
                         var lon = from ln in ctx.Loans
                                   where ln.Status == "Approved" && ln.Service.Department == iDept && (ln.LoanID == n || ln.Service.Name.Contains(txtSearch.Text) || (ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName).Replace(" ","").Contains(txtSearch.Text.Replace(" ","")))
@@ -98,7 +98,7 @@ namespace LoanManagement.Desktop
                 {
                     if (iDept == "Financing")
                     {
-                        using (var ctx = new newContext())
+                        using (var ctx = new newerContext())
                         {
                             var lon = from ln in ctx.Loans
                                       where ln.Status == "Released" && ln.Service.Department == iDept && ln.FPaymentInfo.Where(x => x.PaymentStatus != "Pending").Count() == 0 && (ln.LoanID == n || ln.Service.Name.Contains(txtSearch.Text) || (ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName).Replace(" ", "").Contains(txtSearch.Text.Replace(" ", "")))
@@ -109,7 +109,7 @@ namespace LoanManagement.Desktop
                     }
                     else
                     {
-                        using (var ctx = new newContext())
+                        using (var ctx = new newerContext())
                         {
                             var lon = from ln in ctx.Loans
                                       where ln.Status == "Released" && ln.Service.Department == iDept && (ln.LoanID == n || ln.Service.Name.Contains(txtSearch.Text) || (ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName).Replace(" ", "").Contains(txtSearch.Text.Replace(" ", "")))
@@ -121,7 +121,7 @@ namespace LoanManagement.Desktop
                 }
                 else if (status == "Holding")
                 {
-                    using (var ctx = new newContext())
+                    using (var ctx = new newerContext())
                     {
                         var lon = from ln in ctx.Loans
                                   where (ln.Status == "Released" || ln.Status == "Active") && ln.Service.Department == iDept && (ln.LoanID == n || ln.Service.Name.Contains(txtSearch.Text) || (ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName).Replace(" ","").Contains(txtSearch.Text.Replace(" ","")))
@@ -132,7 +132,7 @@ namespace LoanManagement.Desktop
                 }
                 else if (status == "Voiding")
                 {
-                    using (var ctx = new newContext())
+                    using (var ctx = new newerContext())
                     {
                         var lon = from ln in ctx.Loans
                                   where (ln.Status == "Released" || ln.Status == "Active" || ln.Status=="Paid") && ln.Service.Department == iDept && (ln.LoanID == n || ln.Service.Name.Contains(txtSearch.Text) || (ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName).Replace(" ","").Contains(txtSearch.Text.Replace(" ","")))
@@ -143,7 +143,7 @@ namespace LoanManagement.Desktop
                 }
                 else if (status == "Voiding2")
                 {
-                    using (var ctx = new newContext())
+                    using (var ctx = new newerContext())
                     {
                         var lon = from ln in ctx.Loans
                                   where (ln.Status == "Under Collection") && (ln.LoanID == n || ln.Service.Name.Contains(txtSearch.Text) || (ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName).Replace(" ", "").Contains(txtSearch.Text.Replace(" ", "")))
@@ -154,7 +154,7 @@ namespace LoanManagement.Desktop
                 }
                 else if (status == "VoidClosed")
                 {
-                    using (var ctx = new newContext())
+                    using (var ctx = new newerContext())
                     {
                         var lon = from ln in ctx.Loans
                                   where ln.Status == "Closed Account" && ln.Service.Department == iDept && (ln.LoanID == n || ln.Service.Name.Contains(txtSearch.Text) || (ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName).Replace(" ","").Contains(txtSearch.Text.Replace(" ","")))
@@ -165,7 +165,7 @@ namespace LoanManagement.Desktop
                 }
                 else if (status == "Pass")
                 {
-                    using (var ctx = new newContext())
+                    using (var ctx = new newerContext())
                     {
                         var lon = from ln in ctx.Loans
                                   where ln.Status == "Closed Account" && ln.Service.Department == iDept && (ln.LoanID == n || ln.Service.Name.Contains(txtSearch.Text) || (ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName).Replace(" ", "").Contains(txtSearch.Text.Replace(" ", "")))
@@ -176,7 +176,7 @@ namespace LoanManagement.Desktop
                 }
                 else if (status == "Renewal")
                 {
-                    using (var ctx = new newContext())
+                    using (var ctx = new newerContext())
                     {
                         var lon = from ln in ctx.Loans
                                   where ln.Status == "Closed Account" && ln.Service.Department == iDept && (ln.LoanID == n || ln.Service.Name.Contains(txtSearch.Text) || (ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName).Replace(" ","").Contains(txtSearch.Text.Replace(" ","")))
@@ -187,7 +187,7 @@ namespace LoanManagement.Desktop
                 }
                 else if (status == "Adjustment")
                 {
-                    using (var ctx = new newContext())
+                    using (var ctx = new newerContext())
                     {
                         var lon = from ln in ctx.Loans
                                   where (ln.Status == "Released" || ln.Status == "Active") && (ln.FPaymentInfo.Where(x => x.PaymentStatus == "Due" || x.PaymentStatus == "On Hold" || x.PaymentStatus == "Due" || x.PaymentStatus == "Due/Pending").Count() < 1) && ln.Service.Department == iDept && (ln.LoanID == n || ln.Service.Name.Contains(txtSearch.Text) || (ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName).Replace(" ","").Contains(txtSearch.Text.Replace(" ","")))
@@ -198,7 +198,7 @@ namespace LoanManagement.Desktop
                 }
                 else if (status == "Restructure")
                 {
-                    using (var ctx = new newContext())
+                    using (var ctx = new newerContext())
                     {
                         var lon = from ln in ctx.Loans
                                   where ((ln.Status == "Released" || ln.Status == "Active") && (ln.FPaymentInfo.Where(x => x.PaymentStatus == "Cleared").Count() >= 3)) || (ln.Status == "Closed Account") && ln.Service.Department == iDept && (ln.LoanID == n || ln.Service.Name.Contains(txtSearch.Text) || (ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName).Replace(" ","").Contains(txtSearch.Text.Replace(" ","")))
@@ -209,7 +209,7 @@ namespace LoanManagement.Desktop
                 }
                 else if(status=="View")
                 {
-                    using (var ctx = new newContext())
+                    using (var ctx = new newerContext())
                     {
                         var lon = from ln in ctx.Loans
                                   where (ln.LoanID == n || ln.Service.Name.Contains(txtSearch.Text) || (ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName).Replace(" ","").Contains(txtSearch.Text.Replace(" ","")))
@@ -220,7 +220,7 @@ namespace LoanManagement.Desktop
                 }
                 else if (status == "Aging")
                 {
-                    using (var ctx = new newContext())
+                    using (var ctx = new newerContext())
                     {
                         //var ctr = ctx.Loans.Where(x=> x.LoanID == 5)
                         var lon = from ln in ctx.Loans
@@ -295,7 +295,7 @@ namespace LoanManagement.Desktop
                 {
                     if (iDept == "Financing")
                     {
-                        using (var ctx = new newContext())
+                        using (var ctx = new newerContext())
                         {
                             int n = Convert.ToInt32(getRow(dgLoan, 0));
                             int num = ctx.FPaymentInfo.Where(x => x.LoanID == n && x.PaymentStatus == "Deposited").Count();
@@ -342,7 +342,7 @@ namespace LoanManagement.Desktop
                     }
                     else
                     {
-                        using (var ctx = new newContext())
+                        using (var ctx = new newerContext())
                         {
                             int n = Convert.ToInt32(getRow(dgLoan, 0));
                             int num = ctx.MPaymentInfoes.Where(x => x.LoanID == n && x.PaymentStatus == "Paid").Count();
@@ -414,7 +414,7 @@ namespace LoanManagement.Desktop
                 }
                 else if (status == "Voiding2")
                 {
-                    using (var ctx = new newContext())
+                    using (var ctx = new newerContext())
                     {
                         int n = Convert.ToInt32(getRow(dgLoan, 0));
                         int num = ctx.CollectionInfoes.Where(x => x.LoanID == n).Count();
@@ -460,7 +460,7 @@ namespace LoanManagement.Desktop
                     if (mr == MessageBoxResult.Yes)
                     {
 
-                        using (var ctx = new newContext())
+                        using (var ctx = new newerContext())
                         {
                             var lon = ctx.Loans.Find(n);
                             lon.Status = "Released";//active
@@ -525,7 +525,7 @@ namespace LoanManagement.Desktop
                 {
                     if (status == "View")
                     {
-                        using (var ctx = new newContext())
+                        using (var ctx = new newerContext())
                         {
                             int n = Convert.ToInt32(getRow(dgLoan, 0));
                             var lon = ctx.Loans.Find(n);
@@ -534,6 +534,7 @@ namespace LoanManagement.Desktop
                                 wpfAppliedLoanInfo frm = new wpfAppliedLoanInfo();
                                 frm.lId = n;
                                 frm.status = "View";
+                                frm.UserID = UserID;
                                 frm.Height = 605.5;
                                 frm.ShowDialog();
                             }

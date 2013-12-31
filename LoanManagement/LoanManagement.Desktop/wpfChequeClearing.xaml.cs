@@ -48,7 +48,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newContext())
+                using (var ctx = new newerContext())
                 {
                     var chq = from ch in ctx.FPaymentInfo
                               where ch.PaymentStatus == "Deposited"
@@ -80,7 +80,7 @@ namespace LoanManagement.Desktop
                 //Grid grid = new Grid();
                 wdw1.Background = myBrush;
 
-                using (var ctx = new newContext())
+                using (var ctx = new newerContext())
                 {
                     ctx.Database.ExecuteSqlCommand("delete  from dbo.TempClearings");
                 }
@@ -97,7 +97,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newContext())
+                using (var ctx = new newerContext())
                 {
                     int n = Convert.ToInt32(getRow(dg1,0));
                     TempClearing tc = new TempClearing { FPaymentInfoID = n };
@@ -117,7 +117,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newContext())
+                using (var ctx = new newerContext())
                 {
                     int n = Convert.ToInt32(getRow(dg2, 0));
                     TempClearing tc = ctx.TempClearings.Where(x => x.FPaymentInfoID == n).First();
@@ -137,7 +137,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newContext())
+                using (var ctx = new newerContext())
                 {
                     ctx.Database.ExecuteSqlCommand("delete  from dbo.TempClearings");
                 }
@@ -154,7 +154,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newContext())
+                using (var ctx = new newerContext())
                 {
                     //ctx.Database.ExecuteSqlCommand("delete  from dbo.TempClearings");
                     var chq = from ch in ctx.FPaymentInfo
@@ -185,7 +185,7 @@ namespace LoanManagement.Desktop
             MessageBoxResult mr = MessageBox.Show("Are you sure you want to clear the selected cheque(s)?","Question",MessageBoxButton.YesNo);
             if (mr == MessageBoxResult.Yes)
             {
-                using (var ctx = new newContext())
+                using (var ctx = new newerContext())
                 {
                     var chq = from ch in ctx.TempClearings
                               select ch;
