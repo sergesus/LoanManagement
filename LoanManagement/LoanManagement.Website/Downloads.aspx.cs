@@ -15,6 +15,7 @@ namespace LoanManagement.Website
         {
             Session["Service"] = null;
             Session["iService"] = null;
+            Session["UpdateChecker"] = null;
             string path = @"F:/Loan Files/Downloads/";
             List<String> lst = new List<String>();
             

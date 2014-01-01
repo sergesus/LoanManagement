@@ -12,6 +12,7 @@ namespace LoanManagement.Website
         protected void Page_Load(object sender, EventArgs e)
         {
             Session["Service"] = null;
+            Session["UpdateChecker"] = null;
             Session["iService"] = null;
         }
 

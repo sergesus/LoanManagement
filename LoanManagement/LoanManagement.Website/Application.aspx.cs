@@ -21,16 +21,7 @@ namespace LoanManagement.Website
                 using (var ctx = new newerContext())
                 {
                     int n = Convert.ToInt32(Session["ID"]);
-                    var c = ctx.TemporaryLoanApplications.Where(x => x.ClientID == n).Count();
-                    if (c > 0)
-                    {
-                        lblCheck.Text = "You still have a pending online application that needs to be confirmed. You cannot apply for another loan.";
-                        lblCheck.Visible = true;
-                        pnlForm.Visible = !true;
-                        return;
-                    }
-
-                    c = ctx.Loans.Where(x => x.ClientID == n && (x.Status=="Applied" || x.Status=="Under Collection" || x.Status=="Closed Account" || x.Status=="Released")).Count();
+                    var c = ctx.Loans.Where(x => x.ClientID == n && (x.Status == "Applied" || x.Status == "Under Collection" || x.Status == "Closed Account" || x.Status == "Released")).Count();
                     if (c > 0)
                     {
                         lblCheck.Text = "You still have an existing loan application OR a loan that is not yet finished. You cannot apply for another loan.";
@@ -38,14 +29,32 @@ namespace LoanManagement.Website
                         pnlForm.Visible = !true;
                         return;
                     }
-                }
-                pnlForm.Visible = true;
-                lnkBtn.Visible = false;
-                if (Session["Service"] == null)
-                {
-                    checkTOL();
-                    checkMode();
-                    cmbTOL_SelectedIndexChanged(null, null);
+
+                    pnlForm.Visible = true;
+                    lnkBtn.Visible = false;
+                    if (Session["Service"] == null)
+                    {
+                        checkTOL();
+                        checkMode();
+                        cmbTOL_SelectedIndexChanged(null, null);
+                    }
+                    c = ctx.TemporaryLoanApplications.Where(x => x.ClientID == n).Count();
+                    if (c > 0)
+                    {
+                        lblCheck.Text = "You still have a pending online application that needs to be confirmed. You cannot apply for another loan, but you are able to update it.";
+                        lblCheck.Visible = true;
+                        pnlForm.Visible = true;
+                        if (Session["UpdateChecker"] == null)
+                        {
+                            var lon = ctx.TemporaryLoanApplications.Where(x => x.ClientID == n).First();
+                            cmbMode.Text = lon.Mode;
+                            cmbTOL.Text = lon.Service.Name;
+                            txtAmt.Text = lon.AmountApplied.ToString("N2");
+                            txtTerm.Text = lon.Term.ToString();
+                            Session["UpdateChecker"] = "1";
+                        }
+                        //return;
+                    }
                 }
             }
             else
@@ -87,46 +96,55 @@ namespace LoanManagement.Website
         {
             using (var ctx = new newerContext())
             {
-                string value = cmbTOL.Text;
-                var ser = ctx.Services.Where(x => x.Name == value).First();
-                Session["Service"] = ser.ServiceID.ToString();
+                int n = Convert.ToInt32(Session["ID"]);
+                var c = ctx.TemporaryLoanApplications.Where(x => x.ClientID == n).Count();
+                    string value = cmbTOL.Text;
+                    var ser = ctx.Services.Where(x => x.Name == value).First();
+                    Session["Service"] = ser.ServiceID.ToString();
 
-                cmbMode.Items.Clear();
+                    cmbMode.Items.Clear();
 
-                if (ser.Department == "Financing")
-                {
-                    cmbMode.Items.Add("Monthly");
-                    cmbMode.Items.Add("Semi-Monthly");
-                    cmbMode.Items.Add("One-Time Payment");
-                }
-                else if (ser.Department == "Micro Business")
-                {
-                    cmbMode.Items.Add("Semi-Monthly");
-                    cmbMode.Items.Add("Weekly");
-                    cmbMode.Items.Add("Daily");
-                }
+                    if (ser.Department == "Financing")
+                    {
+                        cmbMode.Items.Add("Monthly");
+                        cmbMode.Items.Add("Semi-Monthly");
+                        cmbMode.Items.Add("One-Time Payment");
+                    }
+                    else if (ser.Department == "Micro Business")
+                    {
+                        cmbMode.Items.Add("Semi-Monthly");
+                        cmbMode.Items.Add("Weekly");
+                        cmbMode.Items.Add("Daily");
+                    }
 
-                double ded = ser.AgentCommission;
-                var de = from d in ctx.Deductions
-                         where d.ServiceID == ser.ServiceID
-                         select d;
+                    double ded = ser.AgentCommission;
+                    var de = from d in ctx.Deductions
+                             where d.ServiceID == ser.ServiceID
+                             select d;
 
-                foreach (var itm in de)
-                {
-                    ded = ded + itm.Percentage;
-                }
-                lblDed.Text = "Total Deduction: " + ded + "%";
-                lblInt.Text = "Total Interest: " + ser.Interest + "%";
-                lblAmt.Text = "(Min. of " + ser.MinValue.ToString("C") + " and Max. of " + ser.MaxValue.ToString("C") + ")";
-                lblTerm.Text = "(Min. of " + ser.MinTerm + " month(s) and Max. of " + ser.MaxTerm + " month(s))";
-             }
+                    foreach (var itm in de)
+                    {
+                        ded = ded + itm.Percentage;
+                    }
+                    lblDed.Text = "Total Deduction: " + ded + "%";
+                    lblInt.Text = "Total Interest: " + ser.Interest + "%";
+                    lblAmt.Text = "(Min. of " + ser.MinValue.ToString("C") + " and Max. of " + ser.MaxValue.ToString("C") + ")";
+                    lblTerm.Text = "(Min. of " + ser.MinTerm + " month(s) and Max. of " + ser.MaxTerm + " month(s))";
+
+                
+            }
         }
 
         protected void btnApply_Click(object sender, EventArgs e)
         {
-            if (Session["ref"] == "false")
+            if (Session["ID"] == null)
             {
-                Response.Redirect("/Application.aspx");
+                Response.Redirect("/Index.aspx");
+            }
+            if (txtCaptcha.Text == "")
+            {
+                lblCaptcha.Visible = true;
+                return;
             }
             CaptchaControl1.ValidateCaptcha(txtCaptcha.Text);
             if (!CaptchaControl1.UserValidated)
@@ -155,17 +173,40 @@ namespace LoanManagement.Website
                     lblError.Visible = true;
                     return;
                 }
+                int n = Convert.ToInt32(Session["ID"]);
+                var c = ctx.TemporaryLoanApplications.Where(x => x.ClientID == n).Count();
+                if (c > 0)
+                {
+                    using (var ictx = new newerContext())
+                    {
+                        int num = Convert.ToInt32(Session["ID"]);
+                        var ln = ictx.TemporaryLoanApplications.Where(x => x.ClientID == num).First();
+                        ln.Mode = cmbMode.Text;
+                        ln.AmountApplied = Convert.ToDouble(txtAmt.Text);
+                        ln.Term = Convert.ToInt32(txtTerm.Text);
+                        ln.ServiceID = ser.ServiceID;
+                        ictx.Entry(ln).State = System.Data.EntityState.Modified;
+                        ictx.SaveChanges();
 
-                TemporaryLoanApplication lon = new TemporaryLoanApplication { AmountApplied = Convert.ToDouble(txtAmt.Text), ClientID = Convert.ToInt32(Session["ID"]), DateApplied = DateTime.Now.Date, ExpirationDate = DateTime.Now.Date.AddMonths(1), Mode = cmbMode.Text, ServiceID = Convert.ToInt32(Session["Service"]), Term = Convert.ToInt32(txtTerm.Text) };
-                ctx.TemporaryLoanApplications.Add(lon);
-                ctx.SaveChanges();
-                Session["tempLoan"] = lon.TemporaryLoanApplicationID.ToString();
-                Response.Redirect("/ApplicationSuccess.aspx");
+                        Session["tempLoan"] = ln.TemporaryLoanApplicationID.ToString();
+                        Response.Redirect("/ApplicationSuccess.aspx");
+                        //Response.Redirect("/MyAccount_Loans.aspx");
+                        return;
+                    }
+                }
+                else
+                {
+                    TemporaryLoanApplication lon = new TemporaryLoanApplication { AmountApplied = Convert.ToDouble(txtAmt.Text), ClientID = Convert.ToInt32(Session["ID"]), DateApplied = DateTime.Now.Date, ExpirationDate = DateTime.Now.Date.AddMonths(1), Mode = cmbMode.Text, ServiceID = Convert.ToInt32(Session["Service"]), Term = Convert.ToInt32(txtTerm.Text) };
+                    ctx.TemporaryLoanApplications.Add(lon);
+                    ctx.SaveChanges();
+                    Session["tempLoan"] = lon.TemporaryLoanApplicationID.ToString();
+                    Response.Redirect("/ApplicationSuccess.aspx");
+                }
             }
         }
 
         protected void cmbTOL_SelectedIndexChanged(object sender, EventArgs e)
-        {
+        {   
             checkMode();
         }
 

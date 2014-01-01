@@ -694,8 +694,8 @@ namespace LoanManagement.Domain
     {
         public int LoanID { get; set; }
         public double AmountApproved { get; set; }
-        public DateTime DateApproved { get; set; }
-        public DateTime ReleaseDate { get; set; }
+        public DateTime? DateApproved { get; set; }
+        public DateTime? ReleaseDate { get; set; }
 
         public virtual Loan Loan { get; set; }
     }
@@ -867,6 +867,9 @@ namespace LoanManagement.Domain
         public DateTime ExpirationDate { get; set; }
         public int ServiceID { get; set; }
         public int ClientID { get; set; }
+
+        public virtual Client Client { get; set; }
+        public virtual Service Service { get; set; }
     }
 
     public class Holiday

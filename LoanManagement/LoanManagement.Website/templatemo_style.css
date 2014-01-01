@@ -274,6 +274,14 @@ h5 {
 
 /* end of menu */
 
+#menu {
+    font-size: medium;
+}
+
+#menu li a:hover, #menu li .current{
+	color: #ffffff;
+}
+
 /* content */
 
 #templatemo_content_wrapper {

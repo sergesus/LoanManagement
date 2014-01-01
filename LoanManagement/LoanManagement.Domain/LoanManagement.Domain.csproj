@@ -45,6 +45,26 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Migrations\201401010633219_UpdatedTempLoans.cs" />
+    <Compile Include="Migrations\201401010633219_UpdatedTempLoans.Designer.cs">
+      <DependentUpon>201401010633219_UpdatedTempLoans.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201401010633435_Checker1.cs" />
+    <Compile Include="Migrations\201401010633435_Checker1.Designer.cs">
+      <DependentUpon>201401010633435_Checker1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201401010900296_Checker2.cs" />
+    <Compile Include="Migrations\201401010900296_Checker2.Designer.cs">
+      <DependentUpon>201401010900296_Checker2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201401010902346_Checker3.cs" />
+    <Compile Include="Migrations\201401010902346_Checker3.Designer.cs">
+      <DependentUpon>201401010902346_Checker3.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201401011208528_Tester.cs" />
+    <Compile Include="Migrations\201401011208528_Tester.Designer.cs">
+      <DependentUpon>201401011208528_Tester.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemData.cs" />
@@ -52,6 +72,23 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\201401010633219_UpdatedTempLoans.resx">
+      <DependentUpon>201401010633219_UpdatedTempLoans.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201401010633435_Checker1.resx">
+      <DependentUpon>201401010633435_Checker1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201401010900296_Checker2.resx">
+      <DependentUpon>201401010900296_Checker2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201401010902346_Checker3.resx">
+      <DependentUpon>201401010902346_Checker3.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201401011208528_Tester.resx">
+      <DependentUpon>201401011208528_Tester.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

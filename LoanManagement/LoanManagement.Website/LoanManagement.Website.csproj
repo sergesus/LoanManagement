@@ -75,9 +75,11 @@
     <Content Include="Calculator.aspx" />
     <Content Include="Confirmation.aspx" />
     <Content Include="Downloads.aspx" />
+    <Content Include="images\banner.gif" />
     <Content Include="images\contact_icon.png" />
     <Content Include="images\GFC.jpg" />
     <Content Include="images\home_icon.png" />
+    <Content Include="images\myImg.gif" />
     <Content Include="images\templatemo_banner_bg.jpg" />
     <Content Include="images\templatemo_body_bg.jpg" />
     <Content Include="images\templatemo_button_01.jpg" />
@@ -101,6 +103,10 @@
     <Content Include="Logo\GFC.jpg" />
     <Content Include="Logo\logo.jpg" />
     <Content Include="Logo\myImg.gif" />
+    <Content Include="MyAccount_Edit.aspx" />
+    <Content Include="MyAccount_Loans.aspx" />
+    <Content Include="MyAccount_Loans_LoanInfo.aspx" />
+    <Content Include="MyAccount_Main.aspx" />
     <Content Include="RegisterClient.aspx" />
     <Content Include="RegisterUser.aspx" />
     <Content Include="RegistrationSuccess.aspx" />
@@ -160,6 +166,34 @@
     </Compile>
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MyAccount_Edit.aspx.cs">
+      <DependentUpon>MyAccount_Edit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MyAccount_Edit.aspx.designer.cs">
+      <DependentUpon>MyAccount_Edit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MyAccount_Loans.aspx.cs">
+      <DependentUpon>MyAccount_Loans.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MyAccount_Loans.aspx.designer.cs">
+      <DependentUpon>MyAccount_Loans.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MyAccount_Loans_LoanInfo.aspx.cs">
+      <DependentUpon>MyAccount_Loans_LoanInfo.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MyAccount_Loans_LoanInfo.aspx.designer.cs">
+      <DependentUpon>MyAccount_Loans_LoanInfo.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MyAccount_Main.aspx.cs">
+      <DependentUpon>MyAccount_Main.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MyAccount_Main.aspx.designer.cs">
+      <DependentUpon>MyAccount_Main.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Index.aspx.cs">

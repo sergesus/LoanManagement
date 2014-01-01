@@ -14,7 +14,8 @@ namespace LoanManagement.Website
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            
+            Session["UpdateChecker"] = null;
+            Session["Service"] = null;
             if (Session["iService"] == null)
             {
                 checkTOL();

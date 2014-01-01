@@ -675,7 +675,7 @@ namespace LoanManagement.Desktop
 
                     //sheet.Cells[10, 1] = "Prepared By: " + emp2.LastName + ", " + emp2.FirstName + " " + emp2.MI + " " + emp2.Suffix;
                     sheet.PageSetup.LeftFooter = "Prepared By: " + emp2.LastName + ", " + emp2.FirstName + " " + emp2.MI + " " + emp2.Suffix;
-                    emp2 = ctx.Employees.Find(1);
+                    emp2 = ctx.Employees.Where(x=> x.PositionID == 1).First();
                     sheet.PageSetup.CenterFooter = "Confirmed By: " + emp2.LastName + ", " + emp2.FirstName + " " + emp2.MI + " " + emp2.Suffix;
 
                     int iNum = 0;

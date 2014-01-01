@@ -40,6 +40,11 @@ namespace LoanManagement.Website
 
         protected void btnRegister_Click(object sender, EventArgs e)
         {
+            if (txtCaptcha.Text == "")
+            {
+                lblCaptcha.Visible = true;
+                return;
+            }
             CaptchaControl1.ValidateCaptcha(txtCaptcha.Text);
             if (!CaptchaControl1.UserValidated)
             {
@@ -66,6 +71,13 @@ namespace LoanManagement.Website
                     if (txtPassword.Text != txtConfirm.Text)
                     {
                         lblCheck.Text = "Password didn't match";
+                        lblCheck.Visible = true;
+                        return;
+                    }
+
+                    if (txtPassword.Text.Length < 8)
+                    {
+                        lblCheck.Text = "Password length must be at least 8";
                         lblCheck.Visible = true;
                         return;
                     }

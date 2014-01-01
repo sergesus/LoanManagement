@@ -17,6 +17,7 @@ namespace LoanManagement.Website
             Page.Response.Cache.SetCacheability(HttpCacheability.NoCache);
             Session["Service"] = null;
             Session["iService"] = null;
+            Session["UpdateChecker"] = null;
             if (Session["ID"] != null)
             {
                 Response.Redirect("/Index.aspx");

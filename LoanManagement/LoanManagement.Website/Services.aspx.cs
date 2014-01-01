@@ -14,9 +14,9 @@ namespace LoanManagement.Website
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            Session["UpdateChecker"] = null;
             Session["Service"] = null;
             Session["iService"] = null;
-
             using (var ctx = new newerContext())
             {
                 var ser = from se in ctx.Services
@@ -26,6 +26,7 @@ namespace LoanManagement.Website
                 dg1.DataBind();
             }
         }
+
 
         protected void LinkButton1_Click(object sender, EventArgs e)
         {

@@ -6,7 +6,7 @@
 <head id="Head1" runat="server">
     <title>Guahan Finance Corporation</title>
     <link href="templatemo_style.css" rel="stylesheet" type="text/css" />
-
+    
     <style type="text/css">
         .auto-style1 {
             width: 100%;
@@ -49,10 +49,12 @@
         </div>
         
         <div id="top_menu">
+            <asp:PlaceHolder ID="PlaceHolder1" runat="server">
             <%if(Session["ID"]==null){ %>Welcome Guest!<asp:LinkButton ID="LinkButton2" runat="server" OnClick="LinkButton2_Click">(login)</asp:LinkButton>
 &nbsp;<%}else { %>Welcome <% string id = Session["NAME"].ToString(); Response.Write(id); %> 
             <asp:LinkButton ID="LinkButton1" runat="server" OnClick="LinkButton1_Click">(Logout)</asp:LinkButton>
             <%} %>
+            </asp:PlaceHolder>
         </div>
     
     </div> <!-- templatemo_site_title_bar -->
@@ -72,12 +74,14 @@
             <li><a href="Downloads.aspx">Downloads</a></li>
             <li><a href="Application.aspx">Application</a></li>
             <li><a href="Calculator.aspx">Loan Calc.</a></li>
+            <asp:PlaceHolder ID="PlaceHolder2" runat="server">
                 <%
                 if(Session["ID"]==null) {%>
                     <li><a href="Login.aspx">Login/Register</a></li>
                         <% }else {%>
-                    <li><a href="#">My Account</a></li>
+                    <li><a href="MyAccount_Main.aspx">My Account</a></li>
                         <% } %>
+                </asp:PlaceHolder>
         </ul>
     </div> <!-- end of menu -->
     
@@ -174,7 +178,10 @@
                 
                 
                 
-            </div> <!-- end of main column -->
+            </div> 
+            <asp:Panel ID="Panel1" runat="server">
+            </asp:Panel>
+            <!-- end of main column -->
              <!-- end of side column -->
             
             <div class="divider"> </div>

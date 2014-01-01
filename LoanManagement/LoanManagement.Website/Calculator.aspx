@@ -183,7 +183,7 @@
                 if(Session["ID"]==null) {%>
                     <li><a href="Login.aspx">Login/Register</a></li>
                         <% }else {%>
-                    <li><a href="#">My Account</a></li>
+                    <li><a href="MyAccount_Main.aspx">My Account</a></li>
                         <% } %>
         </ul>
     </div> <!-- end of menu -->

@@ -14,6 +14,11 @@ namespace LoanManagement.Website
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (Session["ID"] == null)
+            {
+                Response.Redirect("/Index.aspx");
+            }
+            Session["UpdateChecker"] = null;
             Page.Response.Cache.SetCacheability(HttpCacheability.NoCache);
             Session["Service"] = null;
             if (Session["tempLoan"] != null)
