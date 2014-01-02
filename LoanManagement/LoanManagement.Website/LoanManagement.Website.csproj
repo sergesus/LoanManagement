@@ -107,6 +107,8 @@
     <Content Include="MyAccount_Loans.aspx" />
     <Content Include="MyAccount_Loans_LoanInfo.aspx" />
     <Content Include="MyAccount_Main.aspx" />
+    <Content Include="MyAccount_Submit.aspx" />
+    <Content Include="MyAccount_Submit_Requirements.aspx" />
     <Content Include="RegisterClient.aspx" />
     <Content Include="RegisterUser.aspx" />
     <Content Include="RegistrationSuccess.aspx" />
@@ -194,6 +196,20 @@
     </Compile>
     <Compile Include="MyAccount_Main.aspx.designer.cs">
       <DependentUpon>MyAccount_Main.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MyAccount_Submit.aspx.cs">
+      <DependentUpon>MyAccount_Submit.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MyAccount_Submit.aspx.designer.cs">
+      <DependentUpon>MyAccount_Submit.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="MyAccount_Submit_Requirements.aspx.cs">
+      <DependentUpon>MyAccount_Submit_Requirements.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="MyAccount_Submit_Requirements.aspx.designer.cs">
+      <DependentUpon>MyAccount_Submit_Requirements.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Index.aspx.cs">

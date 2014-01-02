@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 
 using System.Data.Entity;
 using LoanManagement.Domain;
+using System.IO;
 
 namespace LoanManagement.Website
 {
@@ -194,14 +195,24 @@ namespace LoanManagement.Website
                         return;
                     }
                 }
+
+                TemporaryLoanApplication lon = new TemporaryLoanApplication { AmountApplied = Convert.ToDouble(txtAmt.Text), ClientID = Convert.ToInt32(Session["ID"]), DateApplied = DateTime.Now.Date, ExpirationDate = DateTime.Now.Date.AddMonths(1), Mode = cmbMode.Text, ServiceID = Convert.ToInt32(Session["Service"]), Term = Convert.ToInt32(txtTerm.Text) };
+                ctx.TemporaryLoanApplications.Add(lon);
+                ctx.SaveChanges();
+                Session["tempLoan"] = lon.TemporaryLoanApplicationID.ToString();
+                string folderName = @"F:\Loan Files\Applications Online";
+                string pathString = System.IO.Path.Combine(folderName, "Application " + Session["tempLoan"]);
+                if (!Directory.Exists(pathString))
+                {
+                    System.IO.Directory.CreateDirectory(pathString);
+                }
                 else
                 {
-                    TemporaryLoanApplication lon = new TemporaryLoanApplication { AmountApplied = Convert.ToDouble(txtAmt.Text), ClientID = Convert.ToInt32(Session["ID"]), DateApplied = DateTime.Now.Date, ExpirationDate = DateTime.Now.Date.AddMonths(1), Mode = cmbMode.Text, ServiceID = Convert.ToInt32(Session["Service"]), Term = Convert.ToInt32(txtTerm.Text) };
-                    ctx.TemporaryLoanApplications.Add(lon);
-                    ctx.SaveChanges();
-                    Session["tempLoan"] = lon.TemporaryLoanApplicationID.ToString();
-                    Response.Redirect("/ApplicationSuccess.aspx");
+                    Directory.Delete(pathString, true);
+                    System.IO.Directory.CreateDirectory(pathString);
                 }
+                Response.Redirect("/ApplicationSuccess.aspx");    
+                
             }
         }
 

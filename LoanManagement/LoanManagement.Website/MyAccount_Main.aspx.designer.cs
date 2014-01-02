@@ -238,6 +238,24 @@ namespace LoanManagement.Website {
         protected global::System.Web.UI.WebControls.Label lblContact;
         
         /// <summary>
+        /// Label14 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label Label14;
+        
+        /// <summary>
+        /// lblType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblType;
+        
+        /// <summary>
         /// ScriptManager1 control.
         /// </summary>
         /// <remarks>

@@ -7,6 +7,7 @@ using System.Web.UI.WebControls;
 
 using LoanManagement.Domain;
 using System.Data.Entity;
+using System.IO;
 
 namespace LoanManagement.Website
 {
@@ -81,8 +82,15 @@ namespace LoanManagement.Website
             {
                 int n = Convert.ToInt32(Session["ID"]);
                 var lon = ctx.TemporaryLoanApplications.Where(x => x.ClientID == n).First();
+                string folderName = @"F:\Loan Files\Applications Online";
+                string pathString = System.IO.Path.Combine(folderName, "Application " + lon.TemporaryLoanApplicationID.ToString());
+                if (Directory.Exists(pathString))
+                {
+                    Directory.Delete(pathString, true);
+                }
                 ctx.TemporaryLoanApplications.Remove(lon);
                 ctx.SaveChanges();
+                
                 string myStringVariable = "Loan application has been successfuly cancelled";
                 ClientScript.RegisterStartupScript(this.GetType(), "myalert", "alert('" + myStringVariable + "');", true);
                 Response.Redirect("/MyAccount_Loans.aspx");
@@ -104,12 +112,12 @@ namespace LoanManagement.Website
 
         protected void btnView_Click(object sender, EventArgs e)
         {
-            //try
-            //{
+            try
+            {
                 string s = dgLoans.SelectedRow.Cells[1].Text;
                 Response.Redirect("/MyAccount_Loans_LoanInfo.aspx?LoanID=" +s );
-            //}
-            //catch (Exception) { return; }
+            }
+            catch (Exception) { return; }
         } 
 
     }

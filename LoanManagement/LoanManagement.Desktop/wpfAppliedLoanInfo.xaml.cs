@@ -350,7 +350,17 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                Process.Start(@"F:\Loan Files\Loan " + lId.ToString());
+                string folderName = @"F:\Loan Files";
+                string pathString = System.IO.Path.Combine(folderName, "Loan " + lId.ToString());
+                if (!Directory.Exists(pathString))
+                {
+                    System.IO.Directory.CreateDirectory(pathString);
+                    Process.Start(@"F:\Loan Files\Loan " + lId.ToString());
+                }
+                else
+                {
+                    Process.Start(@"F:\Loan Files\Loan " + lId.ToString());
+                }
             }
             catch (Exception ex)
             {

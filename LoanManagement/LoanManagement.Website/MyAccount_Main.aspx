@@ -33,11 +33,14 @@
         .auto-style7 {
             width: 100%;
         }
-        .auto-style9 {
-            width: 55px;
-        }
         .auto-style10 {
             width: 2px;
+        }
+        .auto-style11 {
+            width: 120px;
+        }
+        .auto-style12 {
+            width: 185px;
         }
     </style>
 
@@ -126,7 +129,7 @@
                                     <table class="auto-style7">
                                         <tr>
                                             <td class="auto-style10">&nbsp;</td>
-                                            <td class="auto-style9">
+                                            <td class="auto-style12">
                                                 <asp:Label ID="Label6" runat="server" Font-Bold="True" Font-Size="Medium" Text="Name:"></asp:Label>
                                             </td>
                                             <td>
@@ -136,7 +139,7 @@
                                         </tr>
                                         <tr>
                                             <td class="auto-style10">&nbsp;</td>
-                                            <td class="auto-style9">
+                                            <td class="auto-style12">
                                                 <asp:Label ID="Label7" runat="server" Font-Bold="True" Font-Size="Medium" Text="Birthday:"></asp:Label>
                                             </td>
                                             <td>
@@ -146,7 +149,7 @@
                                         </tr>
                                         <tr>
                                             <td class="auto-style10">&nbsp;</td>
-                                            <td class="auto-style9">
+                                            <td class="auto-style12">
                                                 <asp:Label ID="Label8" runat="server" Font-Bold="True" Font-Size="Medium" Text="Gender:"></asp:Label>
                                             </td>
                                             <td>
@@ -156,7 +159,7 @@
                                         </tr>
                                         <tr>
                                             <td class="auto-style10">&nbsp;</td>
-                                            <td class="auto-style9">
+                                            <td class="auto-style12">
                                                 <asp:Label ID="Label9" runat="server" Font-Bold="True" Font-Size="Medium" Text="Status:"></asp:Label>
                                             </td>
                                             <td>
@@ -166,7 +169,7 @@
                                         </tr>
                                         <tr>
                                             <td class="auto-style10">&nbsp;</td>
-                                            <td class="auto-style9">
+                                            <td class="auto-style12">
                                                 <asp:Label ID="Label10" runat="server" Font-Bold="True" Font-Size="Medium" Text="Email:"></asp:Label>
                                             </td>
                                             <td>
@@ -176,7 +179,7 @@
                                         </tr>
                                         <tr>
                                             <td class="auto-style10">&nbsp;</td>
-                                            <td class="auto-style9">
+                                            <td class="auto-style12">
                                                 <asp:Label ID="Label11" runat="server" Font-Bold="True" Font-Size="Medium" Text="SSS:"></asp:Label>
                                             </td>
                                             <td>
@@ -186,7 +189,7 @@
                                         </tr>
                                         <tr>
                                             <td class="auto-style10">&nbsp;</td>
-                                            <td class="auto-style9">
+                                            <td class="auto-style12">
                                                 <asp:Label ID="Label12" runat="server" Font-Bold="True" Font-Size="Medium" Text="TIN:"></asp:Label>
                                             </td>
                                             <td>
@@ -196,11 +199,21 @@
                                         </tr>
                                         <tr>
                                             <td class="auto-style10">&nbsp;</td>
-                                            <td class="auto-style9">
+                                            <td class="auto-style12">
                                                 <asp:Label ID="Label13" runat="server" Font-Bold="True" Font-Size="Medium" Text="Contact:"></asp:Label>
                                             </td>
                                             <td>
                                                 <asp:Label ID="lblContact" runat="server" Font-Size="Medium" Text="-"></asp:Label>
+                                            </td>
+                                            <td>&nbsp;</td>
+                                        </tr>
+                                        <tr>
+                                            <td class="auto-style10">&nbsp;</td>
+                                            <td class="auto-style12">
+                                                <asp:Label ID="Label14" runat="server" Font-Bold="True" Font-Size="Medium" Text="Account Type:"></asp:Label>
+                                            </td>
+                                            <td>
+                                                <asp:Label ID="lblType" runat="server" Font-Size="Medium" Text="-"></asp:Label>
                                             </td>
                                             <td>&nbsp;</td>
                                         </tr>

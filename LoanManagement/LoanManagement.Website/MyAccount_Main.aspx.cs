@@ -34,6 +34,11 @@ namespace LoanManagement.Website
                 lblSSS.Text = clt.SSS;
                 lblStatus.Text = clt.Status;
                 lblTIN.Text = clt.TIN;
+
+                if (clt.isConfirmed == true)
+                    lblType.Text = "Verified";
+                else
+                    lblType.Text = "Pending";
             }
         }
 
