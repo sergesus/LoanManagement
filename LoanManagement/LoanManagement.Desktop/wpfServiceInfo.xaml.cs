@@ -283,10 +283,13 @@ namespace LoanManagement.Desktop
                 lblPenLate.Content = "";
                 lblPenRes.Content = "";
 
+                lblCIName.Content = "";
+
                 tbDed.IsEnabled = !false;
                 tbInfo.IsEnabled = !false;
                 tbPen.IsEnabled = !false;
                 tbReq.IsEnabled = !false;
+                tbCol.IsEnabled = !false;
 
                 btnAddReq.Content = "Add";
                 btnEdtReq.Content = "Edit";
@@ -303,14 +306,23 @@ namespace LoanManagement.Desktop
                 grpDed.Visibility = Visibility.Hidden;
                 txtDedName.Text = "";
                 txtDedPerc.Text = "";
+
+                btnAddCI.Content = "Add";
+                btnEdtCI.Content = "Edit";
+                dgCI.IsEnabled = true;
+                btnDelCI.Visibility = Visibility.Visible;
+                grpCI.Visibility = Visibility.Hidden;
+                txtCIName.Text = "";
                 int num1 = 0;
                 int num2 = 0;
+                int num3 = 0;
                 if (status == "Add")
                 {
                     using (var ctx = new newerContext())
                     {
                         num1 = ctx.TempoRequirements.Count();
                         num2 = ctx.TempoDeductions.Count();
+                        num3 = ctx.TempCollateralInformations.Count();
                     }
                 }
                 else
@@ -319,6 +331,7 @@ namespace LoanManagement.Desktop
                     {
                         num1 = ctx.Requirements.Where(x => x.ServiceID == sId).Count();
                         num2 = ctx.Deductions.Where(x => x.ServiceID == sId).Count();
+                        num3 = ctx.CollateralInformations.Where(x => x.ServiceID == sId).Count();
                     }
                 }
                 if (num1 > 0)
@@ -340,6 +353,16 @@ namespace LoanManagement.Desktop
                 {
                     btnDelDed.IsEnabled = !true;
                     btnEdtDed.IsEnabled = !true;
+                }
+                if (num3 > 0)
+                {
+                    btnDelCI.IsEnabled = true;
+                    btnEdtCI.IsEnabled = true;
+                }
+                else
+                {
+                    btnDelCI.IsEnabled = !true;
+                    btnEdtCI.IsEnabled = !true;
                 }
             }
             catch (Exception ex)
@@ -395,6 +418,20 @@ namespace LoanManagement.Desktop
                         {
                             Requirement rr = new Requirement { RequirementNum = item.ReqNumber, Name = item.Name, Description = item.Description };
                             ctx.Requirements.Add(rr);
+                        }
+
+                        ComboBoxItem typeItem = (ComboBoxItem)cmbType.SelectedItem;
+                        string value = typeItem.Content.ToString();
+                        if (value == "Collateral")
+                        {
+                            var ci = from c in ctx.TempCollateralInformations
+                                     select c;
+
+                            foreach (var itm in ci)
+                            {
+                                CollateralInformation cl = new CollateralInformation { CollateralInformationNum = itm.TempCollateralInformationNum, Field = itm.Field };
+                                ctx.CollateralInformations.Add(cl);
+                            }
                         }
 
                         AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Added new Service " + txtName.Text };
@@ -504,6 +541,7 @@ namespace LoanManagement.Desktop
                     {
                         ctx.Database.ExecuteSqlCommand("delete from dbo.TempoRequirements");
                         ctx.Database.ExecuteSqlCommand("delete from dbo.TempoDeductions");
+                        ctx.Database.ExecuteSqlCommand("delete from dbo.TempCollateralInformations");
                     }
                 }
                 else
@@ -547,6 +585,11 @@ namespace LoanManagement.Desktop
                                    where dd.ServiceID == sId
                                    select new { DedNumber = dd.DeductionNum, Name = dd.Name, Percentage = dd.Percentage };
                         dgDed.ItemsSource = deds.ToList();
+
+                        var reqs2 = from rq in ctx.CollateralInformations
+                                   where rq.ServiceID == sId
+                                   select new { Number = rq.CollateralInformationNum, Field = rq.Field };
+                        dgCI.ItemsSource = reqs2.ToList();
 
                     }
                 }
@@ -1209,6 +1252,251 @@ namespace LoanManagement.Desktop
         private void txtLtPen_LostFocus(object sender, RoutedEventArgs e)
         {
             checkDouble(txtLtPen, lblPenLate, true);
+        }
+
+        private void btnAddCI_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (btnAddCI.Content.ToString() != "Add")
+                {
+                    if (lblCIName.Content == "?" || String.IsNullOrWhiteSpace(txtCIName.Text))
+                    {
+                        System.Windows.MessageBox.Show("Please input correct format and/or fill all required fields", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                        return;
+                    }
+                }
+
+                if (btnAddCI.Content.ToString() == "Add")
+                {
+                    grpCI.Visibility = Visibility.Visible;
+                    btnAddCI.Content = "Save";
+                    btnEdtCI.Content = "Cancel";
+                    btnEdtCI.IsEnabled = true;
+                    btnDelCI.Visibility = Visibility.Hidden;
+
+                    tbDed.IsEnabled = false;
+                    tbInfo.IsEnabled = false;
+                    tbPen.IsEnabled = false;
+                    tbReq.IsEnabled = false;
+                    tbCol.IsEnabled = false;
+                }
+                else if (btnAddCI.Content.ToString() == "Save")
+                {
+                    if (txtCIName.Text == "")
+                    {
+                        System.Windows.MessageBox.Show("Please complete the required information", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
+                    //for view
+                    if (status == "View")
+                    {
+                        using (var ctx = new newerContext())
+                        {
+                            var ctr = ctx.CollateralInformations.Where(x => x.ServiceID == sId).Count() + 1;
+                            CollateralInformation ci = new CollateralInformation { CollateralInformationNum = ctr, Field = txtCIName.Text, ServiceID = sId };
+                            ctx.CollateralInformations.Add(ci);
+                            ctx.SaveChanges();
+                            var reqs = from rq in ctx.CollateralInformations
+                                       where rq.ServiceID == sId
+                                       select new { Number = rq.CollateralInformationNum, Field = rq.Field};
+                            dgCI.ItemsSource = reqs.ToList();
+                        }
+                        reset();
+                        return;
+                    }
+
+                    using (var ctx = new newerContext())
+                    {
+                        var ctr = ctx.TempCollateralInformations.Count() + 1;
+                        TempCollateralInformation ci = new TempCollateralInformation { Field = txtCIName.Text, TempCollateralInformationNum = ctr };
+                        ctx.TempCollateralInformations.Add(ci);
+                        ctx.SaveChanges();
+
+                        var rqs = from rq in ctx.TempCollateralInformations
+                                  select new { Number = rq.TempCollateralInformationNum, Field = rq.Field };
+                        dgCI.ItemsSource = rqs.ToList();
+                        reset();
+
+                    }
+
+                    reset();
+                }
+                else //for update
+                {
+                    //for view
+                    if (status == "View")
+                    {
+                        using (var ctx = new newerContext())
+                        {
+                            int num = Convert.ToInt32(getRow(dgCI, 0));
+                            var ci = ctx.CollateralInformations.Where(x => x.CollateralInformationNum == num && x.ServiceID == sId).First();
+                            ci.Field = txtCIName.Text;
+                            ctx.SaveChanges();
+
+                            var reqs = from rq in ctx.CollateralInformations
+                                       where rq.ServiceID == sId
+                                       select new { Number = rq.CollateralInformationNum, Field = rq.Field };
+                            dgCI.ItemsSource = reqs.ToList();
+                            
+                        }
+                        reset();
+                        return;
+                    }
+
+
+                    using (var ctx = new newerContext())
+                    {
+                        int num = Convert.ToInt32(getRow(dgCI, 0));
+                        var ci = ctx.TempCollateralInformations.Where(x=> x.TempCollateralInformationNum == num).First();
+                        ci.Field = txtCIName.Text;
+                        ctx.SaveChanges();
+                        var rqs = from rq in ctx.TempCollateralInformations
+                                  select new { Number = rq.TempCollateralInformationNum, Field = rq.Field };
+                        dgCI.ItemsSource = rqs.ToList();
+                        reset();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void btnEdtCI_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (btnEdtCI.Content.ToString() == "Edit")
+                {
+                    btnEdtCI.Content = "Cancel";
+                    btnAddCI.Content = "Update";
+                    dgCI.IsEnabled = false;
+                    btnDelCI.Visibility = Visibility.Hidden;
+                    grpCI.Visibility = Visibility.Visible;
+                    tbDed.IsEnabled = false;
+                    tbInfo.IsEnabled = false;
+                    tbPen.IsEnabled = false;
+                    tbReq.IsEnabled = false;
+                    tbCol.IsEnabled = false;
+                    //for view
+                    if (status == "View")
+                    {
+                        using (var ctx = new newerContext())
+                        {
+                            int num = Convert.ToInt32(getRow(dgCI, 0));
+                            var ci = ctx.CollateralInformations.Where(x => x.CollateralInformationNum == num && x.ServiceID == sId).First();
+                            txtCIName.Text = ci.Field;
+                        }
+
+                        return;
+                    }
+
+                    using (var ctx = new newerContext())
+                    {
+                        int num = Convert.ToInt32(getRow(dgCI, 0));
+                        var ci = ctx.TempCollateralInformations.Where(x => x.TempCollateralInformationNum == num).First();
+                        txtCIName.Text = ci.Field;
+                    }
+                }
+                else
+                {
+                    reset();
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void btnDelCI_Click(object sender, RoutedEventArgs e)
+        {
+            using (var ctx = new newerContext())
+            {
+                try
+                {
+                    //for view
+                    if (status == "View")
+                    {
+                        int nums = Convert.ToInt32(getRow(dgCI, 0));
+                        var tr1 = ctx.CollateralInformations.Where(x => x.CollateralInformationNum == nums && x.ServiceID == sId).First();
+                        ctx.CollateralInformations.Remove(tr1);
+                        ctx.SaveChanges();
+
+                        var reqs1 = from req in ctx.CollateralInformations
+                                    select req;
+                        int ctr1 = 1;
+                        foreach (var item in reqs1)
+                        {
+                            item.CollateralInformationNum = ctr1;
+                            ctr1++;
+                        }
+
+                        ctx.SaveChanges();
+                        var reqs = from rq in ctx.CollateralInformations
+                                   where rq.ServiceID == sId
+                                   select new { Number = rq.CollateralInformationNum, Field = rq.Field };
+                        dgCI.ItemsSource = reqs.ToList();
+                        return;
+                    }
+
+                    int num = Convert.ToInt32(getRow(dgCI, 0));
+                    var tr = ctx.TempCollateralInformations.Where(x => x.TempCollateralInformationNum == num).First();
+                    ctx.TempCollateralInformations.Remove(tr);
+                    ctx.SaveChanges();
+
+                    var reqs2 = from req in ctx.TempCollateralInformations
+                               select req;
+                    int ctr = 1;
+                    foreach (var item in reqs2)
+                    {
+                        item.TempCollateralInformationNum = ctr;
+                        ctr++;
+                    }
+                    ctx.SaveChanges();
+                    var rqs3 = from rq in ctx.TempCollateralInformations
+                              select new { Number = rq.TempCollateralInformationNum, Field = rq.Field };
+                    dgCI.ItemsSource = rqs3.ToList();
+                    reset();
+                }
+                catch (Exception ex)
+                {
+                    System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+            }
+        }
+
+        private void cmbType_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            try
+            {
+                ComboBoxItem typeItem = (ComboBoxItem)cmbType.SelectedItem;
+                string value = typeItem.Content.ToString();
+                if (value == "Collateral")
+                {
+                    tbCol.Visibility = Visibility.Visible;
+                }
+                else
+                {
+                    tbCol.Visibility = Visibility.Hidden;
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void txtCIName_LostFocus(object sender, RoutedEventArgs e)
+        {
+            checkString(txtCIName, lblCIName, true);
         }
 
     }

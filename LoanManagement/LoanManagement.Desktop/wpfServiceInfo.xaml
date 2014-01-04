@@ -77,7 +77,7 @@
                     <Label x:Name="lblCom" Content="" HorizontalAlignment="Left" Height="23" Margin="285,12,0,0" VerticalAlignment="Top" Width="34" Foreground="Red" Grid.Column="2"/>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="tbPen" Header="Penalties/Fees" Margin="150,-2,-154,0" FontSize="16">
+            <TabItem x:Name="tbPen" Header="Fees" Margin="150,-2,-154,0" FontSize="16">
                 <Grid Background="#FFE5E5E5" Margin="0,0,0,-1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="11*"/>
@@ -128,7 +128,7 @@
                     </Grid>
                 </Grid>
             </TabItem>
-            <TabItem x:Name="tbInfo" Header="Information" Margin="-500,-2,496,0" FontSize="16">
+            <TabItem x:Name="tbInfo" Header="Information" Margin="-388,-2,384,0" FontSize="16">
                 <Grid Background="#FFE5E5E5" Margin="0,-3,0,3">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="11*"/>
@@ -144,7 +144,7 @@
                         <Label Content="Min. Term:" HorizontalAlignment="Left" Height="31" Margin="7,114,0,0" VerticalAlignment="Top" Width="108" Foreground="Black" FontSize="18" RenderTransformOrigin="0.683,-1.051"/>
                         <TextBox x:Name="txtMaxTerm" HorizontalAlignment="Left" Height="31" Margin="134,151,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" FontSize="18" LostFocus="txtMaxTerm_LostFocus"/>
                         <Label Content="Type:" HorizontalAlignment="Left" Height="42" Margin="6,78,0,0" VerticalAlignment="Top" Width="79" Foreground="Black" FontSize="18" RenderTransformOrigin="0.506,3.129"/>
-                        <ComboBox x:Name="cmbType" HorizontalAlignment="Left" Height="22" Margin="134,84,0,0" VerticalAlignment="Top" Width="224" FontSize="18">
+                        <ComboBox x:Name="cmbType" HorizontalAlignment="Left" Height="22" Margin="134,84,0,0" VerticalAlignment="Top" Width="224" FontSize="18" SelectionChanged="cmbType_SelectionChanged">
                             <ComboBoxItem Content="Collateral"/>
                             <ComboBoxItem Content="Non Collateral"/>
                         </ComboBox>
@@ -179,6 +179,32 @@
                     <Label Content="*" HorizontalAlignment="Left" Height="31" Margin="408,22,0,0" VerticalAlignment="Top" Width="16" Foreground="Red" Grid.Column="2"/>
                     <Label Content="* Required Field(s)" HorizontalAlignment="Left" Height="31" Margin="499,331,0,0" VerticalAlignment="Top" Width="168" Foreground="Red" FontSize="13" Grid.Column="2"/>
                     <Label Content="** Incorrect Format" HorizontalAlignment="Left" Height="31" Margin="499,356,0,0" VerticalAlignment="Top" Width="168" Foreground="Red" FontSize="13" Grid.Column="2"/>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="tbCol" Header="Collateral Info" FontSize="16" Margin="6,-2,-6,2">
+                <Grid Background="#FFE5E5E5" Margin="0,0,0,4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0*"/>
+                        <ColumnDefinition Width="83*"/>
+                        <ColumnDefinition Width="9*"/>
+                        <ColumnDefinition Width="214*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="btnAddCI" Content="Add" HorizontalAlignment="Left" Height="24" Margin="10,10,0,0" VerticalAlignment="Top" Width="153" RenderTransformOrigin="1.635,0.625" Grid.Column="1" Click="btnAddCI_Click"/>
+                    <Button x:Name="btnEdtCI" Content="Edit" HorizontalAlignment="Left" Height="24" Margin="10,40,0,0" VerticalAlignment="Top" Width="153" Grid.Column="1" RenderTransformOrigin="-0.635,0.375" Click="btnEdtCI_Click"/>
+                    <Button x:Name="btnDelCI" Content="Delete" HorizontalAlignment="Left" Height="24" Margin="10,70,0,0" VerticalAlignment="Top" Width="153" RenderTransformOrigin="1.635,0.625" Grid.Column="1" Click="btnDelCI_Click"/>
+                    <Grid x:Name="grpCI" Grid.ColumnSpan="4" HorizontalAlignment="Left" Height="194" Margin="168,188,0,0" VerticalAlignment="Top" Width="570">
+                        <Grid HorizontalAlignment="Left" Height="184" VerticalAlignment="Top" Width="545">
+                            <Label Content="Field:" HorizontalAlignment="Left" Height="29" Margin="7,5,0,0" VerticalAlignment="Top" Width="74" RenderTransformOrigin="0.37,1.448" Foreground="Black" FontSize="18"/>
+                            <TextBox x:Name="txtCIName" HorizontalAlignment="Left" Height="31" Margin="86,10,-45,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="232" FontSize="18" LostFocus="txtCIName_LostFocus"/>
+                            <Label x:Name="lblCIName" Content="" HorizontalAlignment="Left" Height="33" Margin="317,1,0,0" VerticalAlignment="Top" Width="34" Foreground="Red"/>
+                            <Label x:Name="lblReqDesc1" Content="" HorizontalAlignment="Left" Height="37" Margin="317,32,0,0" VerticalAlignment="Top" Width="34" Foreground="Red"/>
+
+                        </Grid>
+                        <Label Content="*" HorizontalAlignment="Left" Height="31" Margin="60,7,0,0" VerticalAlignment="Top" Width="16" Foreground="Red"/>
+                        <Label Content="* Required Field(s)" HorizontalAlignment="Left" Height="31" Margin="392,128,0,0" VerticalAlignment="Top" Width="168" Foreground="Red" FontSize="13"/>
+                        <Label Content="** Incorrect Format" HorizontalAlignment="Left" Height="31" Margin="392,153,0,0" VerticalAlignment="Top" Width="168" Foreground="Red" FontSize="13"/>
+                    </Grid>
+                    <DataGrid x:Name="dgCI" HorizontalAlignment="Left" Height="168" Margin="168,10,-20,0" VerticalAlignment="Top" Width="592" RenderTransformOrigin="0.283,-0.065" Grid.Column="1" Grid.ColumnSpan="3" GridLinesVisibility="None"/>
                 </Grid>
             </TabItem>
         </TabControl>

@@ -73,6 +73,8 @@ namespace LoanManagement.Domain
         //public DbSet<CancelledLoan> CancelledLoans { get; set; }
         public DbSet<iClientExpiration> iClientExpirations { get; set; }
         public DbSet<RequirementChecklist> RequirementChecklists { get; set; }
+        public DbSet<CollateralInformation> CollateralInformations { get; set; }
+        public DbSet<TempCollateralInformation> TempCollateralInformations { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -317,6 +319,7 @@ namespace LoanManagement.Domain
 
         public ICollection<Requirement> Requirement { get; set; }
         public ICollection<Deduction> Deduction { get; set; }
+        public ICollection<CollateralInformation> CollateralInformation { get; set; }
     }
 
 
@@ -328,6 +331,16 @@ namespace LoanManagement.Domain
         public string Description { get; set; }
 
         public int ServiceID{ get; set; }
+        public virtual Service Service { get; set; }
+    }
+
+    public class CollateralInformation
+    {
+        public int CollateralInformationID { get; set; }
+        public int CollateralInformationNum { get; set; }
+        public string Field { get; set; }
+
+        public int ServiceID { get; set; }
         public virtual Service Service { get; set; }
     }
 
@@ -362,6 +375,13 @@ namespace LoanManagement.Domain
         public int RequirementNum { get; set; }
         public string Name { get; set; }
         public string Description { get; set; }
+    }
+
+    public class TempCollateralInformation
+    {
+        public int TempCollateralInformationID { get; set; }
+        public int TempCollateralInformationNum { get; set; }
+        public string Field { get; set; }
     }
 
     public class TempoDeduction
