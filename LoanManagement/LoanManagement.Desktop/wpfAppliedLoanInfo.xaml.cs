@@ -394,5 +394,21 @@ namespace LoanManagement.Desktop
             }
         }
 
+        private void btnRequirement_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                wpfRequirementsChecklist frm = new wpfRequirementsChecklist();
+                frm.lID = lId;
+                frm.UserID = UserID;
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
     }
 }

@@ -69,6 +69,18 @@
     <Compile Include="Migrations\201401040216154_UpdatedDeclined.Designer.cs">
       <DependentUpon>201401040216154_UpdatedDeclined.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201401040841454_AddedReqChecklist.cs" />
+    <Compile Include="Migrations\201401040841454_AddedReqChecklist.Designer.cs">
+      <DependentUpon>201401040841454_AddedReqChecklist.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201401040844551_AddedReqChecklist2.cs" />
+    <Compile Include="Migrations\201401040844551_AddedReqChecklist2.Designer.cs">
+      <DependentUpon>201401040844551_AddedReqChecklist2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201401040846338_AddedReqChecklist3.cs" />
+    <Compile Include="Migrations\201401040846338_AddedReqChecklist3.Designer.cs">
+      <DependentUpon>201401040846338_AddedReqChecklist3.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemData.cs" />
@@ -95,6 +107,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201401040216154_UpdatedDeclined.resx">
       <DependentUpon>201401040216154_UpdatedDeclined.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201401040841454_AddedReqChecklist.resx">
+      <DependentUpon>201401040841454_AddedReqChecklist.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201401040844551_AddedReqChecklist2.resx">
+      <DependentUpon>201401040844551_AddedReqChecklist2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201401040846338_AddedReqChecklist3.resx">
+      <DependentUpon>201401040846338_AddedReqChecklist3.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

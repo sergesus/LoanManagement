@@ -12,3 +12,7 @@ C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManageme
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Domain\obj\Debug\LoanManagement.Domain.Migrations.Checker3.resources
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Domain\obj\Debug\LoanManagement.Domain.Migrations.Tester.resources
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Domain\obj\Debug\LoanManagement.Domain.Migrations.UpdatedDeclined.resources
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Domain\obj\Debug\LoanManagement.Domain.csprojResolveAssemblyReference.cache
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Domain\obj\Debug\LoanManagement.Domain.Migrations.AddedReqChecklist.resources
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Domain\obj\Debug\LoanManagement.Domain.Migrations.AddedReqChecklist2.resources
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Domain\obj\Debug\LoanManagement.Domain.Migrations.AddedReqChecklist3.resources

@@ -1,0 +1,51 @@
+﻿<Controls:MetroWindow x:Name="wdw1" x:Class="LoanManagement.Desktop.wpfRequirementsChecklist"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        Title="Requirement Checklist" Height="532" Width="940" Loaded="wdw1_Loaded" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Green.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedTabControl.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid>
+        <DataGrid x:Name="dg1" HorizontalAlignment="Left" Height="372" Margin="10,121,0,0" VerticalAlignment="Top" Width="396" FontSize="18" GridLinesVisibility="Horizontal">
+            <DataGrid.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" 
+    				Color="#CC48CB00"/>
+            </DataGrid.Resources>
+        </DataGrid>
+        <DataGrid x:Name="dg2" HorizontalAlignment="Left" Height="366" Margin="522,127,0,0" VerticalAlignment="Top" Width="396" FontSize="18" GridLinesVisibility="Horizontal">
+            <DataGrid.Resources>
+                <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" 
+    				Color="#CC48CB00"/>
+            </DataGrid.Resources>
+        </DataGrid>
+        <Label Content="Confirmed Submitted Requirements:" HorizontalAlignment="Left" Height="40" Margin="522,82,0,0" VerticalAlignment="Top" Width="305" FontSize="18" Foreground="#CC48CB00"/>
+        <Label Content="Requirements" HorizontalAlignment="Left" Height="40" Margin="10,82,0,0" VerticalAlignment="Top" Width="209" FontSize="18" Foreground="#CC48CB00"/>
+        <Grid HorizontalAlignment="Left" Height="74" VerticalAlignment="Top" Width="1051" Background="#7F48CB00" Margin="-1,1,-758,0">
+            <Image HorizontalAlignment="Left" Height="74" VerticalAlignment="Top" Width="97" Source="Images/Clear.ico"/>
+            <Label Content="Requirement Checlist" HorizontalAlignment="Left" Height="54" Margin="87,10,0,0" VerticalAlignment="Top" Width="325" FontSize="30"/>
+        </Grid>
+        <Button x:Name="btnContinue_Copy" HorizontalAlignment="Left" Height="39" Margin="411,127,0,0" VerticalAlignment="Top" Width="106" BorderBrush="#CC48CB00" BorderThickness="2" Background="#7F48CB00" Click="Button_Click">
+            <DockPanel LastChildFill="True">
+                <Image Source="Images/PUSH1.ico" />
+            </DockPanel>
+        </Button>
+        <Button x:Name="btnContinue_Copy3" HorizontalAlignment="Left" Height="39" Margin="411,171,0,0" VerticalAlignment="Top" Width="106" BorderBrush="#CC48CB00" BorderThickness="2" Background="#7F48CB00" Click="Button_Click_1">
+            <DockPanel LastChildFill="True">
+                <Image Source="Images/PULL1.ico" />
+            </DockPanel>
+        </Button>
+
+    </Grid>
+</Controls:MetroWindow>

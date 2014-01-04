@@ -72,6 +72,7 @@ namespace LoanManagement.Domain
         public DbSet<CollectionInfo> CollectionInfoes { get; set; }
         //public DbSet<CancelledLoan> CancelledLoans { get; set; }
         public DbSet<iClientExpiration> iClientExpirations { get; set; }
+        public DbSet<RequirementChecklist> RequirementChecklists { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -328,6 +329,19 @@ namespace LoanManagement.Domain
 
         public int ServiceID{ get; set; }
         public virtual Service Service { get; set; }
+    }
+
+    public class RequirementChecklist
+    {
+        public int RequirementChecklistID { get; set; }
+        public int RequirementId { get; set; }
+        public int LoanID { get; set; }
+        public DateTime? DateConfirmed { get; set; }
+
+        public int EmployeeID { get; set; }
+
+        public virtual Requirement Requirement { get; set; }
+        public virtual Employee Employee { get; set; }
     }
 
     public class Deduction

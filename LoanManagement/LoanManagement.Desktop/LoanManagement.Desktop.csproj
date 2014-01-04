@@ -234,6 +234,9 @@
     <Compile Include="wpfReportForLoans.xaml.cs">
       <DependentUpon>wpfReportForLoans.xaml</DependentUpon>
     </Compile>
+    <Compile Include="wpfRequirementsChecklist.xaml.cs">
+      <DependentUpon>wpfRequirementsChecklist.xaml</DependentUpon>
+    </Compile>
     <Compile Include="wpfSelectApplication.xaml.cs">
       <DependentUpon>wpfSelectApplication.xaml</DependentUpon>
     </Compile>
@@ -431,6 +434,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="wpfReportForLoans.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="wpfRequirementsChecklist.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

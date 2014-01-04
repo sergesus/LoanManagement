@@ -139,3 +139,5 @@ C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManageme
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\LoanManagement.Desktop.csproj.GenerateResource.Cache
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\LoanManagement.Desktop.exe
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\LoanManagement.Desktop.pdb
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\wpfRequirementsChecklist.baml
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Desktop\obj\Debug\wpfRequirementsChecklist.g.cs

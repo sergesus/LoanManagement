@@ -101,9 +101,18 @@ namespace LoanManagement.Desktop
                     System.Windows.MessageBox.Show("Principal amount must not be greater than the maximum loanable amount OR less than the minimum loanable amount", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
+                string qst = "Are you sure you want to process this transaction?";
 
+                using (var ctx = new newerContext())
+                {
+                    var c1 = ctx.RequirementChecklists.Where(x => x.LoanID == lId).Count();
+                    var lon = ctx.Loans.Find(lId);
+                    var c2 = ctx.Requirements.Where(x => x.ServiceID == lon.ServiceID).Count();
+                    if (c1 != c2)
+                        qst = "Are you sure you want to process this loan even with incomplete requirements?";
+                }
 
-                System.Windows.MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure you want to process this transaction?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                System.Windows.MessageBoxResult mr = System.Windows.MessageBox.Show(qst, "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (mr == System.Windows.MessageBoxResult.Yes)
                 {
                     using (var ctx = new newerContext())
