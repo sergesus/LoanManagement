@@ -373,6 +373,14 @@ namespace LoanManagement.Desktop
                         var num = ctx.Holidays.Where(x => x.HolidayName == txtName.Text).Count();
                         if (num > 0)
                         {
+                            System.Windows.MessageBox.Show("Holiday already exists", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                            return;
+                        }
+
+                        num = ctx.Holidays.Where(x => x.Date == dt.SelectedDate.Value.Date).Count();
+                        if (num > 0)
+                        {
+                            System.Windows.MessageBox.Show("Holiday already exists", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                             return;
                         }
 

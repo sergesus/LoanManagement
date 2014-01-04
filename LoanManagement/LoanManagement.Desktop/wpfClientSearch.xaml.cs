@@ -235,8 +235,20 @@ namespace LoanManagement.Desktop
                     var ctr = Application.Current.Windows.Count;
                     if (status2 == "LoanApplication")
                     {
-                        var frm = Application.Current.Windows[ctr - 2] as wpfLoanApplication;
                         int cbId = Convert.ToInt32(getRow(dgClient, 0));
+
+                        using (var ctx = new newerContext())
+                        {
+                            var c = ctx.Loans.Where(x => (x.Status == "Applied" || x.Status == "Approved" ||
+                                x.Status == "Released" || x.Status == "Under Collection" || x.Status == "Closed Account") && (x.ClientID == cbId || x.CoBorrower == cbId)).Count();
+                            if (c > 0)
+                            {
+                                System.Windows.MessageBox.Show("Selected Client cannot become a co-borrower since it has an existing loan taht is not yet finished", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                return;
+                            }
+                        }
+
+                        var frm = Application.Current.Windows[ctr - 2] as wpfLoanApplication;
                         frm.cbId = Convert.ToInt32(getRow(dgClient, 0));
                         frm.UserID = UserID;
                         using (var ctx = new newerContext())

@@ -28,7 +28,7 @@ namespace LoanManagement.Website
         {
             using (var ctx = new newerContext())
             {
-                var ctr1 = ctx.Clients.Where(x => x.Username == txtUsername.Text && x.Password == txtPassword.Text).Count();
+                var ctr1 = ctx.Clients.Where(x => x.Username == txtUsername.Text && x.Password == txtPassword.Text && x.isRegistered == true).Count();
                 if (ctr1 > 0)
                 {
                     var clt = ctx.Clients.Where(x => x.Username == txtUsername.Text && x.Password == txtPassword.Text && x.isRegistered==true).First();

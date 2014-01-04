@@ -44,6 +44,75 @@ namespace LoanManagement.Desktop
             
         }
 
+        private void checkExpiration()
+        {
+            try
+            {
+                using (var iCtx = new newerContext())
+                {
+                    var l = from x in iCtx.TemporaryLoanApplications
+                            where x.ExpirationDate <= DateTime.Today.Date && x.Client.isConfirmed == true
+                            select x;
+                    foreach (var i in l)
+                    {
+                        string message = "Your online loan application has been removed because you fail to confirm it. You can rapply again online but please be sure to confirm it next time. Thank you. \n\n\n\n\n -Guahan Financing Corporation Management.";
+                        string email = i.Client.Email;
+                        MailMessage msg = new MailMessage();
+                        msg.To.Add(email);
+                        msg.From = new MailAddress("aldrinarciga@gmail.com"); //See the note afterwards...
+                        msg.Body = message;
+                        SmtpClient smtp = new SmtpClient("smtp.gmail.com");
+                        smtp.EnableSsl = true;
+                        smtp.Port = 587;
+                        smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                        smtp.Credentials = new NetworkCredential("aldrinarciga@gmail.com", "312231212131");
+                        smtp.Send(msg);
+                        iCtx.TemporaryLoanApplications.Remove(i);
+                    }
+                    iCtx.SaveChanges();
+                }
+
+
+
+                using (var ctx = new newerContext())
+                {
+                    var clt = from x in ctx.Clients
+                              where x.isConfirmed == false && x.iClientExpiration.ExpirationDate <= DateTime.Today.Date
+                              select x;
+
+                    foreach (var itm in clt)
+                    {
+                        var c = ctx.TemporaryLoanApplications.Where(x => x.ClientID == itm.ClientID).Count();
+                        if (c > 0)
+                        {
+                            var ln = ctx.TemporaryLoanApplications.Where(x => x.ClientID == itm.ClientID).First();
+                            ctx.TemporaryLoanApplications.Remove(ln);
+                        }
+                        string message = "Your account together with your loan application(s) have been removed because you fail to confirm them. You can register again an account but please be sure to confirm it next time. Thank you. \n\n\n\n\n -Guahan Financing Corporation Management.";
+                        string email = itm.Email;
+                        MailMessage msg = new MailMessage();
+                        msg.To.Add(email);
+                        msg.From = new MailAddress("aldrinarciga@gmail.com"); //See the note afterwards...
+                        msg.Body = message;
+                        SmtpClient smtp = new SmtpClient("smtp.gmail.com");
+                        smtp.EnableSsl = true;
+                        smtp.Port = 587;
+                        smtp.DeliveryMethod = SmtpDeliveryMethod.Network;
+                        smtp.Credentials = new NetworkCredential("aldrinarciga@gmail.com", "312231212131");
+                        smtp.Send(msg);
+                        ctx.iClientExpirations.Remove(itm.iClientExpiration);
+                        ctx.Clients.Remove(itm);
+                    }
+                    ctx.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
         private void remind()
         {
             try
@@ -350,6 +419,7 @@ namespace LoanManagement.Desktop
             //{
                 //System.Windows.MessageBox.Show("Okay");
                 checkDue();
+                checkExpiration();
                 remind();
                 /*
                 using (var ctx = new newerContext())

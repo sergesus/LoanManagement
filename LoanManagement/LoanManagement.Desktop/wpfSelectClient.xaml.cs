@@ -131,6 +131,22 @@ namespace LoanManagement.Desktop
                         System.Windows.MessageBox.Show("Client cannot have another application while having a loan under collection", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
+
+                    ictr = ctx.TemporaryLoanApplications.Where(x => x.ClientID == cid).Count();
+                    if (ictr > 0)
+                    {
+                        System.Windows.MessageBox.Show("Client cannot have another application while having an online application. Please confirm the loan first", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
+                    var c = ctx.Loans.Where(x => (x.Status == "Applied" || x.Status == "Approved" ||
+                                x.Status == "Released" || x.Status == "Under Collection" || x.Status == "Closed Account") && (x.CoBorrower == cid)).Count();
+                    if (c > 0)
+                    {
+                        System.Windows.MessageBox.Show("Selected Client cannot become a co-borrower since it has an existing loan taht is not yet finished", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
                     wpfLoanApplication frm = new wpfLoanApplication();
                     frm.cId = Convert.ToInt32(txtID.Text);
                     frm.status = "Add";

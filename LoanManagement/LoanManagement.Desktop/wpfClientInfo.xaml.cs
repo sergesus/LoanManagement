@@ -35,6 +35,7 @@ namespace LoanManagement.Desktop
     {
 
         public string status;
+        public string status2;
         public int cId;
         string selectedFileName;
         public bool isChanged = false;
@@ -585,6 +586,12 @@ namespace LoanManagement.Desktop
                     grd1.Visibility = Visibility.Hidden;
                 }
 
+                if (status2 == "Confirmation")
+                {
+                    lblAdd.Content = "Confirm";
+                    btnDel.Visibility = Visibility.Hidden;
+                }
+
                 if (status == "Add")
                 {
                     using (var ctx = new newerContext())
@@ -628,7 +635,7 @@ namespace LoanManagement.Desktop
                         cmbSex.Text = clt.Sex;
                         txtSSS.Text = clt.SSS;
                         txtTIN.Text = clt.TIN;
-                        txtEmail.Text = clt.Email;
+                        txtEmail_Copy.Text = clt.Email;
                         dtBDay.SelectedDate = clt.Birthday;
                         cmbStatus.Text = clt.Status;
 
@@ -653,16 +660,27 @@ namespace LoanManagement.Desktop
                             txtSStreet.Text = sps.Street;
                             txtSuffix.Text = sps.Suffix;
                         }
-
-                        byte[] imageArr;
-                        imageArr = clt.Photo;
-                        BitmapImage bi = new BitmapImage();
-                        bi.BeginInit();
-                        bi.CreateOptions = BitmapCreateOptions.None;
-                        bi.CacheOption = BitmapCacheOption.Default;
-                        bi.StreamSource = new MemoryStream(imageArr);
-                        bi.EndInit();
-                        img.Source = bi;
+                        try
+                        {
+                            byte[] imageArr;
+                            imageArr = clt.Photo;
+                            BitmapImage bi = new BitmapImage();
+                            bi.BeginInit();
+                            bi.CreateOptions = BitmapCreateOptions.None;
+                            bi.CacheOption = BitmapCacheOption.Default;
+                            bi.StreamSource = new MemoryStream(imageArr);
+                            bi.EndInit();
+                            img.Source = bi;
+                        }
+                        catch (Exception)
+                        {
+                            selectedFileName = AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\myImg.gif";
+                            BitmapImage bitmap = new BitmapImage();
+                            bitmap.BeginInit();
+                            bitmap.UriSource = new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\myImg.gif");
+                            bitmap.EndInit();
+                            img.Source = bitmap;
+                        }
 
                         var ads = from ad in ctx.HomeAddresses
                                   where ad.ClientID == cId
@@ -2337,10 +2355,21 @@ namespace LoanManagement.Desktop
                         {
                             clt.Photo = ConvertImageToByteArray(selectedFileName);
                         }
+
+                        if (status2 == "Confirmation")
+                        {
+                            clt.isConfirmed = true;
+                            AuditTrail at1 = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Confirmed Client " + txtFName.Text + " " + txtMName.Text + " " + txtLName.Text + " " + txtSuffix.Text };
+                            ctx.AuditTrails.Add(at1);
+                            ctx.SaveChanges();
+                            System.Windows.MessageBox.Show("Client has been successfully confirmed", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                            this.Close();
+                            return;
+                        }
                         AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Updated Client " + txtFName.Text + " " + txtMName.Text + " " + txtLName.Text + " " + txtSuffix.Text };
                         ctx.AuditTrails.Add(at);
                         ctx.SaveChanges();
-                        System.Windows.MessageBox.Show("User has been updated", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                        System.Windows.MessageBox.Show("Client has been successfully updated", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                         this.Close();
                     }
                 }

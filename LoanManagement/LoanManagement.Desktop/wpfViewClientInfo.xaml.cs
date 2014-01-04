@@ -108,15 +108,26 @@ namespace LoanManagement.Desktop
                 using (var ctx = new newerContext())
                 {
                     var clt = ctx.Clients.Find(cID);
-                    byte[] imageArr;
-                    imageArr = clt.Photo;
-                    BitmapImage bi = new BitmapImage();
-                    bi.BeginInit();
-                    bi.CreateOptions = BitmapCreateOptions.None;
-                    bi.CacheOption = BitmapCacheOption.Default;
-                    bi.StreamSource = new MemoryStream(imageArr);
-                    bi.EndInit();
-                    img.Source = bi;
+                    try
+                    {
+                        byte[] imageArr;
+                        imageArr = clt.Photo;
+                        BitmapImage bi = new BitmapImage();
+                        bi.BeginInit();
+                        bi.CreateOptions = BitmapCreateOptions.None;
+                        bi.CacheOption = BitmapCacheOption.Default;
+                        bi.StreamSource = new MemoryStream(imageArr);
+                        bi.EndInit();
+                        img.Source = bi;
+                    }
+                    catch (Exception)
+                    {
+                        BitmapImage bitmap = new BitmapImage();
+                        bitmap.BeginInit();
+                        bitmap.UriSource = new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\myImg.gif");
+                        bitmap.EndInit();
+                        img.Source = bitmap;
+                    }
 
                     lblBday.Content = clt.Birthday.ToString().Split(' ')[0];
                     var ctr = ctx.ClientContacts.Where(x => x.ClientID == clt.ClientID).Count();

@@ -39,6 +39,7 @@ namespace LoanManagement.Desktop
         public int ciId;
         public string iDept;
         public int UserID;
+        public string status2;
 
         public wpfLoanApplication()
         {
@@ -99,69 +100,116 @@ namespace LoanManagement.Desktop
                 grdCoBorrower.Visibility = Visibility.Hidden;
                 cboxAgent.IsEnabled = true;
 
-                if (status == "Edit")
+                if (status == "Edit" || status == "Confirmation")
                 {
-                    cboxAgent.IsEnabled = !true;
+                    if (status == "Confirmation")
+                    {
+                        cboxAgent.IsEnabled = true;
+                    }
+                    else
+                    {
+                        cboxAgent.IsEnabled = !true;
+                    }
                     using (var ctx = new newerContext())
                     {
-
-                        var lon = ctx.Loans.Find(lId);
-                        cId = lon.ClientID;
-                        cmbServices.Items.Add(lon.Service.Name);
-                        cmbServices.Text = lon.Service.Name;
-                        cmbServices.IsEnabled = !true;
-                        txtCat.Text = lon.Service.Type;
-                        servId = lon.ServiceID;
-                        var la = ctx.LoanApplications.Where(x => x.LoanID == lId).First();
-                        txtAmt.Text = la.AmountApplied.ToString();
-                        txtTerm.Text = lon.Term.ToString();
-                        if (lon.AgentID != 0)
+                        if (status == "Confirmation")
                         {
-                            agentId = lon.AgentID;
-                            var agt = ctx.Agents.Find(agentId);
-                            String str = "(" + agentId.ToString() + ")" + agt.FirstName + " " + agt.MI + ". " + agt.LastName;
-                            txtAgent.Text = str;
-                            grdAgent.Visibility = Visibility.Visible;
-                            cboxAgent.IsChecked = true;
+                            reset();
+                            var lon = ctx.TemporaryLoanApplications.Find(lId);
+                            cId = lon.ClientID;
+                            cmbServices.Items.Add(lon.Service.Name);
+                            cmbServices.Text = lon.Service.Name;
+                            cmbServices.IsEnabled = !true;
+                            txtCat.Text = lon.Service.Type;
+                            servId = lon.ServiceID;
+                           
+                            txtAmt.Text = lon.AmountApplied.ToString();
+                            txtTerm.Text = lon.Term.ToString();
+                           
+
+                            cmbMode.Items.Clear();
+
+
+                            if (lon.Service.Department == "Financing")
+                            {
+                                cmbMode.Items.Add(new ComboBoxItem { Content = "Monthly" });
+                                cmbMode.Items.Add(new ComboBoxItem { Content = "Semi-Monthly" });
+                                cmbMode.Items.Add(new ComboBoxItem { Content = "One-Time Payment" });
+                            }
+                            else if (lon.Service.Department == "Micro Business")
+                            {
+                                cmbMode.Items.Add(new ComboBoxItem { Content = "Semi-Monthly" });
+                                cmbMode.Items.Add(new ComboBoxItem { Content = "Weekly" });
+                                cmbMode.Items.Add(new ComboBoxItem { Content = "Daily" });
+                            }
+                            cmbMode.Text = lon.Mode;
+
+                            //cmbMode.SelectedIndex = 0;
+
+                            if (lon.Service.Type == "Non Collateral")
+                            {
+                                grdCoBorrower.Visibility = Visibility.Visible;
+                            }
                         }
-
-                        cmbMode.Items.Clear();
-                        
-
-                        if (lon.Service.Department == "Financing")
+                        else
                         {
-                            cmbMode.Items.Add(new ComboBoxItem { Content = "Monthly" });
-                            cmbMode.Items.Add(new ComboBoxItem { Content = "Semi-Monthly" });
-                            cmbMode.Items.Add(new ComboBoxItem { Content = "One-Time Payment" });
+                            var lon = ctx.Loans.Find(lId);
+                            cId = lon.ClientID;
+                            cmbServices.Items.Add(lon.Service.Name);
+                            cmbServices.Text = lon.Service.Name;
+                            cmbServices.IsEnabled = !true;
+                            txtCat.Text = lon.Service.Type;
+                            servId = lon.ServiceID;
+                            var la = ctx.LoanApplications.Where(x => x.LoanID == lId).First();
+                            txtAmt.Text = la.AmountApplied.ToString();
+                            txtTerm.Text = lon.Term.ToString();
+                            if (lon.AgentID != 0)
+                            {
+                                agentId = lon.AgentID;
+                                var agt = ctx.Agents.Find(agentId);
+                                String str = "(" + agentId.ToString() + ")" + agt.FirstName + " " + agt.MI + ". " + agt.LastName;
+                                txtAgent.Text = str;
+                                grdAgent.Visibility = Visibility.Visible;
+                                cboxAgent.IsChecked = true;
+                            }
+
+                            cmbMode.Items.Clear();
+
+
+                            if (lon.Service.Department == "Financing")
+                            {
+                                cmbMode.Items.Add(new ComboBoxItem { Content = "Monthly" });
+                                cmbMode.Items.Add(new ComboBoxItem { Content = "Semi-Monthly" });
+                                cmbMode.Items.Add(new ComboBoxItem { Content = "One-Time Payment" });
+                            }
+                            else if (lon.Service.Department == "Micro Business")
+                            {
+                                cmbMode.Items.Add(new ComboBoxItem { Content = "Semi-Monthly" });
+                                cmbMode.Items.Add(new ComboBoxItem { Content = "Weekly" });
+                                cmbMode.Items.Add(new ComboBoxItem { Content = "Daily" });
+                            }
+                            cmbMode.Text = lon.Mode;
+
+                            //cmbMode.SelectedIndex = 0;
+
+                            if (lon.CI != 0)
+                            {
+                                ciId = lon.CI;
+                                var agt = ctx.Employees.Find(ciId);
+                                String str = "(" + agentId.ToString() + ")" + agt.FirstName + " " + agt.MI + ". " + agt.LastName;
+                                txtCI.Text = str;
+                            }
+
+                            if (lon.Service.Type == "Non Collateral")
+                            {
+                                cbId = lon.CoBorrower;
+                                var agt = ctx.Clients.Find(cbId);
+                                String str = "(" + cbId + ")" + agt.FirstName + " " + agt.MiddleName + " " + agt.LastName;
+                                txtID.Text = str;
+                                grdCoBorrower.Visibility = Visibility.Visible;
+                            }
+
                         }
-                        else if (lon.Service.Department == "Micro Business")
-                        {
-                            cmbMode.Items.Add(new ComboBoxItem { Content = "Semi-Monthly" });
-                            cmbMode.Items.Add(new ComboBoxItem { Content = "Weekly" });
-                            cmbMode.Items.Add(new ComboBoxItem { Content = "Daily" });
-                        }
-                        cmbMode.Text = lon.Mode;
-
-                        //cmbMode.SelectedIndex = 0;
-
-                        if (lon.CI != 0)
-                        {
-                            ciId = lon.CI;
-                            var agt = ctx.Employees.Find(ciId);
-                            String str = "(" + agentId.ToString() + ")" + agt.FirstName + " " + agt.MI + ". " + agt.LastName;
-                            txtCI.Text = str;
-                        }
-
-                        if (lon.Service.Type == "Non Collateral")
-                        {
-                            cbId = lon.CoBorrower;
-                            var agt = ctx.Clients.Find(cbId);
-                            String str = "(" + cbId + ")" + agt.FirstName + " " + agt.MiddleName + " " + agt.LastName;
-                            txtID.Text = str;
-                            grdCoBorrower.Visibility = Visibility.Visible;
-                        }
-
-
                     }
                 }
 
@@ -190,17 +238,27 @@ namespace LoanManagement.Desktop
                 using (var ctx = new newerContext())
                 {
                     var clt = ctx.Clients.Find(cId);
-                    
 
-                    byte[] imageArr;
-                    imageArr = clt.Photo;
-                    BitmapImage bi = new BitmapImage();
-                    bi.BeginInit();
-                    bi.CreateOptions = BitmapCreateOptions.None;
-                    bi.CacheOption = BitmapCacheOption.Default;
-                    bi.StreamSource = new MemoryStream(imageArr);
-                    bi.EndInit();
-                    img.Source = bi;
+                    try
+                    {
+                        byte[] imageArr;
+                        imageArr = clt.Photo;
+                        BitmapImage bi = new BitmapImage();
+                        bi.BeginInit();
+                        bi.CreateOptions = BitmapCreateOptions.None;
+                        bi.CacheOption = BitmapCacheOption.Default;
+                        bi.StreamSource = new MemoryStream(imageArr);
+                        bi.EndInit();
+                        img.Source = bi;
+                    }
+                    catch (Exception)
+                    {
+                        BitmapImage bitmap = new BitmapImage();
+                        bitmap.BeginInit();
+                        bitmap.UriSource = new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\myImg.gif");
+                        bitmap.EndInit();
+                        img.Source = bitmap;
+                    }
 
 
                     lblBday.Content = clt.Birthday.ToString().Split(' ')[0];
@@ -526,6 +584,7 @@ namespace LoanManagement.Desktop
 
                 }
 
+
                 using (var ctx = new newerContext())
                 {
                     var ser = ctx.Services.Find(servId);
@@ -543,43 +602,93 @@ namespace LoanManagement.Desktop
                         cbId = 0;
                     }
 
-                    if (status == "Add")
+                    if (status == "Add" || status == "Confirmation")
                     {
-
-                        Loan loan = new Loan { };
-
-                        LoanApplication la = new LoanApplication { AmountApplied = Convert.ToDouble(txtAmt.Text), DateApplied = DateTime.Now.Date };
-                        if (cboxAgent.IsChecked == true)
+                        if (status == "Confirmation")
                         {
-                            loan = new Loan { CI = ciId, AgentID = agentId, ClientID = cId, CoBorrower = cbId, ServiceID = servId, Status = "Applied", Term = Convert.ToInt32(txtTerm.Text), LoanApplication = la, Mode = cmbMode.Text };
+                            Loan loan = new Loan { };
+
+                            LoanApplication la = new LoanApplication { AmountApplied = Convert.ToDouble(txtAmt.Text), DateApplied = DateTime.Now.Date };
+                            if (cboxAgent.IsChecked == true)
+                            {
+                                loan = new Loan { CI = ciId, AgentID = agentId, ClientID = cId, CoBorrower = cbId, ServiceID = servId, Status = "Applied", Term = Convert.ToInt32(txtTerm.Text), LoanApplication = la, Mode = cmbMode.Text, ApplicationType = "Online" };
+                            }
+                            else
+                            {
+                                loan = new Loan { CI = ciId, AgentID = 0, ClientID = cId, CoBorrower = cbId, ServiceID = servId, Status = "Applied", Term = Convert.ToInt32(txtTerm.Text), LoanApplication = la, Mode = cmbMode.Text , ApplicationType = "Online"};
+                            }
+                            ctx.Loans.Add(loan);
+                            ctx.SaveChanges();
+                            
+
+
+                            string folderName = @"F:\Loan Files";
+                            string pathString = System.IO.Path.Combine(folderName, "Loan " + loan.LoanID.ToString());
+                            if (!Directory.Exists(pathString))
+                            {
+                                System.IO.Directory.CreateDirectory(pathString);
+                            }
+                            else
+                            {
+                                Directory.Delete(pathString, true);
+                                System.IO.Directory.CreateDirectory(pathString);
+                            }
+
+                            using (var ictx = new newerContext())
+                            {
+                                var ln = ictx.TemporaryLoanApplications.Find(lId);
+                                string pathString2 = @"F:\Loan Files\Applications Online\Application " + lId.ToString();
+                                if (Directory.Exists(pathString2))
+                                {
+                                    Copy(pathString2, pathString);
+                                    Directory.Delete(pathString2, true);
+                                }
+
+
+                                ictx.TemporaryLoanApplications.Remove(ln);
+                                ictx.SaveChanges();
+                                System.Windows.MessageBox.Show("Loan has been successfuly confirmed", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                                this.Close();
+                            }
+                            
                         }
                         else
                         {
-                            loan = new Loan { CI = ciId, AgentID = 0, ClientID = cId, CoBorrower = cbId, ServiceID = servId, Status = "Applied", Term = Convert.ToInt32(txtTerm.Text), LoanApplication = la, Mode = cmbMode.Text };
+                            Loan loan = new Loan { };
+
+                            LoanApplication la = new LoanApplication { AmountApplied = Convert.ToDouble(txtAmt.Text), DateApplied = DateTime.Now.Date };
+                            if (cboxAgent.IsChecked == true)
+                            {
+                                loan = new Loan { CI = ciId, AgentID = agentId, ClientID = cId, CoBorrower = cbId, ServiceID = servId, Status = "Applied", Term = Convert.ToInt32(txtTerm.Text), LoanApplication = la, Mode = cmbMode.Text, ApplicationType = "Walk-In" };
+                            }
+                            else
+                            {
+                                loan = new Loan { CI = ciId, AgentID = 0, ClientID = cId, CoBorrower = cbId, ServiceID = servId, Status = "Applied", Term = Convert.ToInt32(txtTerm.Text), LoanApplication = la, Mode = cmbMode.Text, ApplicationType = "Walk-In" };
+                            }
+
+                            //AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Processed new loan application (" + cmbServices.Text + ") for client " + txtFName.Text + " " + txtMName.Text + " " + txtLName.Text + " " + txtSuffix.Text };
+                            //ctx.AuditTrails.Add(at);
+
+                            ctx.Loans.Add(loan);
+                            ctx.SaveChanges();
+
+                            string folderName = @"F:\Loan Files";
+                            string pathString = System.IO.Path.Combine(folderName, "Loan " + loan.LoanID.ToString());
+                            if (!Directory.Exists(pathString))
+                            {
+                                System.IO.Directory.CreateDirectory(pathString);
+                            }
+                            else
+                            {
+                                Directory.Delete(pathString, true);
+                                System.IO.Directory.CreateDirectory(pathString);
+                            }
+
+
+
+                            System.Windows.MessageBox.Show("Loan has been successfuly applied", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                            this.Close();
                         }
-
-                        //AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Processed new loan application (" + cmbServices.Text + ") for client " + txtFName.Text + " " + txtMName.Text + " " + txtLName.Text + " " + txtSuffix.Text };
-                        //ctx.AuditTrails.Add(at);
-
-                        ctx.Loans.Add(loan);
-                        ctx.SaveChanges();
-
-                        string folderName = @"F:\Loan Files";
-                        string pathString = System.IO.Path.Combine(folderName, "Loan " + loan.LoanID.ToString());
-                        if (!Directory.Exists(pathString))
-                        {
-                            System.IO.Directory.CreateDirectory(pathString);
-                        }
-                        else
-                        {
-                            Directory.Delete(pathString, true);
-                            System.IO.Directory.CreateDirectory(pathString);
-                        }
-                        
-
-
-                        System.Windows.MessageBox.Show("Loan has been successfuly applied", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
-                        this.Close();
                     }
                     else
                     {
@@ -622,6 +731,17 @@ namespace LoanManagement.Desktop
                 System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
+        }
+
+        void Copy(string sourceDir, string targetDir)
+        {
+            Directory.CreateDirectory(targetDir);
+
+            foreach (var file in Directory.GetFiles(sourceDir))
+                File.Copy(file, System.IO.Path.Combine(targetDir, System.IO.Path.GetFileName(file)));
+
+            foreach (var directory in Directory.GetDirectories(sourceDir))
+                Copy(directory, System.IO.Path.Combine(targetDir, System.IO.Path.GetFileName(directory)));
         }
 
         private void Button_Click_5(object sender, RoutedEventArgs e)

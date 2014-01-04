@@ -115,6 +115,12 @@
                                         <Image Source="Images/Manage.ico" />
                                     </DockPanel>
                                 </Button>
+                                <Button x:Name="btnMClients_Confirmation" HorizontalAlignment="Left" Height="118" Margin="209,133,0,0" VerticalAlignment="Top" Width="128" BorderBrush="#FF4AEE0D" BorderThickness="4" Click="btnMClients_Confirmation_Click" Grid.Column="1">
+                                    <DockPanel LastChildFill="True">
+                                        <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom" Foreground="#FF343434" Content="Reg. Confirmation"/>
+                                        <Image Source="Images/Bank.ico" />
+                                    </DockPanel>
+                                </Button>
                             </Grid>
                         </TabItem>
                         <TabItem Header="Log Out" MouseUp="TabItem_MouseUp_1">
@@ -204,6 +210,12 @@
                                     <Image Source="Images/Adjustment.ico" />
                                 </DockPanel>
                             </Button>
+                            <Button x:Name="btnConfirmApplication" HorizontalAlignment="Left" Height="118" Margin="212,133,0,0" VerticalAlignment="Top" Width="128" BorderBrush="#FF4AEE0D" BorderThickness="4" Click="btnConfirmApplication_Click" Grid.Column="1">
+                                <DockPanel LastChildFill="True">
+                                    <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom" Foreground="#FF343434" Content=" App Confirmation"/>
+                                    <Image Source="Images/Application.ico" />
+                                </DockPanel>
+                            </Button>
                         </Grid>
                     </TabItem>
                     <TabItem x:Name="tbMicro" Header="Micro-Business" MouseUp="TabItem_MouseUp_1">
@@ -247,6 +259,12 @@
                                 <DockPanel LastChildFill="True">
                                     <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom" Foreground="#FF343434" Content="Payments"/>
                                     <Image Source="Images/Payment.ico" />
+                                </DockPanel>
+                            </Button>
+                            <Button x:Name="btnMConfirmApplication" HorizontalAlignment="Left" Height="118" Margin="18,133,0,0" VerticalAlignment="Top" Width="128" BorderBrush="#FF4AEE0D" BorderThickness="4" Click="btnMConfirmApplication_Click" Grid.Column="1" Grid.ColumnSpan="2">
+                                <DockPanel LastChildFill="True">
+                                    <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom" Foreground="#FF343434" Content=" App Confirmation"/>
+                                    <Image Source="Images/Application.ico" />
                                 </DockPanel>
                             </Button>
 

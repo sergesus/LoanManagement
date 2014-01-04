@@ -15,6 +15,8 @@ using System.Windows.Shapes;
 using MahApps.Metro.Controls;
 using LoanManagement.Domain;
 using System.Data.Entity;
+using System.IO;
+using System.Diagnostics;
 
 namespace LoanManagement.Desktop
 {
@@ -83,6 +85,16 @@ namespace LoanManagement.Desktop
 
                     }
                 }
+                else if (status == "Confirmation")
+                {
+                    using (var ctx = new newerContext())
+                    {
+                        var lon = from ln in ctx.TemporaryLoanApplications
+                                  where ln.Service.Department == iDept && (ln.TemporaryLoanApplicationID == n || ln.Service.Name.Contains(txtSearch.Text) || (ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName).Replace(" ", "").Contains(txtSearch.Text.Replace(" ", "")))
+                                  select new { LoanID = ln.TemporaryLoanApplicationID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, ClientName = ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName };
+                        dgLoan.ItemsSource = lon.ToList();
+                    }
+                }
                 else if (status == "Releasing")
                 {
                     using (var ctx = new newerContext())
@@ -135,7 +147,7 @@ namespace LoanManagement.Desktop
                     using (var ctx = new newerContext())
                     {
                         var lon = from ln in ctx.Loans
-                                  where (ln.Status == "Released" || ln.Status == "Active" || ln.Status=="Paid") && ln.Service.Department == iDept && (ln.LoanID == n || ln.Service.Name.Contains(txtSearch.Text) || (ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName).Replace(" ","").Contains(txtSearch.Text.Replace(" ","")))
+                                  where (ln.Status == "Released" || ln.Status == "Active" || ln.Status=="Paid") && ln.ReleasedLoan.DateReleased == DateTime.Now.Date && ln.Service.Department == iDept && (ln.LoanID == n || ln.Service.Name.Contains(txtSearch.Text) || (ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName).Replace(" ","").Contains(txtSearch.Text.Replace(" ","")))
                                   select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, ClientName = ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName };
                         dgLoan.ItemsSource = lon.ToList();
                         btnView.Content = "Void last payment";
@@ -271,6 +283,70 @@ namespace LoanManagement.Desktop
                     frm.UserID = UserID;
                     frm.btnContinue.Content = "Update";
                     frm.ShowDialog();
+                }
+                else if (status == "Confirmation")
+                {
+                    using (var ctx = new newerContext())
+                    {
+                        int lID = Convert.ToInt32(getRow(dgLoan, 0));
+                        var clt = ctx.TemporaryLoanApplications.Where(x => x.TemporaryLoanApplicationID == lID).First();
+                        int cid = clt.ClientID;
+                        var ctr = ctx.Clients.Where(x => x.ClientID == cid).Count();
+                        if (ctr == 0)
+                        {
+                            MessageBox.Show("Client doesn't exists");
+                            return;
+                        }
+
+                        if (clt.Client.isConfirmed == false)
+                        {
+                            System.Windows.MessageBox.Show("Client is not yet confirmed. Please confirm the client first", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
+                        }
+
+                        var ictr = ctx.Loans.Where(x => x.ClientID == cid && x.Status == "Released").Count();
+                        if (ictr > 0)
+                        {
+                            ictr = ctx.Loans.Where(x => x.ClientID == cid && x.Status == "Released" && x.Service.Department != iDept).Count();
+                            if (ictr > 0)
+                            {
+                                System.Windows.MessageBox.Show("Client has an existing loan on other department", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                return;
+                            }
+                            else
+                            {
+                                ictr = ctx.Loans.Where(x => x.ClientID == cid && x.Status == "Released" && x.Service.Type == "Non Collateral" && x.Service.Department == iDept).Count();
+                                if (ictr > 0)
+                                {
+                                    System.Windows.MessageBox.Show("Client has an existing Non-Collateral loan. The client can only apply for collateral loan.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                                }
+                            }
+                        }
+
+                        ictr = ctx.Loans.Where(x => x.ClientID == cid && (x.Status == "Applied" || x.Status == "Approved")).Count();
+                        if (ictr > 0)
+                        {
+                            System.Windows.MessageBox.Show("Client cannot have multiple applications at the same time", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
+                        }
+
+                        ictr = ctx.Loans.Where(x => x.ClientID == cid && x.Status == "Under Collection").Count();
+                        if (ictr > 0)
+                        {
+                            System.Windows.MessageBox.Show("Client cannot have another application while having a loan under collection", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
+                        }
+                        wpfLoanApplication frm = new wpfLoanApplication();
+                        frm.cId = Convert.ToInt32(clt.ClientID);
+                        frm.status = "Confirmation";
+                        frm.btnContinue.Content = "Confirm";
+                        frm.iDept = iDept;
+                        frm.UserID = UserID;
+                        frm.lId = lID;
+                        this.Close();
+                        frm.ShowDialog();
+                        this.Close();
+                    }
                 }
                 else if (status == "UReleasing")
                 {
@@ -596,6 +672,10 @@ namespace LoanManagement.Desktop
             try
             {
                 rg();
+                if (status == "Confirmation")
+                    btnViewFolder.Visibility = Visibility.Visible;
+                else
+                    btnViewFolder.Visibility = Visibility.Hidden;
             }
             catch (Exception ex)
             {
@@ -609,6 +689,35 @@ namespace LoanManagement.Desktop
             try
             {
                 rg();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void btnViewFolder_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string folderName = @"F:\Loan Files\Applications Online";
+                string lid = getRow(dgLoan, 0);
+                string pathString = System.IO.Path.Combine(folderName, "Application " + lid);
+                if (lid == "")
+                {
+                    return;
+                }
+                if (!Directory.Exists(pathString))
+                {
+                    System.IO.Directory.CreateDirectory(pathString);
+                    Process.Start(pathString);
+                }
+                else
+                {
+                    Process.Start(pathString);
+                }
+
             }
             catch (Exception ex)
             {

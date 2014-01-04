@@ -44,16 +44,26 @@ namespace LoanManagement.Desktop
                 using (var ctx = new newerContext())
                 {
                     var lon = ctx.Loans.Find(lId);
-
-                    byte[] imageArr;
-                    imageArr = lon.Client.Photo;
-                    BitmapImage bi = new BitmapImage();
-                    bi.BeginInit();
-                    bi.CreateOptions = BitmapCreateOptions.None;
-                    bi.CacheOption = BitmapCacheOption.Default;
-                    bi.StreamSource = new MemoryStream(imageArr);
-                    bi.EndInit();
-                    img.Source = bi;
+                    try
+                    {
+                        byte[] imageArr;
+                        imageArr = lon.Client.Photo;
+                        BitmapImage bi = new BitmapImage();
+                        bi.BeginInit();
+                        bi.CreateOptions = BitmapCreateOptions.None;
+                        bi.CacheOption = BitmapCacheOption.Default;
+                        bi.StreamSource = new MemoryStream(imageArr);
+                        bi.EndInit();
+                        img.Source = bi;
+                    }
+                    catch (Exception)
+                    {
+                        BitmapImage bitmap = new BitmapImage();
+                        bitmap.BeginInit();
+                        bitmap.UriSource = new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\myImg.gif");
+                        bitmap.EndInit();
+                        img.Source = bitmap;
+                    }
 
                     lblTOL.Content = lon.Service.Name;
                     lblType.Content = lon.Service.Type;
@@ -314,6 +324,21 @@ namespace LoanManagement.Desktop
                                 if (ctr > 0)
                                 {
                                     System.Windows.MessageBox.Show("Client has an existing loan on other department", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                    return;
+                                }
+
+                                ctr = ctx.TemporaryLoanApplications.Where(x => x.ClientID == lon.ClientID).Count();
+                                if (ctr > 0)
+                                {
+                                    System.Windows.MessageBox.Show("Client cannot have another application while having an online application. Please confirm the loan first", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                    return;
+                                }
+
+                                var c = ctx.Loans.Where(x => (x.Status == "Applied" || x.Status == "Approved" ||
+                                x.Status == "Released" || x.Status == "Under Collection" || x.Status == "Closed Account") && (x.CoBorrower == lon.ClientID)).Count();
+                                if (c > 0)
+                                {
+                                    System.Windows.MessageBox.Show("Selected Client cannot become a co-borrower since it has an existing loan taht is not yet finished", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                                     return;
                                 }
                             }

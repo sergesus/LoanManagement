@@ -685,7 +685,7 @@ namespace LoanManagement.Domain
     {
         public int LoanID { get; set; }
         public string Reason { get; set; }
-        public DateTime DateDeclined { get; set; }
+        public DateTime? DateDeclined { get; set; }
 
         public virtual Loan Loan { get; set; }
     }

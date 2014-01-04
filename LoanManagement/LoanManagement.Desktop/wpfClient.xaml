@@ -42,7 +42,7 @@
             </GroupBox>
             <Button x:Name="btnAdd" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="39" Margin="344,338,0,0" VerticalAlignment="Top" Width="164" BorderBrush="#CC48CB00" BorderThickness="2" Background="#7F48CB00" Click="btnAdd_Click">
                 <DockPanel LastChildFill="True">
-                    <Label HorizontalContentAlignment="Center" DockPanel.Dock="Right" Foreground="#FF343434" Height="28" FontSize="16" Content="ADD"/>
+                    <Label x:Name="iLBL" HorizontalContentAlignment="Center" DockPanel.Dock="Right" Foreground="#FF343434" Height="28" FontSize="16" Content="ADD"/>
                     <Image Source="Images/Add.ico" />
                 </DockPanel>
             </Button>

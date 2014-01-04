@@ -30,6 +30,7 @@ namespace LoanManagement.Desktop
     {
         public bool status;
         public int UserID;
+        public string status2;
 
         public wpfClient()
         {
@@ -67,6 +68,18 @@ namespace LoanManagement.Desktop
         {
             try
             {
+                if (status2 == "Confirmation")
+                {
+                    wpfClientInfo frm1 = new wpfClientInfo();
+                    frm1.status = "View";
+                    frm1.status2 = status2;
+                    frm1.UserID = UserID;
+                    frm1.cId = Convert.ToInt32(getRow(dgClient, 0));
+                    System.Windows.MessageBox.Show("Please enter other information like addres to confirm the client", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                    frm1.ShowDialog();
+                    return;
+                }
+
                 wpfClientInfo frm = new wpfClientInfo();
                 frm.status = "Add";
                 frm.UserID = UserID;
@@ -107,6 +120,12 @@ namespace LoanManagement.Desktop
                 myBrush.ImageSource = image.Source;
                 wdw1.Background = myBrush;
 
+                if (status2 == "Confirmation")
+                {
+                    btnView.Visibility = Visibility.Hidden;
+                    iLBL.Content = "Confirm";
+                }
+
                  if (status == false)//archive
                 {
                     btnView.Visibility = Visibility.Hidden;
@@ -126,12 +145,26 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newerContext())
+                if (status2 == "Confirmation")
                 {
-                    var clt = from cl in ctx.Clients
-                              where cl.Active == status && cl.isConfirmed == true
-                              select new { ClientID = cl.ClientID, FirstName = cl.FirstName, MiddleName = cl.MiddleName, LastName = cl.LastName, Suffix = cl.Suffix, Birthday = cl.Birthday };
-                    dgClient.ItemsSource = clt.ToList();
+                    using (var ctx = new newerContext())
+                    {
+                        var clt = from cl in ctx.Clients
+                                  where cl.Active == status && cl.isConfirmed == false && cl.isRegistered == true
+                                  select new { ClientID = cl.ClientID, FirstName = cl.FirstName, MiddleName = cl.MiddleName, LastName = cl.LastName, Suffix = cl.Suffix, Birthday = cl.Birthday };
+                        dgClient.ItemsSource = clt.ToList();
+                        return;
+                    }
+                }
+                else
+                {
+                    using (var ctx = new newerContext())
+                    {
+                        var clt = from cl in ctx.Clients
+                                  where cl.Active == status && cl.isConfirmed == true
+                                  select new { ClientID = cl.ClientID, FirstName = cl.FirstName, MiddleName = cl.MiddleName, LastName = cl.LastName, Suffix = cl.Suffix, Birthday = cl.Birthday };
+                        dgClient.ItemsSource = clt.ToList();
+                    }
                 }
             }
             catch (Exception ex)
@@ -241,22 +274,23 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newerContext())
-                {
-                    int n;
-                    try
-                    {
-                        n = Convert.ToInt16(txtSearch.Text);
-                    }
-                    catch (Exception)
-                    {
-                        n = 0;
-                    }
-                    var clt = from cl in ctx.Clients
-                              where (cl.Active == status) && ((cl.FirstName + cl.LastName + cl.MiddleName + cl.Suffix).Contains(txtSearch.Text) || cl.ClientID==n)
-                              select new { ClientID = cl.ClientID, FirstName = cl.FirstName, MiddleName = cl.MiddleName, LastName = cl.LastName, Suffix = cl.Suffix, Birthday = cl.Birthday };
-                    dgClient.ItemsSource = clt.ToList();
-                }
+                //using (var ctx = new newerContext())
+                //{
+                //    int n;
+                //    try
+                //    {
+                //        n = Convert.ToInt16(txtSearch.Text);
+                //    }
+                //    catch (Exception)
+                //    {
+                //        n = 0;
+                //    }
+                //    var clt = from cl in ctx.Clients
+                //              where (cl.Active == status) && ((cl.FirstName + cl.LastName + cl.MiddleName + cl.Suffix).Contains(txtSearch.Text) || cl.ClientID==n)
+                //              select new { ClientID = cl.ClientID, FirstName = cl.FirstName, MiddleName = cl.MiddleName, LastName = cl.LastName, Suffix = cl.Suffix, Birthday = cl.Birthday };
+                //    dgClient.ItemsSource = clt.ToList();
+                //}
+                resetGrid();
             }
             catch (Exception ex)
             {
