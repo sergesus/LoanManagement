@@ -881,6 +881,7 @@ namespace LoanManagement.Desktop
                         ctx.SaveChanges();
 
                         var reqs1 = from req in ctx.Requirements
+                                    where req.ServiceID == sId
                                    select req;
                         int ctr1 = 1;
                         foreach (var item in reqs1)
@@ -988,6 +989,7 @@ namespace LoanManagement.Desktop
                         ctx.SaveChanges();
 
                         var deds1 = from dd in ctx.Deductions
+                                    where dd.ServiceID == sId
                                    select dd;
                         int ctr1 = 1;
                         foreach (var item in deds1)
@@ -1294,6 +1296,14 @@ namespace LoanManagement.Desktop
                     {
                         using (var ctx = new newerContext())
                         {
+                            var c = ctx.CollateralInformations.Where(x => x.ServiceID == sId && x.Field == txtCIName.Text).Count();
+                            if (c > 0)
+                            {
+                                System.Windows.MessageBox.Show("Field already exists", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                return;
+                            }
+
+
                             var ctr = ctx.CollateralInformations.Where(x => x.ServiceID == sId).Count() + 1;
                             CollateralInformation ci = new CollateralInformation { CollateralInformationNum = ctr, Field = txtCIName.Text, ServiceID = sId };
                             ctx.CollateralInformations.Add(ci);
@@ -1330,8 +1340,21 @@ namespace LoanManagement.Desktop
                     {
                         using (var ctx = new newerContext())
                         {
+                            
+
                             int num = Convert.ToInt32(getRow(dgCI, 0));
                             var ci = ctx.CollateralInformations.Where(x => x.CollateralInformationNum == num && x.ServiceID == sId).First();
+
+                            if (ci.Field != txtCIName.Text)
+                            {
+                                var c = ctx.CollateralInformations.Where(x => x.ServiceID == sId && x.Field == txtCIName.Text).Count();
+                                if (c > 0)
+                                {
+                                    System.Windows.MessageBox.Show("Field already exists", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                    return;
+                                }
+                            }
+                            
                             ci.Field = txtCIName.Text;
                             ctx.SaveChanges();
 
@@ -1429,6 +1452,7 @@ namespace LoanManagement.Desktop
                         ctx.SaveChanges();
 
                         var reqs1 = from req in ctx.CollateralInformations
+                                    where req.ServiceID == sId
                                     select req;
                         int ctr1 = 1;
                         foreach (var item in reqs1)

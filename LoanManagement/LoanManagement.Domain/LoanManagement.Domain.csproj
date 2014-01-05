@@ -89,6 +89,14 @@
     <Compile Include="Migrations\201401041157137_AddedCollateral2.Designer.cs">
       <DependentUpon>201401041157137_AddedCollateral2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201401042258514_CollateralLoanInfo.cs" />
+    <Compile Include="Migrations\201401042258514_CollateralLoanInfo.Designer.cs">
+      <DependentUpon>201401042258514_CollateralLoanInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201401042310278_CollateralLoanInfo2.cs" />
+    <Compile Include="Migrations\201401042310278_CollateralLoanInfo2.Designer.cs">
+      <DependentUpon>201401042310278_CollateralLoanInfo2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemData.cs" />
@@ -130,6 +138,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201401041157137_AddedCollateral2.resx">
       <DependentUpon>201401041157137_AddedCollateral2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201401042258514_CollateralLoanInfo.resx">
+      <DependentUpon>201401042258514_CollateralLoanInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201401042310278_CollateralLoanInfo2.resx">
+      <DependentUpon>201401042310278_CollateralLoanInfo2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

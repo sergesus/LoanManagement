@@ -116,10 +116,16 @@
                 <Image x:Name="bt" Source="Images/Void.ico" />
             </DockPanel>
         </Button>
-        <Button x:Name="btnSOA" HorizontalAlignment="Left" Height="39" Margin="502,258,0,0" VerticalAlignment="Top" Width="208" BorderBrush="#CC48CB00" BorderThickness="2" Background="#7F48CB00" Click="btnSOA_Click" Grid.Column="1">
+        <Button x:Name="btnSOA" HorizontalAlignment="Left" Height="36" Margin="502,258,0,0" VerticalAlignment="Top" Width="208" BorderBrush="#CC48CB00" BorderThickness="2" Background="#7F48CB00" Click="btnSOA_Click" Grid.Column="1">
             <DockPanel LastChildFill="True">
                 <Label x:Name="lbl3" HorizontalContentAlignment="Center" DockPanel.Dock="Right" Foreground="#FF343434" Height="31" FontSize="16" Content="Print SOA"/>
                 <Image Source="Images/Add.ico" />
+            </DockPanel>
+        </Button>
+        <Button x:Name="btnCol" HorizontalAlignment="Left" Height="36" Margin="502,217,0,0" VerticalAlignment="Top" Width="208" BorderBrush="#CC48CB00" BorderThickness="2" Background="#7F48CB00" Click="btnCol_Click" Grid.Column="1">
+            <DockPanel LastChildFill="True">
+                <Label HorizontalContentAlignment="Center" DockPanel.Dock="Right" Foreground="#FF343434" Height="35" FontSize="16" Content="Collateral Info" Width="128"/>
+                <Image Source="Images/Renew.ico" />
             </DockPanel>
         </Button>
 

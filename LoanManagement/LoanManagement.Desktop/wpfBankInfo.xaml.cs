@@ -492,6 +492,7 @@ namespace LoanManagement.Desktop
                         ctx.SaveChanges();
 
                         var address = from ad in ctx.BankAdresses
+                                      where ad.BankID == bId
                                       select ad;
                         int ctr = 1;
                         foreach (var item in address)

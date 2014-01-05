@@ -75,6 +75,7 @@ namespace LoanManagement.Domain
         public DbSet<RequirementChecklist> RequirementChecklists { get; set; }
         public DbSet<CollateralInformation> CollateralInformations { get; set; }
         public DbSet<TempCollateralInformation> TempCollateralInformations { get; set; }
+        public DbSet<CollateralLoanInfo> CollateralLoanInfoes { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -342,6 +343,16 @@ namespace LoanManagement.Domain
 
         public int ServiceID { get; set; }
         public virtual Service Service { get; set; }
+    }
+
+    public class CollateralLoanInfo
+    {
+        public int CollateralLoanInfoID { get; set; }
+        public int CollateralInformationID { get; set; }
+        public int LoanID { get; set; }
+        public string Value { get; set; }
+
+        public virtual CollateralInformation CollateralInformation { get; set; }
     }
 
     public class RequirementChecklist

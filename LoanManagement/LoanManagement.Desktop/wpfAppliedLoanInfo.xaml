@@ -106,5 +106,11 @@
                 <Image Source="Images/Services.ico" />
             </DockPanel>
         </Button>
+        <Button x:Name="btnCol" HorizontalAlignment="Left" Height="36" Margin="582,239,0,0" VerticalAlignment="Top" Width="179" BorderBrush="#CC48CB00" BorderThickness="2" Background="#7F48CB00" Click="btnCol_Click">
+            <DockPanel LastChildFill="True">
+                <Label HorizontalContentAlignment="Center" DockPanel.Dock="Right" Foreground="#FF343434" Height="35" FontSize="16" Content="Collateral Info" Width="128"/>
+                <Image Source="Images/Renew.ico" />
+            </DockPanel>
+        </Button>
     </Grid>
 </Controls:MetroWindow>

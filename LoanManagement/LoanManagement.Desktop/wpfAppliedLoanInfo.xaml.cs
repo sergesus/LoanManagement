@@ -44,6 +44,12 @@ namespace LoanManagement.Desktop
                 using (var ctx = new newerContext())
                 {
                     var lon = ctx.Loans.Find(lId);
+
+                    if (lon.Service.Type == "Collateral")
+                        btnCol.Visibility = Visibility.Visible;
+                    else
+                        btnCol.Visibility = Visibility.Hidden;
+
                     try
                     {
                         byte[] imageArr;
@@ -399,6 +405,22 @@ namespace LoanManagement.Desktop
             try
             {
                 wpfRequirementsChecklist frm = new wpfRequirementsChecklist();
+                frm.lID = lId;
+                frm.UserID = UserID;
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void btnCol_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                wpfCollateralInfo frm = new wpfCollateralInfo();
                 frm.lID = lId;
                 frm.UserID = UserID;
                 frm.ShowDialog();

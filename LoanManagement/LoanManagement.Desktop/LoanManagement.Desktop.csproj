@@ -149,6 +149,9 @@
     <Compile Include="wpfClientSearch.xaml.cs">
       <DependentUpon>wpfClientSearch.xaml</DependentUpon>
     </Compile>
+    <Compile Include="wpfCollateralInfo.xaml.cs">
+      <DependentUpon>wpfCollateralInfo.xaml</DependentUpon>
+    </Compile>
     <Compile Include="wpfCPayments.xaml.cs">
       <DependentUpon>wpfCPayments.xaml</DependentUpon>
     </Compile>
@@ -326,6 +329,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="wpfClientSearch.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="wpfCollateralInfo.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
