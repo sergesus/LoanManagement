@@ -95,6 +95,15 @@ namespace LoanManagement.Desktop
                     var ser = ctx.Services.Find(lon.ServiceID);
                     max = ser.MaxValue;
                     min = ser.MinValue;
+                    double val = Convert.ToDouble(txtAmt.Text);
+                    if (status == "Renewal")
+                    {
+                        if (val < lon.ReleasedLoan.TotalLoan)
+                        {
+                            System.Windows.MessageBox.Show("Amount must be greater than or equal the Total Loan Amount of Previous loan(" + lon.ReleasedLoan.TotalLoan.ToString("N2") + ")", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                            return;
+                        }
+                    }
                 }
                 if (Convert.ToDouble(txtAmt.Text) > max || Convert.ToDouble(txtAmt.Text) < min)
                 {
@@ -111,6 +120,7 @@ namespace LoanManagement.Desktop
                     if (c1 != c2)
                         qst = "Are you sure you want to process this loan even with incomplete requirements?";
                 }
+
 
                 System.Windows.MessageBoxResult mr = System.Windows.MessageBox.Show(qst, "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (mr == System.Windows.MessageBoxResult.Yes)

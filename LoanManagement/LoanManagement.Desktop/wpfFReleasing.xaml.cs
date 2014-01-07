@@ -88,7 +88,7 @@ namespace LoanManagement.Desktop
                     sp[ctr].Children.Add(labelarray[ctr]);
                     sp[ctr].Children.Add(textarray[ctr]);
                     stck.Children.Add(sp[ctr]);
-                    if (status == "Releasing")
+                    if (status == "Releasing" || status == "Renewal")
                     {
                         if (ctr == 0)
                         {
@@ -142,24 +142,28 @@ namespace LoanManagement.Desktop
                         ctx.SaveChanges();
                         var lon = ctx.Loans.Find(lId);
                         Double Amt = Convert.ToDouble(txtAmt.Text);
-
+                        double ltp = 0;
                         if (status == "Renewal")
                         {
+                            var rn = ctx.LoanRenewals.Where(x => x.newLoanID == lId).First();
+
                             var pys = from p in ctx.FPaymentInfo
-                                      where p.PaymentStatus != "Cleared" && p.LoanID == lId
+                                      where p.PaymentStatus != "Cleared" && p.LoanID == rn.LoanID
                                       select p;
-                            double ltp = 0;
                             foreach (var itm in pys)
                             {
                                 ltp = ltp + itm.Amount;
                             }
-                            lbl1.Content = "Less to Proceed: ";
-                            lblPrincipal.Content = ltp.ToString("N2");
+                            lblLTP.Content = "Less to Proceed: ";
+                            lblLTP2.Content = ltp.ToString("N2");
+                            lblLTP.Visibility = Visibility.Visible;
+                            lblLTP2.Visibility = Visibility.Visible;
                             Amt = Amt - ltp;
                         }
 
                         //lblPrincipal.Content = Amt.ToString("N2");
-                        txtAmt.Text = Amt.ToString("N2");
+                        if(status == "Releasing")
+                            txtAmt.Text = Amt.ToString("N2");
                         txtAmt.SelectionStart = txtAmt.Text.Length - 3;
                         Double TotalInt = lon.Service.Interest * Convert.ToInt32(txtTerm.Text);
                         TotalInt = TotalInt / 100;
@@ -173,7 +177,11 @@ namespace LoanManagement.Desktop
                         }
                         Double Deduction = ded / 100;
                         Double NetProceed = (Convert.ToDouble(txtAmt.Text)) - (Convert.ToDouble(txtAmt.Text) * Deduction);
+                        if (status == "Renewal")
+                            NetProceed = NetProceed - ltp;
                         Double WithInt = (Convert.ToDouble(txtAmt.Text)) + (Convert.ToDouble(txtAmt.Text) * TotalInt);
+                        if (status == "Renewal")
+                            WithInt = Amt + (Amt * TotalInt);
                         lblProceed.Content = NetProceed.ToString("N2");
                         lblInt.Content = WithInt.ToString("N2");
                         Double Payment = 0;
@@ -297,7 +305,7 @@ namespace LoanManagement.Desktop
                 wdw1.Background = myBrush;
 
                 //num = 0;
-                if (status == "Releasing")
+                if (status == "Releasing" || status == "Renewal")
                 {
                     using (var ctx = new newerContext())
                     {
@@ -708,30 +716,28 @@ namespace LoanManagement.Desktop
                             {
                                 var bk = ctx.Banks.Where(x => x.BankName == cmbBank.Text).First();
                                 int bId = bk.BankID;
-                                var lon = ctx.Loans.Find(lId);
+                                var rn = ctx.LoanRenewals.Where(x => x.newLoanID == lId).First();
+                                var lon = ctx.Loans.Find(rn.LoanID);
                                 lon.Status = "Paid";
+                                int tlID = lon.LoanID;
                                 var pys = from p in ctx.FPaymentInfo
-                                          where p.LoanID == lId
+                                          where p.LoanID == rn.LoanID
                                           select p;
                                 foreach (var itm in pys)
                                 {
                                     itm.PaymentStatus = "Cleared";
                                 }
+                                lon = ctx.Loans.Find(lId);
+                                lon.Status = "Released";
                                 var cn = ctx.Services.Find(lon.ServiceID);
                                 double co = cn.AgentCommission / 100;
                                 double cm = Convert.ToDouble(txtAmt.Text) * co;
-                                LoanApplication la = new LoanApplication { AmountApplied = lon.LoanApplication.AmountApplied, DateApplied = DateTime.Now.Date };
-                                ApprovedLoan al = new ApprovedLoan { AmountApproved = lon.ApprovedLoan.AmountApproved, DateApproved = DateTime.Now.Date, ReleaseDate = DateTime.Now.Date };
-                                ReleasedLoan rl = new ReleasedLoan { AgentsCommission = cm, DateReleased = DateTime.Now.Date, MonthlyPayment = Convert.ToDouble(lblMonthly.Content), NetProceed = Convert.ToDouble(lblProceed.Content), Principal = Convert.ToDouble(txtAmt.Text), TotalLoan = Convert.ToDouble(lblInt.Content) };
-                                Loan ln = new Loan { AgentID = lon.AgentID, ApplicationType = "Walk-In", BankID = bId, ClientID = lon.ClientID, CoBorrower = lon.CoBorrower, Mode = cmbMode.Text, Term = Convert.ToInt32(txtTerm.Text), Status = "Released", ServiceID = lon.ServiceID,LoanApplication = la, ReleasedLoan = rl, ApprovedLoan = al };
+                                ReleasedLoan rl = new ReleasedLoan { LoanID=lId, AgentsCommission = cm, DateReleased = DateTime.Now.Date, MonthlyPayment = Convert.ToDouble(lblMonthly.Content), NetProceed = Convert.ToDouble(lblProceed.Content), Principal = Convert.ToDouble(txtAmt.Text), TotalLoan = Convert.ToDouble(lblInt.Content) };
                                 var lo = from l in ctx.GenSOA
                                          select l;
                                 int y = 0;
-                                ctx.Loans.Add(ln);
+                                ctx.ReleasedLoans.Add(rl);
                                 ctx.SaveChanges();
-                                int tlID = lId;
-                                lId = ln.LoanID;
-
                                 var inf = from i in ctx.CollateralLoanInfoes
                                           where i.LoanID == tlID
                                           select i;
@@ -748,7 +754,7 @@ namespace LoanManagement.Desktop
                                     ctx.FPaymentInfo.Add(fp);
                                     y++;
                                 }
-                                AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Released loan (" + lon.Service.Name + ") for client " + lon.Client.FirstName + " " + lon.Client.MiddleName + " " + lon.Client.LastName + " " + lon.Client.Suffix };
+                                AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Released loan renewal (" + lon.Service.Name + ") for client " + lon.Client.FirstName + " " + lon.Client.MiddleName + " " + lon.Client.LastName + " " + lon.Client.Suffix };
                                 ctx.AuditTrails.Add(at);
                                 ctx.SaveChanges();
                                 printSOA();
@@ -827,6 +833,21 @@ namespace LoanManagement.Desktop
 
         private void txtAmt_LostFocus(object sender, RoutedEventArgs e)
         {
+            using (var ctx = new newerContext())
+            {
+                var lon = ctx.Loans.Find(lId);
+                var ser = ctx.Services.Find(lon.ServiceID);
+                double val = Convert.ToDouble(txtAmt.Text);
+                if (status == "Renewal")
+                {
+                    if (val < lon.ReleasedLoan.TotalLoan)
+                    {
+                        System.Windows.MessageBox.Show("Amount must be greater than or equal the Total Loan Amount of Previous loan(" + lon.ReleasedLoan.TotalLoan.ToString("N2") + ")", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                        txtAmt.Text = lblPrincipal.Content.ToString();
+                        return;
+                    }
+                }
+            }
             refr();
         }
 

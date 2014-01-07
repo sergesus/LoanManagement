@@ -117,6 +117,17 @@ namespace LoanManagement.Desktop
 
                     }
                 }
+                else if (status == "Renewal Releasing")
+                {
+                    using (var ctx = new newerContext())
+                    {
+                        var lon = from ln in ctx.Loans
+                                  where ln.Status == "Approved for Renewal" && ln.Service.Department == iDept && (ln.LoanID == n || ln.Service.Name.Contains(txtSearch.Text) || (ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName).Replace(" ", "").Contains(txtSearch.Text.Replace(" ", "")))
+                                  select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, ClientName = ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName };
+                        dgLoan.ItemsSource = lon.ToList();
+
+                    }
+                }
                 else if (status == "UReleasing")
                 {
                     if (iDept == "Financing")
@@ -697,6 +708,8 @@ namespace LoanManagement.Desktop
                     frm.UserID = UserID;
                     frm.lId = num;
                     frm.status = status;
+                    if (status == "Renewal Releasing")
+                        frm.status = "Renewal";
                     frm.ShowDialog();
                 }
             }

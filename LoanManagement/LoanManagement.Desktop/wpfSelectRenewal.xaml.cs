@@ -81,5 +81,22 @@ namespace LoanManagement.Desktop
                 return;
             }
         }
+
+        private void btnProcess_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                wpfLoanSearch frm = new wpfLoanSearch();
+                frm.status = "Renewal Releasing";
+                frm.iDept = "Financing";
+                frm.UserID = UserID;
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
     }
 }

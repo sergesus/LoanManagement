@@ -482,7 +482,7 @@ namespace LoanManagement.Desktop
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                //System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
         }
@@ -507,7 +507,7 @@ namespace LoanManagement.Desktop
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                //System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
         }
@@ -575,6 +575,15 @@ namespace LoanManagement.Desktop
                     {
                         System.Windows.MessageBox.Show("Invalid loan ammount", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                         return;
+                    }
+                    var lon = ctx.Loans.Find(lId);
+                    if (status == "Renewal")
+                    {
+                        if (val < lon.ReleasedLoan.TotalLoan)
+                        {
+                            System.Windows.MessageBox.Show("Amount must be greater than or equal the Total Loan Amount of Previous loan(" + lon.ReleasedLoan.TotalLoan.ToString("N2") + ")", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                            return;
+                        }
                     }
                     val = Convert.ToDouble(txtTerm.Text);
                     if (val > ser.MaxTerm || val < ser.MinTerm)

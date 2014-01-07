@@ -30,7 +30,7 @@
                 <Image Source="Images/Hold.ico" />
             </DockPanel>
         </Button>
-        <Button x:Name="btnProcess" HorizontalAlignment="Left" Height="46" Margin="11,114,-8,0" VerticalAlignment="Top" Width="289" BorderBrush="#FF4AEE0D">
+        <Button x:Name="btnProcess" HorizontalAlignment="Left" Height="46" Margin="11,114,-8,0" VerticalAlignment="Top" Width="289" BorderBrush="#FF4AEE0D" Click="btnProcess_Click">
             <DockPanel LastChildFill="True">
                 <Label x:Name="lbl3" HorizontalContentAlignment="Center" DockPanel.Dock="Right" Foreground="#FF343434" Height="34" FontSize="16" Content="Process Renewal"/>
                 <Image Source="Images/Clear.ico" />

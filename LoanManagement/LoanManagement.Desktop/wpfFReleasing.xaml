@@ -71,6 +71,8 @@
                 <Image Source="Images/Refresh.ico" />
             </DockPanel>
         </Button>
+        <Label x:Name="lblLTP" Content="Max. Loanable Amt.:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="418,470,0,0" Width="173" FontSize="16" Foreground="#CC48CB00" FontWeight="Bold" Visibility="Hidden"/>
+        <Label x:Name="lblLTP2" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="574,470,0,0" Width="275" FontSize="16" Foreground="Black" Visibility="Hidden"/>
 
     </Grid>
 </Controls:MetroWindow>

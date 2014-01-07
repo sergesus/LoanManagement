@@ -121,9 +121,11 @@ namespace LoanManagement.Desktop
                             btnApprove.Visibility = Visibility.Hidden;
                         }
                     }
-                    else if (status == "Releasing")
+                    else if (status == "Releasing" || status == "Renewal")
                     {
                         lbl1.Content = "Release Loan";
+                        if(status == "Renewal")
+                            lbl1.Content = "Process Renewal";
                         btnDecline.Visibility = Visibility.Hidden;
                         lblR.Visibility = Visibility.Visible;
                         lblReason1.Visibility = Visibility.Visible;
@@ -257,7 +259,7 @@ namespace LoanManagement.Desktop
                     this.Close();
                     frm.ShowDialog();
                 }
-                else if (status == "Releasing")
+                else if (status == "Releasing" || status == "Renewal")
                 {
                     String iDept = "";
                     using (var ctx = new newerContext())
