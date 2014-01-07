@@ -19,3 +19,6 @@ C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManageme
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Domain\obj\Debug\LoanManagement.Domain.csproj.GenerateResource.Cache
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Domain\obj\Debug\LoanManagement.Domain.dll
 C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Domain\obj\Debug\LoanManagement.Domain.pdb
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Domain\obj\Debug\LoanManagement.Domain.csprojResolveAssemblyReference.cache
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Domain\obj\Debug\LoanManagement.Domain.Migrations.AddedRenewal.resources
+C:\Users\admin\Documents\Visual Studio 2012\Projects\LoanManagement\LoanManagement\LoanManagement.Domain\obj\Debug\LoanManagement.Domain.Migrations.AddedRenewal2.resources

@@ -1,0 +1,41 @@
+﻿<Controls:MetroWindow x:Name="wdw1" x:Class="LoanManagement.Desktop.wpfSelectRenewal"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        Title="Select Options" Height="199.624" Width="315.789" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" Loaded="wdw1_Loaded">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Colours.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Fonts.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/Green.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Accents/BaseLight.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/MahApps.Metro;component/Styles/Controls.AnimatedTabControl.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+
+    <Grid>
+        <Button x:Name="btnApply" HorizontalAlignment="Left" Height="46" Margin="11,12,-8,0" VerticalAlignment="Top" Width="289" BorderBrush="#FF4AEE0D" Click="btnApply_Click">
+            <DockPanel LastChildFill="True">
+                <Label x:Name="lbl1" HorizontalContentAlignment="Center" DockPanel.Dock="Right" Foreground="#FF343434" Height="32" FontSize="16" Content="Apply for Renewal"/>
+                <Image Source="Images/Deposit.ico" />
+            </DockPanel>
+        </Button>
+        <Button x:Name="btnApproval" HorizontalAlignment="Left" Height="46" Margin="11,63,-8,0" VerticalAlignment="Top" Width="289" BorderBrush="#FF4AEE0D" Click="btnApproval_Click">
+            <DockPanel LastChildFill="True">
+                <Label x:Name="lbl2" HorizontalContentAlignment="Center" DockPanel.Dock="Right" Foreground="#FF343434" Height="33" FontSize="16" Content="Renewal Approval"/>
+                <Image Source="Images/Hold.ico" />
+            </DockPanel>
+        </Button>
+        <Button x:Name="btnProcess" HorizontalAlignment="Left" Height="46" Margin="11,114,-8,0" VerticalAlignment="Top" Width="289" BorderBrush="#FF4AEE0D">
+            <DockPanel LastChildFill="True">
+                <Label x:Name="lbl3" HorizontalContentAlignment="Center" DockPanel.Dock="Right" Foreground="#FF343434" Height="34" FontSize="16" Content="Process Renewal"/>
+                <Image Source="Images/Clear.ico" />
+            </DockPanel>
+        </Button>
+
+    </Grid>
+</Controls:MetroWindow>

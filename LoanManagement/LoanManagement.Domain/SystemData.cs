@@ -76,6 +76,7 @@ namespace LoanManagement.Domain
         public DbSet<CollateralInformation> CollateralInformations { get; set; }
         public DbSet<TempCollateralInformation> TempCollateralInformations { get; set; }
         public DbSet<CollateralLoanInfo> CollateralLoanInfoes { get; set; }
+        public DbSet<LoanRenewal> LoanRenewals { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -715,6 +716,16 @@ namespace LoanManagement.Domain
         public double AmountApplied { get; set; }
         public DateTime DateApplied { get; set; }
         
+        public virtual Loan Loan { get; set; }
+    }
+
+    public class LoanRenewal
+    {
+        public int LoanRenewalID { get; set; }
+        public int LoanID { get; set; }
+        public int newLoanID { get; set; }
+        public string Status { get; set; }
+
         public virtual Loan Loan { get; set; }
     }
 

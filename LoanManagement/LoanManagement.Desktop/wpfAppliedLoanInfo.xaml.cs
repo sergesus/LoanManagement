@@ -220,30 +220,33 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                if (status == "Approval" || status == "UApproval")
+                if (status == "Approval" || status == "UApproval" || status=="Renewal Approval")
                 {
                     using (var ctx = new newerContext())
                     {
                         var lon = ctx.Loans.Find(lId);
-                        var ctr = ctx.Loans.Where(x => x.ClientID == lon.ClientID && (x.Status == "Applied" || x.Status == "Released" || x.Status == "Approved") && x.LoanID != lon.LoanID).Count();
-                        if (ctr > 0)
+                        if (status != "Renewal Approval")
                         {
-                            System.Windows.MessageBox.Show("Client cannot have more than one(1) Loan application/Loan", "Notice", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                            return;
-                        }
+                            var ctr = ctx.Loans.Where(x => x.ClientID == lon.ClientID && (x.Status == "Applied" || x.Status == "Released" || x.Status == "Approved") && x.LoanID != lon.LoanID).Count();
+                            if (ctr > 0)
+                            {
+                                System.Windows.MessageBox.Show("Client cannot have more than one(1) Loan application/Loan", "Notice", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                                return;
+                            }
 
-                        ctr = ctx.Loans.Where(x => x.ClientID == lon.ClientID && (x.Status == "Closed Account" || x.Status == "Under Collection")).Count();
-                        if (ctr > 0)
-                        {
-                            System.Windows.MessageBox.Show("Client has bad record due to Closed Account/Unpaid Balance. Unable to process loan.", "Notice", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                            return;
-                        }
+                            ctr = ctx.Loans.Where(x => x.ClientID == lon.ClientID && (x.Status == "Closed Account" || x.Status == "Under Collection")).Count();
+                            if (ctr > 0)
+                            {
+                                System.Windows.MessageBox.Show("Client has bad record due to Closed Account/Unpaid Balance. Unable to process loan.", "Notice", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                                return;
+                            }
 
-                        ctr = ctx.Loans.Where(x => x.ClientID == lon.ClientID && x.Status == "Released" && x.Service.Department != lon.Service.Department).Count();
-                        if (ctr > 0)
-                        {
-                            System.Windows.MessageBox.Show("Client has an existing loan on other department", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                            return;
+                            ctr = ctx.Loans.Where(x => x.ClientID == lon.ClientID && x.Status == "Released" && x.Service.Department != lon.Service.Department).Count();
+                            if (ctr > 0)
+                            {
+                                System.Windows.MessageBox.Show("Client has an existing loan on other department", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                return;
+                            }
                         }
                     }
 
@@ -294,10 +297,11 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                if (status == "Approval")
+                if (status == "Approval" || status == "Renewal Approval")
                 {
                     wpfLoanDeclining frm = new wpfLoanDeclining();
                     frm.lId = lId;
+                    frm.status = "Renewal";
                     frm.UserID = UserID;
                     this.Close();
                     frm.ShowDialog();

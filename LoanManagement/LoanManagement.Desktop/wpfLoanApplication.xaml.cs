@@ -100,7 +100,7 @@ namespace LoanManagement.Desktop
                 grdCoBorrower.Visibility = Visibility.Hidden;
                 cboxAgent.IsEnabled = true;
 
-                if (status == "Edit" || status == "Confirmation")
+                if (status == "Edit" || status == "Confirmation" || status == "Renewal")
                 {
                     if (status == "Confirmation")
                     {
@@ -580,6 +580,7 @@ namespace LoanManagement.Desktop
                     if (val > ser.MaxTerm || val < ser.MinTerm)
                     {
                         System.Windows.MessageBox.Show("Invalid desired term", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                        return;
                     }
 
                 }
@@ -602,7 +603,7 @@ namespace LoanManagement.Desktop
                         cbId = 0;
                     }
 
-                    if (status == "Add" || status == "Confirmation")
+                    if (status == "Add" || status == "Confirmation" || status=="Renewal")
                     {
                         if (status == "Confirmation")
                         {
@@ -615,7 +616,8 @@ namespace LoanManagement.Desktop
                             }
                             else
                             {
-                                loan = new Loan { CI = ciId, AgentID = 0, ClientID = cId, CoBorrower = cbId, ServiceID = servId, Status = "Applied", Term = Convert.ToInt32(txtTerm.Text), LoanApplication = la, Mode = cmbMode.Text , ApplicationType = "Online"};
+                                string str = "Applied";
+                                loan = new Loan { CI = ciId, AgentID = 0, ClientID = cId, CoBorrower = cbId, ServiceID = servId, Status = str, Term = Convert.ToInt32(txtTerm.Text), LoanApplication = la, Mode = cmbMode.Text , ApplicationType = "Online"};
                             }
                             ctx.Loans.Add(loan);
                             ctx.SaveChanges();
@@ -663,7 +665,10 @@ namespace LoanManagement.Desktop
                             }
                             else
                             {
-                                loan = new Loan { CI = ciId, AgentID = 0, ClientID = cId, CoBorrower = cbId, ServiceID = servId, Status = "Applied", Term = Convert.ToInt32(txtTerm.Text), LoanApplication = la, Mode = cmbMode.Text, ApplicationType = "Walk-In" };
+                                string str = "Applied";
+                                if (status == "Renewal")
+                                    str = "Applied for Renewal";
+                                loan = new Loan { CI = ciId, AgentID = 0, ClientID = cId, CoBorrower = cbId, ServiceID = servId, Status = str, Term = Convert.ToInt32(txtTerm.Text), LoanApplication = la, Mode = cmbMode.Text, ApplicationType = "Walk-In" };
                             }
 
                             //AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Processed new loan application (" + cmbServices.Text + ") for client " + txtFName.Text + " " + txtMName.Text + " " + txtLName.Text + " " + txtSuffix.Text };
@@ -671,6 +676,13 @@ namespace LoanManagement.Desktop
 
                             ctx.Loans.Add(loan);
                             ctx.SaveChanges();
+
+                            if (status == "Renewal")
+                            {
+                                LoanRenewal lr = new LoanRenewal { LoanID = lId, newLoanID = loan.LoanID, Status = "Pending" };
+                                ctx.LoanRenewals.Add(lr);
+                                ctx.SaveChanges();
+                            }
 
                             string folderName = @"F:\Loan Files";
                             string pathString = System.IO.Path.Combine(folderName, "Loan " + loan.LoanID.ToString());
@@ -684,7 +696,15 @@ namespace LoanManagement.Desktop
                                 System.IO.Directory.CreateDirectory(pathString);
                             }
 
-
+                            if (status == "Renewal")
+                            {
+                                string pathString2 = @"F:\Loan Files\Loan " + lId.ToString();
+                                if (Directory.Exists(pathString2))
+                                {
+                                    Copy(pathString2, pathString);
+                                    Directory.Delete(pathString2, true);
+                                }
+                            }
 
                             System.Windows.MessageBox.Show("Loan has been successfuly applied", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                             this.Close();

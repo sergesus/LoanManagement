@@ -27,6 +27,7 @@ namespace LoanManagement.Desktop
     {
         public int lId;
         public int UserID;
+        public string status;
         public wpfLoanDeclining()
         {
             InitializeComponent();
@@ -68,6 +69,11 @@ namespace LoanManagement.Desktop
                 {
                     var lon = ctx.Loans.Find(lId);
                     lon.Status = "Declined";
+                    if (status == "Renewal")
+                    {
+                        var rn = ctx.LoanRenewals.Where(x => x.newLoanID == lId).First();
+                        rn.Status = "Declined";
+                    }
                     DeclinedLoan dl = new DeclinedLoan { DateDeclined = DateTime.Today.Date, Reason = str };
                     lon.DeclinedLoan = dl;
                     ctx.SaveChanges();

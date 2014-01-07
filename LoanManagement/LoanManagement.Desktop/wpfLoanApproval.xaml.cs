@@ -118,10 +118,16 @@ namespace LoanManagement.Desktop
                     using (var ctx = new newerContext())
                     {
                         var lon = ctx.Loans.Find(lId);
-                        if (status == "Approval")
+                        if (status == "Approval" || status == "Renewal Approval")
                         {
 
                             lon.Status = "Approved";
+                            if (status == "Renewal Approval")
+                            {
+                                lon.Status = "Approved for Renewal";
+                                var rn = ctx.LoanRenewals.Where(x => x.newLoanID == lId).First();
+                                rn.Status = "Approved";
+                            }
                             ApprovedLoan al = new ApprovedLoan { AmountApproved = Convert.ToDouble(txtAmt.Text), DateApproved = DateTime.Today.Date, ReleaseDate = dtDate.SelectedDate.Value.Date };
                             lon.ApprovedLoan = al;
                             AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Processed approval for loan (" + lon.Service.Name + ") for client " + lon.Client.FirstName + " " + lon.Client.MiddleName + " " + lon.Client.LastName + " " + lon.Client.Suffix };

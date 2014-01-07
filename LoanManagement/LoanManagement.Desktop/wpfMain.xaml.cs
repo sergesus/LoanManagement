@@ -2300,6 +2300,21 @@ namespace LoanManagement.Desktop
             }
         }
 
+        private void btnFRenewal_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                wpfSelectRenewal frm = new wpfSelectRenewal();
+                frm.UserID = UserID;
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
 
 
     }

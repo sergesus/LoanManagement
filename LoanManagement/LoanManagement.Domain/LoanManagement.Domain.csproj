@@ -97,6 +97,14 @@
     <Compile Include="Migrations\201401042310278_CollateralLoanInfo2.Designer.cs">
       <DependentUpon>201401042310278_CollateralLoanInfo2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201401070056586_AddedRenewal.cs" />
+    <Compile Include="Migrations\201401070056586_AddedRenewal.Designer.cs">
+      <DependentUpon>201401070056586_AddedRenewal.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201401070127116_AddedRenewal2.cs" />
+    <Compile Include="Migrations\201401070127116_AddedRenewal2.Designer.cs">
+      <DependentUpon>201401070127116_AddedRenewal2.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemData.cs" />
@@ -144,6 +152,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201401042310278_CollateralLoanInfo2.resx">
       <DependentUpon>201401042310278_CollateralLoanInfo2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201401070056586_AddedRenewal.resx">
+      <DependentUpon>201401070056586_AddedRenewal.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201401070127116_AddedRenewal2.resx">
+      <DependentUpon>201401070127116_AddedRenewal2.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

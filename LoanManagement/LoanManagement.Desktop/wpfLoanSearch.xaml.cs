@@ -85,6 +85,17 @@ namespace LoanManagement.Desktop
 
                     }
                 }
+                else if (status == "Renewal Approval")
+                {
+                    using (var ctx = new newerContext())
+                    {
+                        var lon = from ln in ctx.Loans
+                                  where ln.Status == "Applied for Renewal" && ln.Service.Department == iDept && (ln.LoanID == n || ln.Service.Name.Contains(txtSearch.Text) || (ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName).Replace(" ", "").Contains(txtSearch.Text.Replace(" ", "")))
+                                  select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, ClientName = ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName };
+                        dgLoan.ItemsSource = lon.ToList();
+
+                    }
+                }
                 else if (status == "Confirmation")
                 {
                     using (var ctx = new newerContext())
@@ -140,6 +151,17 @@ namespace LoanManagement.Desktop
                                   select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, ClientName = ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName };
                         dgLoan.ItemsSource = lon.ToList();
 
+                    }
+                }
+                else if (status == "Renewal Application")
+                {
+                    using (var ctx = new newerContext())
+                    {
+                        var lon = from ln in ctx.Loans
+                                  where (ln.Status == "Released" || ln.Status == "Active") && (ln.FPaymentInfo.Where(x => x.PaymentStatus == "Due" || x.PaymentStatus == "On Hold" || x.PaymentStatus == "Due" || x.PaymentStatus == "Due/Pending" || x.PaymentStatus=="Pending").Count() < 4) && ln.Service.Department == iDept && (ln.LoanID == n || ln.Service.Name.Contains(txtSearch.Text) || (ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName).Replace(" ", "").Contains(txtSearch.Text.Replace(" ", "")))
+                                  select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, ClientName = ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName };
+                        dgLoan.ItemsSource = lon.ToList();
+                        btnView.Content = "Apply Renewal";
                     }
                 }
                 else if (status == "Voiding")
@@ -282,6 +304,25 @@ namespace LoanManagement.Desktop
                     frm.lId = id;
                     frm.UserID = UserID;
                     frm.btnContinue.Content = "Update";
+                    frm.ShowDialog();
+                }
+                else if (status == "Renewal Application")
+                {
+                    wpfLoanApplication frm = new wpfLoanApplication();
+                    frm.status = "Renewal";
+                    int id = Convert.ToInt32(getRow(dgLoan, 0));
+                    using (var ctx = new newerContext())
+                    {
+                        var ctr = ctx.LoanRenewals.Where(x => x.LoanID == id && (x.Status == "Pending" || x.Status == "Approved")).Count();
+                        if (ctr > 0)
+                        {
+                            System.Windows.MessageBox.Show("There is an existing application for this loan","Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
+                        }
+                    }
+                    frm.lId = id;
+                    frm.UserID = UserID;
+                    frm.btnContinue.Content = "Renew";
                     frm.ShowDialog();
                 }
                 else if (status == "Confirmation")

@@ -216,6 +216,12 @@
                                     <Image Source="Images/Application.ico" />
                                 </DockPanel>
                             </Button>
+                            <Button x:Name="btnFRenewal" HorizontalAlignment="Left" Height="118" Margin="212,256,0,0" VerticalAlignment="Top" Width="128" BorderBrush="#FF4AEE0D" BorderThickness="4" Grid.Column="1" Click="btnFRenewal_Click">
+                                <DockPanel LastChildFill="True">
+                                    <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom" Foreground="#FF343434" Content="Loan Renewal"/>
+                                    <Image Source="Images/Application.ico" />
+                                </DockPanel>
+                            </Button>
                         </Grid>
                     </TabItem>
                     <TabItem x:Name="tbMicro" Header="Micro-Business" MouseUp="TabItem_MouseUp_1">

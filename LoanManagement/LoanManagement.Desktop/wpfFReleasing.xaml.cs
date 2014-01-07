@@ -133,7 +133,7 @@ namespace LoanManagement.Desktop
                     return;
                 }
 
-                if (status == "Releasing")
+                if (status == "Releasing" || status == "Renewal")
                 {
                     using (var ctx = new newerContext())
                     {
@@ -142,6 +142,22 @@ namespace LoanManagement.Desktop
                         ctx.SaveChanges();
                         var lon = ctx.Loans.Find(lId);
                         Double Amt = Convert.ToDouble(txtAmt.Text);
+
+                        if (status == "Renewal")
+                        {
+                            var pys = from p in ctx.FPaymentInfo
+                                      where p.PaymentStatus != "Cleared" && p.LoanID == lId
+                                      select p;
+                            double ltp = 0;
+                            foreach (var itm in pys)
+                            {
+                                ltp = ltp + itm.Amount;
+                            }
+                            lbl1.Content = "Less to Proceed: ";
+                            lblPrincipal.Content = ltp.ToString("N2");
+                            Amt = Amt - ltp;
+                        }
+
                         //lblPrincipal.Content = Amt.ToString("N2");
                         txtAmt.Text = Amt.ToString("N2");
                         txtAmt.SelectionStart = txtAmt.Text.Length - 3;
@@ -619,7 +635,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                if (status == "Releasing")
+                if (status == "Releasing" || status == "Renewal")
                 {
                     double max = 0;
                     double min = 0;
@@ -647,7 +663,7 @@ namespace LoanManagement.Desktop
                         }
                     }
 
-                    if (Convert.ToDouble(txtAmt.Text) > Convert.ToDouble(lblPrincipal.Content))
+                    if (Convert.ToDouble(txtAmt.Text) > Convert.ToDouble(lblPrincipal.Content) && status=="Releasing")
                     {
                         MessageBox.Show("Principal amount must not be greater than the maximum loanable amount", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
@@ -686,36 +702,93 @@ namespace LoanManagement.Desktop
                     MessageBoxResult mr = MessageBox.Show("Are you sure you want to process this transaction?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
                     if (mr == MessageBoxResult.Yes)
                     {
-                        using (var ctx = new newerContext())
+                        if (status == "Renewal")
                         {
-                            var bk = ctx.Banks.Where(x => x.BankName == cmbBank.Text).First();
-                            int bId = bk.BankID;
-                            var lon = ctx.Loans.Find(lId);
-                            lon.Status = "Released";
-                            lon.BankID = bId;
-                            lon.Mode = cmbMode.Text;
-                            lon.Term = Convert.ToInt32(txtTerm.Text);
-                            var cn = ctx.Services.Find(lon.ServiceID);
-                            double co = cn.AgentCommission / 100;
-                            double cm = Convert.ToDouble(txtAmt.Text) * co;
-                            //MessageBox.Show(cm.ToString());
-                            ReleasedLoan rl = new ReleasedLoan { AgentsCommission = cm, DateReleased = DateTime.Today.Date, LoanID = lId, MonthlyPayment = Convert.ToDouble(lblMonthly.Content), NetProceed = Convert.ToDouble(lblProceed.Content), Principal = Convert.ToDouble(txtAmt.Text), TotalLoan = Convert.ToDouble(lblInt.Content) };
-                            lon.ReleasedLoan = rl;
-                            var lo = from l in ctx.GenSOA
-                                     select l;
-                            int y = 0;
-                            foreach (var item in lo)
+                            using (var ctx = new newerContext())
                             {
-                                FPaymentInfo fp = new FPaymentInfo { PaymentNumber = item.PaymentNumber, Amount = Convert.ToDouble(item.Amount), ChequeInfo = textarray[y].Text, LoanID = lId, ChequeDueDate = item.PaymentDate, PaymentDate = item.PaymentDate, PaymentStatus = "Pending", RemainingBalance = Convert.ToDouble(item.RemainingBalance) };
-                                ctx.FPaymentInfo.Add(fp);
-                                y++;
+                                var bk = ctx.Banks.Where(x => x.BankName == cmbBank.Text).First();
+                                int bId = bk.BankID;
+                                var lon = ctx.Loans.Find(lId);
+                                lon.Status = "Paid";
+                                var pys = from p in ctx.FPaymentInfo
+                                          where p.LoanID == lId
+                                          select p;
+                                foreach (var itm in pys)
+                                {
+                                    itm.PaymentStatus = "Cleared";
+                                }
+                                var cn = ctx.Services.Find(lon.ServiceID);
+                                double co = cn.AgentCommission / 100;
+                                double cm = Convert.ToDouble(txtAmt.Text) * co;
+                                LoanApplication la = new LoanApplication { AmountApplied = lon.LoanApplication.AmountApplied, DateApplied = DateTime.Now.Date };
+                                ApprovedLoan al = new ApprovedLoan { AmountApproved = lon.ApprovedLoan.AmountApproved, DateApproved = DateTime.Now.Date, ReleaseDate = DateTime.Now.Date };
+                                ReleasedLoan rl = new ReleasedLoan { AgentsCommission = cm, DateReleased = DateTime.Now.Date, MonthlyPayment = Convert.ToDouble(lblMonthly.Content), NetProceed = Convert.ToDouble(lblProceed.Content), Principal = Convert.ToDouble(txtAmt.Text), TotalLoan = Convert.ToDouble(lblInt.Content) };
+                                Loan ln = new Loan { AgentID = lon.AgentID, ApplicationType = "Walk-In", BankID = bId, ClientID = lon.ClientID, CoBorrower = lon.CoBorrower, Mode = cmbMode.Text, Term = Convert.ToInt32(txtTerm.Text), Status = "Released", ServiceID = lon.ServiceID,LoanApplication = la, ReleasedLoan = rl, ApprovedLoan = al };
+                                var lo = from l in ctx.GenSOA
+                                         select l;
+                                int y = 0;
+                                ctx.Loans.Add(ln);
+                                ctx.SaveChanges();
+                                int tlID = lId;
+                                lId = ln.LoanID;
+
+                                var inf = from i in ctx.CollateralLoanInfoes
+                                          where i.LoanID == tlID
+                                          select i;
+
+                                foreach (var itm in inf)
+                                {
+                                    CollateralLoanInfo ci = new CollateralLoanInfo { CollateralInformationID = itm.CollateralInformationID, LoanID = lId, Value = itm.Value };
+                                    ctx.CollateralLoanInfoes.Add(ci);
+                                }
+
+                                foreach (var item in lo)
+                                {
+                                    FPaymentInfo fp = new FPaymentInfo { PaymentNumber = item.PaymentNumber, Amount = Convert.ToDouble(item.Amount), ChequeInfo = textarray[y].Text, LoanID = lId, ChequeDueDate = item.PaymentDate, PaymentDate = item.PaymentDate, PaymentStatus = "Pending", RemainingBalance = Convert.ToDouble(item.RemainingBalance) };
+                                    ctx.FPaymentInfo.Add(fp);
+                                    y++;
+                                }
+                                AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Released loan (" + lon.Service.Name + ") for client " + lon.Client.FirstName + " " + lon.Client.MiddleName + " " + lon.Client.LastName + " " + lon.Client.Suffix };
+                                ctx.AuditTrails.Add(at);
+                                ctx.SaveChanges();
+                                printSOA();
+                                MessageBox.Show("Transaction has been successfully processed", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                                this.Close();
                             }
-                            AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Released loan (" + lon.Service.Name + ") for client " + lon.Client.FirstName + " " + lon.Client.MiddleName + " " + lon.Client.LastName + " " + lon.Client.Suffix };
-                            ctx.AuditTrails.Add(at);
-                            ctx.SaveChanges();
-                            printSOA();
-                            MessageBox.Show("Transaction has been successfully processed", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
-                            this.Close();
+                        }
+                        else
+                        {
+                            using (var ctx = new newerContext())
+                            {
+                                var bk = ctx.Banks.Where(x => x.BankName == cmbBank.Text).First();
+                                int bId = bk.BankID;
+                                var lon = ctx.Loans.Find(lId);
+                                lon.Status = "Released";
+                                lon.BankID = bId;
+                                lon.Mode = cmbMode.Text;
+                                lon.Term = Convert.ToInt32(txtTerm.Text);
+                                var cn = ctx.Services.Find(lon.ServiceID);
+                                double co = cn.AgentCommission / 100;
+                                double cm = Convert.ToDouble(txtAmt.Text) * co;
+                                //MessageBox.Show(cm.ToString());
+                                ReleasedLoan rl = new ReleasedLoan { AgentsCommission = cm, DateReleased = DateTime.Today.Date, LoanID = lId, MonthlyPayment = Convert.ToDouble(lblMonthly.Content), NetProceed = Convert.ToDouble(lblProceed.Content), Principal = Convert.ToDouble(txtAmt.Text), TotalLoan = Convert.ToDouble(lblInt.Content) };
+                                lon.ReleasedLoan = rl;
+                                var lo = from l in ctx.GenSOA
+                                         select l;
+                                int y = 0;
+                                foreach (var item in lo)
+                                {
+                                    FPaymentInfo fp = new FPaymentInfo { PaymentNumber = item.PaymentNumber, Amount = Convert.ToDouble(item.Amount), ChequeInfo = textarray[y].Text, LoanID = lId, ChequeDueDate = item.PaymentDate, PaymentDate = item.PaymentDate, PaymentStatus = "Pending", RemainingBalance = Convert.ToDouble(item.RemainingBalance) };
+                                    ctx.FPaymentInfo.Add(fp);
+                                    y++;
+                                }
+                                AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Released loan (" + lon.Service.Name + ") for client " + lon.Client.FirstName + " " + lon.Client.MiddleName + " " + lon.Client.LastName + " " + lon.Client.Suffix };
+                                ctx.AuditTrails.Add(at);
+                                ctx.SaveChanges();
+                                printSOA();
+                                MessageBox.Show("Transaction has been successfully processed", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                                this.Close();
+                            }
                         }
                     }
                 }

@@ -258,6 +258,9 @@
     <Compile Include="wpfSelectPayment.xaml.cs">
       <DependentUpon>wpfSelectPayment.xaml</DependentUpon>
     </Compile>
+    <Compile Include="wpfSelectRenewal.xaml.cs">
+      <DependentUpon>wpfSelectRenewal.xaml</DependentUpon>
+    </Compile>
     <Compile Include="wpfServiceInfo.xaml.cs">
       <DependentUpon>wpfServiceInfo.xaml</DependentUpon>
     </Compile>
@@ -469,6 +472,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="wpfSelectPayment.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="wpfSelectRenewal.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
