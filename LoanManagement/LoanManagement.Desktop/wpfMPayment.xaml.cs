@@ -119,13 +119,12 @@ namespace LoanManagement.Desktop
 
                         lblCurrentPayment.Content = mp.Amount.ToString("N2");
                         lblExcessive.Content = mp.ExcessBalance.ToString("N2");
-                        
-                        lblTotalLoan.Content = mp.RemainingLoanBalance.ToString("N2");
+                        double rem = mp.RemainingLoanBalance + mp.TotalAmount;
+                        lblTotalLoan.Content = rem.ToString("N2");
                         lblLateInterest.Content = mp.BalanceInterest.ToString("N2");
                         lblPrevBalance.Content = mp.PreviousBalance.ToString("N2");
                         lblTotalBalance.Content = mp.TotalBalance.ToString("N2");
                         lblTotal.Content = mp.TotalAmount.ToString("N2");
-                        
                         
                     }
                     else
@@ -178,6 +177,11 @@ namespace LoanManagement.Desktop
                 }
 
                 double cPayment = (Convert.ToDouble(lblTotalLoan.Content) - Convert.ToDouble(lblExcessive.Content));
+
+                if (cPayment < 0 || cPayment < Convert.ToDouble(lblTotalLoan.Content))
+                {
+                    cPayment = Convert.ToDouble(lblTotalLoan.Content);
+                }
 
                 if (amt > cPayment )
                 {
@@ -255,9 +259,14 @@ namespace LoanManagement.Desktop
                         double balInt = Convert.ToDouble((pbal * interest).ToString("N2"));
                         double totalBal = Convert.ToDouble((pbal + balInt).ToString("N2"));
                         double total = Convert.ToDouble((totalBal + py.Amount).ToString("N2"));
-                        double rem = Convert.ToDouble((py.RemainingLoanBalance - payment).ToString("N2"));
+                        double re = Convert.ToDouble(lblTotalLoan.Content);
+                        double rem = Convert.ToDouble((re - payment).ToString("N2"));
 
-                        
+                        if (rem < total)
+                        {
+                            rem = 0;
+                            total = totalBal;
+                        }
 
                         py.TotalPayment = amt;
                         py.PaymentDate = DateTime.Now.Date;
@@ -266,7 +275,7 @@ namespace LoanManagement.Desktop
                         int n = py.PaymentNumber + 1;
 
                         
-                        if ((amt == Convert.ToDouble(lblTotal.Content) && rem <= py.Amount))
+                        if ((amt == Convert.ToDouble(lblTotal.Content) && rem <= py.Amount) || rem < 0)
                         {
                             System.Windows.MessageBox.Show("The Loan has been successfully finished!", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                             var lon = ctx.Loans.Find(lID);
@@ -360,7 +369,9 @@ namespace LoanManagement.Desktop
                             double payment = Convert.ToDouble(py.Amount.ToString("N2"));
                             double rem = Convert.ToDouble((py.RemainingLoanBalance - py.TotalAmount).ToString("N2"));
                             double total = Convert.ToDouble((py.Amount - ex).ToString("N2"));
+                            ex = Convert.ToDouble(ex.ToString("N2"));
                             double ex2 = ex - py.Amount;
+                            ex2 = Convert.ToDouble(ex2.ToString("N2"));
                             string st = "";
                             int n = py.PaymentNumber + 1;
                             //System.Windows.MessageBox.Show(rem.ToString());
@@ -378,7 +389,8 @@ namespace LoanManagement.Desktop
                                 st = "Pending";
                                 mp = new MPaymentInfo { Amount = py.Amount, BalanceInterest = 0, DueDate = dt, ExcessBalance = Convert.ToDouble(ex.ToString("N2")), LoanID = lID, PaymentNumber = n, PaymentStatus = st, PreviousBalance = 0, RemainingLoanBalance = rem, TotalAmount = total, TotalBalance = 0 };
                             }
-                            if (rem <= py.Amount && ex>=py.Amount )
+                            ex = Convert.ToDouble(ex.ToString("N2"));
+                            if ((rem <= py.Amount && ex >= py.Amount) || rem < 0)
                             {
                                 System.Windows.MessageBox.Show("The Loan has been successfully finished!", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                                 var lon = ctx.Loans.Find(lID);

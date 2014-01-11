@@ -180,7 +180,7 @@ namespace LoanManagement.Desktop
                     using (var ctx = new newerContext())
                     {
                         var lon = from ln in ctx.Loans
-                                  where (ln.Status == "Released" || ln.Status == "Active" || ln.Status=="Paid") && ln.ReleasedLoan.DateReleased == DateTime.Now.Date && ln.Service.Department == iDept && (ln.LoanID == n || ln.Service.Name.Contains(txtSearch.Text) || (ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName).Replace(" ","").Contains(txtSearch.Text.Replace(" ","")))
+                                  where (ln.Status == "Released" || ln.Status == "Active" || ln.Status=="Paid") && ln.Service.Department == iDept && (ln.LoanID == n || ln.Service.Name.Contains(txtSearch.Text) || (ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName).Replace(" ","").Contains(txtSearch.Text.Replace(" ","")))
                                   select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, ClientName = ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName };
                         dgLoan.ItemsSource = lon.ToList();
                         btnView.Content = "Void last payment";
