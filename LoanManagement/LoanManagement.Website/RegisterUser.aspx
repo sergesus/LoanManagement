@@ -11,7 +11,7 @@
 
     <style type="text/css">
         .auto-style1 {
-            width: 844px;
+            width: 886px;
         }
         .auto-style2 {
             width: 217px;
@@ -94,7 +94,7 @@
     
     <div id="templatemo_banner_bar">
     	
-        <h2>Guahan Finance Corporation</h2>
+        
         
       
     	
@@ -151,42 +151,45 @@
                             <td class="auto-style5"></td>
                             <td class="auto-style15">
                                 <asp:Label ID="Label1" runat="server" Font-Names="Segoe UI" Font-Size="Large" Text="Username:"></asp:Label>
+                                <asp:Label ID="Label20" runat="server" ForeColor="Red" Text="*"></asp:Label>
                             </td>
                             <td class="auto-style7">
                                 <asp:TextBox ID="txtUsername" runat="server" Width="266px" ValidationGroup="1" Enabled="False"></asp:TextBox>
                             </td>
                             <td class="auto-style8">
-                                <asp:RequiredFieldValidator ID="RequiredFieldValidator1" runat="server" ControlToValidate="txtUsername" ErrorMessage="Please input your username" ValidationGroup="1"></asp:RequiredFieldValidator>
+                                <asp:RegularExpressionValidator ID="RegularExpressionValidator7" runat="server" ControlToValidate="txtUsername" ErrorMessage="Wrong Username Format" Font-Size="Medium" ForeColor="Red" ValidationExpression="[a-zA-Z0-9_]{1,40}"></asp:RegularExpressionValidator>
                             </td>
                         </tr>
                         <tr>
                             <td class="auto-style2">&nbsp;</td>
                             <td class="auto-style14">
                                 <asp:Label ID="Label2" runat="server" Font-Names="Segoe UI" Font-Size="Large" Text="Password:"></asp:Label>
+                                <asp:Label ID="Label21" runat="server" ForeColor="Red" Text="*"></asp:Label>
                             </td>
                             <td class="auto-style3">
                                 <asp:TextBox ID="txtPassword" runat="server" TextMode="Password" Width="266px" ValidationGroup="1" Enabled="False"></asp:TextBox>
                             </td>
                             <td>
-                                <asp:RequiredFieldValidator ID="RequiredFieldValidator2" runat="server" ControlToValidate="txtPassword" ErrorMessage="Please input your password" ValidationGroup="1"></asp:RequiredFieldValidator>
+                                <asp:RegularExpressionValidator ID="RegularExpressionValidator8" runat="server" ControlToValidate="txtPassword" ErrorMessage="Wrong Password Format" Font-Size="Medium" ForeColor="Red" ValidationExpression="[a-zA-Z0-9]{1,40}"></asp:RegularExpressionValidator>
                             </td>
                         </tr>
                         <tr>
                             <td class="auto-style2">&nbsp;</td>
                             <td class="auto-style14">
                                 <asp:Label ID="Label4" runat="server" Font-Names="Segoe UI" Font-Size="Large" Text="Confirm Password:"></asp:Label>
+                                <asp:Label ID="Label22" runat="server" ForeColor="Red" Text="*"></asp:Label>
                             </td>
                             <td class="auto-style3">
                                 <asp:TextBox ID="txtConfirm" runat="server" TextMode="Password" Width="266px" ValidationGroup="1" Enabled="False"></asp:TextBox>
                             </td>
                             <td>
-                                <asp:RequiredFieldValidator ID="RequiredFieldValidator3" runat="server" ErrorMessage="Please Confirm your password:" ControlToValidate="txtConfirm" ValidationGroup="1"></asp:RequiredFieldValidator>
-                            </td>
+                                &nbsp;</td>
                         </tr>
                         <tr>
                             <td class="auto-style9">&nbsp;</td>
                             <td class="auto-style16">
                                 <asp:Label ID="Label5" runat="server" Font-Names="Segoe UI" Font-Size="Large" Text="Captcha:"></asp:Label>
+                                <asp:Label ID="Label24" runat="server" ForeColor="Red" Text="*"></asp:Label>
                             </td>
                             <td class="auto-style11">
                                 <table class="auto-style13">
@@ -208,7 +211,9 @@
                         </tr>
                         <tr>
                             <td class="auto-style9"></td>
-                            <td class="auto-style16"></td>
+                            <td class="auto-style16">
+                                <asp:Label ID="Label23" runat="server" ForeColor="Red" Text="*"></asp:Label>
+                                Required Fields</td>
                             <td class="auto-style11">
                                 <asp:Button ID="btnRegister" runat="server" Text="Register" Width="79px" OnClick="btnRegister_Click" ValidationGroup="1" Enabled="False" />
                             </td>
@@ -237,7 +242,8 @@
     <div id="templatemo_footer_bar_wrapper">
         <div id="templatemo_footer_bar">
                 Copyright © 2013 | Guahan Financing Corporation | All Rights Reserved
-		
+		<br />
+            <a href="Index.aspx">Home</a> | <a href="About.aspx">About</a> | <a href="Services.aspx">Services</a> | <a href="Downloads.aspx">Downloands</a> | <a href="Application.aspx">Application</a> | <a href="Calculator.aspx">Calculator</a> | <a href ="RegisterClient.aspx">Client Registration</a> | <a href="RegisterUser.aspx">Register User</a> | <a href="Login.aspx">Login</a> | <a href="MyAccount_Main.aspx">My Account</a> | <a href="MyAccount_Edit.aspx">Edit Account</a> | <a href="MyAccount_Loans.aspx">My Loans</a> | <a href="MyAccount_Submit.aspx">Submit Requirements</a>
         </div>  <!-- end of footer -->
 	</div> <!-- end of footer_wrapper -->
 </div> <!-- end of container -->

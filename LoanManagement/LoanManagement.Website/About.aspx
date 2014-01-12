@@ -7,6 +7,18 @@
     <title>Guahan Finance Corporation</title>
     <link href="templatemo_style.css" rel="stylesheet" type="text/css" />
 
+    <style type="text/css">
+        .auto-style1 {
+            width: 100%;
+        }
+        .auto-style2 {
+            width: 109px;
+        }
+        .auto-style3 {
+            width: 664px;
+        }
+    </style>
+
 </head>
 <body>
 <form id="Form1" runat="server">
@@ -19,8 +31,7 @@
         </div>
         
         <div id="top_menu">
-            <%if(Session["ID"]==null){ %>
-                Welcome Guest!<asp:LinkButton ID="LinkButton2" runat="server" OnClick="LinkButton2_Click">(login)</asp:LinkButton>
+            <%if(Session["ID"]==null){ %>Welcome Guest!<asp:LinkButton ID="LinkButton2" runat="server" OnClick="LinkButton2_Click">(login)</asp:LinkButton>
 &nbsp;<%}else { %>Welcome <% string id = Session["NAME"].ToString(); Response.Write(id); %> 
             <asp:LinkButton ID="LinkButton1" runat="server" OnClick="LinkButton1_Click">(Logout)</asp:LinkButton>
             <%} %>
@@ -30,7 +41,7 @@
     
     <div id="templatemo_banner_bar">
     	
-        <h2>Guahan Finance Corporation</h2>
+        
         
       
     	
@@ -43,12 +54,12 @@
             <li><a href="Downloads.aspx">Downloads</a></li>
             <li><a href="Application.aspx">Application</a></li>
             <li><a href="Calculator.aspx">Loan Calc.</a></li>
-            <%
+                <%
                 if(Session["ID"]==null) {%>
                     <li><a href="Login.aspx">Login/Register</a></li>
-            <% }else {%>
+                        <% }else {%>
                     <li><a href="MyAccount_Main.aspx">My Account</a></li>
-            <% } %>
+                        <% } %>
         </ul>
     </div> <!-- end of menu -->
     
@@ -60,21 +71,47 @@
             
                 <div class="section_w590">
                     <h3>
-                        <asp:Label ID="Label4" runat="server" Font-Bold="True" Font-Italic="True" Font-Size="X-Large" ForeColor="Lime" Text="About Us"></asp:Label>
+                        <asp:Label ID="Label4" runat="server" Font-Bold="True" Font-Italic="True" Font-Size="X-Large" ForeColor="#00CC00" Text="About Us"></asp:Label>
                     </h3>
                     <p>
-                        <asp:Label ID="Label3" runat="server" Text="A group of enterprising executives belonging to various industries saw the opportunity to venture in the booming consumer financing business. Combining their strengths, Robert B. Jordan handled credit; Ruben Y. Lugtu Jr. labored on the financials while the late Wilfredo T. Anastacio took care of the human resources and operations. With the good demand and sound credit, the company, which they formed, Asialink Finance Corporation was off to a good start. Established in June of 1997, Asialink Finance Corporation is now the leading and fastest growing finance company in the Philippines. " Font-Size="Large"></asp:Label>
+                        <asp:Label ID="lblAbout" runat="server" Text="-" Font-Size="Medium"></asp:Label>
                     </p>
                     
                      &nbsp;<h4><p>
-                    <asp:Label ID="Label1" runat="server" Font-Bold="True" Font-Italic="True" Font-Size="X-Large" ForeColor="Lime" Text="Our Mission - Vision"></asp:Label>
+                    <asp:Label ID="Label1" runat="server" Font-Bold="True" Font-Italic="True" Font-Size="X-Large" ForeColor="#00CC00" Text="Our Mission - Vision"></asp:Label>
                     </p>
                     <p>&nbsp;</p>
                     <p>
-                        <asp:Label ID="Label2" runat="server" Text="Asialink Finance Corporation strives to deliver fast, convenient, efficient and accessible service to businesses and individuals in need of financial assistance.   It constantly pushes to attain a competitive edge in the financing industry through raising the standards of quality and integrity in its services, thus gaining a greater market share and showing attractive returns on the investment of its stakeholders.  It also prioritizes the welfare of its workforce through giving fair wages, benefits, and incentives, thus fostering a healthy and goal-oriented working environment.  It envisions itself to be the best in the Philippines and a significant player in the rest of Southeast Asia in the financing industry by the year 2015." Font-Size="Medium"></asp:Label>
+                        <asp:Label ID="lblMission" runat="server" Text="-" Font-Size="Medium"></asp:Label>
                     </p>
                     </h4>
                     
+                    
+
+                    <table class="auto-style1">
+                        <tr>
+                            <td class="auto-style2">&nbsp;</td>
+                            <td class="auto-style3">&nbsp;</td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td class="auto-style2">&nbsp;</td>
+                            <td class="auto-style3">
+                    <asp:Label ID="Label5" runat="server" Font-Bold="True" Font-Italic="True" Font-Size="X-Large" ForeColor="#00CC00" Text="Vicinity Map"></asp:Label>
+                            </td>
+                            <td>&nbsp;</td>
+                        </tr>
+                        <tr>
+                            <td class="auto-style2">&nbsp;</td>
+                            <td class="auto-style3">
+                                <asp:Image ID="Image1" runat="server" Height="488px" ImageUrl="~/images/map.jpg" Width="663px" />
+                            </td>
+                            <td>&nbsp;</td>
+                        </tr>
+                    </table>
+                    
+                    
+
                 <div class="cleaner"></div>
                 </div>
                 
@@ -96,7 +133,8 @@
     <div id="templatemo_footer_bar_wrapper">
         <div id="templatemo_footer_bar">
                 Copyright © 2013 | Guahan Financing Corporation | All Rights Reserved
-		
+		<br />
+            <a href="Index.aspx">Home</a> | <a href="About.aspx">About</a> | <a href="Services.aspx">Services</a> | <a href="Downloads.aspx">Downloands</a> | <a href="Application.aspx">Application</a> | <a href="Calculator.aspx">Calculator</a> | <a href ="RegisterClient.aspx">Client Registration</a> | <a href="RegisterUser.aspx">Register User</a> | <a href="Login.aspx">Login</a> | <a href="MyAccount_Main.aspx">My Account</a> | <a href="MyAccount_Edit.aspx">Edit Account</a> | <a href="MyAccount_Loans.aspx">My Loans</a> | <a href="MyAccount_Submit.aspx">Submit Requirements</a>
         </div>  <!-- end of footer -->
 	</div> <!-- end of footer_wrapper -->
 </div> <!-- end of container -->

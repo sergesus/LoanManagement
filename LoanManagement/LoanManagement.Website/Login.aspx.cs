@@ -14,11 +14,18 @@ namespace LoanManagement.Website
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            Page.Response.Cache.SetCacheability(HttpCacheability.NoCache);
-            Session["Service"] = null;
-            Session["iService"] = null;
-            Session["UpdateChecker"] = null;
-            if (Session["ID"] != null)
+            try
+            {
+                Page.Response.Cache.SetCacheability(HttpCacheability.NoCache);
+                Session["Service"] = null;
+                Session["iService"] = null;
+                Session["UpdateChecker"] = null;
+                if (Session["ID"] != null)
+                {
+                    Response.Redirect("/Index.aspx");
+                }
+            }
+            catch (Exception)
             {
                 Response.Redirect("/Index.aspx");
             }
@@ -26,20 +33,27 @@ namespace LoanManagement.Website
 
         protected void btnLogin_Click(object sender, EventArgs e)
         {
-            using (var ctx = new newerContext())
+            try
             {
-                var ctr1 = ctx.Clients.Where(x => x.Username == txtUsername.Text && x.Password == txtPassword.Text && x.isRegistered == true).Count();
-                if (ctr1 > 0)
+                using (var ctx = new newerContext())
                 {
-                    var clt = ctx.Clients.Where(x => x.Username == txtUsername.Text && x.Password == txtPassword.Text && x.isRegistered==true).First();
-                    Session["ID"] = clt.ClientID;
-                    Session["NAME"] = clt.LastName + ", " + clt.FirstName;
-                    Response.Redirect("/Index.aspx");
+                    var ctr1 = ctx.Clients.Where(x => x.Username == txtUsername.Text && x.Password == txtPassword.Text && x.isRegistered == true).Count();
+                    if (ctr1 > 0)
+                    {
+                        var clt = ctx.Clients.Where(x => x.Username == txtUsername.Text && x.Password == txtPassword.Text && x.isRegistered == true).First();
+                        Session["ID"] = clt.ClientID;
+                        Session["NAME"] = clt.LastName + ", " + clt.FirstName;
+                        Response.Redirect("/Index.aspx");
+                    }
+                    else
+                    {
+                        lclCheck.Visible = true;
+                    }
                 }
-                else
-                {
-                    lclCheck.Visible = true;
-                }
+            }
+            catch (Exception)
+            {
+                Response.Redirect("/Index.aspx");
             }
         }
 

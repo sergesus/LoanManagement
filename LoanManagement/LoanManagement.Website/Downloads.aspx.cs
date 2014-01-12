@@ -13,20 +13,27 @@ namespace LoanManagement.Website
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            Session["Service"] = null;
-            Session["iService"] = null;
-            Session["UpdateChecker"] = null;
-            string path = @"F:/Loan Files/Downloads/";
-            List<String> lst = new List<String>();
-            
-            foreach (string s in Directory.GetFiles(path).Select(Path.GetFileName))
-                lst.Add(s);
-            dg.DataSource = lst;
-            dg.DataBind();
-            foreach (GridViewRow row in dg.Rows)
+            try
             {
-                LinkButton lb = (LinkButton)row.Cells[0].Controls[0];
-                lb.Text = "Download";
+                Session["Service"] = null;
+                Session["iService"] = null;
+                Session["UpdateChecker"] = null;
+                string path = @"F:/Loan Files/Downloads/";
+                List<String> lst = new List<String>();
+
+                foreach (string s in Directory.GetFiles(path).Select(Path.GetFileName))
+                    lst.Add(s);
+                dg.DataSource = lst;
+                dg.DataBind();
+                foreach (GridViewRow row in dg.Rows)
+                {
+                    LinkButton lb = (LinkButton)row.Cells[0].Controls[0];
+                    lb.Text = "Download";
+                }
+            }
+            catch (Exception)
+            {
+                Response.Redirect("/Index.aspx");
             }
         }
 
@@ -49,20 +56,27 @@ namespace LoanManagement.Website
 
         protected void dg_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string name = dg.SelectedRow.Cells[1].Text;
-            string path = @"F:/Loan Files/Downloads/" + name;
-            FileInfo file = new FileInfo(path);
-            if (file.Exists)
+            try
             {
-                Response.Clear();
-                Response.ClearHeaders();
-                Response.ClearContent();
-                Response.AddHeader("Content-Disposition", "attachment; filename=" + file.Name);
-                Response.AddHeader("Content-Length", file.Length.ToString());
-                Response.ContentType = "text/plain";
-                Response.Flush();
-                Response.TransmitFile(file.FullName);
-                Response.End();
+                string name = dg.SelectedRow.Cells[1].Text;
+                string path = @"F:/Loan Files/Downloads/" + name;
+                FileInfo file = new FileInfo(path);
+                if (file.Exists)
+                {
+                    Response.Clear();
+                    Response.ClearHeaders();
+                    Response.ClearContent();
+                    Response.AddHeader("Content-Disposition", "attachment; filename=" + file.Name);
+                    Response.AddHeader("Content-Length", file.Length.ToString());
+                    Response.ContentType = "text/plain";
+                    Response.Flush();
+                    Response.TransmitFile(file.FullName);
+                    Response.End();
+                }
+            }
+            catch (Exception)
+            {
+                return;
             }
         }
     }

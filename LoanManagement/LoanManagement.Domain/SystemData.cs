@@ -77,6 +77,7 @@ namespace LoanManagement.Domain
         public DbSet<TempCollateralInformation> TempCollateralInformations { get; set; }
         public DbSet<CollateralLoanInfo> CollateralLoanInfoes { get; set; }
         public DbSet<LoanRenewal> LoanRenewals { get; set; }
+        public DbSet<OnlineSetting> OnlineSettings { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -1002,6 +1003,14 @@ namespace LoanManagement.Domain
         public DateTime ExpirationDate { get; set; }
 
         public virtual Client Client { get; set; }
+    }
+
+    public class OnlineSetting
+    {
+        public int OnlineSettingID { get; set; }
+        public string HomeDescription { get; set; }
+        public string AboutDescription { get; set; }
+        public string MissionVision { get; set; }
     }
 
 }

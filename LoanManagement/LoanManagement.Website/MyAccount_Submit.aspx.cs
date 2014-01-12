@@ -15,53 +15,63 @@ namespace LoanManagement.Website
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            Page.Response.Cache.SetCacheability(HttpCacheability.NoCache);
-            Session["Service"] = null;
-            Session["UpdateChecker"] = null;
-            Session["iService"] = null;
-            if (Session["ID"] == null)
+            try
             {
-                Response.Redirect("/Index.aspx");
+                Page.Response.Cache.SetCacheability(HttpCacheability.NoCache);
+                Session["Service"] = null;
+                Session["UpdateChecker"] = null;
+                Session["iService"] = null;
+                if (Session["ID"] == null)
+                {
+                    Response.Redirect("/Login.aspx");
+                }
+
+                int cID = Convert.ToInt32(Session["ID"]);
+
+                using (var ctx = new newerContext())
+                {
+                    var c1 = ctx.TemporaryLoanApplications.Where(x => x.ClientID == cID).Count();
+                    if (c1 > 0)
+                    {
+                        var lns = from l in ctx.TemporaryLoanApplications
+                                  where l.ClientID == cID
+                                  select new { ID = l.TemporaryLoanApplicationID, TypeOfLoan = l.Service.Name, ServiceType = l.Service.Type, DesiredTerm = l.Term, AmountApplied = l.AmountApplied, ModeOfPayment = l.Mode };
+
+                        dg.DataSource = lns.ToList();
+                        dg.DataBind();
+                        pnlHidden.Visible = !false;
+                        lblCheck.Visible = !true;
+                        return;
+                    }
+                    var c2 = ctx.Loans.Where(x => x.ClientID == cID && x.Status == "Applied").Count();
+                    if (c2 > 0)
+                    {
+                        var lns = from l in ctx.Loans
+                                  where l.ClientID == cID && l.Status == "Applied"
+                                  select new { LoanID = l.LoanID, TypeOfLoan = l.Service.Name, Type = l.Service.Type, Term = l.Term, ModeOfPayment = l.Mode, Status = l.Status };
+
+                        dg.DataSource = lns.ToList();
+                        dg.DataBind();
+                        pnlHidden.Visible = !false;
+                        lblCheck.Visible = !true;
+                        return;
+                    }
+
+                    if (c1 == 0 && c2 == 0)
+                    {
+                        pnlHidden.Visible = false;
+                        lblCheck.Visible = true;
+                    }
+
+
+                }
             }
-
-            int cID = Convert.ToInt32(Session["ID"]);
-
-            using (var ctx = new newerContext())
+            catch (Exception)
             {
-                var c1 = ctx.TemporaryLoanApplications.Where(x => x.ClientID == cID).Count();
-                if (c1 > 0)
-                {
-                    var lns = from l in ctx.TemporaryLoanApplications
-                              where l.ClientID == cID
-                              select new { ID = l.TemporaryLoanApplicationID, TypeOfLoan = l.Service.Name, ServiceType = l.Service.Type, DesiredTerm = l.Term, AmountApplied = l.AmountApplied, ModeOfPayment = l.Mode};
-
-                    dg.DataSource = lns.ToList();
-                    dg.DataBind();
-                    pnlHidden.Visible = !false;
-                    lblCheck.Visible = !true;
-                    return;
-                }
-                var c2 = ctx.Loans.Where(x => x.ClientID == cID && x.Status == "Applied").Count();
-                if (c2 > 0)
-                {
-                    var lns = from l in ctx.Loans
-                              where l.ClientID == cID && l.Status == "Applied"
-                              select new { LoanID = l.LoanID, TypeOfLoan = l.Service.Name, Type = l.Service.Type, Term = l.Term, ModeOfPayment = l.Mode, Status = l.Status };
-
-                    dg.DataSource = lns.ToList();
-                    dg.DataBind();
-                    pnlHidden.Visible = !false;
-                    lblCheck.Visible = !true;
-                    return;
-                }
-
-                if (c1 == 0 && c2 == 0)
-                {
-                    pnlHidden.Visible = false;
-                    lblCheck.Visible = true;
-                }
-                    
-                
+                if (Session["ID"] == null)
+                    Response.Redirect("/Login.aspx");
+                else
+                    Response.Redirect("/Index.aspx");
             }
             
         }

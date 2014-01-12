@@ -19,8 +19,7 @@
         </div>
         
         <div id="top_menu">
-            <%if(Session["ID"]==null){ %>
-                Welcome Guest!<asp:LinkButton ID="LinkButton2" runat="server" OnClick="LinkButton2_Click">(login)</asp:LinkButton>
+            <%if(Session["ID"]==null){ %>Welcome Guest!<asp:LinkButton ID="LinkButton2" runat="server" OnClick="LinkButton2_Click">(login)</asp:LinkButton>
 &nbsp;<%}else { %>Welcome <% string id = Session["NAME"].ToString(); Response.Write(id); %> 
             <asp:LinkButton ID="LinkButton1" runat="server" OnClick="LinkButton1_Click">(Logout)</asp:LinkButton>
             <%} %>
@@ -30,7 +29,7 @@
     
     <div id="templatemo_banner_bar">
     	
-        <h2>Guahan Finance Corporation</h2>
+        
         
       
     	
@@ -43,12 +42,12 @@
             <li><a href="Downloads.aspx">Downloads</a></li>
             <li><a href="Application.aspx">Application</a></li>
             <li><a href="Calculator.aspx">Loan Calc.</a></li>
-            <%
+                <%
                 if(Session["ID"]==null) {%>
                     <li><a href="Login.aspx">Login/Register</a></li>
-            <% }else {%>
+                        <% }else {%>
                     <li><a href="MyAccount_Main.aspx">My Account</a></li>
-            <% } %>
+                        <% } %>
         </ul>
     </div> <!-- end of menu -->
     
@@ -63,13 +62,9 @@
                         <asp:Label ID="Label4" runat="server" Font-Bold="True" Font-Italic="True" Font-Size="X-Large" ForeColor="Lime" Text="Welcome to our website!"></asp:Label>
                     </h3>
                     
-                     <img class="image_wrapper fl_image" src="logo/logo.jpg" alt="image" />
-                   
-                    <h4><p>Our website can be used to view your loan status, payment history and statement of accounts.</p>
-                    <p>If you are a new client, you can register here. 
-                        If you already are a client of the company and already provided your 
-                        email address, you may use the tracking number that was sent to your 
-                        email and register your personal account to use our online features.</p></h4>
+                     &nbsp;<h4>
+                        <asp:Label ID="lblDesc" runat="server" Text="-"></asp:Label>
+                    </h4>
                     
                 <div class="cleaner"></div>
                 </div>
@@ -92,7 +87,8 @@
     <div id="templatemo_footer_bar_wrapper">
         <div id="templatemo_footer_bar">
                 Copyright © 2013 | Guahan Financing Corporation | All Rights Reserved
-		
+		<br />
+            <a href="Index.aspx">Home</a> | <a href="About.aspx">About</a> | <a href="Services.aspx">Services</a> | <a href="Downloads.aspx">Downloands</a> | <a href="Application.aspx">Application</a> | <a href="Calculator.aspx">Calculator</a> | <a href ="RegisterClient.aspx">Client Registration</a> | <a href="RegisterUser.aspx">Register User</a> | <a href="Login.aspx">Login</a> | <a href="MyAccount_Main.aspx">My Account</a> | <a href="MyAccount_Edit.aspx">Edit Account</a> | <a href="MyAccount_Loans.aspx">My Loans</a> | <a href="MyAccount_Submit.aspx">Submit Requirements</a>
         </div>  <!-- end of footer -->
 	</div> <!-- end of footer_wrapper -->
 </div> <!-- end of container -->

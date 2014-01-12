@@ -47,6 +47,7 @@
         }
         .auto-style17 {
             width: 100%;
+            height: 189px;
         }
         .auto-style8 {
             width: 99%;
@@ -57,6 +58,7 @@
         }
         .auto-style18 {
             width: 316px;
+            height: 259px;
         }
         .auto-style19 {
             width: 121px;
@@ -72,6 +74,22 @@
         .auto-style30 {
             width: 99%;
             height: 178px;
+        }
+        .auto-style31 {
+            height: 38px;
+        }
+        .auto-style32 {
+            height: 319px;
+        }
+        .auto-style33 {
+            width: 100%;
+            height: 453px;
+        }
+        .auto-style35 {
+            height: 259px;
+        }
+        .auto-style37 {
+            height: 161px;
         }
     </style>
 
@@ -97,7 +115,7 @@
     
     <div id="templatemo_banner_bar">
     	
-        <h2>Guahan Finance Corporation</h2>
+        
         
       
     	
@@ -236,7 +254,7 @@
                                                             </tr>
                                                         </table>
                                                     </td>
-                                                    <td>
+                                                    <td class="auto-style35">
                                                         <asp:Panel ID="pnlHidden" runat="server" Visible="False">
                                                             <table class="auto-style8">
                                                                 <tr>
@@ -294,7 +312,41 @@
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td>&nbsp;</td>
+                                        <td>
+                                            <table class="auto-style17">
+                                                <tr>
+                                                    <td class="auto-style31">
+                                    <asp:Label ID="lblPH" runat="server" Font-Bold="True" Font-Italic="True" Font-Size="X-Large" ForeColor="Lime" Text="Payment History"></asp:Label>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="auto-style32">
+                                                        <table class="auto-style33">
+                                                            <tr>
+                                                                <td class="auto-style37">
+                                                                    <asp:GridView ID="dgHistory" runat="server" CellPadding="4" CellSpacing="2" ForeColor="#333333" GridLines="None" OnSelectedIndexChanged="dgHistory_SelectedIndexChanged" Width="627px">
+                                                                        <AlternatingRowStyle BackColor="White" />
+                                                                        <EditRowStyle BackColor="#7C6F57" />
+                                                                        <FooterStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
+                                                                        <HeaderStyle BackColor="#1C5E55" Font-Bold="True" ForeColor="White" />
+                                                                        <PagerStyle BackColor="#666666" ForeColor="White" HorizontalAlign="Center" />
+                                                                        <RowStyle BackColor="#E3EAEB" />
+                                                                        <SelectedRowStyle BackColor="#C5BBAF" Font-Bold="True" ForeColor="#333333" />
+                                                                        <SortedAscendingCellStyle BackColor="#F8FAFA" />
+                                                                        <SortedAscendingHeaderStyle BackColor="#246B61" />
+                                                                        <SortedDescendingCellStyle BackColor="#D4DFE1" />
+                                                                        <SortedDescendingHeaderStyle BackColor="#15524A" />
+                                                                    </asp:GridView>
+                                                                </td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td></td>
+                                                            </tr>
+                                                        </table>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
                                     </tr>
                                 </table>
                             </td>
@@ -319,7 +371,9 @@
         <div id="templatemo_footer_bar">
                 Copyright © 2013 | Guahan Financing Corporation | All Rights Reserved
 		
-         f footer -->
+         <br />
+            <a href="Index.aspx">Home</a> | <a href="About.aspx">About</a> | <a href="Services.aspx">Services</a> | <a href="Downloads.aspx">Downloands</a> | <a href="Application.aspx">Application</a> | <a href="Calculator.aspx">Calculator</a> | <a href ="RegisterClient.aspx">Client Registration</a> | <a href="RegisterUser.aspx">Register User</a> | <a href="Login.aspx">Login</a> | <a href="MyAccount_Main.aspx">My Account</a> | <a href="MyAccount_Edit.aspx">Edit Account</a> | <a href="MyAccount_Loans.aspx">My Loans</a> | <a href="MyAccount_Submit.aspx">Submit Requirements</a>
+            </div>
 	</div> <!-- end of footer_wrapper -->
 </div> <!-- end of container -->
 

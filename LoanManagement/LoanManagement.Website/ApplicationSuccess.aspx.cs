@@ -14,26 +14,33 @@ namespace LoanManagement.Website
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (Session["ID"] == null)
+            try
             {
-                Response.Redirect("/Index.aspx");
-            }
-            Session["UpdateChecker"] = null;
-            Page.Response.Cache.SetCacheability(HttpCacheability.NoCache);
-            Session["Service"] = null;
-            if (Session["tempLoan"] != null)
-            {
-                int lID = Convert.ToInt32(Session["tempLoan"]);
-                using (var ctx = new newerContext())
+                if (Session["ID"] == null)
                 {
-                    var lon = ctx.TemporaryLoanApplications.Find(lID);
-                    lblContent.Text = "Your loan application has been successfully applied. Please visit our branch ON or BEFORE " + lon.ExpirationDate.ToString().Split(' ')[0] + " to submit the requirements, provide other information and to confirm of the application. Thankyou";
-                    Session["tempLoan"] = null;
-                    Session["ref"] = "false";
+                    Response.Redirect("/Index.aspx");
+                }
+                Session["UpdateChecker"] = null;
+                Page.Response.Cache.SetCacheability(HttpCacheability.NoCache);
+                Session["Service"] = null;
+                if (Session["tempLoan"] != null)
+                {
+                    int lID = Convert.ToInt32(Session["tempLoan"]);
+                    using (var ctx = new newerContext())
+                    {
+                        var lon = ctx.TemporaryLoanApplications.Find(lID);
+                        lblContent.Text = "Your loan application has been successfully applied. Please visit our branch ON or BEFORE " + lon.ExpirationDate.ToString().Split(' ')[0] + " to submit the requirements, provide other information and to confirm of the application. Thankyou";
+                        Session["tempLoan"] = null;
+                        Session["ref"] = "false";
+                    }
+                }
+                else
+                {
+                    Response.Redirect("/Index.aspx");
                 }
             }
-            else
-            { 
+            catch (Exception)
+            {
                 Response.Redirect("/Index.aspx");
             }
         }

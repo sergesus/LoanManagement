@@ -80,6 +80,26 @@ namespace LoanManagement.Desktop
                         }
                     }
                 }
+                else if (status == "void")
+                {
+                    using (var ctx = new newerContext())
+                    {
+                        var ctr = ctx.Users.Where(x => x.EmployeeID == UserID && x.Password == txtPassword.Password).Count();
+                        if (ctr > 0)
+                        {
+                            var ctr1 = Application.Current.Windows.Count;
+                            var frm = Application.Current.Windows[ctr1 - 2] as wpfLoanSearch;
+                            frm.cont = true;
+                            this.Close();
+                        }
+                        else
+                        {
+                            MessageBox.Show("Incorrect Password", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                            txtPassword.Password = "";
+                            return;
+                        }
+                    }
+                }
                 else if (status == "scope")
                 {
                     using (var ctx = new newerContext())

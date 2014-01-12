@@ -13,18 +13,25 @@ namespace LoanManagement.Website
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            Page.Response.Cache.SetCacheability(HttpCacheability.NoCache);
-            Session["Service"] = null;
-            Session["iService"] = null;
-            if (Session["ID"] == null)
+            try
             {
-                Response.Redirect("/Index.aspx");
+                Page.Response.Cache.SetCacheability(HttpCacheability.NoCache);
+                Session["Service"] = null;
+                Session["iService"] = null;
+                if (Session["ID"] == null)
+                {
+                    Response.Redirect("/Login.aspx");
+                }
+                using (var ctx = new newerContext())
+                {
+                    int cID = Convert.ToInt32(Session["ID"]);
+                    var clt = ctx.Clients.Find(cID);
+                    lblUsername.Text = clt.Username;
+                }
             }
-            using (var ctx = new newerContext())
+            catch (Exception)
             {
-                int cID = Convert.ToInt32(Session["ID"]);
-                var clt = ctx.Clients.Find(cID);
-                lblUsername.Text = clt.Username;
+                Response.Redirect("/Login.aspx");
             }
         }
 
@@ -41,38 +48,45 @@ namespace LoanManagement.Website
 
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            if(txtConfirm.Text != txtNew.Text)
+            try
             {
-                lblCheck.Text = "Password didn't match";
-                lblCheck.Visible = true;
-                return;
-            }
-
-            if (txtNew.Text.Length < 8)
-            {
-                lblCheck.Text = "Password length must be at least 8";
-                lblCheck.Visible = true;
-                return;
-            }
-
-            using (var ctx = new newerContext())
-            {
-                int cID = Convert.ToInt32(Session["ID"]);
-                var clt = ctx.Clients.Find(cID);
-                if (clt.Password != txtCurrent.Text)
+                if (txtConfirm.Text != txtNew.Text)
                 {
-                    lblCheck.Text = "Current Password is wrong";
+                    lblCheck.Text = "Password didn't match";
                     lblCheck.Visible = true;
                     return;
                 }
 
-                else
+                if (txtNew.Text.Length < 8)
                 {
-                    clt.Password = txtNew.Text;
-                    ctx.SaveChanges();
-                    lblCheck.Text = "Password has been successfully changed!";
+                    lblCheck.Text = "Password length must be at least 8";
                     lblCheck.Visible = true;
+                    return;
                 }
+
+                using (var ctx = new newerContext())
+                {
+                    int cID = Convert.ToInt32(Session["ID"]);
+                    var clt = ctx.Clients.Find(cID);
+                    if (clt.Password != txtCurrent.Text)
+                    {
+                        lblCheck.Text = "Current Password is wrong";
+                        lblCheck.Visible = true;
+                        return;
+                    }
+
+                    else
+                    {
+                        clt.Password = txtNew.Text;
+                        ctx.SaveChanges();
+                        lblCheck.Text = "Password has been successfully changed!";
+                        lblCheck.Visible = true;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                Response.Redirect("/Index.aspx");
             }
         }
     }

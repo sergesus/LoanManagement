@@ -2315,6 +2315,49 @@ namespace LoanManagement.Desktop
             }
         }
 
+        private void tbOnline_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            try
+            {
+                using (var ctx = new newerContext())
+                {
+                    var set = ctx.OnlineSettings.Find(1);
+                    txtHome.Text = set.HomeDescription;
+                    txtAbout.Text = set.AboutDescription;
+                    txtMission.Text = set.MissionVision;
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void btnSave_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                if (System.Windows.MessageBox.Show("Are you sure you want to save this changes?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
+                {
+                    using (var ctx = new newerContext())
+                    {
+                        var set = ctx.OnlineSettings.Find(1);
+                        set.AboutDescription = txtAbout.Text;
+                        set.HomeDescription = txtHome.Text;
+                        set.MissionVision = txtMission.Text;
+                        System.Windows.MessageBox.Show("Information has been successfully saved", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
 
 
     }

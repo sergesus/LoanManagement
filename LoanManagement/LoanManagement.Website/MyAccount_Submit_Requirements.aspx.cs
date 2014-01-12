@@ -23,7 +23,7 @@ namespace LoanManagement.Website
             Session["iService"] = null;
             if (Session["ID"] == null)
             {
-                Response.Redirect("/Index.aspx");
+                Response.Redirect("/Login.aspx");
             }
 
             int cID = Convert.ToInt32(Session["ID"]);
@@ -97,7 +97,10 @@ namespace LoanManagement.Website
             }
             catch (Exception)
             {
-                Response.Redirect("MyAccount_Submit.aspx");
+                if (Session["ID"] == null)
+                    Response.Redirect("/Login.aspx");
+                else
+                    Response.Redirect("MyAccount_Submit.aspx");
             }
         }
 
@@ -114,50 +117,64 @@ namespace LoanManagement.Website
 
         protected void dg_SelectedIndexChanged(object sender, EventArgs e)
         {
-            string name = "";
-            string path = "";
-            name = dg.SelectedRow.Cells[1].Text;
-            if (status == "Online")
-                path = @"F:/Loan Files/Applications Online/Application " + id.ToString();
-            else
-                path = @"F:/Loan Files/Loan " + id.ToString();
-
-            path = path + "/" + name;
-
-            FileInfo file = new FileInfo(path);
-            if (file.Exists)
+            try
             {
-                Response.Clear();
-                Response.ClearHeaders();
-                Response.ClearContent();
-                Response.AddHeader("Content-Disposition", "attachment; filename=" + file.Name);
-                Response.AddHeader("Content-Length", file.Length.ToString());
-                Response.ContentType = "text/plain";
-                Response.Flush();
-                Response.TransmitFile(file.FullName);
-                Response.End();
+                string name = "";
+                string path = "";
+                name = dg.SelectedRow.Cells[1].Text;
+                if (status == "Online")
+                    path = @"F:/Loan Files/Applications Online/Application " + id.ToString();
+                else
+                    path = @"F:/Loan Files/Loan " + id.ToString();
+
+                path = path + "/" + name;
+
+                FileInfo file = new FileInfo(path);
+                if (file.Exists)
+                {
+                    Response.Clear();
+                    Response.ClearHeaders();
+                    Response.ClearContent();
+                    Response.AddHeader("Content-Disposition", "attachment; filename=" + file.Name);
+                    Response.AddHeader("Content-Length", file.Length.ToString());
+                    Response.ContentType = "text/plain";
+                    Response.Flush();
+                    Response.TransmitFile(file.FullName);
+                    Response.End();
+                }
+            }
+            catch (Exception)
+            {
+                return;
             }
         }
 
         protected void btnUpload_Click(object sender, EventArgs e)
         {
-            string path = "";
-            if (status == "Online")
-                path = @"F:/Loan Files/Applications Online/Application " + id.ToString();
-            else
-                path = @"F:/Loan Files/Loan " + id.ToString();
+            try
+            {
+                string path = "";
+                if (status == "Online")
+                    path = @"F:/Loan Files/Applications Online/Application " + id.ToString();
+                else
+                    path = @"F:/Loan Files/Loan " + id.ToString();
 
-            if (FileUpload1.HasFile)
-            {
-                //create the path to save the file to
-                string fileName = Path.Combine(path, FileUpload1.FileName);
-                //save the file to our local path
-                FileUpload1.SaveAs(fileName);
-                Response.Redirect(Request.RawUrl);
+                if (FileUpload1.HasFile)
+                {
+                    //create the path to save the file to
+                    string fileName = Path.Combine(path, FileUpload1.FileName);
+                    //save the file to our local path
+                    FileUpload1.SaveAs(fileName);
+                    Response.Redirect(Request.RawUrl);
+                }
+                else
+                {
+                    Span1.Text = "Please select a file to upload";
+                }
             }
-            else
+            catch (Exception)
             {
-                Span1.Text = "Please select a file to upload";
+                return;
             }
         }
     }

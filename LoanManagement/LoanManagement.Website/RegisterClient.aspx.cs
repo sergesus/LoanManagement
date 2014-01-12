@@ -30,34 +30,36 @@ namespace LoanManagement.Website
 
         protected void btnRegister_Click1(object sender, EventArgs e)
         {
-            if (txtCaptcha.Text == "")
+            try
             {
-                lblCaptcha.Visible = true;
-                return;
-            }
-            CaptchaControl1.ValidateCaptcha(txtCaptcha.Text);
-            if (!CaptchaControl1.UserValidated)
-            {
-                lblCaptcha.Visible = true;
-                return;
-            }
-            else
-            {
-                lblCaptcha.Visible = !true;
-            }
-            DateTime bDay = Convert.ToDateTime(txtBirthday.Text);
-                    
-            using (var ctx = new newerContext())
-            {
-                var ctr = ctx.Clients.Where(x => x.FirstName == txtFirstName.Text && x.LastName == txtLastName.Text && x.MiddleName == txtMiddleName.Text && x.Suffix == txtSuffix.Text && x.Birthday == bDay).Count();
-                if (ctr > 0)
+                if (txtCaptcha.Text == "")
                 {
-                    lblExists.Visible = true;
+                    lblCaptcha.Visible = true;
+                    return;
+                }
+                CaptchaControl1.ValidateCaptcha(txtCaptcha.Text);
+                if (!CaptchaControl1.UserValidated)
+                {
+                    lblCaptcha.Visible = true;
                     return;
                 }
                 else
-                { 
-                    
+                {
+                    lblCaptcha.Visible = !true;
+                }
+                DateTime bDay = Convert.ToDateTime(txtBirthday.Text);
+
+                using (var ctx = new newerContext())
+                {
+                    var ctr = ctx.Clients.Where(x => x.FirstName == txtFirstName.Text && x.LastName == txtLastName.Text && x.MiddleName == txtMiddleName.Text && x.Suffix == txtSuffix.Text && x.Birthday == bDay).Count();
+                    if (ctr > 0)
+                    {
+                        lblExists.Visible = true;
+                        return;
+                    }
+                    else
+                    {
+
                         string age = "0";
                         int years = DateTime.Now.Year - bDay.Year;
                         if (bDay.AddYears(years) > DateTime.Now) ;
@@ -81,6 +83,20 @@ namespace LoanManagement.Website
                         if (txtPassword.Text.Length < 8)
                         {
                             lblExists.Text = "Password length must be at least 8";
+                            lblExists.Visible = true;
+                            return;
+                        }
+
+                        if (txtUsername.Text.Length < 8)
+                        {
+                            lblExists.Text = "Username length must be at least 8";
+                            lblExists.Visible = true;
+                            return;
+                        }
+
+                        if(txtBirthday.Text == "" || txtEmail.Text == "" || txtFirstName.Text == "" || txtLastName.Text == "" || txtUsername.Text == "")
+                        {
+                            lblExists.Text = "Please input all required fields";
                             lblExists.Visible = true;
                             return;
                         }
@@ -111,7 +127,7 @@ namespace LoanManagement.Website
                                           .ToArray());
                             c = ctx.Clients.Where(x => x.TrackingNumber == result).Count();
                         } while (c > 0);
-                        Client clt = new Client { Active = true, Birthday = bDay, Email = txtEmail.Text, FirstName = txtFirstName.Text, isConfirmed = false, LastName = txtLastName.Text, MiddleName = txtMiddleName.Text, Password = txtPassword.Text, Sex = cmbGender.Text, SSS = txtSSS.Text, Username = txtUsername.Text, Status = cmbStatus.Text, Suffix = txtSuffix.Text, TIN = txtTIN.Text, isRegistered=false, TrackingNumber = result };
+                        Client clt = new Client { Active = true, Birthday = bDay, Email = txtEmail.Text, FirstName = txtFirstName.Text, isConfirmed = false, LastName = txtLastName.Text, MiddleName = txtMiddleName.Text, Password = txtPassword.Text, Sex = cmbGender.Text, SSS = txtSSS.Text, Username = txtUsername.Text, Status = cmbStatus.Text, Suffix = txtSuffix.Text, TIN = txtTIN.Text, isRegistered = false, TrackingNumber = result };
                         ClientContact con = new ClientContact { ContactNumber = 1, Primary = true, Contact = txtContact.Text };
                         iClientExpiration exp = new iClientExpiration { ExpirationDate = DateTime.Now.AddMonths(1) };
 
@@ -121,8 +137,13 @@ namespace LoanManagement.Website
                         ctx.SaveChanges();
                         Session["newID"] = clt.ClientID.ToString();
                         Response.Redirect("/RegistrationSuccess.aspx");
-                    
+
+                    }
                 }
+            }
+            catch (Exception)
+            {
+                //Response.Redirect("/Index.aspx");
             }
             
         }

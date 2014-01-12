@@ -116,7 +116,7 @@
     
     <div id="templatemo_banner_bar">
     	
-        <h2>Guahan Finance Corporation</h2>
+        
         
       
     	
@@ -168,22 +168,28 @@
                         <td class="auto-style13">&nbsp;</td>
                         <td class="auto-style2">
                             <asp:Label ID="Label2" runat="server" Font-Size="Medium" Text="Last Name:"></asp:Label>
+                            <asp:Label ID="Label20" runat="server" ForeColor="Red" Text="*"></asp:Label>
                         </td>
                         <td class="auto-style5">
                             <asp:TextBox ID="txtLastName" runat="server" Width="320px"></asp:TextBox>
                         </td>
-                        <td>&nbsp;</td>
+                        <td>
+                            <asp:RegularExpressionValidator ID="RegularExpressionValidator1" runat="server" ControlToValidate="txtLastName" ErrorMessage="Wrong Name Format" Font-Size="Medium" ForeColor="Red" ValidationExpression="[a-zA-Z]{1,40}"></asp:RegularExpressionValidator>
+                        </td>
                         <td>&nbsp;</td>
                     </tr>
                     <tr>
                         <td class="auto-style14">&nbsp;</td>
                         <td class="auto-style3">
                             <asp:Label ID="Label3" runat="server" Font-Size="Medium" Text="First Name:"></asp:Label>
+                            <asp:Label ID="Label21" runat="server" ForeColor="Red" Text="*"></asp:Label>
                         </td>
                         <td class="auto-style6">
                             <asp:TextBox ID="txtFirstName" runat="server" Width="320px"></asp:TextBox>
                         </td>
-                        <td class="auto-style4"></td>
+                        <td class="auto-style4">
+                            <asp:RegularExpressionValidator ID="RegularExpressionValidator2" runat="server" ControlToValidate="txtFirstName" ErrorMessage="Wrong Name Format" Font-Size="Medium" ForeColor="Red" ValidationExpression="[a-zA-Z]{1,40}"></asp:RegularExpressionValidator>
+                        </td>
                         <td class="auto-style4"></td>
                     </tr>
                     <tr>
@@ -194,7 +200,9 @@
                         <td class="auto-style5">
                             <asp:TextBox ID="txtMiddleName" runat="server" Width="320px"></asp:TextBox>
                         </td>
-                        <td>&nbsp;</td>
+                        <td>
+                            <asp:RegularExpressionValidator ID="RegularExpressionValidator3" runat="server" ControlToValidate="txtMiddleName" ErrorMessage="Wrong Name Format" Font-Size="Medium" ForeColor="Red" ValidationExpression="[a-zA-Z]{1,40}"></asp:RegularExpressionValidator>
+                        </td>
                         <td>&nbsp;</td>
                     </tr>
                     <tr>
@@ -205,24 +213,30 @@
                         <td class="auto-style5">
                             <asp:TextBox ID="txtSuffix" runat="server" Width="45px"></asp:TextBox>
                         </td>
-                        <td>&nbsp;</td>
+                        <td>
+                            <asp:RegularExpressionValidator ID="RegularExpressionValidator4" runat="server" ControlToValidate="txtSuffix" ErrorMessage="Wrong Name Format" Font-Size="Medium" ForeColor="Red" ValidationExpression="[a-zA-Z]{1,40}"></asp:RegularExpressionValidator>
+                        </td>
                         <td>&nbsp;</td>
                     </tr>
                     <tr>
                         <td class="auto-style13">&nbsp;</td>
                         <td class="auto-style2">
                             <asp:Label ID="Label6" runat="server" Font-Size="Medium" Text="Birthday:"></asp:Label>
+                            <asp:Label ID="Label22" runat="server" ForeColor="Red" Text="*"></asp:Label>
                         </td>
                         <td class="auto-style5">
                             <asp:TextBox ID="txtBirthday" runat="server" Width="320px"></asp:TextBox>
                         </td>
-                        <td>&nbsp;</td>
+                        <td>
+                                            <asp:CompareValidator ID="CompareValidator2" runat="server" ControlToValidate="txtBirthday" ErrorMessage="Enter correct Birthday" Font-Size="Medium" ForeColor="Red" Operator="DataTypeCheck" Type="Date"></asp:CompareValidator>
+                                            </td>
                         <td>&nbsp;</td>
                     </tr>
                     <tr>
                         <td class="auto-style13"></td>
                         <td class="auto-style2">
                             <asp:Label ID="Label7" runat="server" Font-Size="Medium" Text="Gender:"></asp:Label>
+                            <asp:Label ID="Label23" runat="server" ForeColor="Red" Text="*"></asp:Label>
                         </td>
                         <td class="auto-style5">
                             <asp:DropDownList ID="cmbGender" runat="server" Font-Size="Medium" Height="25px" Width="158px">
@@ -237,6 +251,7 @@
                         <td class="auto-style16"></td>
                         <td class="auto-style10">
                             <asp:Label ID="Label8" runat="server" Font-Size="Medium" Text="Status:"></asp:Label>
+                            <asp:Label ID="Label24" runat="server" ForeColor="Red" Text="*"></asp:Label>
                         </td>
                         <td class="auto-style11">
                             <asp:DropDownList ID="cmbStatus" runat="server" Font-Size="Medium" Height="25px" Width="158px">
@@ -274,11 +289,14 @@
                         <td class="auto-style13">&nbsp;</td>
                         <td class="auto-style2">
                             <asp:Label ID="Label11" runat="server" Font-Size="Medium" Text="Email:"></asp:Label>
+                            <asp:Label ID="Label25" runat="server" ForeColor="Red" Text="*"></asp:Label>
                         </td>
                         <td class="auto-style5">
                             <asp:TextBox ID="txtEmail" runat="server" Width="320px"></asp:TextBox>
                         </td>
-                        <td>&nbsp;</td>
+                        <td>
+                            <asp:RegularExpressionValidator ID="RegularExpressionValidator5" runat="server" ControlToValidate="txtEmail" ErrorMessage="Wrong Email Format" Font-Size="Medium" ForeColor="Red" ValidationExpression="\w+([-+.']\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*"></asp:RegularExpressionValidator>
+                        </td>
                         <td>&nbsp;</td>
                     </tr>
                     <tr>
@@ -289,35 +307,44 @@
                         <td class="auto-style5">
                             <asp:TextBox ID="txtContact" runat="server" Width="320px"></asp:TextBox>
                         </td>
-                        <td>&nbsp;</td>
+                        <td>
+                            <asp:RegularExpressionValidator ID="RegularExpressionValidator6" runat="server" ControlToValidate="txtContact" ErrorMessage="Wrong Contact Format" Font-Size="Medium" ForeColor="Red" ValidationExpression="[0-9]{11}"></asp:RegularExpressionValidator>
+                        </td>
                         <td>&nbsp;</td>
                     </tr>
                     <tr>
                         <td class="auto-style13">&nbsp;</td>
                         <td class="auto-style2">
                             <asp:Label ID="Label16" runat="server" Font-Size="Medium" Text="Username:"></asp:Label>
+                            <asp:Label ID="Label26" runat="server" ForeColor="Red" Text="*"></asp:Label>
                         </td>
                         <td class="auto-style5">
                             <asp:TextBox ID="txtUsername" runat="server" Width="320px"></asp:TextBox>
                         </td>
-                        <td>&nbsp;</td>
+                        <td>
+                            <asp:RegularExpressionValidator ID="RegularExpressionValidator7" runat="server" ControlToValidate="txtUsername" ErrorMessage="Wrong Username Format" Font-Size="Medium" ForeColor="Red" ValidationExpression="[a-zA-Z0-9_]{1,40}"></asp:RegularExpressionValidator>
+                        </td>
                         <td>&nbsp;</td>
                     </tr>
                     <tr>
                         <td class="auto-style13">&nbsp;</td>
                         <td class="auto-style2">
                             <asp:Label ID="Label17" runat="server" Font-Size="Medium" Text="Password:"></asp:Label>
+                            <asp:Label ID="Label27" runat="server" ForeColor="Red" Text="*"></asp:Label>
                         </td>
                         <td class="auto-style5">
                             <asp:TextBox ID="txtPassword" runat="server" Width="320px" TextMode="Password"></asp:TextBox>
                         </td>
-                        <td>&nbsp;</td>
+                        <td>
+                            <asp:RegularExpressionValidator ID="RegularExpressionValidator8" runat="server" ControlToValidate="txtPassword" ErrorMessage="Wrong Password Format" Font-Size="Medium" ForeColor="Red" ValidationExpression="[a-zA-Z0-9]{1,40}"></asp:RegularExpressionValidator>
+                        </td>
                         <td>&nbsp;</td>
                     </tr>
                     <tr>
                         <td class="auto-style13">&nbsp;</td>
                         <td class="auto-style2">
                             <asp:Label ID="Label18" runat="server" Font-Size="Medium" Text="Confirm Password:"></asp:Label>
+                            <asp:Label ID="Label28" runat="server" ForeColor="Red" Text="*"></asp:Label>
                         </td>
                         <td class="auto-style5">
                             <asp:TextBox ID="txtConfirm" runat="server" Width="320px" TextMode="Password"></asp:TextBox>
@@ -329,6 +356,7 @@
                         <td class="auto-style17"></td>
                         <td class="auto-style18">
                             <asp:Label ID="Label14" runat="server" Font-Size="Medium" Text="Captcha:"></asp:Label>
+                            <asp:Label ID="Label30" runat="server" ForeColor="Red" Text="*"></asp:Label>
                         </td>
                         <td class="auto-style19">
                             <table class="auto-style1">
@@ -351,7 +379,9 @@
                     </tr>
                     <tr>
                         <td class="auto-style13">&nbsp;</td>
-                        <td class="auto-style2">&nbsp;</td>
+                        <td class="auto-style2">
+                            <asp:Label ID="Label29" runat="server" ForeColor="Red" Text="*"></asp:Label>
+                            Required Fields</td>
                         <td class="auto-style5">
                             <asp:Button ID="btnRegister" runat="server" Text="Register" OnClick="btnRegister_Click1" />
                         </td>
@@ -385,7 +415,8 @@
     <div id="templatemo_footer_bar_wrapper">
         <div id="templatemo_footer_bar">
                 Copyright © 2013 | Guahan Financing Corporation | All Rights Reserved
-		
+		<br />
+            <a href="Index.aspx">Home</a> | <a href="About.aspx">About</a> | <a href="Services.aspx">Services</a> | <a href="Downloads.aspx">Downloands</a> | <a href="Application.aspx">Application</a> | <a href="Calculator.aspx">Calculator</a> | <a href ="RegisterClient.aspx">Client Registration</a> | <a href="RegisterUser.aspx">Register User</a> | <a href="Login.aspx">Login</a> | <a href="MyAccount_Main.aspx">My Account</a> | <a href="MyAccount_Edit.aspx">Edit Account</a> | <a href="MyAccount_Loans.aspx">My Loans</a> | <a href="MyAccount_Submit.aspx">Submit Requirements</a>
         </div>  <!-- end of footer -->
 	</div> <!-- end of footer_wrapper -->
 </div> <!-- end of container -->

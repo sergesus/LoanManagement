@@ -105,6 +105,10 @@
     <Compile Include="Migrations\201401070127116_AddedRenewal2.Designer.cs">
       <DependentUpon>201401070127116_AddedRenewal2.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201401120725350_AddedOnlineSettings.cs" />
+    <Compile Include="Migrations\201401120725350_AddedOnlineSettings.Designer.cs">
+      <DependentUpon>201401120725350_AddedOnlineSettings.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SystemData.cs" />
@@ -158,6 +162,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201401070127116_AddedRenewal2.resx">
       <DependentUpon>201401070127116_AddedRenewal2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201401120725350_AddedOnlineSettings.resx">
+      <DependentUpon>201401120725350_AddedOnlineSettings.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

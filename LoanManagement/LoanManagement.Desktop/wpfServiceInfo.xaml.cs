@@ -388,6 +388,13 @@ namespace LoanManagement.Desktop
                     return;
                 }
 
+                if (Convert.ToDouble(txtMaxVal.Text) < 1 || Convert.ToDouble(txtMinVal.Text) < 1 || Convert.ToDouble(txtMaxTerm.Text) < 1 || Convert.ToDouble(txtMinTerm.Text) < 0)
+                {
+                    System.Windows.MessageBox.Show("Terms and Values must be greater thant one(1)", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                    return;
+                }
+
+
                 if (status == "Add")
                 {
 

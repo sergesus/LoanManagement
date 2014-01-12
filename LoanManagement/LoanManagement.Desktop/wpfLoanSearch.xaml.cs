@@ -28,6 +28,7 @@ namespace LoanManagement.Desktop
         public string status;
         public string iDept;
         public int UserID;
+        public bool cont = false;
 
         public wpfLoanSearch()
         {
@@ -449,10 +450,20 @@ namespace LoanManagement.Desktop
                                     x++;
                                 }
                                 //var fp = ctx.FPaymentInfo.Where(x => x.LoanID == n && x.PaymentStatus == "Cleared").Last();
-                                MessageBox.Show("The last payment has the following info: \n No :" + fp.PaymentNumber + " \n ChequeNumber: " + fp.ChequeInfo + " \n Amount: " + fp.Amount.ToString("N2") + "");
-                                MessageBoxResult mr = MessageBox.Show("Are you sure you want to process this transaction?", "Question", MessageBoxButton.YesNo);
+                                MessageBox.Show("The last payment has the following info: \n No :" + fp.PaymentNumber + " \n ChequeNumber: " + fp.ChequeInfo + " \n Amount: " + fp.Amount.ToString("N2") + "","Information",MessageBoxButton.OK, MessageBoxImage.Information);
+                                MessageBoxResult mr = MessageBox.Show("Are you sure you want to process this transaction?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
                                 if (mr == MessageBoxResult.Yes)
                                 {
+                                    wpfPassword frm = new wpfPassword();
+                                    frm.status = "void";
+                                    frm.ID = UserID;
+                                    frm.ShowDialog();
+
+                                    if (cont == false)
+                                    {
+                                        MessageBox.Show("Please re-enter you password", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                                        return;
+                                    }   
                                     fp.PaymentStatus = "Deposited";
                                     ClearedCheque cc = ctx.ClearedCheques.Find(fp.ClearCheque.FPaymentInfoID);
                                     ctx.ClearedCheques.Remove(cc);
@@ -492,9 +503,20 @@ namespace LoanManagement.Desktop
                                 //var fp = ctx.FPaymentInfo.Where(x => x.LoanID == n && x.PaymentStatus == "Cleared").Last();
                                 var mp = ctx.MPaymentInfoes.Where(m => m.LoanID == n && m.PaymentNumber == fp.PaymentNumber).First();
                                 MessageBox.Show("The last payment has the following info: \n No :" + mp.PaymentNumber + "\n Total Payment: " + mp.TotalPayment.ToString("N2") + "");
-                                MessageBoxResult mr = MessageBox.Show("Are you sure you want to process this transaction?", "Question", MessageBoxButton.YesNo);
+                                MessageBoxResult mr = MessageBox.Show("Are you sure you want to process this transaction?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
                                 if (mr == MessageBoxResult.Yes)
                                 {
+                                    wpfPassword frm = new wpfPassword();
+                                    frm.status = "void";
+                                    frm.ID = UserID;
+                                    frm.ShowDialog();
+
+                                    if (cont == false)
+                                    {
+                                        MessageBox.Show("Please re-enter you password", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                                        return;
+                                    }
+
                                     try
                                     {
                                         var m2 = ctx.MPaymentInfoes.Where(m => m.LoanID == n && m.PaymentStatus == "Pending").First();
@@ -562,7 +584,7 @@ namespace LoanManagement.Desktop
                                 x++;
                             }
                             MessageBox.Show("The last payment has the following info: \n Total Collection :" + fp.TotalCollection + "\n Collection Date: " + fp.DateCollected.ToString().Split(' ')[0] + "");
-                            MessageBoxResult mr = MessageBox.Show("Are you sure you want to process this transaction?", "Question", MessageBoxButton.YesNo);
+                            MessageBoxResult mr = MessageBox.Show("Are you sure you want to process this transaction?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
                             if (mr == MessageBoxResult.Yes)
                             {
 

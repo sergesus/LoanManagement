@@ -20,7 +20,7 @@ namespace LoanManagement.Website
             Session["UpdateChecker"] = null;
             if (Session["ID"] == null)
             {
-                Response.Redirect("/Index.aspx");
+                Response.Redirect("/Login.aspx");
             }
 
             try
@@ -57,6 +57,13 @@ namespace LoanManagement.Website
                         {
                             double remain = lon.PassedToCollector.RemainingBalance;
                             lblRemaining.Text = remain.ToString("N2");
+                            var pys = from py in ctx.CollectionInfoes
+                                      where py.LoanID == lID
+                                      select new { TotalCollection = py.TotalCollection, DateCollected = py.DateCollected };
+                            dgHistory.Visible = true;
+                            lblPH.Visible = true;
+                            dgHistory.DataSource = pys.ToList();
+                            dgHistory.DataBind();
                             return;
                         }
 
@@ -75,11 +82,25 @@ namespace LoanManagement.Website
                             var l = ctx.FPaymentInfo.Where(x => x.LoanID == lID && (x.PaymentStatus == "Pending" || x.PaymentStatus == "Due/Pending")).First();
                             lblPaymentAmt.Text = lon.ReleasedLoan.MonthlyPayment.ToString("N2");
                             lblNextPaymentDt.Text = l.PaymentDate.ToString().Split(' ')[0];
+                            var pys = from py in ctx.FPaymentInfo
+                                      where py.LoanID == lID
+                                      select new { No = py.PaymentNumber, ChequeNumber = py.ChequeInfo, Amount = py.Amount, PaymentDate = py.PaymentDate, Status = py.PaymentStatus };
+                            dgHistory.Visible = true;
+                            lblPH.Visible = true;
+                            dgHistory.DataSource = pys.ToList();
+                            dgHistory.DataBind();
                         }
                         else
                         {
                             try
                             {
+                                var pys = from py in ctx.MPaymentInfoes
+                                          where py.LoanID == lID
+                                          select new { No = py.PaymentNumber, Amount = py.Amount, Balance = py.ExcessBalance, TotalBalance = py.TotalBalance, TotalAmount = py.TotalAmount, TotalPayment = py.TotalPayment, PaymentDate = py.PaymentDate, Status = py.PaymentStatus };
+                                dgHistory.Visible = true;
+                                lblPH.Visible = true;
+                                dgHistory.DataSource = pys.ToList();
+                                dgHistory.DataBind();
                                 var re1 = ctx.MPaymentInfoes.Where(x => x.LoanID == lID && x.PaymentStatus == "Pending").First();
                                 double remain1 = re1.RemainingLoanBalance;
                                 lblRemaining.Text = remain1.ToString("N2");
@@ -100,7 +121,10 @@ namespace LoanManagement.Website
             }
             catch (Exception)
             {
-                Response.Redirect("MyAccount_Loans.aspx");
+                if (Session["ID"] == null)
+                    Response.Redirect("/Login.aspx");
+                else
+                    Response.Redirect("MyAccount_Loans.aspx");
             }
 
         }
@@ -114,6 +138,11 @@ namespace LoanManagement.Website
         protected void LinkButton2_Click(object sender, EventArgs e)
         {
             Response.Redirect("/Login.aspx");
+        }
+
+        protected void dgHistory_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

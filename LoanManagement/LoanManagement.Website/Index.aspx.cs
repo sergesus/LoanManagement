@@ -14,9 +14,21 @@ namespace LoanManagement.Website
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            Session["Service"] = null;
-            Session["UpdateChecker"] = null;
-            Session["iService"] = null;
+            try
+            {
+                Session["Service"] = null;
+                Session["UpdateChecker"] = null;
+                Session["iService"] = null;
+                using (var ctx = new newerContext())
+                {
+                    var set = ctx.OnlineSettings.Find(1);
+                    lblDesc.Text = set.HomeDescription;
+                }
+            }
+            catch (Exception)
+            {
+                Response.Redirect("/Index.aspx");
+            }
         }
 
         protected void LinkButton1_Click(object sender, EventArgs e)

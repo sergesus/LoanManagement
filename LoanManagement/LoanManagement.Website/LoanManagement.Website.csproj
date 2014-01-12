@@ -79,6 +79,7 @@
     <Content Include="images\contact_icon.png" />
     <Content Include="images\GFC.jpg" />
     <Content Include="images\home_icon.png" />
+    <Content Include="images\map.jpg" />
     <Content Include="images\myImg.gif" />
     <Content Include="images\templatemo_banner_bg.jpg" />
     <Content Include="images\templatemo_body_bg.jpg" />

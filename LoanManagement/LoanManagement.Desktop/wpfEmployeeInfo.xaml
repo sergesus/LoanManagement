@@ -114,14 +114,14 @@
                     <Label Content="Email:" HorizontalAlignment="Left" Height="31" Margin="12,256,0,0" VerticalAlignment="Top" Width="79" Foreground="Black" FontSize="18"/>
                     <Button x:Name="btnBrowse" Content="Browse.." HorizontalAlignment="Left" Height="26" Margin="135,97,0,0" VerticalAlignment="Top" Width="84" Click="btnBrowse_Click"/>
                     <Label Content="*" HorizontalAlignment="Left" Height="31" Margin="110,172,0,0" VerticalAlignment="Top" Width="16" Foreground="Red"/>
-                    <Label x:Name="lblFName" Content="" HorizontalAlignment="Left" Height="31" Margin="467,179,0,0" VerticalAlignment="Top" Width="34" Foreground="Red"/>
+                    <Label x:Name="lblFName" Content="" HorizontalAlignment="Left" Height="31" Margin="467,179,0,0" VerticalAlignment="Top" Width="34" Foreground="Red" FontSize="18"/>
                     <Label Content="* Required Field(s)" HorizontalAlignment="Left" Height="31" Margin="606,318,0,0" VerticalAlignment="Top" Width="168" Foreground="Red" FontSize="13"/>
                     <Label Content="? Incorrect Format" HorizontalAlignment="Left" Height="31" Margin="606,349,0,0" VerticalAlignment="Top" Width="168" Foreground="Red" FontSize="13"/>
                     <Label Content="*" HorizontalAlignment="Left" Height="31" Margin="109,141,0,0" VerticalAlignment="Top" Width="16" Foreground="Red"/>
-                    <Label x:Name="lblMI" Content="" HorizontalAlignment="Left" Height="30" Margin="605,142,0,0" VerticalAlignment="Top" Width="34" Foreground="Red"/>
-                    <Label x:Name="lblLName" Content="" HorizontalAlignment="Left" Height="33" Margin="467,141,0,0" VerticalAlignment="Top" Width="34" Foreground="Red"/>
-                    <Label x:Name="lblSuffix" Content="" HorizontalAlignment="Left" Height="31" Margin="178,215,0,0" VerticalAlignment="Top" Width="34" Foreground="Red"/>
-                    <Label x:Name="lblEmail" Content="" HorizontalAlignment="Left" Height="31" Margin="467,246,0,0" VerticalAlignment="Top" Width="34" Foreground="Red"/>
+                    <Label x:Name="lblMI" Content="" HorizontalAlignment="Left" Height="30" Margin="605,142,0,0" VerticalAlignment="Top" Width="34" Foreground="Red" FontSize="18"/>
+                    <Label x:Name="lblLName" Content="" HorizontalAlignment="Left" Height="33" Margin="467,141,0,0" VerticalAlignment="Top" Width="34" Foreground="Red" FontSize="18"/>
+                    <Label x:Name="lblSuffix" Content="" HorizontalAlignment="Left" Height="31" Margin="178,215,0,0" VerticalAlignment="Top" Width="34" Foreground="Red" FontSize="18"/>
+                    <Label x:Name="lblEmail" Content="" HorizontalAlignment="Left" Height="31" Margin="467,246,0,0" VerticalAlignment="Top" Width="34" Foreground="Red" FontSize="18"/>
                 </Grid>
             </TabItem>
         </TabControl>

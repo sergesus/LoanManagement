@@ -166,7 +166,7 @@
     
     <div id="templatemo_banner_bar">
     	
-        <h2>Guahan Finance Corporation</h2>
+        
         
       
     	
@@ -233,10 +233,15 @@
                                             <asp:Label ID="Label5" runat="server" Font-Size="Medium" Text="Desired Amount :"></asp:Label>
                                         </td>
                                         <td class="auto-style56">
-                                            <asp:TextBox ID="txtAmt" runat="server" Width="281px"></asp:TextBox>
+                                            <asp:TextBox ID="txtAmt" runat="server" Width="281px" ValidationGroup="1"></asp:TextBox>
                                             <asp:Label ID="lblAmt" runat="server"></asp:Label>
                                         </td>
-                                        <td class="auto-style57"></td>
+                                        <td class="auto-style57">
+                                            <asp:CompareValidator ID="CompareValidator2" runat="server" ControlToValidate="txtAmt" ErrorMessage="Enter double values only" Font-Size="Medium" ForeColor="Red" Operator="DataTypeCheck" Type="Double" ValidationGroup="1"></asp:CompareValidator>
+                                            <br />
+                                            <asp:Label ID="Label12" runat="server" Text=" "></asp:Label>
+                                            <br />
+                                        </td>
                                         <td class="auto-style58"></td>
                                     </tr>
                                     <tr>
@@ -245,17 +250,22 @@
                                             <asp:Label ID="Label6" runat="server" Font-Size="Medium" Text="Desired Term(months) :"></asp:Label>
                                         </td>
                                         <td class="auto-style61">
-                                            <asp:TextBox ID="txtTerm" runat="server" Width="281px"></asp:TextBox>
+                                            <asp:TextBox ID="txtTerm" runat="server" Width="281px" ValidationGroup="1"></asp:TextBox>
                                             <asp:Label ID="lblTerm" runat="server"></asp:Label>
                                         </td>
-                                        <td class="auto-style62"></td>
+                                        <td class="auto-style62">
+                                            <asp:CompareValidator ID="CompareValidator1" runat="server" ControlToValidate="txtTerm" ErrorMessage="Enter whole numbers only" Font-Size="Medium" ForeColor="Red" Operator="DataTypeCheck" Type="Integer" ValidationGroup="1"></asp:CompareValidator>
+                                            <br />
+                                            <asp:Label ID="Label13" runat="server" Text=" "></asp:Label>
+                                            <br />
+                                        </td>
                                         <td class="auto-style63"></td>
                                     </tr>
                                     <tr>
                                         <td class="auto-style33"></td>
                                         <td class="auto-style34"></td>
                                         <td class="auto-style35">
-                                            <asp:Button ID="btnCalculate" runat="server" OnClick="btnCalculate_Click" Text="Calculate" Width="83px" />
+                                            <asp:Button ID="btnCalculate" runat="server" OnClick="btnCalculate_Click" Text="Calculate" Width="83px" ValidationGroup="1" />
                                             <asp:Button ID="btnReset" runat="server" OnClick="btnReset_Click" Text="Reset" Width="83px" />
                                         </td>
                                         <td class="auto-style36"></td>
@@ -337,7 +347,8 @@
     <div id="templatemo_footer_bar_wrapper">
         <div id="templatemo_footer_bar">
                 Copyright © 2013 | Guahan Financing Corporation | All Rights Reserved
-		
+		<br />
+            <a href="Index.aspx">Home</a> | <a href="About.aspx">About</a> | <a href="Services.aspx">Services</a> | <a href="Downloads.aspx">Downloands</a> | <a href="Application.aspx">Application</a> | <a href="Calculator.aspx">Calculator</a> | <a href ="RegisterClient.aspx">Client Registration</a> | <a href="RegisterUser.aspx">Register User</a> | <a href="Login.aspx">Login</a> | <a href="MyAccount_Main.aspx">My Account</a> | <a href="MyAccount_Edit.aspx">Edit Account</a> | <a href="MyAccount_Loans.aspx">My Loans</a> | <a href="MyAccount_Submit.aspx">Submit Requirements</a>
         </div>  <!-- end of footer -->
 	</div> <!-- end of footer_wrapper -->
 </div> <!-- end of container -->

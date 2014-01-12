@@ -14,16 +14,23 @@ namespace LoanManagement.Website
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            Session["UpdateChecker"] = null;
-            Session["Service"] = null;
-            Session["iService"] = null;
-            using (var ctx = new newerContext())
+            try
             {
-                var ser = from se in ctx.Services
-                          where se.Active == true
-                          select new { ServiceNumber = se.ServiceID, Name = se.Name, Department = se.Department, Type = se.Type };
-                dg1.DataSource = ser.ToList();
-                dg1.DataBind();
+                Session["UpdateChecker"] = null;
+                Session["Service"] = null;
+                Session["iService"] = null;
+                using (var ctx = new newerContext())
+                {
+                    var ser = from se in ctx.Services
+                              where se.Active == true
+                              select new { ServiceNumber = se.ServiceID, Name = se.Name, Department = se.Department, Type = se.Type };
+                    dg1.DataSource = ser.ToList();
+                    dg1.DataBind();
+                }
+            }
+            catch (Exception)
+            {
+                Response.Redirect("/Index.aspx");
             }
         }
 
@@ -41,23 +48,30 @@ namespace LoanManagement.Website
 
         protected void GridView1_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int sID = Convert.ToInt32(dg1.SelectedRow.Cells[1].Text);
-            using (var ctx = new newerContext())
+            try
             {
-                var ser = ctx.Services.Find(sID);
-                double ded = ser.AgentCommission;
-                var de = from d in ctx.Deductions
-                         where d.ServiceID == sID
-                         select d;
-                foreach (var itm in de)
+                int sID = Convert.ToInt32(dg1.SelectedRow.Cells[1].Text);
+                using (var ctx = new newerContext())
                 {
-                    ded = ded + itm.Percentage;
+                    var ser = ctx.Services.Find(sID);
+                    double ded = ser.AgentCommission;
+                    var de = from d in ctx.Deductions
+                             where d.ServiceID == sID
+                             select d;
+                    foreach (var itm in de)
+                    {
+                        ded = ded + itm.Percentage;
+                    }
+                    lblDeduction.Text = ded.ToString("N2") + "%";
+                    lblAmt.Text = ser.MinValue.ToString("N2") + " to " + ser.MaxValue.ToString("N2");
+                    lblDesc.Text = ser.Description;
+                    lblInt.Text = ser.Interest.ToString() + "%";
+                    lblTerm.Text = ser.MinTerm + " month(s) to " + ser.MaxTerm + " month(s)";
                 }
-                lblDeduction.Text = ded.ToString("N2") + "%";
-                lblAmt.Text = ser.MinValue.ToString("N2") + " to " + ser.MaxValue.ToString("N2");
-                lblDesc.Text = ser.Description;
-                lblInt.Text = ser.Interest.ToString() + "%";
-                lblTerm.Text = ser.MinTerm + " month(s) to " + ser.MaxTerm + " month(s)";
+            }
+            catch (Exception)
+            {
+                Response.Redirect("/Index.aspx");
             }
         }
     }

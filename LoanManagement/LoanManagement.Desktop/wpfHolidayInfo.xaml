@@ -26,13 +26,13 @@
                         <Label Content="Holiday:" HorizontalAlignment="Left" Height="31" Margin="6,-17,0,0" VerticalAlignment="Top" Width="117" Foreground="#FF171717" FontSize="18"/>
                         <TextBox x:Name="txtDesc" HorizontalAlignment="Left" Height="134" Margin="128,21,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="591" FontSize="18" LostFocus="txtDesc_LostFocus"/>
                         <Label Content="Description:" HorizontalAlignment="Left" Height="31" Margin="6,15,0,0" VerticalAlignment="Top" Width="117" Foreground="Black" FontSize="18" RenderTransformOrigin="0.511,-2.728"/>
-                        <Label x:Name="lblDesc" Content="" HorizontalAlignment="Left" Height="39" Margin="719,23,0,0" VerticalAlignment="Top" Width="34" Foreground="Red"/>
+                        <Label x:Name="lblDesc" Content="" HorizontalAlignment="Left" Height="39" Margin="719,23,0,0" VerticalAlignment="Top" Width="34" Foreground="Red" FontSize="18"/>
                         <Label Content="Date:" HorizontalAlignment="Left" Height="31" Margin="11,155,0,0" VerticalAlignment="Top" Width="117" Foreground="Black" FontSize="18" RenderTransformOrigin="0.511,-2.728"/>
                         <DatePicker x:Name="dt" HorizontalAlignment="Left" Height="26" Margin="133,160,0,0" VerticalAlignment="Top" Width="253"/>
                         <Label Content="Yearly?" HorizontalAlignment="Left" Height="31" Margin="10,191,0,0" VerticalAlignment="Top" Width="117" Foreground="Black" FontSize="18" RenderTransformOrigin="0.511,-2.728"/>
                     </Grid>
                     <Label Content="*" HorizontalAlignment="Left" Height="31" Margin="109,14,0,0" VerticalAlignment="Top" Width="16" Foreground="Red"/>
-                    <Label x:Name="lblName" Content="" HorizontalAlignment="Left" Height="31" Margin="725,14,0,0" VerticalAlignment="Top" Width="34" Foreground="Red"/>
+                    <Label x:Name="lblName" Content="" HorizontalAlignment="Left" Height="31" Margin="725,14,0,0" VerticalAlignment="Top" Width="34" Foreground="Red" FontSize="18"/>
                     <CheckBox x:Name="isYearly" Content="Yes" HorizontalAlignment="Left" Height="21" Margin="138,223,0,0" VerticalAlignment="Top" Width="252" FontSize="18"/>
                 </Grid>
             </TabItem>

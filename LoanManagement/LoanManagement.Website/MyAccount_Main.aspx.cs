@@ -13,32 +13,42 @@ namespace LoanManagement.Website
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            Page.Response.Cache.SetCacheability(HttpCacheability.NoCache);
-            Session["Service"] = null;
-            Session["UpdateChecker"] = null;
-            Session["iService"] = null;
-            if (Session["ID"] == null)
+            try
             {
-                Response.Redirect("/Index.aspx");
-            }
-            using (var ctx = new newerContext())
-            { 
-                int cID = Convert.ToInt32(Session["ID"]);
-                var clt = ctx.Clients.Find(cID);
-                lblBirthday.Text = clt.Birthday.ToString().Split(' ')[0];
-                var con = ctx.ClientContacts.Where(x => x.ClientID == cID).First();
-                lblContact.Text = con.Contact.ToString();
-                lblEmail.Text = clt.Email;
-                lblGender.Text = clt.Sex;
-                lblName.Text = clt.LastName + ", " + clt.FirstName + " " + clt.MiddleName + " " + clt.Suffix;
-                lblSSS.Text = clt.SSS;
-                lblStatus.Text = clt.Status;
-                lblTIN.Text = clt.TIN;
+                Page.Response.Cache.SetCacheability(HttpCacheability.NoCache);
+                Session["Service"] = null;
+                Session["UpdateChecker"] = null;
+                Session["iService"] = null;
+                if (Session["ID"] == null)
+                {
+                    Response.Redirect("/Login.aspx");
+                }
+                using (var ctx = new newerContext())
+                {
+                    int cID = Convert.ToInt32(Session["ID"]);
+                    var clt = ctx.Clients.Find(cID);
+                    lblBirthday.Text = clt.Birthday.ToString().Split(' ')[0];
+                    var con = ctx.ClientContacts.Where(x => x.ClientID == cID).First();
+                    lblContact.Text = con.Contact.ToString();
+                    lblEmail.Text = clt.Email;
+                    lblGender.Text = clt.Sex;
+                    lblName.Text = clt.LastName + ", " + clt.FirstName + " " + clt.MiddleName + " " + clt.Suffix;
+                    lblSSS.Text = clt.SSS;
+                    lblStatus.Text = clt.Status;
+                    lblTIN.Text = clt.TIN;
 
-                if (clt.isConfirmed == true)
-                    lblType.Text = "Verified";
+                    if (clt.isConfirmed == true)
+                        lblType.Text = "Verified";
+                    else
+                        lblType.Text = "Pending";
+                }
+            }
+            catch (Exception)
+            {
+                if (Session["ID"] == null)
+                    Response.Redirect("/Login.aspx");
                 else
-                    lblType.Text = "Pending";
+                    Response.Redirect("/Index.aspx");
             }
         }
 

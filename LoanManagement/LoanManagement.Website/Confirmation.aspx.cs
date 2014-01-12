@@ -13,22 +13,29 @@ namespace LoanManagement.Website
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            string tnum = Request.QueryString["id"];
-            using (var ctx = new newerContext())
+            try
             {
-                var clt = ctx.Clients.Where(x => x.TrackingNumber == tnum).First();
-                if (clt.isRegistered == true)
+                string tnum = Request.QueryString["id"];
+                using (var ctx = new newerContext())
                 {
-                    Response.Redirect("/Index.aspx");
+                    var clt = ctx.Clients.Where(x => x.TrackingNumber == tnum).First();
+                    if (clt.isRegistered == true)
+                    {
+                        Response.Redirect("/Index.aspx");
+                    }
+                    else
+                    {
+                        clt.isRegistered = true;
+                        var exp = ctx.iClientExpirations.Find(clt.ClientID);
+                        lblContent.Text = "Your currently registered account will be deleted if not confirmed on or before " + exp.ExpirationDate + "\n Please visit our office to confirm this account regarding the information. Thank You.";
+                        Session["newID"] = null;
+                        ctx.SaveChanges();
+                    }
                 }
-                else
-                {
-                    clt.isRegistered = true;
-                    var exp = ctx.iClientExpirations.Find(clt.ClientID);
-                    lblContent.Text = "Your currently registered account will be deleted if not confirmed on or before " + exp.ExpirationDate + "\n Please visit our office to confirm this account regarding the information. Thank You.";
-                    Session["newID"] = null;
-                    ctx.SaveChanges();
-                }
+            }
+            catch (Exception)
+            {
+                Response.Redirect("/Index.aspx");
             }
         }
 

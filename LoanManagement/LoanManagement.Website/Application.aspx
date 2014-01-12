@@ -135,7 +135,7 @@
     
     <div id="templatemo_banner_bar">
     	
-        <h2>Guahan Finance Corporation</h2>
+        
         
       
     	
@@ -214,7 +214,11 @@
                                             <asp:TextBox ID="txtAmt" runat="server" Width="281px"></asp:TextBox>
                                             <asp:Label ID="lblAmt" runat="server"></asp:Label>
                                         </td>
-                                        <td class="auto-style12"></td>
+                                        <td class="auto-style12">
+                                            <asp:CompareValidator ID="CompareValidator2" runat="server" ControlToValidate="txtAmt" ErrorMessage="Enter double values only" Font-Size="Medium" ForeColor="Red" Operator="DataTypeCheck" Type="Double"></asp:CompareValidator>
+                                            <br />
+                                            <br />
+                                        </td>
                                         <td></td>
                                     </tr>
                                     <tr>
@@ -226,7 +230,11 @@
                                             <asp:TextBox ID="txtTerm" runat="server" Width="281px"></asp:TextBox>
                                             <asp:Label ID="lblTerm" runat="server"></asp:Label>
                                         </td>
-                                        <td class="auto-style52"></td>
+                                        <td class="auto-style52">
+                                            <asp:CompareValidator ID="CompareValidator1" runat="server" ControlToValidate="txtTerm" ErrorMessage="Enter whole numbers only" Font-Size="Medium" ForeColor="Red" Operator="DataTypeCheck" Type="Integer"></asp:CompareValidator>
+                                            <br />
+                                            <br />
+                                        </td>
                                         <td class="auto-style53"></td>
                                     </tr>
                                     <tr>
@@ -309,6 +317,8 @@
     <div id="templatemo_footer_bar_wrapper">
         <div id="templatemo_footer_bar">
                 Copyright © 2013 | Guahan Financing Corporation | All Rights Reserved
+            <br />
+            <a href="Index.aspx">Home</a> | <a href="About.aspx">About</a> | <a href="Services.aspx">Services</a> | <a href="Downloads.aspx">Downloands</a> | <a href="Application.aspx">Application</a> | <a href="Calculator.aspx">Calculator</a> | <a href ="RegisterClient.aspx">Client Registration</a> | <a href="RegisterUser.aspx">Register User</a> | <a href="Login.aspx">Login</a> | <a href="MyAccount_Main.aspx">My Account</a> | <a href="MyAccount_Edit.aspx">Edit Account</a> | <a href="MyAccount_Loans.aspx">My Loans</a> | <a href="MyAccount_Submit.aspx">Submit Requirements</a>
 		
         </div>  <!-- end of footer -->
 	</div> <!-- end of footer_wrapper -->

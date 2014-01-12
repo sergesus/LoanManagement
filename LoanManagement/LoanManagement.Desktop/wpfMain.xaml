@@ -510,6 +510,41 @@
                             </Button>
                         </Grid>
                     </TabItem>
+                    <TabItem x:Name="tbOnline" Header="Online Settings" BorderBrush="{x:Null}" Background="Black" Foreground="Black" MouseUp="tbOnline_MouseUp" Height="45" VerticalAlignment="Bottom">
+                        <Grid x:Name="grdM2" Margin="0,0,0,-12">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="46*"/>
+                                <ColumnDefinition Width="829*"/>
+                            </Grid.ColumnDefinitions>
+                            <ListBox x:Name="lb1_Copy10" HorizontalAlignment="Left" Height="318" VerticalAlignment="Top" Width="361" OpacityMask="#FFA0A0A0" BorderBrush="#FFB4A1A1" SelectionChanged="ListBox_SelectionChanged_1" Margin="477,162,0,-60" Grid.Column="1" Visibility="Hidden">
+                                <ListBox.Background>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop Color="Black" Offset="0"/>
+                                        <GradientStop Color="#FF9C9C9C" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </ListBox.Background>
+                                <ListBoxItem x:Name="itm53" Content="Loan Application" FontSize="25" Foreground="#FF32AFD4" MouseUp="itm6_MouseUp"/>
+                                <ListBoxItem x:Name="itm54" Content="Loan Approval" FontSize="25" Foreground="#FF32AFD4" MouseUp="itm8_MouseUp" Selected="itm8_Selected"/>
+                                <ListBoxItem x:Name="itm55" Content="Releasing" FontSize="25" Foreground="#FF32AFD4" Selected="itm9_Selected" MouseUp="itm9_MouseUp"/>
+                                <ListBoxItem x:Name="itm56" Content="Payments" FontSize="25" Foreground="#FF32AFD4" MouseUp="itm10_MouseUp"/>
+                                <ListBoxItem x:Name="itm57" Content="Manage Closed Accounts" FontSize="25" Foreground="#FF32AFD4" MouseUp="itm12_MouseUp"/>
+                                <ListBoxItem x:Name="itm58" Content="Loan Re-structure" FontSize="25" Foreground="#FF32AFD4" MouseUp="itm11_MouseUp"/>
+                                <ListBoxItem x:Name="itm59" Content="Payment Adjustment" FontSize="25" Foreground="#FF32AFD4" MouseUp="itm13_MouseUp"/>
+                            </ListBox>
+                            <Label Content="Home Page Description:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Width="198" FontSize="16" Foreground="#CC48CB00" FontStyle="Italic" FontWeight="Bold" Grid.ColumnSpan="2"/>
+                            <TextBox x:Name="txtHome" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="164" Margin="10,46,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="932" VerticalScrollBarVisibility="Auto" FontSize="18" FontFamily="Segoe UI"/>
+                            <Label Content="About Us:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,216,0,0" Width="198" FontSize="16" Foreground="#CC48CB00" FontStyle="Italic" FontWeight="Bold" Grid.ColumnSpan="2"/>
+                            <TextBox x:Name="txtAbout" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="242" Margin="10,252,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="461" VerticalScrollBarVisibility="Auto" FontSize="18" FontFamily="Segoe UI"/>
+                            <TextBox x:Name="txtMission" HorizontalAlignment="Left" Height="242" Margin="417,252,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="461" VerticalScrollBarVisibility="Auto" FontSize="18" FontFamily="Segoe UI" Grid.Column="1"/>
+                            <Label Content="Mission/Vision:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="417,216,0,0" Width="198" FontSize="16" Foreground="#CC48CB00" FontStyle="Italic" FontWeight="Bold" Grid.Column="1"/>
+                            <Button x:Name="btnSave" HorizontalAlignment="Left" Height="39" Margin="10,499,0,0" VerticalAlignment="Top" Width="164" BorderBrush="#CC48CB00" BorderThickness="2" Background="#7F48CB00" Click="btnSave_Click" Grid.ColumnSpan="2">
+                                <DockPanel LastChildFill="True">
+                                    <Label x:Name="lblAdd" HorizontalContentAlignment="Center" DockPanel.Dock="Right" Foreground="#FF343434" Height="28" FontSize="16" Content="Save"/>
+                                    <Image Source="Images/Save.ico" />
+                                </DockPanel>
+                            </Button>
+                        </Grid>
+                    </TabItem>
                 </TabControl>
             </TabItem>
             <TabItem x:Name="tb4" Header="">
