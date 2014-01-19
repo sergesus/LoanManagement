@@ -27,6 +27,7 @@ namespace LoanManagement.Desktop
     public partial class wpfDepositCheques : MetroWindow
     {
         public int UserID;
+        public bool cont = false;
         public wpfDepositCheques()
         {
             InitializeComponent();
@@ -228,15 +229,24 @@ namespace LoanManagement.Desktop
                                     {
                                         tPaid = tPaid + i.TotalPayment;
                                     }
-                                    PassedToCollector pc = new PassedToCollector { DatePassed = DateTime.Today.Date, LoanID = itm.LoanID, RemainingBalance = tRem, TotalPassedBalance = tRem, TotalPaidBeforePassing = tPaid };
-                                    var l1 = ctx.Loans.Find(itm.LoanID);
-                                    l1.Status = "Under Collection";
-                                    ctx.PassedToCollectors.Add(pc);
+                                    var c = ctx.PassedToCollectors.Where(x => x.LoanID == itm.LoanID).Count();
+                                    if (c < 1)
+                                    {
+                                        using (var ctx2 = new newerContext())
+                                        {
+                                            PassedToCollector pc = new PassedToCollector { DatePassed = DateTime.Today.Date, LoanID = itm.LoanID, RemainingBalance = tRem, TotalPassedBalance = tRem, TotalPaidBeforePassing = tPaid };
+                                            var l1 = ctx2.Loans.Find(itm.LoanID);
+                                            l1.Status = "Under Collection";
+                                            ctx2.PassedToCollectors.Add(pc);
+                                            ctx2.SaveChanges();
+                                        }
+                                    }
                                 }
                             }
+
                             iAmt = tAmount;
                             n++;
-                            ctx.MPaymentInfoes.Add(mpi);
+
                         }
 
                     }
@@ -288,7 +298,7 @@ namespace LoanManagement.Desktop
                         state = "Dep";
                         //lblDep.Content = "Deposit all cheques";
                     }
-                    btnCash.Visibility = Visibility.Hidden;
+                    //btnCash.Visibility = Visibility.Hidden;
                     btnNew.Visibility = Visibility.Hidden;
                 }
                 else if (rdDeposited.IsChecked == true)
@@ -305,7 +315,7 @@ namespace LoanManagement.Desktop
                             lblDep.Content = "Mark as Returned";
                         state = "Undep";
                     }
-                    btnCash.Visibility = Visibility.Hidden;
+                    //btnCash.Visibility = Visibility.Hidden;
                     btnNew.Visibility = Visibility.Hidden;
                 }
                 else
@@ -321,7 +331,7 @@ namespace LoanManagement.Desktop
                         else if (status == "Returning")
                             lblDep.Content = "Void Returning";
                         state = "Redep";
-                        btnCash.Visibility = Visibility.Visible;
+                        //btnCash.Visibility = Visibility.Visible;
                         btnNew.Visibility = Visibility.Visible;
                     }
                 }
@@ -437,6 +447,17 @@ namespace LoanManagement.Desktop
                             MessageBoxResult mr = MessageBox.Show("Are you sure you want to redeposit this cheque?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
                             if (mr == MessageBoxResult.Yes)
                             {
+                                wpfCheckout frm = new wpfCheckout();
+                                frm.status = "Daif";
+                                frm.fId = fp.FPaymentInfoID;
+                                frm.ShowDialog();
+
+                                if (cont == false)
+                                {
+                                    System.Windows.MessageBox.Show("Please pay the DAIF fee first", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                    return;
+                                }
+
                                 fp.PaymentStatus = "Deposited";
                                 dp.DepositDate = DateTime.Today.Date;
                                 AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Redeposit cheque " + fp.ChequeInfo };
@@ -492,7 +513,7 @@ namespace LoanManagement.Desktop
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                //System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
         }

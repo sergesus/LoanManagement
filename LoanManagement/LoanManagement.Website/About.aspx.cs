@@ -23,8 +23,9 @@ namespace LoanManagement.Website
                 using(var ctx = new newerContext())
                 {
                     var set = ctx.OnlineSettings.Find(1);
-                    lblAbout.Text = set.AboutDescription;
-                    lblMission.Text = set.MissionVision;
+                    lblAbout.Text = set.AboutDescription.Replace("\n", "<br />"); ;
+                    lblMission.Text = set.MissionVision.Replace("\n", "<br />"); ;
+                    lblContact.Text = set.ContactInfo.Replace("\n", "<br />"); ;
                 }
             }
             catch (Exception)

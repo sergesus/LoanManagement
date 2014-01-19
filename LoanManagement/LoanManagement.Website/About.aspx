@@ -49,7 +49,7 @@
     <div id="templatemo_menu">
     	<ul>
             <li><a href="Index.aspx">Home</a></li>
-            <li><a href="About.aspx" class="current">About Us</a></li>
+            <li><a href="About.aspx" class="current">About/Contact</a></li>
             <li><a href="Services.aspx">Services</a></li>
             <li><a href="Downloads.aspx">Downloads</a></li>
             <li><a href="Application.aspx">Application</a></li>
@@ -85,6 +85,17 @@
                         <asp:Label ID="lblMission" runat="server" Text="-" Font-Size="Medium"></asp:Label>
                     </p>
                     </h4>
+                    <br />
+                    <p>
+                    <asp:Label ID="Label6" runat="server" Font-Bold="True" Font-Italic="True" Font-Size="X-Large" ForeColor="#00CC00" Text="Contact Us"></asp:Label>
+                    </p>
+                    <p>
+                        &nbsp;</p>
+                    <p>
+                        <asp:Label ID="lblContact" runat="server" Text="-" Font-Size="Medium"></asp:Label>
+                    </p>
+                    <p>
+                        &nbsp;</p>
                     
                     
 
@@ -134,7 +145,7 @@
         <div id="templatemo_footer_bar">
                 Copyright © 2013 | Guahan Financing Corporation | All Rights Reserved
 		<br />
-            <a href="Index.aspx">Home</a> | <a href="About.aspx">About</a> | <a href="Services.aspx">Services</a> | <a href="Downloads.aspx">Downloands</a> | <a href="Application.aspx">Application</a> | <a href="Calculator.aspx">Calculator</a> | <a href ="RegisterClient.aspx">Client Registration</a> | <a href="RegisterUser.aspx">Register User</a> | <a href="Login.aspx">Login</a> | <a href="MyAccount_Main.aspx">My Account</a> | <a href="MyAccount_Edit.aspx">Edit Account</a> | <a href="MyAccount_Loans.aspx">My Loans</a> | <a href="MyAccount_Submit.aspx">Submit Requirements</a>
+            <a href="Index.aspx">Home</a> | <a href="About.aspx">About/Contact</a> | <a href="Services.aspx">Services</a> | <a href="Downloads.aspx">Downloands</a> | <a href="Application.aspx">Application</a> | <a href="Calculator.aspx">Calculator</a> | <a href ="RegisterClient.aspx">Client Registration</a> | <a href="RegisterUser.aspx">Register User</a> | <a href="Login.aspx">Login</a> | <a href="MyAccount_Main.aspx">My Account</a> | <a href="MyAccount_Edit.aspx">Edit Account</a> <br /> <a href="MyAccount_Loans.aspx">My Loans</a> | <a href="MyAccount_Submit.aspx">Submit Requirements</a>
         </div>  <!-- end of footer -->
 	</div> <!-- end of footer_wrapper -->
 </div> <!-- end of container -->

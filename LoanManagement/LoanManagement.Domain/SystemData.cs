@@ -1051,6 +1051,7 @@ namespace LoanManagement.Domain
         public string HomeDescription { get; set; }
         public string AboutDescription { get; set; }
         public string MissionVision { get; set; }
+        public string ContactInfo { get; set; }
     }
 
 }

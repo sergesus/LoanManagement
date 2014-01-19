@@ -31,6 +31,7 @@ namespace LoanManagement.Desktop
         public int UserID;
         public int lId;
         public int myNum;
+        public bool cont = false;
         public TextBox[] textarray = new TextBox[0];
 
         public void reset()
@@ -171,6 +172,17 @@ namespace LoanManagement.Desktop
                 MessageBoxResult mr = MessageBox.Show("Are you sure you want to process this transaction?", "Question", MessageBoxButton.YesNo);
                 if (mr == MessageBoxResult.Yes)
                 {
+                    wpfCheckout frm = new wpfCheckout();
+                    frm.status = "RenewClosed";
+                    frm.lId = lId;
+                    frm.ShowDialog();
+
+                    if (cont == false)
+                    {
+                        System.Windows.MessageBox.Show("Please pay the Closed Account Penalty first", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
+
                     using (var ctx = new newerContext())
                     {
                         var bk = ctx.Banks.Where(x => x.BankName == cmbBank.Text).First();
@@ -225,6 +237,9 @@ namespace LoanManagement.Desktop
                             dt = DateAndTime.DateAdd(dInt, Interval, dt);
                             num++;
                         }
+
+                        var cc = ctx.ClosedAccounts.Where(x => x.LoanID == lId && x.isPaid == false).First();
+                        cc.isPaid = true;
 
                         AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Processed renewal for Closed Account Loan " + lon.LoanID };
                         ctx.AuditTrails.Add(at);

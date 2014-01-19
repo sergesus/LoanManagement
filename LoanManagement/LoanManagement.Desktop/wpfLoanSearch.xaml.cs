@@ -253,6 +253,17 @@ namespace LoanManagement.Desktop
                         btnView.Content = "View";
                     }
                 }
+                else if (status == "Full")
+                {
+                    using (var ctx = new newerContext())
+                    {
+                        var lon = from ln in ctx.Loans
+                                  where ((ln.Status == "Released" || ln.Status == "Active") && (ln.FPaymentInfo.Where(x => x.PaymentStatus != "Cleared").Count() > 1)) && ln.Service.Department == iDept && (ln.LoanID == n || ln.Service.Name.Contains(txtSearch.Text) || (ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName).Replace(" ", "").Contains(txtSearch.Text.Replace(" ", "")))
+                                  select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, ClientName = ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName };
+                        dgLoan.ItemsSource = lon.ToList();
+                        btnView.Content = "View";
+                    }
+                }
                 else if(status=="View")
                 {
                     using (var ctx = new newerContext())
@@ -409,6 +420,15 @@ namespace LoanManagement.Desktop
                     frm.UserID = UserID;
                     frm.status = status;
                     frm.iDept = iDept;
+                    frm.ShowDialog();
+                }
+                else if (status == "Full")
+                {
+                    wpfNewCheque frm = new wpfNewCheque();
+                    int num = Convert.ToInt32(getRow(dgLoan, 0));
+                    frm.lID = num;
+                    frm.UserID = UserID;
+                    frm.status = status;
                     frm.ShowDialog();
                 }
                 else if (status == "Holding")
@@ -613,21 +633,8 @@ namespace LoanManagement.Desktop
                         using (var ctx = new newerContext())
                         {
                             var lon = ctx.Loans.Find(n);
-                            lon.Status = "Released";//active
-                            int num = ctx.ClosedAccounts.Where(x => x.LoanID == n).Count();
-                            var fp1 = from f in ctx.ClosedAccounts
-                                      where f.LoanID == n
-                                      select f;
-                            int y = 0;
-                            ClosedAccount fp = null;
-                            foreach (var item in fp1)
-                            {
-                                if (y == num - 1)
-                                {
-                                    fp = item;
-                                }
-                                y++;
-                            }
+                            lon.Status = "Released";
+                            var fp = ctx.ClosedAccounts.Where(x => x.LoanID == n && x.isPaid == false).First();
                             ctx.ClosedAccounts.Remove(fp);
                             var fp2 = from f in ctx.FPaymentInfo
                                       where f.LoanID == n && f.PaymentStatus != "Cleared"

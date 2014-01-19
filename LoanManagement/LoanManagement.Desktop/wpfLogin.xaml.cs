@@ -260,8 +260,7 @@ namespace LoanManagement.Desktop
                         itm.PaymentStatus = "Unpaid";
                         itm.TotalPayment = 0;
                         var ser = ctx.Services.Find(itm.Loan.ServiceID);
-                        double iAmt = itm.TotalAmount;
-
+                        var iAmt = itm.TotalAmount;
                         //var ln = ctx.Loans.Find(itm.LoanID);
 
                         double cRem = itm.RemainingLoanBalance;
@@ -388,14 +387,24 @@ namespace LoanManagement.Desktop
                                     {
                                         tPaid = tPaid + i.TotalPayment;
                                     }
-                                    PassedToCollector pc = new PassedToCollector { DatePassed = DateTime.Today.Date, LoanID = itm.LoanID, RemainingBalance = tRem, TotalPassedBalance = tRem, TotalPaidBeforePassing = tPaid };
-                                    var l1 = ctx.Loans.Find(itm.LoanID);
-                                    l1.Status = "Under Collection";
-                                    ctx.PassedToCollectors.Add(pc);
+                                    var c = ctx.PassedToCollectors.Where(x => x.LoanID == itm.LoanID).Count();
+                                    if (c < 1)
+                                    {
+                                        using (var ctx2 = new newerContext())
+                                        {
+                                            PassedToCollector pc = new PassedToCollector { DatePassed = DateTime.Today.Date, LoanID = itm.LoanID, RemainingBalance = tRem, TotalPassedBalance = tRem, TotalPaidBeforePassing = tPaid };
+                                            var l1 = ctx2.Loans.Find(itm.LoanID);
+                                            l1.Status = "Under Collection";
+                                            ctx2.PassedToCollectors.Add(pc);
+                                            ctx2.SaveChanges();
+                                        }
+                                    }
                                 }
                             }
+
+                            iAmt = tAmount;
                             n++;
-                            ctx.MPaymentInfoes.Add(mpi);
+
                         }
 
                     }

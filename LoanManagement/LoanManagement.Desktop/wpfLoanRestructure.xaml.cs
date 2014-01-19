@@ -409,11 +409,16 @@ namespace LoanManagement.Desktop
                         frm.lId = lId;
                         frm.status = "Restructure";
                         frm.lbl2.Content = (Convert.ToDouble(txtAmt.Text) * (lon.Service.RestructureFee / 100)).ToString("N2");
+                        if(lon.Status == "Closed Account")
+                        {
+                            var cc = ctx.ClosedAccounts.Where(x=> x.LoanID==lId && x.isPaid == false).First();
+                            frm.lbl2.Content = (Double.Parse(frm.lbl2.Content.ToString()) + cc.Fee).ToString("N2");
+                        }
                         frm.ShowDialog();
                     }
                     if (cont != true)
                     {
-                        MessageBox.Show("Please pay restructure fee first", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                        MessageBox.Show("Please pay restructure fee and/or closed account fee first", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                         return;
                     }
 
@@ -422,6 +427,11 @@ namespace LoanManagement.Desktop
                         var bk = ctx.Banks.Where(x => x.BankName == cmbBank.Text).First();
                         int bId = bk.BankID;
                         var lon = ctx.Loans.Find(lId);
+                        if (lon.Status == "Closed Account")
+                        {
+                            var cc = ctx.ClosedAccounts.Where(x => x.LoanID == lId && x.isPaid == false).First();
+                            cc.isPaid = true;
+                        }
                         lon.Status = "Resturctured";
                         Loan l = new Loan { AgentID = lon.AgentID, CI = 0, Term = Convert.ToInt32(txtTerm.Text), Status = "Released", ServiceID = lon.ServiceID, Mode = cmbMode.Text, CoBorrower = lon.CoBorrower, ClientID = lon.ClientID, BankID = bId };
                         ReleasedLoan rl = new ReleasedLoan { LoanID = l.LoanID, AgentsCommission = 0, DateReleased = DateTime.Today.Date, MonthlyPayment = Convert.ToDouble(lblMonthly.Content), NetProceed = 0, Principal = 0, TotalLoan = Convert.ToDouble(lblInt.Content) };
@@ -452,6 +462,9 @@ namespace LoanManagement.Desktop
                         ctx.SaveChanges();
                         RestructuredLoan rln = new RestructuredLoan { LoanID = lId, NewLoanID = l.LoanID, DateRestructured = DateTime.Today, Fee = Convert.ToDouble(txtAmt.Text) * (lon.Service.RestructureFee / 100) };
                         ctx.RestructuredLoans.Add(rln);
+
+                        
+
                         ctx.SaveChanges();
                         printSOP();
                         MessageBox.Show("Transaction has been successfully processed", "Information", MessageBoxButton.OK, MessageBoxImage.Information);

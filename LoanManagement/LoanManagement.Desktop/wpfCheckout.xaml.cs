@@ -108,7 +108,22 @@ namespace LoanManagement.Desktop
                         this.Close();
                     }
                 }
-
+                else if (status == "Daif")
+                {
+                    var ctr = Application.Current.Windows.Count;
+                    var frm = Application.Current.Windows[ctr - 2] as wpfNewCheque;
+                    frm.cont = true;
+                    MessageBox.Show("Transaction has been successfully processed. Renewal of Cheque will now be processed.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                    this.Close();
+                }
+                else if (status == "RenewClosed")
+                {
+                    var ctr = Application.Current.Windows.Count;
+                    var frm = Application.Current.Windows[ctr - 2] as wpfRenewClosed;
+                    frm.cont = true;
+                    MessageBox.Show("Transaction has been successfully processed. Renewal of Account will now be processed.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                    this.Close();
+                }
             }
             catch (Exception ex)
             {
@@ -152,7 +167,26 @@ namespace LoanManagement.Desktop
                 {
                     lbl1.Content = "Loan Restructure";
                 }
-
+                else if (status == "Daif")
+                {
+                    lbl1.Content = "DAIF Fee";
+                    using (var ctx = new newerContext())
+                    {
+                        var fee = ctx.ReturnedCheques.Find(fId);
+                        double hFee = Convert.ToDouble(fee.Fee.ToString("N2"));
+                        lbl2.Content = hFee.ToString("N2");
+                    }
+                }
+                else if (status == "RenewClosed")
+                {
+                    lbl1.Content = "Closed Account Fee";
+                    using (var ctx = new newerContext())
+                    {
+                        var fee = ctx.ClosedAccounts.Where(x => x.isPaid == false && x.LoanID == lId).First();
+                        double hFee = Convert.ToDouble(fee.Fee.ToString("N2"));
+                        lbl2.Content = hFee.ToString("N2");
+                    }
+                }
             }
             catch (Exception ex)
             {

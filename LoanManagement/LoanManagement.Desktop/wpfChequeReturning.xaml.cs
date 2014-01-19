@@ -51,10 +51,10 @@ namespace LoanManagement.Desktop
                     double n = 0;
                     n = fp.Amount * (fp.Loan.Service.DaifPenalty / 100);
                     lblDaif.Content = "(Fee: " + n.ToString("N2") + ")";
-                    DaifFee = n;
+                    DaifFee = Double.Parse(n.ToString("N2"));
                     n = fp.Amount * (fp.Loan.Service.ClosedAccountPenalty / 100);
                     lblClosed.Content = "(Fee: " + n.ToString("N2") + ")";
-                    ClosedFee = n;
+                    ClosedFee = Double.Parse(n.ToString("N2"));
                 }
             }
             catch (Exception ex)

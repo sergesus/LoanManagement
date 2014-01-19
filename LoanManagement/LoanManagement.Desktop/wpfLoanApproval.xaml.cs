@@ -598,5 +598,44 @@ namespace LoanManagement.Desktop
                 System.Windows.MessageBox.Show(msg);
             }
         }
+
+        private void btnFolder_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string folderName = @"F:\Loan Files";
+                string pathString = System.IO.Path.Combine(folderName, "Loan " + lId.ToString());
+                if (!Directory.Exists(pathString))
+                {
+                    System.IO.Directory.CreateDirectory(pathString);
+                    Process.Start(@"F:\Loan Files\Loan " + lId.ToString());
+                }
+                else
+                {
+                    Process.Start(@"F:\Loan Files\Loan " + lId.ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void btnRequirement_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                wpfRequirementsChecklist frm = new wpfRequirementsChecklist();
+                frm.lID = lId;
+                frm.UserID = UserID;
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
     }
 }

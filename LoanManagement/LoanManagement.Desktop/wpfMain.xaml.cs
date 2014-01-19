@@ -337,10 +337,18 @@ namespace LoanManagement.Desktop
                                     {
                                         tPaid = tPaid + i.TotalPayment;
                                     }
-                                    PassedToCollector pc = new PassedToCollector { DatePassed = DateTime.Today.Date, LoanID = itm.LoanID, RemainingBalance = tRem, TotalPassedBalance = tRem, TotalPaidBeforePassing = tPaid };
-                                    var l1 = ctx.Loans.Find(itm.LoanID);
-                                    l1.Status = "Under Collection";
-                                    ctx.PassedToCollectors.Add(pc);
+                                    var c = ctx.PassedToCollectors.Where(x => x.LoanID == itm.LoanID).Count();
+                                    if (c < 1)
+                                    {
+                                        using (var ctx2 = new newerContext())
+                                        {
+                                            PassedToCollector pc = new PassedToCollector { DatePassed = DateTime.Today.Date, LoanID = itm.LoanID, RemainingBalance = tRem, TotalPassedBalance = tRem, TotalPaidBeforePassing = tPaid };
+                                            var l1 = ctx2.Loans.Find(itm.LoanID);
+                                            l1.Status = "Under Collection";
+                                            ctx2.PassedToCollectors.Add(pc);
+                                            ctx2.SaveChanges();
+                                        }
+                                    }
                                 }
                             }
                             
@@ -2330,6 +2338,7 @@ namespace LoanManagement.Desktop
                     txtHome.Text = set.HomeDescription;
                     txtAbout.Text = set.AboutDescription;
                     txtMission.Text = set.MissionVision;
+                    txtContact.Text = set.ContactInfo;
                 }
             }
             catch (Exception ex)
@@ -2351,10 +2360,33 @@ namespace LoanManagement.Desktop
                         set.AboutDescription = txtAbout.Text;
                         set.HomeDescription = txtHome.Text;
                         set.MissionVision = txtMission.Text;
+                        set.ContactInfo = txtContact.Text;
                         ctx.SaveChanges();
                         System.Windows.MessageBox.Show("Information has been successfully saved", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
 
                     }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void btnFolder_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                string pathString = @"F:\Loan Files\Downloads\";
+                if (!Directory.Exists(pathString))
+                {
+                    System.IO.Directory.CreateDirectory(pathString);
+                    Process.Start(pathString);
+                }
+                else
+                {
+                    Process.Start(pathString);
                 }
             }
             catch (Exception ex)

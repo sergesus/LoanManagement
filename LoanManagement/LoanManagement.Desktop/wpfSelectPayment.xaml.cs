@@ -225,15 +225,22 @@ namespace LoanManagement.Desktop
                                     {
                                         tPaid = tPaid + i.TotalPayment;
                                     }
-                                    PassedToCollector pc = new PassedToCollector { DatePassed = DateTime.Today.Date, LoanID = itm.LoanID, RemainingBalance = tRem, TotalPassedBalance = tRem, TotalPaidBeforePassing = tPaid };
-                                    var l1 = ctx.Loans.Find(itm.LoanID);
-                                    l1.Status = "Under Collection";
-                                    ctx.PassedToCollectors.Add(pc);
+                                    var c = ctx.PassedToCollectors.Where(x => x.LoanID == itm.LoanID).Count();
+                                    if (c < 1)
+                                    {
+                                        using (var ctx2 = new newerContext())
+                                        {
+                                            PassedToCollector pc = new PassedToCollector { DatePassed = DateTime.Today.Date, LoanID = itm.LoanID, RemainingBalance = tRem, TotalPassedBalance = tRem, TotalPaidBeforePassing = tPaid };
+                                            var l1 = ctx2.Loans.Find(itm.LoanID);
+                                            l1.Status = "Under Collection";
+                                            ctx2.PassedToCollectors.Add(pc);
+                                            ctx2.SaveChanges();
+                                        }
+                                    }
                                 }
                             }
                             iAmt = tAmount;
                             n++;
-                            ctx.MPaymentInfoes.Add(mpi);
                         }
 
                     }
@@ -357,6 +364,24 @@ namespace LoanManagement.Desktop
         private void wdw1_Activated(object sender, EventArgs e)
         {
             checkDue();
+        }
+
+        private void btnFullPayment_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                wpfLoanSearch frm = new wpfLoanSearch();
+                frm.status = "Full";
+                frm.UserID = UserID;
+                frm.iDept = "Financing";
+                this.Close();
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
 

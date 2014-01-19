@@ -75,6 +75,18 @@
                 <Image Source="Images/Refresh.ico" />
             </DockPanel>
         </Button>
+        <Button x:Name="btnFolder" HorizontalAlignment="Left" Height="36" Margin="647,-2,0,0" VerticalAlignment="Top" Width="164" BorderBrush="#CC48CB00" BorderThickness="2" Background="#7F48CB00" Click="btnFolder_Click">
+            <DockPanel LastChildFill="True">
+                <Label HorizontalContentAlignment="Center" DockPanel.Dock="Right" Foreground="#FF343434" Height="28" FontSize="16" Content="View Folder"/>
+                <Image Source="Images/Search.ico" />
+            </DockPanel>
+        </Button>
+        <Button x:Name="btnRequirement" HorizontalAlignment="Left" Height="36" Margin="483,-1,0,0" VerticalAlignment="Top" Width="164" BorderBrush="#CC48CB00" BorderThickness="2" Background="#7F48CB00" Click="btnRequirement_Click">
+            <DockPanel LastChildFill="True">
+                <Label HorizontalContentAlignment="Center" DockPanel.Dock="Right" Foreground="#FF343434" Height="35" FontSize="16" Content="Req Checlist" Width="108"/>
+                <Image Source="Images/Services.ico" />
+            </DockPanel>
+        </Button>
 
     </Grid>
 </Controls:MetroWindow>

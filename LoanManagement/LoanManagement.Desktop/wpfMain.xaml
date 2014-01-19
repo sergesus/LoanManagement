@@ -511,7 +511,7 @@
                         </Grid>
                     </TabItem>
                     <TabItem x:Name="tbOnline" Header="Online Settings" BorderBrush="{x:Null}" Background="Black" Foreground="Black" MouseUp="tbOnline_MouseUp" Height="45" VerticalAlignment="Bottom">
-                        <Grid x:Name="grdM2" Margin="0,0,0,-12">
+                        <Grid x:Name="grdM2" Margin="10,0,-10,-12">
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="46*"/>
                                 <ColumnDefinition Width="829*"/>
@@ -532,15 +532,23 @@
                                 <ListBoxItem x:Name="itm59" Content="Payment Adjustment" FontSize="25" Foreground="#FF32AFD4" MouseUp="itm13_MouseUp"/>
                             </ListBox>
                             <Label Content="Home Page Description:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,10,0,0" Width="198" FontSize="16" Foreground="#CC48CB00" FontStyle="Italic" FontWeight="Bold" Grid.ColumnSpan="2"/>
-                            <TextBox x:Name="txtHome" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="164" Margin="10,46,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="932" VerticalScrollBarVisibility="Auto" FontSize="18" FontFamily="Segoe UI"/>
-                            <Label Content="About Us:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,216,0,0" Width="198" FontSize="16" Foreground="#CC48CB00" FontStyle="Italic" FontWeight="Bold" Grid.ColumnSpan="2"/>
-                            <TextBox x:Name="txtAbout" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="242" Margin="10,252,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="461" VerticalScrollBarVisibility="Auto" FontSize="18" FontFamily="Segoe UI"/>
-                            <TextBox x:Name="txtMission" HorizontalAlignment="Left" Height="242" Margin="417,252,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="461" VerticalScrollBarVisibility="Auto" FontSize="18" FontFamily="Segoe UI" Grid.Column="1"/>
-                            <Label Content="Mission/Vision:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="417,216,0,0" Width="198" FontSize="16" Foreground="#CC48CB00" FontStyle="Italic" FontWeight="Bold" Grid.Column="1"/>
+                            <TextBox x:Name="txtHome" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="201" Margin="10,46,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="461" VerticalScrollBarVisibility="Auto" FontSize="18" FontFamily="Segoe UI" AcceptsReturn="True"/>
+                            <Label Content="About Us:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,252,0,0" Width="198" FontSize="16" Foreground="#CC48CB00" FontStyle="Italic" FontWeight="Bold" Grid.ColumnSpan="2"/>
+                            <TextBox x:Name="txtAbout" Grid.ColumnSpan="2" HorizontalAlignment="Left" Height="208" Margin="10,286,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="461" VerticalScrollBarVisibility="Auto" FontSize="18" FontFamily="Segoe UI" AcceptsReturn="True"/>
+                            <TextBox x:Name="txtMission" HorizontalAlignment="Left" Height="208" Margin="417,286,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="461" VerticalScrollBarVisibility="Auto" FontSize="18" FontFamily="Segoe UI" Grid.Column="1" AcceptsReturn="True"/>
+                            <Label Content="Mission/Vision:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="417,250,0,0" Width="198" FontSize="16" Foreground="#CC48CB00" FontStyle="Italic" FontWeight="Bold" Grid.Column="1"/>
                             <Button x:Name="btnSave" HorizontalAlignment="Left" Height="39" Margin="10,499,0,0" VerticalAlignment="Top" Width="164" BorderBrush="#CC48CB00" BorderThickness="2" Background="#7F48CB00" Click="btnSave_Click" Grid.ColumnSpan="2">
                                 <DockPanel LastChildFill="True">
                                     <Label x:Name="lblAdd" HorizontalContentAlignment="Center" DockPanel.Dock="Right" Foreground="#FF343434" Height="28" FontSize="16" Content="Save"/>
                                     <Image Source="Images/Save.ico" />
+                                </DockPanel>
+                            </Button>
+                            <Label Content="Contact Info:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="417,10,0,0" Width="396" FontSize="16" Foreground="#CC48CB00" FontStyle="Italic" FontWeight="Bold" Grid.Column="1"/>
+                            <TextBox x:Name="txtContact" HorizontalAlignment="Left" Height="201" Margin="417,46,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="461" VerticalScrollBarVisibility="Auto" FontSize="18" FontFamily="Segoe UI" Grid.Column="1" AcceptsReturn="True"/>
+                            <Button x:Name="btnFolder" HorizontalAlignment="Left" Height="39" Margin="115,499,0,0" VerticalAlignment="Top" Width="164" BorderBrush="#CC48CB00" BorderThickness="2" Background="#7F48CB00" Click="btnFolder_Click" Grid.Column="1">
+                                <DockPanel LastChildFill="True">
+                                    <Label HorizontalContentAlignment="Center" DockPanel.Dock="Right" Foreground="#FF343434" Height="28" FontSize="16" Content="Downloads"/>
+                                    <Image Source="Images/Search.ico" />
                                 </DockPanel>
                             </Button>
                         </Grid>

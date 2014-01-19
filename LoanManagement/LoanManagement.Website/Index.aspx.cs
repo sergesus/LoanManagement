@@ -22,7 +22,7 @@ namespace LoanManagement.Website
                 using (var ctx = new newerContext())
                 {
                     var set = ctx.OnlineSettings.Find(1);
-                    lblDesc.Text = set.HomeDescription;
+                    lblDesc.Text = set.HomeDescription.Replace("\n", "<br />"); ;
                 }
             }
             catch (Exception)

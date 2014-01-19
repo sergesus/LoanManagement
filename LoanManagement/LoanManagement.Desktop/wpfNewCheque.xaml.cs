@@ -25,7 +25,10 @@ namespace LoanManagement.Desktop
     {
 
         public int fId;
+        public int lID;
+        public string status;
         public int UserID;
+        public bool cont = false;
 
         public wpfNewCheque()
         {
@@ -43,6 +46,31 @@ namespace LoanManagement.Desktop
                 myBrush.ImageSource = image.Source;
                 //Grid grid = new Grid();
                 wdw1.Background = myBrush;
+
+                if (status == "Full")
+                {
+                    lblDaif.Visibility = Visibility.Hidden;
+                    chDaif.Visibility = Visibility.Hidden;
+                    using (var ctx = new newerContext())
+                    {
+                        var fp = from f in ctx.FPaymentInfo
+                                 where f.LoanID == lID && f.PaymentStatus!= "Cleared"
+                                 select f;
+                        double tot = 0;
+                        foreach (var itm in fp)
+                        {
+                            tot = tot + itm.Amount;
+                        }
+                        txtAmt.Text = tot.ToString("N2");
+                    }
+                    return;
+                }
+
+                using (var ctx = new newerContext())
+                {
+                    var fp = ctx.FPaymentInfo.Find(fId);
+                    txtAmt.Text = fp.Amount.ToString("N2");
+                }
             }
             catch (Exception ex)
             {
@@ -53,26 +81,81 @@ namespace LoanManagement.Desktop
 
         private void btnNew_Click(object sender, RoutedEventArgs e)
         {
-            using (var ctx = new newerContext())
+            try
             {
-                FPaymentInfo fp = ctx.FPaymentInfo.Find(fId);
-                DepositedCheque dp = ctx.DepositedCheques.Find(fId);
-                MessageBoxResult mr = MessageBox.Show("Are you sure you want to process this transaction?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
-                if (mr == MessageBoxResult.Yes)
+                using (var ctx = new newerContext())
                 {
-                    AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Changed Cheque "+ fp.ChequeInfo +" to "+ txtId.Text +"" };
-                    ctx.AuditTrails.Add(at);
-                    fp.PaymentStatus = "Deposited";
-                    fp.ChequeInfo = txtId.Text;
-                    dp.DepositDate = DateTime.Today.Date;
-                    ctx.SaveChanges();
+                    FPaymentInfo fp = ctx.FPaymentInfo.Find(fId);
+                    DepositedCheque dp = ctx.DepositedCheques.Find(fId);
+                    MessageBoxResult mr = MessageBox.Show("Are you sure you want to process this transaction?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                    if (mr == MessageBoxResult.Yes)
+                    {
+
+                        if (status == "Full")
+                        {
+                            var fp2 = from f in ctx.FPaymentInfo
+                                     where f.LoanID == lID && f.PaymentStatus != "Cleared"
+                                     select f;
+                            double tot = 0;
+                            foreach (var itm in fp2)
+                            {
+                                itm.PaymentStatus = "Cleared";
+                                ClearedCheque cc = new ClearedCheque { FPaymentInfoID = itm.FPaymentInfoID, DateCleared = DateTime.Now };
+                            }
+
+                            FPaymentInfo f2 = new FPaymentInfo { Amount = double.Parse(txtAmt.Text), ChequeDueDate = DateTime.Now.Date, ChequeInfo = txtId.Text, LoanID = lID, PaymentNumber = fp2.Count() + 1, PaymentStatus = "Cleared", PaymentDate = DateTime.Now, RemainingBalance = 0 };
+                            ctx.FPaymentInfo.Add(f2);
+                            var lon = ctx.Loans.Find(lID);
+                            lon.Status = "Paid";
+                            PaidLoan pl = new PaidLoan { DateFinished = DateTime.Now, LoanID = lID };
+                            ctx.PaidLoans.Add(pl);
+                            ctx.SaveChanges();
+                            ClearedCheque cc2 = new ClearedCheque { DateCleared = DateTime.Now, FPaymentInfoID = f2.FPaymentInfoID };
+                            MessageBox.Show("Transaction has been successfully processed", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                            this.Close();
+                            return;
+                        }
 
 
-                    MessageBox.Show("Transaction has been successfully processed", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
-                    this.Close();
+                        if (chDaif.IsChecked == false)
+                        {
+                            wpfCheckout frm = new wpfCheckout();
+                            frm.status = "Daif";
+                            frm.fId = fId;
+                            frm.ShowDialog();
+
+                            if (cont == false)
+                            {
+                                System.Windows.MessageBox.Show("Please pay the DAIF fee first", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                return;
+                            }
+                        }
+
+                        AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Changed Cheque " + fp.ChequeInfo + " to " + txtId.Text + "" };
+                        ctx.AuditTrails.Add(at);
+                        fp.PaymentStatus = "Deposited";
+                        fp.ChequeInfo = txtId.Text;
+                        dp.DepositDate = DateTime.Today.Date;
+                        
+
+                        fp.ReturnedCheque.isPaid = true;
+
+
+                        if (chDaif.IsChecked == true)
+                        {
+                            fp.Amount = fp.Amount + fp.ReturnedCheque.Fee;
+                        }
+                        ctx.SaveChanges();
+                        MessageBox.Show("Transaction has been successfully processed", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                        this.Close();
+                    }
                 }
             }
-
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
@@ -83,6 +166,41 @@ namespace LoanManagement.Desktop
         private void btnNew1_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void chDaif_Checked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                using (var ctx = new newerContext())
+                {
+                    var fp = ctx.FPaymentInfo.Find(fId);
+                    double tot = fp.Amount + fp.ReturnedCheque.Fee;
+                    txtAmt.Text = tot.ToString("N2");
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void chDaif_Unchecked(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                using (var ctx = new newerContext())
+                {
+                    var fp = ctx.FPaymentInfo.Find(fId);
+                    txtAmt.Text = fp.Amount.ToString("N2");
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
     }
 }
