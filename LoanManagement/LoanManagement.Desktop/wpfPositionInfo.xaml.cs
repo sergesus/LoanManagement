@@ -15,6 +15,7 @@ using System.Windows.Shapes;
 using MahApps.Metro.Controls;
 using System.Data.Entity;
 using LoanManagement.Domain;
+using System.Windows.Forms;
 
 namespace LoanManagement.Desktop
 {
@@ -63,42 +64,94 @@ namespace LoanManagement.Desktop
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            if (status == "Add")
+            try
+            {
+                if (txtPosition.Text == "Administrator")
+                {
+                    System.Windows.MessageBox.Show("Administrator cannot be used as position name", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    return;
+                }
+
+
+                if (status == "Add")
+                {
+                    using (var ctx = new newerContext())
+                    {
+                        var ctr = ctx.Positions.Where(x => x.PositionName == txtPosition.Text).Count();
+                        if (ctr > 0)
+                        {
+                            System.Windows.MessageBox.Show("Position already exists.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                            return;
+                        }
+                        Domain.Position pos = new Domain.Position { PositionName = txtPosition.Text, Description = txtDesc.Text };
+                        PositionScope scp = new PositionScope { MAgent = false, MClient = false, MHoliday = false, MBank = false, MEmployee = false, MPosition = false, MRegistration = false, MService = false, TApplication = false, TApproval = false, TCollection = false, TManageClosed = false, TOnlineConfirmation = false, TPaymentAdjustment = false, TPayments = false, TReleasing = false, TResturcture = false, UArchive = false, UBackUp = false, UOnlineSettings = false, UReports = false, UScopes = false, UStatistics = false, UUserAccounts = false };
+                        ctx.Positions.Add(pos);
+
+
+                        AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Added new Position " + txtPosition.Text };
+                        ctx.AuditTrails.Add(at);
+
+                        ctx.SaveChanges();
+                        scp.PositionID = pos.PositionID;
+                        ctx.PositionScopes.Add(scp);
+                        ctx.SaveChanges();
+                        System.Windows.MessageBox.Show("Record has been successfully added", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                        this.Close();
+                    }
+                }
+                else
+                {
+                    using (var ctx = new newerContext())
+                    {
+                        Domain.Position pos = ctx.Positions.Find(pID);
+                        pos.PositionName = txtPosition.Text;
+                        pos.Description = txtDesc.Text;
+                        AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Updated Position " + txtPosition.Text };
+                        ctx.AuditTrails.Add(at);
+                        ctx.SaveChanges();
+                        System.Windows.MessageBox.Show("Record has been successfully updated", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                        this.Close();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void btnDel_Click(object sender, RoutedEventArgs e)
+        {
+            try
             {
                 using (var ctx = new newerContext())
                 {
-                    var ctr = ctx.Positions.Where(x => x.PositionName == txtPosition.Text).Count();
+                    var ctr = ctx.Employees.Where(x => x.PositionID == pID).Count();
                     if (ctr > 0)
                     {
-                        MessageBox.Show("Position already exists.", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                        System.Windows.MessageBox.Show("Position is being used by at least one employee. It cannot be deleted","Error", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
-                    Domain.Position pos = new Domain.Position { PositionName = txtPosition.Text, Description = txtDesc.Text };
-                    ctx.Positions.Add(pos);
 
-                    AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Added new Position " + txtPosition.Text };
-                    ctx.AuditTrails.Add(at);
+                    DialogResult dr = System.Windows.Forms.MessageBox.Show("Are you sure you want to delete this record?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+                    if (dr == System.Windows.Forms.DialogResult.Yes)
+                    {
+                        Domain.Position h = ctx.Positions.Find(pID);
+                        ctx.Positions.Remove(h);
+                        ctx.SaveChanges();
+                        System.Windows.MessageBox.Show("Holiday has been successfuly deleted", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                        this.Close();
 
-                    ctx.SaveChanges();
-                    MessageBox.Show("Record has been successfully added", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
-                    this.Close();
+                    }
+
                 }
             }
-            else
+            catch (Exception ex)
             {
-                using (var ctx = new newerContext())
-                {
-                    Domain.Position pos = ctx.Positions.Find(pID);
-                    pos.PositionName = txtPosition.Text;
-                    pos.Description = txtDesc.Text;
-                    AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Updated Position " + txtPosition.Text };
-                    ctx.AuditTrails.Add(at);
-                    ctx.SaveChanges();
-                    MessageBox.Show("Record has been successfully updated", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
-                    this.Close();
-                }
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
             }
-
         }
     }
 }

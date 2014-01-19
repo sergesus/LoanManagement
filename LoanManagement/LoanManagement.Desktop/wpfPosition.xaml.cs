@@ -74,6 +74,21 @@ namespace LoanManagement.Desktop
                 myBrush.ImageSource = image.Source;
                 wdw1.Background = myBrush;
                 resetGrid();
+
+                using (var ctx = new newerContext())
+                {
+                    
+                    var usr = ctx.Employees.Find(UserID);
+                    var pos = ctx.PositionScopes.Find(usr.PositionID);
+                    if (pos.UScopes == true)
+                    {
+                        btnScope.IsEnabled = true;
+                    }
+                    else
+                    {
+                        btnScope.IsEnabled = false;
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -145,6 +160,37 @@ namespace LoanManagement.Desktop
                                select new { PositionID = ps.PositionID, Position = ps.PositionName, Description = ps.Description };
                     dgBank.ItemsSource = post.ToList();
 
+                }
+            }
+            catch (Exception ex)
+            {
+                //System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void btnScope_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                using (var ctx = new newerContext())
+                {
+                    var n2 = ctx.Employees.Find(UserID);
+                    int n = Convert.ToInt32(getRow(dgBank, 0));
+                    var emp = ctx.Positions.Find(n);
+                    if (emp.PositionName == "Administrator" || n2.PositionID == emp.PositionID)
+                    {
+                        System.Windows.MessageBox.Show("Unable to edit Administrator/Current Position", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                        return;
+                    }
+                    else
+                    {
+                        wpfPassword frm = new wpfPassword();
+                        frm.status = "scope";
+                        frm.ID = UserID;
+                        frm.eID = n;
+                        frm.ShowDialog();
+                    }
                 }
             }
             catch (Exception ex)

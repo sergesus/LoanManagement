@@ -74,7 +74,7 @@
                     </Grid>
                     <DataGrid x:Name="dgDed" HorizontalAlignment="Left" Height="168" Margin="68,80,0,0" VerticalAlignment="Top" Width="621" RenderTransformOrigin="0.283,-0.065" Grid.Column="2" GridLinesVisibility="None"/>
                     <Label Content="*" HorizontalAlignment="Left" Height="31" Margin="156,10,0,0" VerticalAlignment="Top" Width="16" Foreground="Red" Grid.Column="2"/>
-                    <Label x:Name="lblCom" Content="" HorizontalAlignment="Left" Height="23" Margin="285,12,0,0" VerticalAlignment="Top" Width="34" Foreground="Red" Grid.Column="2"/>
+                    <Label x:Name="lblCom" Content="" HorizontalAlignment="Left" Height="37" Margin="285,12,0,0" VerticalAlignment="Top" Width="34" Foreground="Red" Grid.Column="2"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="tbPen" Header="Fees" Margin="150,-2,-154,0" FontSize="16">
@@ -140,7 +140,7 @@
                         <Label Content="Service Name:" HorizontalAlignment="Left" Height="31" Margin="6,13,0,0" VerticalAlignment="Top" Width="128" Foreground="Black" FontSize="18"/>
                         <TextBox x:Name="txtDesc" HorizontalAlignment="Left" Height="89" Margin="497,17,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="224" FontSize="18" LostFocus="txtDesc_LostFocus"/>
                         <Label Content="Description:" HorizontalAlignment="Left" Height="31" Margin="376,17,0,0" VerticalAlignment="Top" Width="128" Foreground="Black" FontSize="18" RenderTransformOrigin="0.511,-2.728"/>
-                        <TextBox x:Name="txtMinTerm" HorizontalAlignment="Left" Height="31" Margin="134,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" FontSize="18" LostFocus="txtMinTerm_LostFocus"/>
+                        <TextBox x:Name="txtMinTerm" HorizontalAlignment="Left" Height="31" Margin="134,115,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" FontSize="18" LostFocus="txtMinTerm_LostFocus" GotFocus="txtMinTerm_LostFocus"/>
                         <Label Content="Min. Term:" HorizontalAlignment="Left" Height="31" Margin="7,114,0,0" VerticalAlignment="Top" Width="108" Foreground="Black" FontSize="18" RenderTransformOrigin="0.683,-1.051"/>
                         <TextBox x:Name="txtMaxTerm" HorizontalAlignment="Left" Height="31" Margin="134,151,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" FontSize="18" LostFocus="txtMaxTerm_LostFocus"/>
                         <Label Content="Type:" HorizontalAlignment="Left" Height="42" Margin="6,78,0,0" VerticalAlignment="Top" Width="79" Foreground="Black" FontSize="18" RenderTransformOrigin="0.506,3.129"/>
@@ -156,9 +156,9 @@
                         <TextBox x:Name="txtInterest" HorizontalAlignment="Left" Height="31" Margin="134,259,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="50" FontSize="18" LostFocus="txtInterest_LostFocus"/>
                         <Label Content="Interest:" HorizontalAlignment="Left" Height="31" Margin="7,256,0,0" VerticalAlignment="Top" Width="79" Foreground="Black" FontSize="18"/>
                         <Label Content="Max. Term:" HorizontalAlignment="Left" Height="31" Margin="7,146,0,0" VerticalAlignment="Top" Width="108" Foreground="Black" FontSize="18" RenderTransformOrigin="0.683,-1.051"/>
-                        <TextBox x:Name="txtMinVal" HorizontalAlignment="Left" Height="31" Margin="134,187,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="224" FontSize="18" LostFocus="txtMinVal_LostFocus"/>
+                        <TextBox x:Name="txtMinVal" HorizontalAlignment="Left" Height="31" Margin="134,187,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="224" FontSize="18" LostFocus="txtMinVal_LostFocus" GotFocus="txtMinVal_LostFocus"/>
                         <Label Content="Min. Value:" HorizontalAlignment="Left" Height="31" Margin="6,184,0,0" VerticalAlignment="Top" Width="122" Foreground="Black" FontSize="18" RenderTransformOrigin="0.683,-1.051"/>
-                        <TextBox x:Name="txtMaxVal" HorizontalAlignment="Left" Height="31" Margin="134,223,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="224" FontSize="18" LostFocus="txtMaxVal_LostFocus"/>
+                        <TextBox x:Name="txtMaxVal" HorizontalAlignment="Left" Height="31" Margin="134,223,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="224" FontSize="18" LostFocus="txtMaxVal_LostFocus" GotFocus="txtMaxVal_LostFocus"/>
                         <Label Content="Max. Value:" HorizontalAlignment="Left" Height="31" Margin="7,219,0,0" VerticalAlignment="Top" Width="108" Foreground="Black" FontSize="18" RenderTransformOrigin="0.683,-1.051"/>
                         <Label x:Name="lblDesc" Content="" HorizontalAlignment="Left" Height="35" Margin="718,8,-13,0" VerticalAlignment="Top" Width="34" Foreground="Red" FontSize="18"/>
                         <Label x:Name="lblName" Content="" HorizontalAlignment="Left" Height="35" Margin="358,8,0,0" VerticalAlignment="Top" Width="34" Foreground="Red" FontSize="18"/>

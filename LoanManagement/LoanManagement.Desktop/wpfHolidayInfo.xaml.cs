@@ -293,8 +293,8 @@ namespace LoanManagement.Desktop
 
         private void btnSave_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
+            //try
+            //{
                 if (lblName.Content == "?" || lblDesc.Content == "?"
                     || String.IsNullOrWhiteSpace(txtName.Text)|| dt.SelectedDate.Value == null)
                 {
@@ -377,7 +377,7 @@ namespace LoanManagement.Desktop
                             return;
                         }
 
-                        num = ctx.Holidays.Where(x => x.Date == dt.SelectedDate.Value.Date).Count();
+                        num = ctx.Holidays.Where(x => x.Date == dt.SelectedDate.Value).Count();
                         if (num > 0)
                         {
                             System.Windows.MessageBox.Show("Holiday already exists", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -473,12 +473,12 @@ namespace LoanManagement.Desktop
                     }
                 }
 
-            }
-            catch (Exception ex)
-            {
-                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            //    return;
+            //}
         }
 
         private void btnClear_Click(object sender, RoutedEventArgs e)

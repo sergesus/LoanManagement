@@ -139,7 +139,7 @@ namespace LoanManagement.Desktop
             }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                //System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
         }
@@ -402,7 +402,7 @@ namespace LoanManagement.Desktop
                 //lbM.UnselectAll();
                 reset();
                 checkDue();
-                checkExpiration();
+                //checkExpiration();
                 autoCancel();
 
             }
@@ -1006,6 +1006,7 @@ namespace LoanManagement.Desktop
             {
                 wpfClient frm = new wpfClient();
                 frm.status = false;
+                frm.UserID = UserID;
                 frm.ShowDialog();
             }
             catch (Exception ex)
@@ -1021,6 +1022,7 @@ namespace LoanManagement.Desktop
             {
                 wpfServices frm = new wpfServices();
                 frm.status = false;
+                frm.UserID = UserID;
                 frm.ShowDialog();
             }
             catch (Exception ex)
@@ -1036,6 +1038,7 @@ namespace LoanManagement.Desktop
             {
                 wpfBank frm = new wpfBank();
                 frm.status = false;
+                frm.UserID = UserID;
                 frm.ShowDialog();
             }
             catch (Exception ex)
@@ -1051,6 +1054,7 @@ namespace LoanManagement.Desktop
             {
                 wpfEmployee frm = new wpfEmployee();
                 frm.status = false;
+                frm.UserID = UserID;
                 frm.ShowDialog();
             }
             catch (Exception ex)
@@ -1066,6 +1070,7 @@ namespace LoanManagement.Desktop
             {
                 wpfAgent frm = new wpfAgent();
                 frm.status = false;
+                frm.UserID = UserID;
                 frm.ShowDialog();
             }
             catch (Exception ex)
@@ -2346,6 +2351,7 @@ namespace LoanManagement.Desktop
                         set.AboutDescription = txtAbout.Text;
                         set.HomeDescription = txtHome.Text;
                         set.MissionVision = txtMission.Text;
+                        ctx.SaveChanges();
                         System.Windows.MessageBox.Show("Information has been successfully saved", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
 
                     }
@@ -2357,8 +2363,5 @@ namespace LoanManagement.Desktop
                 return;
             }
         }
-
-
-
     }
 }

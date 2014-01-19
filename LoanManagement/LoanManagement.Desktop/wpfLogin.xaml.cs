@@ -521,31 +521,40 @@ namespace LoanManagement.Desktop
                         }
 
 
-                        var sc = ctx.Scopes.Find(em.EmployeeID);
-                        wnd.btnMClients.IsEnabled = sc.ClientM;
-                        wnd.btnMAgents.IsEnabled = sc.AgentM;
-                        wnd.btnMServ.IsEnabled = sc.ServiceM;
-                        wnd.btnMBank.IsEnabled = sc.BankM;
-                        wnd.btnMEmployee.IsEnabled = sc.EmployeeM;
-                        wnd.btnFApplication.IsEnabled = sc.Application;
-                        wnd.btnMLoanApplication.IsEnabled = sc.Application;
-                        wnd.btnFApproval.IsEnabled = sc.Approval;
-                        wnd.btnMApproval.IsEnabled = sc.Approval;
-                        wnd.btnFReleasing.IsEnabled = sc.Releasing;
-                        wnd.btnMReleasing.IsEnabled = sc.Releasing;
-                        wnd.btnFPayments.IsEnabled = sc.Payments;
-                        wnd.btnMPayments.IsEnabled = sc.Payments;
-                        wnd.btnFManage.IsEnabled = sc.ManageCLosed ;
-                        wnd.btnFRestructure.IsEnabled = sc.Resturcture;
-                        wnd.btnFAdjustment.IsEnabled = sc.PaymentAdjustment;
-                        wnd.btnPosition.IsEnabled = sc.PositionM;
+                        var sc = ctx.PositionScopes.Find(em.Employee.PositionID);
+                        wnd.btnMClients.IsEnabled = sc.MClient;
+                        wnd.btnMAgents.IsEnabled = sc.MAgent;
+                        wnd.btnMServ.IsEnabled = sc.MService;
+                        wnd.btnMBank.IsEnabled = sc.MBank;
+                        wnd.btnMEmployee.IsEnabled = sc.MEmployee;
+                        wnd.btnMPosition.IsEnabled = sc.MPosition;
+                        wnd.btnMHoliday.IsEnabled = sc.MHoliday;
+                        wnd.btnMClients_Confirmation.IsEnabled = sc.MRegistration;
 
-                        wnd.grdArchive.IsEnabled=sc.Archive;
-                        wnd.btnUBackUp.IsEnabled=sc.BackUp;
-                        wnd.btnUUser.IsEnabled = sc.UserAccounts;
-                        //sc.Reports = Convert.ToBoolean(cReports.IsChecked);
-                        wnd.grdStatistic.IsEnabled = sc.Statistics;
-                        //sc.Scopes = Convert.ToBoolean(cUserScopes.IsChecked);
+                        wnd.btnFApplication.IsEnabled = sc.TApplication;
+                        wnd.btnMLoanApplication.IsEnabled = sc.TApplication;
+                        wnd.btnFApproval.IsEnabled = sc.TApproval;
+                        wnd.btnMApproval.IsEnabled = sc.TApproval;
+                        wnd.btnFReleasing.IsEnabled = sc.TReleasing;
+                        wnd.btnMReleasing.IsEnabled = sc.TReleasing;
+                        wnd.btnFPayments.IsEnabled = sc.TPayments;
+                        wnd.btnMPayments.IsEnabled = sc.TPayments;
+                        wnd.btnFConfirmApplication.IsEnabled = sc.TOnlineConfirmation;
+                        wnd.btnMConfirmApplication.IsEnabled = sc.TOnlineConfirmation;
+                        wnd.btnFManage.IsEnabled = sc.TManageClosed ;
+                        wnd.btnFRestructure.IsEnabled = sc.TResturcture;
+                        wnd.btnFAdjustment.IsEnabled = sc.TPaymentAdjustment;
+                        wnd.btnFRenewal.IsEnabled = sc.TRenewal;
+                        wnd.tbCollectors.IsEnabled = sc.TCollection;
+
+                        
+
+                        wnd.grdArchive.IsEnabled=sc.UArchive;
+                        wnd.btnUBackUp.IsEnabled=sc.UBackUp;
+                        wnd.btnUUser.IsEnabled = sc.UUserAccounts;
+                        wnd.grdStatistic.IsEnabled = sc.UStatistics;
+                        wnd.tbRep.IsEnabled = sc.UReports;
+                        wnd.tbOnline.IsEnabled = sc.UOnlineSettings;
 
                         var st = ctx.State.Find(1);
                         st.iState = 0;

@@ -43,28 +43,34 @@ namespace LoanManagement.Desktop
 
                 using (var ctx = new newerContext())
                 {
-                    var sc = ctx.Scopes.Find(ID);
-                    cClient.IsChecked = sc.ClientM;
-                    cAgents.IsChecked = sc.AgentM;
-                    cServices.IsChecked = sc.ServiceM;
-                    cBanks.IsChecked = sc.BankM;
-                    cEmployee.IsChecked = sc.EmployeeM;
-                    cPosition.IsChecked = sc.PositionM;
+                    var sc = ctx.PositionScopes.Find(ID);
+                    cClient.IsChecked = sc.MClient;
+                    cAgents.IsChecked = sc.MAgent;
+                    cServices.IsChecked = sc.MService;
+                    cBanks.IsChecked = sc.MBank;
+                    cEmployee.IsChecked = sc.MEmployee;
+                    cPosition.IsChecked = sc.MPosition;
+                    cHoliday.IsChecked = sc.MHoliday;
+                    cOnlineReg.IsChecked = sc.MRegistration;
 
-                    cApplication.IsChecked = sc.Application;
-                    cApproval.IsChecked = sc.Approval;
-                    cReleasing.IsChecked = sc.Releasing;
-                    cPayments.IsChecked = sc.Payments;
-                    cManageClosed.IsChecked = sc.ManageCLosed;
-                    cRestructure.IsChecked = sc.Resturcture;
-                    cAdjustment.IsChecked = sc.PaymentAdjustment;
+                    cApplication.IsChecked = sc.TApplication;
+                    cApproval.IsChecked = sc.TApproval;
+                    cReleasing.IsChecked = sc.TReleasing;
+                    cPayments.IsChecked = sc.TPayments;
+                    cManageClosed.IsChecked = sc.TManageClosed;
+                    cRestructure.IsChecked = sc.TResturcture;
+                    cAdjustment.IsChecked = sc.TPaymentAdjustment;
+                    cOnlineApp.IsChecked = sc.TOnlineConfirmation;
+                    cCollection.IsChecked = sc.TCollection;
+                    cRenewal.IsChecked = sc.TRenewal;
 
-                    cArchive.IsChecked = sc.Archive;
-                    cBackup.IsChecked = sc.BackUp;
-                    cUsers.IsChecked = sc.UserAccounts;
-                    cReports.IsChecked = sc.Reports;
-                    cStatistics.IsChecked = sc.Statistics;
-                    cUserScopes.IsChecked = sc.Scopes;
+                    cArchive.IsChecked = sc.UArchive;
+                    cBackup.IsChecked = sc.UBackUp;
+                    cUsers.IsChecked = sc.UUserAccounts;
+                    cReports.IsChecked = sc.UReports;
+                    cStatistics.IsChecked = sc.UStatistics;
+                    cUserScopes.IsChecked = sc.UScopes;
+                    cOnlineSettings.IsChecked = sc.UOnlineSettings;
                 }
             }
             catch (Exception ex)
@@ -81,28 +87,34 @@ namespace LoanManagement.Desktop
             {
                 using (var ctx = new newerContext())
                 {
-                    var sc = ctx.Scopes.Find(ID);
-                    sc.ClientM = Convert.ToBoolean(cClient.IsChecked);
-                    sc.AgentM = Convert.ToBoolean(cAgents.IsChecked);
-                    sc.ServiceM = Convert.ToBoolean(cServices.IsChecked);
-                    sc.BankM = Convert.ToBoolean(cBanks.IsChecked);
-                    sc.EmployeeM = Convert.ToBoolean(cEmployee.IsChecked);
-                    sc.PositionM = Convert.ToBoolean(cEmployee.IsChecked);
+                    var sc = ctx.PositionScopes.Find(ID);
+                    sc.MClient = Convert.ToBoolean(cClient.IsChecked);
+                    sc.MAgent = Convert.ToBoolean(cAgents.IsChecked);
+                    sc.MService = Convert.ToBoolean(cServices.IsChecked);
+                    sc.MBank = Convert.ToBoolean(cBanks.IsChecked);
+                    sc.MEmployee = Convert.ToBoolean(cEmployee.IsChecked);
+                    sc.MPosition = Convert.ToBoolean(cPosition.IsChecked);
+                    sc.MHoliday = Convert.ToBoolean(cHoliday.IsChecked);
+                    sc.MRegistration = Convert.ToBoolean(cOnlineReg.IsChecked);
 
-                    sc.Application = Convert.ToBoolean(cApplication.IsChecked);
-                    sc.Approval = Convert.ToBoolean(cApproval.IsChecked);
-                    sc.Releasing = Convert.ToBoolean(cReleasing.IsChecked);
-                    sc.Payments = Convert.ToBoolean(cPayments.IsChecked);
-                    sc.ManageCLosed = Convert.ToBoolean(cManageClosed.IsChecked);
-                    sc.Resturcture = Convert.ToBoolean(cRestructure.IsChecked);
-                    sc.PaymentAdjustment = Convert.ToBoolean(cAdjustment.IsChecked);
+                    sc.TApplication = Convert.ToBoolean(cApplication.IsChecked);
+                    sc.TApproval = Convert.ToBoolean(cApproval.IsChecked);
+                    sc.TReleasing = Convert.ToBoolean(cReleasing.IsChecked);
+                    sc.TPayments = Convert.ToBoolean(cPayments.IsChecked);
+                    sc.TManageClosed = Convert.ToBoolean(cManageClosed.IsChecked);
+                    sc.TResturcture = Convert.ToBoolean(cRestructure.IsChecked);
+                    sc.TPaymentAdjustment = Convert.ToBoolean(cAdjustment.IsChecked);
+                    sc.TOnlineConfirmation = Convert.ToBoolean(cOnlineApp.IsChecked);
+                    sc.TCollection = Convert.ToBoolean(cCollection.IsChecked);
+                    sc.TRenewal = Convert.ToBoolean(cRenewal.IsChecked);
 
-                    sc.Archive = Convert.ToBoolean(cArchive.IsChecked);
-                    sc.BackUp = Convert.ToBoolean(cBackup.IsChecked);
-                    sc.UserAccounts = Convert.ToBoolean(cUsers.IsChecked);
-                    sc.Reports = Convert.ToBoolean(cReports.IsChecked);
-                    sc.Statistics = Convert.ToBoolean(cStatistics.IsChecked);
-                    sc.Scopes = Convert.ToBoolean(cUserScopes.IsChecked);
+                    sc.UArchive = Convert.ToBoolean(cArchive.IsChecked);
+                    sc.UBackUp = Convert.ToBoolean(cBackup.IsChecked);
+                    sc.UUserAccounts = Convert.ToBoolean(cUsers.IsChecked);
+                    sc.UReports = Convert.ToBoolean(cReports.IsChecked);
+                    sc.UStatistics = Convert.ToBoolean(cStatistics.IsChecked);
+                    sc.UScopes = Convert.ToBoolean(cUserScopes.IsChecked);
+                    sc.UOnlineSettings = Convert.ToBoolean(cOnlineSettings.IsChecked);
 
                     ctx.SaveChanges();
                     MessageBox.Show("Receord has been successfully saved", "Information", MessageBoxButton.OK, MessageBoxImage.Information);

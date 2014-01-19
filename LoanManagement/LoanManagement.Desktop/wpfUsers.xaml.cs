@@ -129,18 +129,7 @@ namespace LoanManagement.Desktop
                 wdw1.Background = myBrush;
                 resetGrid();
 
-                using (var ctx = new newerContext())
-                {
-                    var usr = ctx.Scopes.Find(UserID);
-                    if (usr.Scopes == true)
-                    {
-                        btnScope.IsEnabled = true;
-                    }
-                    else
-                    {
-                        btnScope.IsEnabled = false;
-                    }
-                }
+                
 
             }
             catch (Exception ex)

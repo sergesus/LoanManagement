@@ -32,6 +32,8 @@
                     <CheckBox x:Name="cBanks" Grid.ColumnSpan="4" Content="Banks" HorizontalAlignment="Left" Height="26" Margin="10,88,0,0" VerticalAlignment="Top" Width="166" FontSize="18"/>
                     <CheckBox x:Name="cEmployee" Grid.ColumnSpan="4" Content="Employee" HorizontalAlignment="Left" Height="26" Margin="10,114,0,0" VerticalAlignment="Top" Width="166" FontSize="18"/>
                     <CheckBox x:Name="cPosition" Grid.ColumnSpan="4" Content="Position" HorizontalAlignment="Left" Height="26" Margin="10,140,0,0" VerticalAlignment="Top" Width="166" FontSize="18"/>
+                    <CheckBox x:Name="cHoliday" Grid.ColumnSpan="4" Content="Holiday" HorizontalAlignment="Left" Height="26" Margin="10,166,0,0" VerticalAlignment="Top" Width="166" FontSize="18"/>
+                    <CheckBox x:Name="cOnlineReg" Grid.ColumnSpan="4" Content="Registration Confirmation" HorizontalAlignment="Left" Height="26" Margin="10,192,0,0" VerticalAlignment="Top" Width="241" FontSize="18"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Transaction" FontSize="16" Margin="-2,-2,-2,0">
@@ -52,6 +54,9 @@
                     <CheckBox x:Name="cManageClosed" Grid.ColumnSpan="4" Content="Manage Closed Accounts" HorizontalAlignment="Left" Height="26" Margin="10,179,0,0" VerticalAlignment="Top" Width="230" FontSize="18"/>
                     <CheckBox x:Name="cRestructure" Grid.ColumnSpan="4" Content="Loan Restructure" HorizontalAlignment="Left" Height="26" Margin="10,205,0,0" VerticalAlignment="Top" Width="166" FontSize="18"/>
                     <CheckBox x:Name="cAdjustment" Grid.ColumnSpan="4" Content="Payment Adjustment" HorizontalAlignment="Left" Height="26" Margin="10,231,0,0" VerticalAlignment="Top" Width="202" FontSize="18"/>
+                    <CheckBox x:Name="cOnlineApp" Grid.ColumnSpan="2" Content="Online App Confirmation" HorizontalAlignment="Left" Height="26" Margin="34,44,0,0" VerticalAlignment="Top" Width="236" FontSize="18" Grid.Column="3"/>
+                    <CheckBox x:Name="cCollection" Grid.ColumnSpan="2" Content="Collection Payment" HorizontalAlignment="Left" Height="26" Margin="34,65,0,0" VerticalAlignment="Top" Width="236" FontSize="18" Grid.Column="3"/>
+                    <CheckBox x:Name="cRenewal" Grid.ColumnSpan="2" Content="Renewal" HorizontalAlignment="Left" Height="26" Margin="34,91,0,0" VerticalAlignment="Top" Width="166" FontSize="18" Grid.Column="3"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Others" FontSize="16" Margin="-2,-2,-2,0">
@@ -69,6 +74,7 @@
                     <CheckBox x:Name="cReports" Grid.ColumnSpan="4" Content="Reports" HorizontalAlignment="Left" Height="26" Margin="10,88,0,0" VerticalAlignment="Top" Width="166" FontSize="18"/>
                     <CheckBox x:Name="cStatistics" Grid.ColumnSpan="4" Content="View Statistics" HorizontalAlignment="Left" Height="26" Margin="10,114,0,0" VerticalAlignment="Top" Width="166" FontSize="18"/>
                     <CheckBox x:Name="cUserScopes" Grid.ColumnSpan="4" Content="User Scopes" HorizontalAlignment="Left" Height="26" Margin="10,140,0,0" VerticalAlignment="Top" Width="166" FontSize="18"/>
+                    <CheckBox x:Name="cOnlineSettings" Grid.ColumnSpan="4" Content="Online Settings" HorizontalAlignment="Left" Height="26" Margin="10,166,0,0" VerticalAlignment="Top" Width="166" FontSize="18"/>
                 </Grid>
             </TabItem>
         </TabControl>

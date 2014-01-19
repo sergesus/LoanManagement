@@ -46,6 +46,8 @@ namespace LoanManagement.Desktop
                 int res;
                 String str = txt.Text;
                 err = !int.TryParse(str, out res);
+                int n = 0;
+                n = int.Parse(str);
 
                 if (isRequired == true)
                 {
@@ -64,6 +66,16 @@ namespace LoanManagement.Desktop
                 }
                 else
                 {
+                    n = int.Parse(str);
+                    if (n <= 0)
+                    {
+                        lbl.Content = "?";
+                        lbl.ToolTip = "Value must be greater than 1";
+                        lbl.Focus();
+                        lbl.Foreground = System.Windows.Media.Brushes.Red;
+                        lbl.FontWeight = FontWeights.ExtraBold;
+                        return;
+                    }
                     lbl.Content = "✔";
                     lbl.Foreground = System.Windows.Media.Brushes.Green;
                 }
@@ -87,7 +99,7 @@ namespace LoanManagement.Desktop
                 double res;
                 String str = txt.Text;
                 err = !double.TryParse(str, out res);
-
+                double n = 0;
                 if (isRequired == true)
                 {
                     if (String.IsNullOrWhiteSpace(str))
@@ -104,6 +116,16 @@ namespace LoanManagement.Desktop
                 }
                 else
                 {
+                    n = double.Parse(str);
+                    if (n <= 0)
+                    {
+                        lbl.Content = "?";
+                        lbl.ToolTip = "Value must be greater than 1";
+                        lbl.Focus();
+                        lbl.Foreground = System.Windows.Media.Brushes.Red;
+                        lbl.FontWeight = FontWeights.ExtraBold;
+                        return;
+                    }
                     lbl.Content = "✔";
                     lbl.Foreground = System.Windows.Media.Brushes.Green;
                 }
@@ -376,7 +398,8 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                if (lblName.Content == "?" || lblMinTerm.Content == "?" || lblMaxTerm.Content == "?" || lblMinVal.Content == "?" || lblMaxVal.Content == "?" || lblInterest.Content == "?" || lblDesc.Content == "?"
+                if (lblName.Content == "?" || lblMinTerm.Content == "?" || lblMaxTerm.Content == "?" || lblMinVal.Content == "?" || lblMaxVal.Content == "?" || lblInterest.Content == "?" || lblDesc.Content == "?" || lblCom.Content == "?" || lblPenAdj.Content == "?" || lblPenCA.Content == "?" || lblPenDaif.Content == "?" || lblPenHolding.Content == "?" || lblPenIn.Content == "?" || lblPenLate.Content == "?"
+                    || String.IsNullOrWhiteSpace(txtCom.Text) || String.IsNullOrWhiteSpace(txtHolding.Text) || String.IsNullOrWhiteSpace(txtDaif.Text) || String.IsNullOrWhiteSpace(txtClosed.Text) || String.IsNullOrWhiteSpace(txtResFee.Text) || String.IsNullOrWhiteSpace(txtResInt.Text) || String.IsNullOrWhiteSpace(txtLtPen.Text)
                     || String.IsNullOrWhiteSpace(txtName.Text) || String.IsNullOrWhiteSpace(txtMinTerm.Text) || String.IsNullOrWhiteSpace(txtMaxTerm.Text) || String.IsNullOrWhiteSpace(txtMinVal.Text) || String.IsNullOrWhiteSpace(txtMaxVal.Text) || String.IsNullOrWhiteSpace(txtInterest.Text) || String.IsNullOrWhiteSpace(txtDesc.Text))
                 {
                     System.Windows.MessageBox.Show("Please input correct format and/or fill all required fields", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
@@ -1051,7 +1074,6 @@ namespace LoanManagement.Desktop
             
             try
             {
-                checkNumeric(txtMinTerm, lblMinTerm, true);
                 if (Convert.ToInt32(txtMinTerm.Text) > Convert.ToInt32(txtMaxTerm.Text))
                 {
                     lblMaxTerm.Foreground = Brushes.Red;
@@ -1066,6 +1088,7 @@ namespace LoanManagement.Desktop
                     lblMaxTerm.Content = "✔";
                     lblMinTerm.Content = "✔";
                 }
+                checkNumeric(txtMinTerm, lblMinTerm, true);
             }
             catch
             {
@@ -1080,7 +1103,6 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                checkNumeric(txtMaxTerm, lblMaxTerm, true);
                 if (Convert.ToInt32(txtMinTerm.Text) > Convert.ToInt32(txtMaxTerm.Text))
                 {
                     lblMaxTerm.Foreground = Brushes.Red;
@@ -1095,6 +1117,7 @@ namespace LoanManagement.Desktop
                     lblMaxTerm.Content = "✔";
                     lblMinTerm.Content = "✔";
                 }
+                checkNumeric(txtMaxTerm, lblMaxTerm, true);
             }
             catch
             {
@@ -1109,7 +1132,6 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                checkDouble(txtMinVal, lblMinVal, true);
                 if (Convert.ToDouble(txtMinVal.Text) > Convert.ToDouble(txtMaxVal.Text))
                 {
                     lblMaxVal.Foreground = Brushes.Red;
@@ -1124,6 +1146,7 @@ namespace LoanManagement.Desktop
                     lblMaxVal.Content = "✔";
                     lblMinVal.Content = "✔";
                 }
+                checkDouble(txtMinVal, lblMinVal, true);
             }
             catch
             {
@@ -1138,7 +1161,6 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                checkDouble(txtMaxVal, lblMaxVal, true);
                 if (Convert.ToDouble(txtMinVal.Text) > Convert.ToDouble(txtMaxVal.Text))
                 {
                     lblMaxVal.Foreground = Brushes.Red;
@@ -1153,6 +1175,7 @@ namespace LoanManagement.Desktop
                     lblMaxVal.Content = "✔";
                     lblMinVal.Content = "✔";
                 }
+                checkDouble(txtMaxVal, lblMaxVal, true);
             }
             catch
             {
@@ -1528,6 +1551,11 @@ namespace LoanManagement.Desktop
         private void txtCIName_LostFocus(object sender, RoutedEventArgs e)
         {
             checkString(txtCIName, lblCIName, true);
+        }
+
+        private void txtMinTerm_GotFocus(object sender, RoutedEventArgs e)
+        {
+
         }
 
     }

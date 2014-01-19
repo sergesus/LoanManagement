@@ -78,6 +78,7 @@ namespace LoanManagement.Domain
         public DbSet<CollateralLoanInfo> CollateralLoanInfoes { get; set; }
         public DbSet<LoanRenewal> LoanRenewals { get; set; }
         public DbSet<OnlineSetting> OnlineSettings { get; set; }
+        public DbSet<PositionScope> PositionScopes { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -183,6 +184,9 @@ namespace LoanManagement.Domain
             modelBuilder.Entity<iClientExpiration>()
                 .HasKey(x => x.ClientID)
                 .HasRequired(x => x.Client);
+            modelBuilder.Entity<PositionScope>()
+                .HasKey(x => x.PositionID)
+                .HasRequired(x => x.Position);
         }
     }
 
@@ -229,6 +233,40 @@ namespace LoanManagement.Domain
         public virtual Employee Employee { get; set; }
     }
 
+    public class PositionScope
+    {
+        public int PositionID { get; set; }
+        public bool MClient { get; set; }
+        public bool MService { get; set; }
+        public bool MAgent { get; set; }
+        public bool MBank { get; set; }
+        public bool MEmployee { get; set; }
+        public bool MPosition { get; set; }
+        public bool MHoliday { get; set; }
+        public bool MRegistration { get; set; }
+
+        public bool TApplication { get; set; }
+        public bool TApproval { get; set; }
+        public bool TReleasing { get; set; }
+        public bool TPayments { get; set; }
+        public bool TManageClosed { get; set; }
+        public bool TResturcture { get; set; }
+        public bool TPaymentAdjustment { get; set; }
+        public bool TOnlineConfirmation { get; set; }
+        public bool TCollection { get; set; }
+        public bool TRenewal { get; set; }
+
+        public bool UArchive { get; set; }
+        public bool UBackUp { get; set; }
+        public bool UUserAccounts { get; set; }
+        public bool UReports { get; set; }
+        public bool UStatistics { get; set; }
+        public bool UScopes { get; set; }
+        public bool UOnlineSettings { get; set; }
+
+        public virtual Position Position { get; set; }
+    }
+
     public class Employee
     {
         public int EmployeeID { get; set; }
@@ -254,6 +292,8 @@ namespace LoanManagement.Domain
         public int PositionID { get; set; }
         public string PositionName { get; set; }
         public string Description { get; set; }
+
+        public virtual PositionScope PositionScope { get; set; }
     }
 
     public class EmployeeAddress
