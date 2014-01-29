@@ -231,6 +231,9 @@
     <Compile Include="wpfRenewClosed.xaml.cs">
       <DependentUpon>wpfRenewClosed.xaml</DependentUpon>
     </Compile>
+    <Compile Include="wpfReportForLoans.xaml.cs">
+      <DependentUpon>wpfReportForLoans.xaml</DependentUpon>
+    </Compile>
     <Compile Include="wpfSelectApplication.xaml.cs">
       <DependentUpon>wpfSelectApplication.xaml</DependentUpon>
     </Compile>
@@ -424,6 +427,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="wpfRenewClosed.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="wpfReportForLoans.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

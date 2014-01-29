@@ -42,6 +42,8 @@ namespace LoanManagement.Desktop
     public partial class wpfMain : MetroWindow
     {
         public int UserID;
+        public DateTime dt1 = DateTime.Now;
+        public DateTime dt2 = DateTime.Now;
 
         public wpfMain()
         {
@@ -311,6 +313,8 @@ namespace LoanManagement.Desktop
                 //lbM.UnselectAll();
                 reset();
                 checkDue();
+                
+
             }
             catch (Exception ex)
             {
@@ -379,6 +383,15 @@ namespace LoanManagement.Desktop
                 //grdBG.Background = myBrush;
 
                 //System.Windows.MessageBox.Show(DateTime.Now.DayOfWeek.ToString());
+                //string GuidePath = AppDomain.CurrentDomain.BaseDirectory + @"iAgents.pdf"; 
+                //Uri GuideURI = new Uri(GuidePath, UriKind.Absolute);
+                //wb1.Navigate(GuideURI);
+                checkServices();
+                checkYear();
+                cmbM1.SelectedIndex = 0;
+                cmbM2.SelectedIndex = 0;
+                cmbY1.SelectedIndex = 0;
+                cmbY2.SelectedIndex = 0;
             }
             catch (Exception ex)
             {
@@ -387,6 +400,18 @@ namespace LoanManagement.Desktop
             }
         }
 
+
+        private void checkYear()
+        {
+            int yr = DateTime.Now.Date.Year;
+            cmbY1.Items.Clear();
+            cmbY2.Items.Clear();
+            for (int x = 2011; x <= yr; x++)
+            { 
+                cmbY1.Items.Add(new ComboBoxItem{ Content = x.ToString() });
+                cmbY2.Items.Add(new ComboBoxItem { Content = x.ToString() });
+            }
+        }
 
         private void ListBoxItem_MouseUp_1(object sender, MouseButtonEventArgs e)
         {
@@ -1504,13 +1529,13 @@ namespace LoanManagement.Desktop
                 sheet.PageSetup.TopMargin = 0.5;
                 sheet.Range["A2", "F2"].MergeCells = true;
                 sheet.Range["A7", "E7"].MergeCells = true;
-                sheet.Range["A8", "K8"].MergeCells = true;
-                sheet.Range["A8", "K8"].Style.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+                sheet.Range["A8", "J8"].MergeCells = true;
+                sheet.Range["A8", "J8"].Style.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
                 sheet.Cells[8, 1] = "List of Agents";
-                sheet.get_Range("A8", "K8").Font.Bold = true;
-                sheet.get_Range("A8", "K8").Font.Size = 18;
-                sheet.Range["A9", "K9"].MergeCells = true;
-                sheet.Range["A9", "K9"].Style.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+                sheet.get_Range("A8", "J8").Font.Bold = true;
+                sheet.get_Range("A8", "J8").Font.Size = 18;
+                sheet.Range["A9", "J9"].MergeCells = true;
+                sheet.Range["A9", "J9"].Style.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
                 sheet.Cells[9, 1] = "Date Prepared: " + DateTime.Now;
                 sheet.Range["A1", "Z1"].Columns.AutoFit();
                 sheet.Range["A2", "Z2"].Columns.AutoFit();
@@ -1717,9 +1742,419 @@ namespace LoanManagement.Desktop
             frm.ShowDialog();
         }
 
+        private void btnRLoan_Click(object sender, RoutedEventArgs e)
+        {
+            wpfReportForLoans frm = new wpfReportForLoans();
+            frm.UserID = UserID;
+            frm.ShowDialog();
+        }
 
-        
+        private void btnPrev_Click(object sender, RoutedEventArgs e)
+        {
 
+        }
+
+        private void btnRef_Click(object sender, RoutedEventArgs e)
+        {
+            
+            try
+            {
+                ComboBoxItem typeItem = (ComboBoxItem)cmbY1.SelectedItem;
+                string value = typeItem.Content.ToString();
+                ComboBoxItem typeItem2 = (ComboBoxItem)cmbY2.SelectedItem;
+                string value2 = typeItem2.Content.ToString();
+                int year1 = Convert.ToInt32(value);
+                int year2 = Convert.ToInt32(value2);
+                dt1 = new DateTime(year1, (cmbM1.SelectedIndex + 1), 1);
+                dt2 = new DateTime(year2, (cmbM2.SelectedIndex + 1), DateTime.DaysInMonth(year2, (cmbM1.SelectedIndex + 1)));
+            }
+            catch (Exception)
+            {
+                System.Windows.MessageBox.Show("Select appropriate date values", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+            if (dt1 > dt2)
+            {
+                System.Windows.MessageBox.Show("TO date must be greater than to FROM date", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            if (cmbDept.Text == "" || cmbTOL.Text == "")
+            {
+                System.Windows.MessageBox.Show("Please complete all information and select at least one data to include", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+
+            generateStatistics();
+        }
+
+        private void cmbDept_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            checkServices();
+        }
+
+
+        private void checkServices()
+        {
+            try
+            {
+                using (var ctx = new newContext())
+                {
+                    string dept = "";
+                    ComboBoxItem typeItem = (ComboBoxItem)cmbDept.SelectedItem;
+                    string value = typeItem.Content.ToString();
+
+                    if (value == "Both")
+                        dept = "";
+                    else
+                        dept = value;
+
+                    var ser = from s in ctx.Services
+                              where s.Active == true && s.Department.Contains(dept)
+                              select s;
+                    cmbTOL.Items.Clear();
+                    cmbTOL.Items.Add(new ComboBoxItem { Content = "All" });
+                    foreach (var i in ser)
+                    {
+                        ComboBoxItem cb = new ComboBoxItem { Content = i.Name };
+                        cmbTOL.Items.Add(cb);
+                    }
+                }
+            }
+            catch (Exception)
+            { return; }
+        }
+
+        private void TabItem_MouseUp_3(object sender, MouseButtonEventArgs e)
+        {
+            checkYear();
+        }
+
+
+        private void generateStatistics()
+        {
+            //wb1.Refresh();
+            //wb1 = new WebBrowser();
+            string FileName = AppDomain.CurrentDomain.BaseDirectory + @"iStatistics.xls";
+            Microsoft.Office.Interop.Excel._Application xl = null;
+            Microsoft.Office.Interop.Excel._Workbook wb = null;
+            Microsoft.Office.Interop.Excel._Worksheet sheet = null;
+            Microsoft.Office.Interop.Excel._Worksheet sheet2 = null;
+            bool SaveChanges = false;
+
+            //try
+            //{
+            if (File.Exists(FileName)) { File.Delete(FileName); }
+
+            GC.Collect();
+
+            // Create a new instance of Excel from scratch
+
+            xl = new Microsoft.Office.Interop.Excel.Application();
+            xl.Visible = false;
+            wb = (Microsoft.Office.Interop.Excel._Workbook)(xl.Workbooks.Add(Missing.Value));
+            //sheet = (Microsoft.Office.Interop.Excel._Worksheet)(wb.Sheets[1]);
+            sheet = wb.Worksheets.Add();
+            //sheet2 = wb.Worksheets.Add();
+
+            // set come column heading names
+            sheet.Name = "Business Statistics";
+            sheet.PageSetup.Orientation = Microsoft.Office.Interop.Excel.XlPageOrientation.xlLandscape;
+            sheet.Cells.Style.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+            //sheet.PageSetup.RightFooter = "Page &P of &N";
+            sheet.PageSetup.TopMargin = 0.5;
+            sheet.PageSetup.RightMargin = 0.5;
+            //sheet.Range["A2", "F2"].MergeCells = true;
+            //sheet.Range["A7", "E7"].MergeCells = true;
+            sheet.Range["A1", "J1"].MergeCells = true;
+            sheet.Range["A1", "J1"].Style.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+            sheet.Cells[1, 1] = "Business Statistics Report";
+            sheet.get_Range("A1", "J1").Font.Bold = true;
+            sheet.get_Range("A1", "J1").Font.Size = 18;
+            //sheet.Range["A9", "J9"].MergeCells = true;
+            //sheet.Range["A9", "J9"].Style.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+            //sheet.Cells[9, 1] = "Date Prepared: " + DateTime.Now;
+            //sheet.Range["A1", "Z1"].Columns.AutoFit();
+            //sheet.Range["A2", "Z2"].Columns.AutoFit();
+            //sheet.Cells["1:100"].Rows.AutoFit(); 
+            //String imagePath = AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\GFC.jpg";
+            //sheet.Shapes.AddPicture(imagePath, MsoTriState.msoFalse, MsoTriState.msoCTrue, 40, 0, 600, 100);
+            //sheet.PageSetup.CenterHeaderPicture.Filename = imagePath;
+
+            //sheet.Range["A10", "D10"].MergeCells = true;
+            sheet.Cells[2, 1] = "Department:  " + cmbDept.Text;
+            sheet.Cells[3, 1] = "Type Of Loan  " + cmbTOL.Text;
+            sheet.Cells[4, 1] = "From: " + dt1.ToString().Split(' ')[0];
+            sheet.Cells[5, 1] = "To: " + dt2.ToString().Split(' ')[0];
+
+            sheet.Cells[7, 2] = "Releases";
+            sheet.Cells[7, 3] = "Collection";
+            sheet.Cells[7, 4] = "Unpaid Payments";
+            sheet.Cells[7, 5] = "Expected Payments";
+
+            int y = 8;
+            DateTime dt = dt1;
+            ComboBoxItem typeItem2 = (ComboBoxItem)cmbDept.SelectedItem;
+            string dp = typeItem2.Content.ToString();
+            ComboBoxItem typeItem3 = (ComboBoxItem)cmbTOL.SelectedItem;
+            string tp = typeItem3.Content.ToString();
+
+            if (dp == "Both")
+                dp = "";
+            if (tp == "All")
+                tp = "";
+            while (dt < dt2)
+            {
+                sheet.Cells[y, 1] = dt.ToString("MMM") +"  " + dt.Year;
+               
+
+                double rel = 0;
+                double col = 0;
+                double unp = 0;
+                double exp = 0;
+
+                using (var ctx = new newContext())
+                { 
+                    DateTime endOfMonth = new DateTime(dt.Year, dt.Month, DateTime.DaysInMonth(dt.Year, dt.Month));
+                    var lns = from ln in ctx.ReleasedLoans
+                              where ln.DateReleased >= dt && ln.DateReleased <= endOfMonth && (ln.Loan.Service.Department.Contains(dp) && ln.Loan.Service.Name.Contains(tp))
+                              select ln;
+                    foreach (var itm in lns)
+                    {
+                        rel = rel + itm.Principal;
+                    }
+
+                    var lns2 = from ln in ctx.ClearedCheques
+                               where ln.DateCleared >= dt && ln.DateCleared <= endOfMonth && (ln.FPaymentInfo.Loan.Service.Department.Contains(dp) && ln.FPaymentInfo.Loan.Service.Name.Contains(tp))
+                          select ln;
+                    foreach (var itm in lns2)
+                    {
+                        col = col + itm.FPaymentInfo.Amount;
+                    }
+
+                    var lns3 = from ln in ctx.MPaymentInfoes
+                               where ln.PaymentStatus == "Paid" && (ln.Loan.Service.Department.Contains(dp) && ln.Loan.Service.Name.Contains(tp))
+                               select ln;
+                    foreach (var itm in lns3)
+                    {
+                        if (itm.PaymentDate >= dt && itm.PaymentDate<= endOfMonth)
+                            col = col + itm.TotalPayment;
+                    }
+
+                    var lns4 = from ln in ctx.MPaymentInfoes
+                               where ln.PaymentStatus == "Unpaid" && (ln.Loan.Service.Department.Contains(dp) && ln.Loan.Service.Name.Contains(tp))
+                               select ln;
+                    foreach (var itm in lns4)
+                    {
+                        if (itm.DueDate >= dt && itm.DueDate <= endOfMonth)
+                            unp = unp + itm.TotalAmount;
+                    }
+
+                    var lns5 = from ln in ctx.FPaymentInfo
+                               where (ln.ChequeDueDate >= dt && ln.ChequeDueDate <= endOfMonth) && (ln.PaymentStatus == "Pending/Due" || ln.PaymentStatus == "Returned") && (ln.Loan.Service.Department.Contains(dp) && ln.Loan.Service.Name.Contains(tp))
+                               select ln;
+                    foreach (var itm in lns5)
+                    {
+                        unp = unp + itm.Amount;
+                    }
+
+                    var lns6 = from ln in ctx.FPaymentInfo
+                               where (ln.ChequeDueDate >= dt && ln.ChequeDueDate <= endOfMonth) && (ln.PaymentStatus == "Pending" || ln.PaymentStatus == "Due" || ln.PaymentStatus == "Deposited") && (ln.Loan.Service.Department.Contains(dp) && ln.Loan.Service.Name.Contains(tp))
+                               select ln;
+                    foreach (var itm in lns6)
+                    {
+                        exp = exp + itm.Amount;
+                    }
+
+                    var lns7 = from ln in ctx.MPaymentInfoes
+                               where ln.PaymentStatus == "Pending" && (ln.Loan.Service.Department.Contains(dp) && ln.Loan.Service.Name.Contains(tp))
+                               select ln;
+                    foreach (var itm in lns7)
+                    {
+                        if (itm.PaymentDate >= dt && itm.PaymentDate <= endOfMonth)
+                            exp = exp + itm.TotalPayment;
+                    }
+                    
+
+                }
+
+                sheet.Cells[y, 2] = rel.ToString("N2");
+                sheet.Cells[y, 3] = col.ToString("N2");
+                sheet.Cells[y, 4] = unp.ToString("N2");
+                sheet.Cells[y, 5] = exp.ToString("N2");
+                y++;
+                dt = dt.AddMonths(1);
+            }
+            y--;
+            
+
+            sheet.get_Range("A1", "E" + y).EntireColumn.AutoFit();
+            sheet.get_Range("A7", "E" + y).Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignRight;
+            sheet.get_Range("A7", "E" + y).Borders.LineStyle = Microsoft.Office.Interop.Excel.XlLineStyle.xlContinuous;
+
+            Microsoft.Office.Interop.Excel.ChartObjects xlCharts = (Microsoft.Office.Interop.Excel.ChartObjects)sheet.ChartObjects(Type.Missing);
+            Microsoft.Office.Interop.Excel.ChartObject myChart = (Microsoft.Office.Interop.Excel.ChartObject)xlCharts.Add(10, 80, 300, 250);
+            Microsoft.Office.Interop.Excel.Chart chartPage = myChart.Chart;
+            myChart.Name = "myChart";
+            Microsoft.Office.Interop.Excel.Range chartRange; 
+            chartRange = sheet.get_Range("A7", "E" + y);
+            object misValue = System.Reflection.Missing.Value;
+            chartPage.SetSourceData(chartRange, misValue);
+            chartPage.ChartType = Microsoft.Office.Interop.Excel.XlChartType.xlLineMarkers;
+
+            myChart.Left = 450;
+
+            // Let loose control of the Excel instance
+
+            xl.Visible = false;
+            xl.UserControl = false;
+            xl.StandardFont = "Segoe UI";
+            xl.StandardFontSize = 12;
+
+
+
+            // Set a flag saying that all is well and it is ok to save our changes to a file.
+
+            SaveChanges = true;
+
+            //  Save the file to disk
+            sheet.Protect();
+
+            wb.SaveAs(FileName, Microsoft.Office.Interop.Excel.XlFileFormat.xlWorkbookNormal,
+                      null, null, false, false, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlShared,
+                      false, false, null, null, null);
+            object paramMissing = Type.Missing;
+
+            wb = xl.Workbooks.Open(FileName,
+                paramMissing, paramMissing, paramMissing, paramMissing,
+                paramMissing, paramMissing, paramMissing, paramMissing,
+                paramMissing, paramMissing, paramMissing, paramMissing,
+                paramMissing, paramMissing);
+
+            
+
+            string paramExportFilePath = AppDomain.CurrentDomain.BaseDirectory + @"iStatistics.pdf";
+            XlFixedFormatType paramExportFormat = XlFixedFormatType.xlTypePDF;
+            XlFixedFormatQuality paramExportQuality =
+            XlFixedFormatQuality.xlQualityStandard;
+            bool paramOpenAfterPublish = false;
+            bool paramIncludeDocProps = true;
+            bool paramIgnorePrintAreas = true;
+            object paramFromPage = Type.Missing;
+            object paramToPage = Type.Missing;
+            //var asd = File.Create(paramExportFilePath);
+            if (File.Exists(paramExportFilePath))
+            {
+                wb1.Navigate(new Uri("about:blank"));
+                FindAndKillProcess("AcroRd32.exe");
+                //asd.Close();
+                //Uri GuideURI1 = new Uri(FileName, UriKind.Absolute);
+                //wb1.Navigate(GuideURI1);
+                try
+                {
+                    File.Delete(paramExportFilePath);
+                }
+                catch (Exception)
+                {
+                    wb1.Navigate(new Uri("about:blank"));
+                    FindAndKillProcess("AcroRd32.exe");
+                    generateStatistics();
+                }
+                
+            }
+            
+
+            if (wb != null)
+                wb.ExportAsFixedFormat(paramExportFormat,
+                    paramExportFilePath, paramExportQuality,
+                    paramIncludeDocProps, paramIgnorePrintAreas, paramFromPage,
+                    paramToPage, paramOpenAfterPublish,
+                    paramMissing);
+
+            Uri GuideURI = new Uri(paramExportFilePath, UriKind.Absolute);
+            wb1.Navigate(GuideURI);
+            //asd.Flush();
+            //asd.Close();
+            
+            GC.Collect();
+            //try
+            //{
+                
+            //}
+            //catch (Exception)
+            //{
+            //    wb.Close(false,misValue,misValue);
+            //    xl.Quit();
+            //    releaseObject(wb);
+            //    releaseObject(xl);
+            //    
+            //    generateStatistics();
+            //    //wb1.Navigate(null);
+            //}
+            
+           
+
+            //Process xlProcess = Process.Start(paramExportFilePath);
+            //}
+            //catch (Exception err)
+            //{
+            //    String msg;
+            //    msg = "Error: ";
+            //    msg = String.Concat(msg, err.Message);
+            //    msg = String.Concat(msg, " Line: ");
+            //    msg = String.Concat(msg, err.Source);
+            //    System.Windows.MessageBox.Show(msg);
+            //}
+        }
+
+
+        public bool FindAndKillProcess(string name)
+        {
+            //here we're going to get a list of all running processes on
+            //the computer
+            foreach (Process clsProcess in Process.GetProcesses())
+            {
+                //now we're going to see if any of the running processes
+                //match the currently running processes by using the StartsWith Method,
+                //this prevents us from incluing the .EXE for the process we're looking for.
+                //. Be sure to not
+                //add the .exe to the name you provide, i.e: NOTEPAD,
+                //not NOTEPAD.EXE or false is always returned even if
+                //notepad is running
+                if (clsProcess.ProcessName.StartsWith(name))
+                {
+                    //since we found the proccess we now need to use the
+                    //Kill Method to kill the process. Remember, if you have
+                    //the process running more than once, say IE open 4
+                    //times the loop thr way it is now will close all 4,
+                    //if you want it to just close the first one it finds
+                    //then add a return; after the Kill
+                    clsProcess.Kill();
+                    //process killed, return true
+                    return true;
+                }
+            }
+            //process not found, return false
+            return false;
+        }
+
+        private void releaseObject(object obj)
+        {
+            try
+            {
+                //System.Runtime.InteropServices.Marshal.ReleaseComObject(obj);
+                obj = null;
+            }
+            catch (Exception ex)
+            {
+                obj = null;
+                //MessageBox.Show("Exception Occured while releasing object " + ex.ToString());
+            }
+            finally
+            {
+                GC.Collect();
+            }
+        }
 
 
 

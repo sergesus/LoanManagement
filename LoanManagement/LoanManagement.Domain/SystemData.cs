@@ -70,6 +70,7 @@ namespace LoanManagement.Domain
         public DbSet<MicroAdjusment> MicroAdjusments { get; set; }
         public DbSet<PassedToCollector> PassedToCollectors { get; set; }
         public DbSet<CollectionInfo> CollectionInfoes { get; set; }
+        //public DbSet<CancelledLoan> CancelledLoans { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -169,7 +170,9 @@ namespace LoanManagement.Domain
             modelBuilder.Entity<PassedToCollector>()
                 .HasKey(x => x.LoanID)
                 .HasRequired(x => x.Loan);
-                
+            //modelBuilder.Entity<CancelledLoan>()
+            //    .HasKey(x => x.LoanID)
+            //    .HasRequired(x => x.Loan);
         }
     }
 
@@ -646,6 +649,7 @@ namespace LoanManagement.Domain
         public virtual PaidLoan PaidLoan { get; set; }
         public virtual PassedToCollector PassedToCollector { get; set; }
         public virtual RestructuredLoan RestructuredLoan { get; set; }
+        //public virtual CancelledLoan CancelledLoan { get; set; }
         public ICollection<FPaymentInfo> FPaymentInfo { get; set; }
         public ICollection<MPaymentInfo> MPaymentInfo { get; set; }
         public ICollection<ClosedAccount> ClosedAccount { get; set; }
@@ -660,6 +664,14 @@ namespace LoanManagement.Domain
         
         public virtual Loan Loan { get; set; }
     }
+
+    //public class CancelledLoan
+    //{
+    //    public int LoanID { get; set; }
+    //    public DateTime DateClosed { get; set; }
+
+    //    public virtual Loan Loan { get; set; }
+    //}
 
     public class DeclinedLoan
     {
