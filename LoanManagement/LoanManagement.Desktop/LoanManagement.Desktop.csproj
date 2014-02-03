@@ -149,6 +149,9 @@
     <Compile Include="wpfClientSearch.xaml.cs">
       <DependentUpon>wpfClientSearch.xaml</DependentUpon>
     </Compile>
+    <Compile Include="wpfCPayments.xaml.cs">
+      <DependentUpon>wpfCPayments.xaml</DependentUpon>
+    </Compile>
     <Compile Include="wpfDepositCheques.xaml.cs">
       <DependentUpon>wpfDepositCheques.xaml</DependentUpon>
     </Compile>
@@ -237,6 +240,9 @@
     <Compile Include="wpfSelectClosed.xaml.cs">
       <DependentUpon>wpfSelectClosed.xaml</DependentUpon>
     </Compile>
+    <Compile Include="wpfSelectCPayments.xaml.cs">
+      <DependentUpon>wpfSelectCPayments.xaml</DependentUpon>
+    </Compile>
     <Compile Include="wpfSelectMPayment.xaml.cs">
       <DependentUpon>wpfSelectMPayment.xaml</DependentUpon>
     </Compile>
@@ -314,6 +320,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="wpfClientSearch.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="wpfCPayments.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -426,6 +436,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="wpfSelectClosed.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="wpfSelectCPayments.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

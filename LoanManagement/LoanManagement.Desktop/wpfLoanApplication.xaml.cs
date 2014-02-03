@@ -459,7 +459,7 @@ namespace LoanManagement.Desktop
             try
             {
                 wpfClientSearch frm = new wpfClientSearch();
-                frm.status = "Employee";
+                frm.status = "Client";
                 frm.status2 = "LoanApplication";
                 frm.cId = cId;
                 frm.UserID = UserID;

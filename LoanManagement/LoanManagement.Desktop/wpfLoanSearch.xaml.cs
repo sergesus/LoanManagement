@@ -141,6 +141,17 @@ namespace LoanManagement.Desktop
                         btnView.Content = "Void last payment";
                     }
                 }
+                else if (status == "Voiding2")
+                {
+                    using (var ctx = new newContext())
+                    {
+                        var lon = from ln in ctx.Loans
+                                  where (ln.Status == "Under Collection") && (ln.LoanID == n || ln.Service.Name.Contains(txtSearch.Text) || (ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName).Replace(" ", "").Contains(txtSearch.Text.Replace(" ", "")))
+                                  select new { LoanID = ln.LoanID, TypeOfLoan = ln.Service.Name, Type = ln.Service.Type, ClientName = ln.Client.FirstName + " " + ln.Client.MiddleName + " " + ln.Client.LastName };
+                        dgLoan.ItemsSource = lon.ToList();
+                        btnView.Content = "Void last payment";
+                    }
+                }
                 else if (status == "VoidClosed")
                 {
                     using (var ctx = new newContext())
@@ -401,6 +412,47 @@ namespace LoanManagement.Desktop
                         }
                     }
                 }
+                else if (status == "Voiding2")
+                {
+                    using (var ctx = new newContext())
+                    {
+                        int n = Convert.ToInt32(getRow(dgLoan, 0));
+                        int num = ctx.CollectionInfoes.Where(x => x.LoanID == n).Count();
+                        if (num > 0)
+                        {
+                            var fp1 = from f in ctx.CollectionInfoes
+                                      where f.LoanID == n
+                                      select f;
+                            int x = 0;
+                            CollectionInfo fp = null;
+                            foreach (var item in fp1)
+                            {
+                                if (x == num - 1)
+                                {
+                                    fp = item;
+                                }
+                                x++;
+                            }
+                            MessageBox.Show("The last payment has the following info: \n Total Collection :" + fp.TotalCollection + "\n Collection Date: " + fp.DateCollected.ToString().Split(' ')[0] + "");
+                            MessageBoxResult mr = MessageBox.Show("Are you sure you want to process this transaction?", "Question", MessageBoxButton.YesNo);
+                            if (mr == MessageBoxResult.Yes)
+                            {
+
+                                var r = ctx.PassedToCollectors.Find(fp.LoanID);
+                                r.RemainingBalance = r.RemainingBalance + fp.TotalCollection;
+                                ctx.CollectionInfoes.Remove(fp);
+                                AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Voided Collection for Loan " + n };
+                                ctx.AuditTrails.Add(at);
+                                ctx.SaveChanges();
+                                MessageBox.Show("Transaction has been successfully processed", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                            }
+                        }
+                        else
+                        {
+                            MessageBox.Show("No payments to void", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                    }
+                }
                 else if (status == "VoidClosed")
                 {
                     int n = Convert.ToInt32(getRow(dgLoan, 0));
@@ -469,7 +521,7 @@ namespace LoanManagement.Desktop
                     this.Close();
                     frm.ShowDialog();
                 }
-                else if (status == "Adjustment" || status == "Restructure" || status=="View")
+                else if (status == "Adjustment" || status == "Restructure" || status == "View")
                 {
                     if (status == "View")
                     {

@@ -124,6 +124,13 @@ namespace LoanManagement.Desktop
                         System.Windows.MessageBox.Show("Client cannot have multiple applications at the same time", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                         return;
                     }
+
+                    ictr = ctx.Loans.Where(x => x.ClientID == cid && x.Status=="Under Collection").Count();
+                    if (ictr > 0)
+                    {
+                        System.Windows.MessageBox.Show("Client cannot have another application while having a loan under collection", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                        return;
+                    }
                     wpfLoanApplication frm = new wpfLoanApplication();
                     frm.cId = Convert.ToInt32(txtID.Text);
                     frm.status = "Add";

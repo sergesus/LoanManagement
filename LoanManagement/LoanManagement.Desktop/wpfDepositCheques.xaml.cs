@@ -191,7 +191,7 @@ namespace LoanManagement.Desktop
                             str = tBalance.ToString("N2");
                             tBalance = Convert.ToDouble(str);
 
-                            double tAmount = itm.Amount + ctBalance;
+                            double tAmount = itm.Amount + tBalance;
                             str = tAmount.ToString("N2");
                             tAmount = Convert.ToDouble(str);
 
@@ -210,8 +210,30 @@ namespace LoanManagement.Desktop
                             String st = "Unpaid";
                             if (dt2 > DateTime.Today.Date)
                                 st = "Pending";
-                            
-                            MPaymentInfo mpi = new MPaymentInfo { PaymentNumber = n + 1, Amount = itm.Amount, TotalBalance = tBalance, BalanceInterest = tRate, DueDate = dt, ExcessBalance = 0, LoanID = itm.LoanID, PaymentStatus = st, TotalAmount = tAmount, RemainingLoanBalance = tRem, PreviousBalance = iAmt };
+                            MPaymentInfo mpi = null;
+                            if (tAmount <= tRem)
+                            {
+                                mpi = new MPaymentInfo { PaymentNumber = n + 1, Amount = itm.Amount, TotalBalance = tBalance, BalanceInterest = tRate, DueDate = dt, ExcessBalance = 0, LoanID = itm.LoanID, PaymentStatus = st, TotalAmount = tAmount, RemainingLoanBalance = tRem, PreviousBalance = iAmt };
+                                ctx.MPaymentInfoes.Add(mpi);
+                            }
+                            else
+                            {
+                                if (itm.PaymentStatus == "Unpaid")
+                                {
+                                    double tPaid = 0;
+                                    var m1 = from m in ctx.MPaymentInfoes
+                                             where m.LoanID == itm.LoanID && m.PaymentStatus == "Paid"
+                                             select m;
+                                    foreach (var i in m1)
+                                    {
+                                        tPaid = tPaid + i.TotalPayment;
+                                    }
+                                    PassedToCollector pc = new PassedToCollector { DatePassed = DateTime.Today.Date, LoanID = itm.LoanID, RemainingBalance = tRem, TotalPassedBalance = tRem, TotalPaidBeforePassing = tPaid };
+                                    var l1 = ctx.Loans.Find(itm.LoanID);
+                                    l1.Status = "Under Collection";
+                                    ctx.PassedToCollectors.Add(pc);
+                                }
+                            }
                             iAmt = tAmount;
                             n++;
                             ctx.MPaymentInfoes.Add(mpi);

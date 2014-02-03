@@ -31,7 +31,7 @@
         <Label Content="LOAN INFORMATION:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="73,48,0,0" Width="179" FontSize="16" Foreground="#CC48CB00" FontWeight="Bold" Grid.Column="1"/>
         <Label Content="Type of Loan:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="73,78,0,0" Width="104" FontSize="16" Foreground="#CC48CB00" Grid.Column="1" FontWeight="Bold"/>
         <Label Content="Service Type:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="73,110,0,0" Width="104" FontSize="16" Foreground="#CC48CB00" Grid.Column="1" FontWeight="Bold"/>
-        <Label Content="Mode Of Payment:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="73,202,0,0" Width="150" FontSize="16" Foreground="#CC48CB00" Grid.Column="1" FontWeight="Bold"/>
+        <Label x:Name="lblmd" Content="Mode Of Payment:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="73,202,0,0" Width="150" FontSize="16" Foreground="#CC48CB00" Grid.Column="1" FontWeight="Bold"/>
         <Label Content="Next Payment:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="405,78,0,0" Width="121" FontSize="16" Foreground="#CC48CB00" Grid.Column="1" FontWeight="Bold"/>
         <Label Content="Monthly Payment:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="405,110,0,0" Width="144" FontSize="16" Foreground="#CC48CB00" Grid.Column="1" FontWeight="Bold"/>
         <Label Content="Remaining:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="405,140,0,0" Width="104" FontSize="16" Foreground="#CC48CB00" Grid.Column="1" FontWeight="Bold"/>
@@ -54,7 +54,7 @@
         <Label x:Name="lblRemaining" Content="(type)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="549,141,0,0" Width="164" FontSize="16" Foreground="Black" Grid.Column="1"/>
         <Label Content="Date Released:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="73,172,0,0" Width="150" FontSize="16" Foreground="#CC48CB00" Grid.Column="1" FontWeight="Bold"/>
         <Label x:Name="lblDt" Content="(type)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="223,172,0,0" Width="222" FontSize="16" Foreground="Black" Grid.Column="1"/>
-        <Label Content="Holding Fee:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="73,233,0,0" Width="150" FontSize="16" Foreground="#CC48CB00" Grid.Column="1" FontWeight="Bold"/>
+        <Label x:Name="lblh" Content="Holding Fee:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="73,233,0,0" Width="150" FontSize="16" Foreground="#CC48CB00" Grid.Column="1" FontWeight="Bold"/>
         <Label x:Name="lblHF" Content="(type)" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="223,233,0,0" Width="182" FontSize="16" Foreground="Black" Grid.Column="1"/>
         <Label Content="Payment Info:" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="16,269,0,0" Width="150" FontSize="16" Foreground="#CC48CB00" Grid.ColumnSpan="2" FontWeight="Bold"/>
         <DataGrid x:Name="dg" HorizontalAlignment="Left" Height="206" Margin="16,302,0,0" VerticalAlignment="Top" Width="785" Grid.ColumnSpan="2" FontSize="18" CanUserAddRows="False">

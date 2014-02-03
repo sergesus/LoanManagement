@@ -168,7 +168,7 @@ namespace LoanManagement.Desktop
                 }
                 if (amt > Convert.ToDouble(lblTotalLoan.Content))
                 {
-                    System.Windows.MessageBox.Show("Amount must not be greater that the remaining amoung", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    System.Windows.MessageBox.Show("Amount must not be greater that the remaining amount", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
                 if (amt < 1)
@@ -268,7 +268,7 @@ namespace LoanManagement.Desktop
                         
                         if ((amt == Convert.ToDouble(lblTotal.Content) && rem <= py.Amount))
                         {
-                            System.Windows.MessageBox.Show("The Loan has been successfully finished!", "Information", MessageBoxButton.OK, MessageBoxImage.Error);
+                            System.Windows.MessageBox.Show("The Loan has been successfully finished!", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                             var lon = ctx.Loans.Find(lID);
                             lon.Status = "Paid";
                             py.TotalPayment = amt;
@@ -380,7 +380,7 @@ namespace LoanManagement.Desktop
                             }
                             if (rem <= py.Amount && ex>=py.Amount )
                             {
-                                System.Windows.MessageBox.Show("The Loan has been successfully finished!", "Information", MessageBoxButton.OK, MessageBoxImage.Error);
+                                System.Windows.MessageBox.Show("The Loan has been successfully finished!", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                                 var lon = ctx.Loans.Find(lID);
                                 lon.Status = "Paid";
                                 py.TotalPayment = amt;

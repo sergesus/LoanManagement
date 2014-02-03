@@ -69,6 +69,7 @@ namespace LoanManagement.Domain
         public DbSet<MicroPayment> MicroPayments { get; set; }
         public DbSet<MicroAdjusment> MicroAdjusments { get; set; }
         public DbSet<PassedToCollector> PassedToCollectors { get; set; }
+        public DbSet<CollectionInfo> CollectionInfoes { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -648,6 +649,7 @@ namespace LoanManagement.Domain
         public ICollection<FPaymentInfo> FPaymentInfo { get; set; }
         public ICollection<MPaymentInfo> MPaymentInfo { get; set; }
         public ICollection<ClosedAccount> ClosedAccount { get; set; }
+        public ICollection<CollectionInfo> CollectionInfo { get; set; }
     }
 
     public class LoanApplication
@@ -902,6 +904,16 @@ namespace LoanManagement.Domain
         public double RemainingBalance { get; set; }
         public DateTime DatePassed { get; set; }
 
+        public virtual Loan Loan { get; set; }
+    }
+
+    public class CollectionInfo
+    {
+        public int CollectionInfoID { get; set; }
+        public double TotalCollection { get; set; }
+        public DateTime DateCollected { get; set; }
+
+        public int LoanID { get; set; }
         public virtual Loan Loan { get; set; }
     }
 

@@ -252,6 +252,34 @@
 
                         </Grid>
                     </TabItem>
+                    <TabItem x:Name="tbCollectors" Header="Collection" MouseUp="TabItem_MouseUp_1">
+                        <Grid x:Name="grdLo2" Margin="0,0,0,-84">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="91*"/>
+                                <ColumnDefinition Width="93*"/>
+                                <ColumnDefinition Width="712*"/>
+                            </Grid.ColumnDefinitions>
+                            <ListBox x:Name="lb1_Copy9" HorizontalAlignment="Left" Height="318" VerticalAlignment="Top" Width="361" OpacityMask="#FFA0A0A0" BorderBrush="#FFB4A1A1" SelectionChanged="ListBox_SelectionChanged_1" Margin="544,202,0,-28" Grid.Column="2" Visibility="Hidden">
+                                <ListBox.Background>
+                                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                        <GradientStop Color="Black" Offset="0"/>
+                                        <GradientStop Color="#FF9C9C9C" Offset="1"/>
+                                    </LinearGradientBrush>
+                                </ListBox.Background>
+                                <ListBoxItem x:Name="itm49" Content="Loan Application" FontSize="25" Foreground="#FF32AFD4" MouseUp="itm7_MouseUp"/>
+                                <ListBoxItem x:Name="itm50" Content="Loan Approval" FontSize="25" Foreground="#FF32AFD4" MouseUp="itm14_MouseUp" Selected="itm8_Selected"/>
+                                <ListBoxItem x:Name="itm51" Content="Releasing" FontSize="25" Foreground="#FF32AFD4" Selected="itm9_Selected"/>
+                                <ListBoxItem x:Name="itm52" Content="Payments" FontSize="25" Foreground="#FF32AFD4"/>
+                            </ListBox>
+                            <Button x:Name="btnCPayments" HorizontalAlignment="Left" Height="118" Margin="10,10,0,0" VerticalAlignment="Top" Width="128" BorderBrush="#FF4AEE0D" BorderThickness="4" Click="btnCPayments_Click" Grid.ColumnSpan="2">
+                                <DockPanel LastChildFill="True">
+                                    <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom" Foreground="#FF343434" Content="Payments"/>
+                                    <Image Source="Images/Payment.ico" />
+                                </DockPanel>
+                            </Button>
+
+                        </Grid>
+                    </TabItem>
                 </TabControl>
             </TabItem>
             <TabItem x:Name="tb3" Header="" RenderTransformOrigin="0.5,0.5">
