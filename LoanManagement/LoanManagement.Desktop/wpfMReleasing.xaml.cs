@@ -381,7 +381,7 @@ namespace LoanManagement.Desktop
                             AuditTrail at = new AuditTrail { EmployeeID = UserID, DateAndTime = DateTime.Now, Action = "Released loan (" + lon.Service.Name + ") for client " + lon.Client.FirstName + " " + lon.Client.MiddleName + " " + lon.Client.LastName + " " + lon.Client.Suffix };
                             ctx.AuditTrails.Add(at);
                             ctx.SaveChanges();
-                            //printSOA();
+                            printSOA();
                             MessageBox.Show("Transaction has been successfully processed", "Information", MessageBoxButton.OK, MessageBoxImage.Information);
                             this.Close();
                         }
@@ -549,6 +549,186 @@ namespace LoanManagement.Desktop
                     paramMissing, paramMissing);
 
                 string paramExportFilePath = AppDomain.CurrentDomain.BaseDirectory + @"iPaymentSchedule.pdf";
+                XlFixedFormatType paramExportFormat = XlFixedFormatType.xlTypePDF;
+                XlFixedFormatQuality paramExportQuality =
+                XlFixedFormatQuality.xlQualityStandard;
+                bool paramOpenAfterPublish = false;
+                bool paramIncludeDocProps = true;
+                bool paramIgnorePrintAreas = true;
+                object paramFromPage = Type.Missing;
+                object paramToPage = Type.Missing;
+
+                if (wb != null)
+                    wb.ExportAsFixedFormat(paramExportFormat,
+                        paramExportFilePath, paramExportQuality,
+                        paramIncludeDocProps, paramIgnorePrintAreas, paramFromPage,
+                        paramToPage, paramOpenAfterPublish,
+                        paramMissing);
+
+                Process xlProcess = Process.Start(paramExportFilePath);
+            }
+            catch (Exception err)
+            {
+                String msg;
+                msg = "Error: ";
+                msg = String.Concat(msg, err.Message);
+                msg = String.Concat(msg, " Line: ");
+                msg = String.Concat(msg, err.Source);
+                System.Windows.MessageBox.Show(msg);
+            }
+        }
+
+        private void printSOA()
+        {
+            string FileName = AppDomain.CurrentDomain.BaseDirectory + @"iOfficialSchedule.xls";
+            Microsoft.Office.Interop.Excel._Application xl = null;
+            Microsoft.Office.Interop.Excel._Workbook wb = null;
+            Microsoft.Office.Interop.Excel._Worksheet sheet = null;
+            Microsoft.Office.Interop.Excel._Worksheet sheet2 = null;
+            bool SaveChanges = false;
+
+            try
+            {
+                if (File.Exists(FileName)) { File.Delete(FileName); }
+
+                GC.Collect();
+
+                // Create a new instance of Excel from scratch
+
+                xl = new Microsoft.Office.Interop.Excel.Application();
+                xl.Visible = false;
+                wb = (Microsoft.Office.Interop.Excel._Workbook)(xl.Workbooks.Add(Missing.Value));
+                //sheet = (Microsoft.Office.Interop.Excel._Worksheet)(wb.Sheets[1]);
+                sheet = wb.Worksheets.Add();
+                //sheet2 = wb.Worksheets.Add();
+
+                // set come column heading names
+                sheet.Name = "Official Payment Schedule";
+                sheet.PageSetup.Orientation = Microsoft.Office.Interop.Excel.XlPageOrientation.xlLandscape;
+                sheet.Cells.Style.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+                sheet.PageSetup.RightFooter = "Page &P of &N";
+                sheet.PageSetup.TopMargin = 0.5;
+                sheet.PageSetup.RightMargin = 0.5;
+                sheet.Range["A2", "F2"].MergeCells = true;
+                sheet.Range["A7", "E7"].MergeCells = true;
+                sheet.Range["A8", "J8"].MergeCells = true;
+                sheet.Range["A8", "J8"].Style.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+                sheet.Cells[8, 1] = "Official Payment Schedule";
+                sheet.get_Range("A8", "J8").Font.Bold = true;
+                sheet.get_Range("A8", "J8").Font.Size = 18;
+                sheet.Range["A9", "J9"].MergeCells = true;
+                sheet.Range["A9", "J9"].Style.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+                sheet.Cells[9, 1] = "Date Prepared: " + DateTime.Now;
+                sheet.Range["A1", "Z1"].Columns.AutoFit();
+                sheet.Range["A2", "Z2"].Columns.AutoFit();
+                //sheet.Cells["1:100"].Rows.AutoFit(); 
+                String imagePath = AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\GFC.jpg";
+                sheet.Shapes.AddPicture(imagePath, MsoTriState.msoFalse, MsoTriState.msoCTrue, 40, 0, 600, 100);
+                sheet.PageSetup.CenterHeaderPicture.Filename = imagePath;
+
+                sheet.Range["A10", "D10"].MergeCells = true;
+
+                using (var ctx = new newContext())
+                {
+                    var lon = ctx.Loans.Find(lId);
+                    sheet.Cells[11, 1] = "Client Name: " + lon.Client.LastName + ", " + lon.Client.FirstName + " " + lon.Client.MiddleName + " " + lon.Client.Suffix;
+                    try
+                    {
+                        var agt = ctx.Agents.Find(lon.AgentID);
+                        sheet.Cells[12, 1] = "Agent Name: " + agt.LastName + ", " + agt.FirstName + " " + agt.MI + " " + agt.Suffix;
+                    }
+                    catch (Exception) { sheet.Cells[12, 1] = "Agent Name: -"; }
+                    var py = ctx.MPaymentInfoes.Where(x => x.LoanID == lId && x.PaymentNumber == 1).First();
+                    
+                    try
+                    {
+                        var cb = ctx.Clients.Find(lon.CoBorrower);
+                        sheet.Cells[13, 1] = "Co-Borrower: " + cb.LastName + ", " + cb.FirstName + " " + cb.MiddleName + " " + cb.Suffix;
+                    }
+                    catch(Exception){sheet.Cells[13, 1] = "Co-Borrower: -";}
+
+                    var cl = ctx.Employees.Find(lon.CollectortID);
+                    sheet.Cells[14, 1] = "Collector: " + cl.LastName + " , " +  cl.FirstName + " " + cl.MI + " " + cl.Suffix;
+                    sheet.Cells[11, 10] = "Type of Loan: " + lon.Service.Name;
+                    sheet.Cells[12, 10] = "Principal Loan: " + lon.ReleasedLoan.Principal.ToString("N2");
+                    sheet.Cells[13, 10] = "First Payment: " + py.DueDate.ToString().Split(' ')[0];
+                    sheet.Cells[14, 10] = "Amount: " + py.Amount.ToString("N2");
+                }
+
+                sheet.get_Range("A11", "K14").Font.Italic = true;
+                sheet.get_Range("A11", "K14").Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
+                sheet.Cells[16, 3] = "Payment No.";
+                sheet.Cells[16, 5] = "Amount";
+                sheet.Cells[16, 7] = "Due Date";
+                sheet.Cells[16, 9] = "Remaining Balance";
+                sheet.get_Range("B16", "J16").Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
+                sheet.get_Range("B16", "J16").Font.Underline = true;
+
+                int y = 17;
+
+                using (var ctx = new newContext())
+                {
+                    var ser = from se in ctx.GenSOA
+                              select se;
+
+                    var emp2 = ctx.Employees.Find(UserID);
+
+                    //sheet.Cells[10, 1] = "Prepared By: " + emp2.LastName + ", " + emp2.FirstName + " " + emp2.MI + " " + emp2.Suffix;
+                    sheet.PageSetup.LeftFooter = "Prepared By: " + emp2.LastName + ", " + emp2.FirstName + " " + emp2.MI + " " + emp2.Suffix;
+                    emp2 = ctx.Employees.Find(1);
+                    sheet.PageSetup.CenterFooter = "Confirmed By: " + emp2.LastName + ", " + emp2.FirstName + " " + emp2.MI + " " + emp2.Suffix;
+
+                    int iNum = 0;
+                    foreach (var i in ser)
+                    {
+                        sheet.Cells[y, 3] = i.PaymentNumber;
+                        sheet.Cells[y, 5] = i.Amount;
+                        sheet.Cells[y, 7] = i.PaymentDate.ToString().Split(' ')[0];
+                        sheet.Cells[y, 9] = i.RemainingBalance;
+
+                        iNum++;
+                        y++;
+                    }
+
+                    sheet.get_Range("C17", "A" + y).Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignRight;
+                    sheet.get_Range("E17", "C" + y).Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignRight;
+                    sheet.get_Range("G17", "E" + y).Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft
+                    sheet.get_Range("I17", "G" + y).Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignRight;
+                    //sheet.get_Range("J17", "I" + y).Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignRight;
+
+                }
+
+                //sheet.Range["A16", "I" + y].AutoFit();
+                sheet.get_Range("B16", "J" + y).EntireColumn.AutoFit();
+
+                // Let loose control of the Excel instance
+
+                xl.Visible = false;
+                xl.UserControl = false;
+                xl.StandardFont = "Segoe UI";
+                xl.StandardFontSize = 12;
+
+
+
+                // Set a flag saying that all is well and it is ok to save our changes to a file.
+
+                SaveChanges = true;
+
+                //  Save the file to disk
+                sheet.Protect();
+
+                wb.SaveAs(FileName, Microsoft.Office.Interop.Excel.XlFileFormat.xlWorkbookNormal,
+                          null, null, false, false, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlShared,
+                          false, false, null, null, null);
+                object paramMissing = Type.Missing;
+
+                wb = xl.Workbooks.Open(FileName,
+                    paramMissing, paramMissing, paramMissing, paramMissing,
+                    paramMissing, paramMissing, paramMissing, paramMissing,
+                    paramMissing, paramMissing, paramMissing, paramMissing,
+                    paramMissing, paramMissing);
+
+                string paramExportFilePath = AppDomain.CurrentDomain.BaseDirectory + @"iOfficialSchedule.pdf";
                 XlFixedFormatType paramExportFormat = XlFixedFormatType.xlTypePDF;
                 XlFixedFormatQuality paramExportQuality =
                 XlFixedFormatQuality.xlQualityStandard;
