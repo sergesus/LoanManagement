@@ -969,114 +969,193 @@ namespace LoanManagement.Desktop
 
         private void Button_Click_5(object sender, RoutedEventArgs e)
         {
+            string FileName = AppDomain.CurrentDomain.BaseDirectory + @"iClients.xls";
+            Microsoft.Office.Interop.Excel._Application xl = null;
+            Microsoft.Office.Interop.Excel._Workbook wb = null;
+            Microsoft.Office.Interop.Excel._Worksheet sheet = null;
+            bool SaveChanges = false;
+
             try
             {
-                PdfDocument document = new PdfDocument();
-                document.Info.Title = "List Of Clients";
+                if (File.Exists(FileName)) { File.Delete(FileName); }
 
-                PdfPage page = document.AddPage();
-                page.Orientation = PageOrientation.Landscape;
+                GC.Collect();
+
+                // Create a new instance of Excel from scratch
+
+                xl = new Microsoft.Office.Interop.Excel.Application();
+                xl.Visible = false;
+                wb = (Microsoft.Office.Interop.Excel._Workbook)(xl.Workbooks.Add(Missing.Value));
+                sheet = (Microsoft.Office.Interop.Excel._Worksheet)(wb.Sheets[1]);
+
+                // set come column heading names
+                sheet.Name = "List Of Clients";
+                sheet.PageSetup.Orientation = Microsoft.Office.Interop.Excel.XlPageOrientation.xlLandscape;
+                sheet.Cells.Style.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+                sheet.PageSetup.RightFooter = "Page &P of &N";
+                sheet.PageSetup.TopMargin = 0.5;
+                sheet.Range["A2", "F2"].MergeCells = true;
+                sheet.Range["A7", "E7"].MergeCells = true;
+                sheet.Range["A8", "K8"].MergeCells = true;
+                sheet.Range["A8", "K8"].Style.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+                sheet.Cells[8, 1] = "List of Clients";
+                sheet.get_Range("A8", "K8").Font.Bold = true;
+                sheet.get_Range("A8", "K8").Font.Size = 18;
+                sheet.Range["A9", "K9"].MergeCells = true;
+                sheet.Range["A9", "K9"].Style.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+                sheet.Cells[9, 1] = "Date Prepared: " + DateTime.Now;
+                sheet.Range["A1", "Z1"].Columns.AutoFit();
+                sheet.Range["A2", "Z2"].Columns.AutoFit();
+                //sheet.Cells["1:100"].Rows.AutoFit(); 
                 String imagePath = AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\GFC.jpg";
-                XImage xImage = XImage.FromFile(imagePath);
-                XGraphics gfx = XGraphics.FromPdfPage(page);
-                XFont font = new XFont("Verdana", 20, XFontStyle.BoldItalic);
-                //Header Start
-                //gfx.DrawString("Guahan Financing Corporation", font, XBrushes.Black, new XRect(0, 0, page.Width, 80), XStringFormats.Center);
-                //System.Windows.MessageBox.Show(xImage.Width.ToString());
-                gfx.DrawImage(xImage, 40, 10, xImage.Width - 260,xImage.Height / 3);
-                font = new XFont("Verdana", 18, XFontStyle.Italic);
-                gfx.DrawString("List Of Clients", font, XBrushes.Black, new XRect(0, 0, page.Width, 220), XStringFormats.Center);
-                font = new XFont("Verdana", 10, XFontStyle.Italic);
-                gfx.DrawString("As of " + DateTime.Today.Date.ToString().Split(' ')[0], font, XBrushes.Black, new XRect(0, 0, page.Width, 250), XStringFormats.Center);
-                //Header End
+                sheet.Shapes.AddPicture(imagePath, MsoTriState.msoFalse, MsoTriState.msoCTrue, 60, 0, 600, 100);
+                sheet.PageSetup.CenterHeaderPicture.Filename = imagePath;
 
-                //ColumnHeader Start
-                font = new XFont("Verdana", 10, XFontStyle.Bold);
-                gfx.DrawString("Name", font, XBrushes.Black, new XRect(0, 0, 200, 350), XStringFormats.Center);
-                gfx.DrawString("Gender", font, XBrushes.Black, new XRect(0, 0, 520, 350), XStringFormats.Center);
-                gfx.DrawString("Status", font, XBrushes.Black, new XRect(0, 0, 720, 350), XStringFormats.Center);
-                gfx.DrawString("Email", font, XBrushes.Black, new XRect(0, 0, 950, 350), XStringFormats.Center);
-                gfx.DrawString("Contact", font, XBrushes.Black, new XRect(0, 0, 1157, 350), XStringFormats.Center);
-                //ColumnHeader End
+                sheet.Range["A10", "D10"].MergeCells = true;
 
-                int n = 380;
-                int p = 1;
-                font = new XFont("Verdana", 10, XFontStyle.Regular);
+                sheet.Cells[12, 1] = "Client ID";
+                sheet.Cells[12, 3] = "Client Name";
+                sheet.Cells[12, 5] = "Gender";
+                sheet.Cells[12, 7] = "Age";
+                sheet.Cells[12, 9] = "Contact";
+                sheet.Cells[12, 11] = "Province";
+                sheet.get_Range("A12", "K12").Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
+                sheet.get_Range("A12", "K12").Font.Underline = true;
+
+                int y = 13;
+
                 using (var ctx = new newContext())
                 {
-                    var clt = from cl in ctx.Clients
-                              where cl.Active == true
-                              select cl;
+                    var ser = from se in ctx.Clients
+                              where se.Active == true
+                              select se;
 
-                    foreach (var i in clt)
+                    var emp2 = ctx.Employees.Find(UserID);
+
+                    //sheet.Cells[10, 1] = "Prepared By: " + emp2.LastName + ", " + emp2.FirstName + " " + emp2.MI + " " + emp2.Suffix;
+                    sheet.PageSetup.LeftFooter = "Prepared By: " + emp2.LastName + ", " + emp2.FirstName + " " + emp2.MI + " " + emp2.Suffix;
+                    emp2 = ctx.Employees.Find(1);
+                    sheet.PageSetup.CenterFooter = "Confirmed By: " + emp2.LastName + ", " + emp2.FirstName + " " + emp2.MI + " " + emp2.Suffix;
+                    foreach (var i in ser)
                     {
-                        //LEFT ALIGN
-                        XStringFormat xt = new XStringFormat();
-                        xt.Alignment = XStringAlignment.Near;
-                        xt.LineAlignment = XLineAlignment.Center;
-                        //
-                        gfx.DrawString("\t" + i.LastName + ", " + i.FirstName + " " + i.MiddleName + " " + i.Suffix, font, XBrushes.Black, new XRect(1,1,200,n),xt);
-                        gfx.DrawString(i.Sex, font, XBrushes.Black, new XRect(0, 0, 520, n), XStringFormats.Center);
-                        gfx.DrawString(i.Status, font, XBrushes.Black, new XRect(0, 0, 720, n), XStringFormats.Center);
-                        gfx.DrawString(i.Email, font, XBrushes.Black, new XRect(0, 0, 950, n), XStringFormats.Center);
-                        var ctr = ctx.ClientContacts.Where(x => x.ClientID == i.ClientID).Count();
-                        if (ctr > 0)
+                        sheet.Cells[y, 1] = i.ClientID;
+                        string myString = i.LastName + ", " + i.FirstName + " " + i.MiddleName + " " + i.Suffix;
+                        try
                         {
-                            var em = ctx.ClientContacts.Where(x => x.ClientID == i.ClientID).First();
-                            String str = em.Contact.ToString();
-                            gfx.DrawString(str, font, XBrushes.Black, new XRect(0, 0, 1150, n), XStringFormats.Center);
+                            myString = myString.Substring(0, 20);
                         }
-                        n += 30;
-                        if (n >= 1150)
+                        catch (Exception) { myString = i.LastName + ", " + i.FirstName + " " + i.MiddleName + " " + i.Suffix; }
+                        sheet.Cells[y, 3] = myString;
+                        sheet.Cells[y, 5] = i.Sex;
+                        string age = "0";
+                        try
                         {
-                            gfx.DrawString("Page " + p.ToString(), font, XBrushes.Black, new XRect(0, 0, 1500, 1150), XStringFormats.Center); ;
-                            page = document.AddPage();
-                            page.Orientation = PageOrientation.Landscape;
-                            gfx = XGraphics.FromPdfPage(page);
-                            font = new XFont("Verdana", 20, XFontStyle.BoldItalic);
-                            gfx.DrawImage(xImage, 40, 10, xImage.Width - 260, xImage.Height / 3);
-                            font = new XFont("Verdana", 18, XFontStyle.Italic);
-                            gfx.DrawString("List Of Clients", font, XBrushes.Black, new XRect(0, 0, page.Width, 220), XStringFormats.Center);
-                            font = new XFont("Verdana", 10, XFontStyle.Italic);
-                            gfx.DrawString("As of " + DateTime.Today.Date.ToString().Split(' ')[0], font, XBrushes.Black, new XRect(0, 0, page.Width, 250), XStringFormats.Center);
-                            //ColumnHeader Start
-                            font = new XFont("Verdana", 10, XFontStyle.Bold);
-                            gfx.DrawString("Name", font, XBrushes.Black, new XRect(0, 0, 200, 250), XStringFormats.Center);
-                            gfx.DrawString("Gender", font, XBrushes.Black, new XRect(0, 0, 420, 250), XStringFormats.Center);
-                            gfx.DrawString("Status", font, XBrushes.Black, new XRect(0, 0, 620, 250), XStringFormats.Center);
-                            gfx.DrawString("Email", font, XBrushes.Black, new XRect(0, 0, 850, 250), XStringFormats.Center);
-                            gfx.DrawString("Contact", font, XBrushes.Black, new XRect(0, 0, 1057, 250), XStringFormats.Center);
-                            //ColumnHeader End
-                            n = 280;
-                            p++;
+                            DateTime dt = Convert.ToDateTime(i.Birthday);
+                            int years = DateTime.Now.Year - dt.Year;
+                            if (dt.AddYears(years) > DateTime.Now);
+                            years--;
+                            age = years.ToString();
                         }
+                        catch
+                        { 
+                    
+                        }
+                        sheet.Cells[y, 7] = age;
+                        try
+                        {
+                            var c1 = ctx.ClientContacts.Where(x => x.ClientID == i.ClientID && x.Primary == true).Count();
+                            if (c1 > 0)
+                            {
+                                var con = ctx.ClientContacts.Where(x => x.ClientID == i.ClientID && x.Primary == true).First();
+                                sheet.Cells[y, 9] = con.Contact;
+                            }
+                            else
+                            {
+                                var con = ctx.ClientContacts.Where(x => x.ClientID == i.ClientID).First();
+                                sheet.Cells[y, 9] = con.Contact;
+                            }
+                        }
+                        catch (Exception)
+                        { sheet.Cells[y, 9] = "";  }
+
+                        try
+                        {
+                            var c1 = ctx.HomeAddresses.Where(x => x.ClientID == i.ClientID).First();
+                            sheet.Cells[y, 11] = c1.Province;
+                        }
+                        catch (Exception)
+                        { sheet.Cells[y, 11] = ""; }
+
+                        
+                        y++;
                     }
-                    if (n < 1150)
-                    {
-                        gfx.DrawString("Page " + p.ToString(), font, XBrushes.Black, new XRect(0, 0, 1500, 1150), XStringFormats.Center);
-                    }
+                    sheet.get_Range("A13", "A" + y).Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignRight;
+                    sheet.get_Range("C13", "C" + y).Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
+                    sheet.get_Range("E13", "E" + y).Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
+                    sheet.get_Range("G13", "G" + y).Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignRight;
+                    sheet.get_Range("I13", "I" + y).Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignRight;
+                    sheet.get_Range("K13", "K" + y).Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
+
                 }
 
-                //Footer Start
-                font = new XFont("Verdana", 10, XFontStyle.Italic);
-                string user = "";
-                using (var ctx = new newContext())
-                {
-                    var usr = ctx.Employees.Find(UserID);
-                    user = usr.LastName + ", " + usr.FirstName + " " + usr.MI + " " + usr.Suffix;
-                }
-                gfx.DrawString("Prepared By: " + user, font, XBrushes.Black, new XRect(0, 0, 200, 1150), XStringFormats.Center);
-                //Footer End
-                
+                Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)(sheet.UsedRange.Columns);
+                range.AutoFit();
 
-                const string filename = "Clients.pdf";
-                document.Save(filename);
-                Process.Start(filename);
+
+                // Let loose control of the Excel instance
+
+                xl.Visible = false;
+                xl.UserControl = false;
+                xl.StandardFont = "Segoe UI";
+                xl.StandardFontSize = 12;
+
+
+
+                // Set a flag saying that all is well and it is ok to save our changes to a file.
+
+                SaveChanges = true;
+
+                //  Save the file to disk
+                sheet.Protect();
+
+                wb.SaveAs(FileName, Microsoft.Office.Interop.Excel.XlFileFormat.xlWorkbookNormal,
+                          null, null, false, false, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlShared,
+                          false, false, null, null, null);
+                object paramMissing = Type.Missing;
+
+                wb = xl.Workbooks.Open(FileName,
+                    paramMissing, paramMissing, paramMissing, paramMissing,
+                    paramMissing, paramMissing, paramMissing, paramMissing,
+                    paramMissing, paramMissing, paramMissing, paramMissing,
+                    paramMissing, paramMissing);
+
+                string paramExportFilePath = AppDomain.CurrentDomain.BaseDirectory + @"iClients.pdf";
+                XlFixedFormatType paramExportFormat = XlFixedFormatType.xlTypePDF;
+                XlFixedFormatQuality paramExportQuality =
+                XlFixedFormatQuality.xlQualityStandard;
+                bool paramOpenAfterPublish = false;
+                bool paramIncludeDocProps = true;
+                bool paramIgnorePrintAreas = true;
+                object paramFromPage = Type.Missing;
+                object paramToPage = Type.Missing;
+
+                if (wb != null)
+                    wb.ExportAsFixedFormat(paramExportFormat,
+                        paramExportFilePath, paramExportQuality,
+                        paramIncludeDocProps, paramIgnorePrintAreas, paramFromPage,
+                        paramToPage, paramOpenAfterPublish,
+                        paramMissing);
+
+                Process xlProcess = Process.Start(paramExportFilePath);
             }
-            catch (Exception ex)
+            catch (Exception err)
             {
-                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
+                String msg;
+                msg = "Error: ";
+                msg = String.Concat(msg, err.Message);
+                msg = String.Concat(msg, " Line: ");
+                msg = String.Concat(msg, err.Source);
+                MessageBox.Show(msg);
             }
         }
 
@@ -1231,208 +1310,337 @@ namespace LoanManagement.Desktop
 
         private void Button_Click_7(object sender, RoutedEventArgs e)
         {
+            string FileName = AppDomain.CurrentDomain.BaseDirectory + @"iEmployees.xls";
+            Microsoft.Office.Interop.Excel._Application xl = null;
+            Microsoft.Office.Interop.Excel._Workbook wb = null;
+            Microsoft.Office.Interop.Excel._Worksheet sheet = null;
+            Microsoft.Office.Interop.Excel._Worksheet sheet2 = null;
+            bool SaveChanges = false;
+
             try
             {
-                PdfDocument document = new PdfDocument();
-                document.Info.Title = "List Of Employees";
+                if (File.Exists(FileName)) { File.Delete(FileName); }
 
-                PdfPage page = document.AddPage();
-                page.Orientation = PageOrientation.Landscape;
+                GC.Collect();
+
+                // Create a new instance of Excel from scratch
+
+                xl = new Microsoft.Office.Interop.Excel.Application();
+                xl.Visible = false;
+                wb = (Microsoft.Office.Interop.Excel._Workbook)(xl.Workbooks.Add(Missing.Value));
+                //sheet = (Microsoft.Office.Interop.Excel._Worksheet)(wb.Sheets[1]);
+                sheet = wb.Worksheets.Add();
+                //sheet2 = wb.Worksheets.Add();
+
+                // set come column heading names
+                sheet.Name = "List Of Employees";
+                sheet.PageSetup.Orientation = Microsoft.Office.Interop.Excel.XlPageOrientation.xlLandscape;
+                sheet.Cells.Style.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+                sheet.PageSetup.RightFooter = "Page &P of &N";
+                sheet.PageSetup.TopMargin = 0.5;
+                sheet.Range["A2", "F2"].MergeCells = true;
+                sheet.Range["A7", "E7"].MergeCells = true;
+                sheet.Range["A8", "K8"].MergeCells = true;
+                sheet.Range["A8", "K8"].Style.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+                sheet.Cells[8, 1] = "List of Employees";
+                sheet.get_Range("A8", "K8").Font.Bold = true;
+                sheet.get_Range("A8", "K8").Font.Size = 18;
+                sheet.Range["A9", "K9"].MergeCells = true;
+                sheet.Range["A9", "K9"].Style.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+                sheet.Cells[9, 1] = "Date Prepared: " + DateTime.Now;
+                sheet.Range["A1", "Z1"].Columns.AutoFit();
+                sheet.Range["A2", "Z2"].Columns.AutoFit();
+                //sheet.Cells["1:100"].Rows.AutoFit(); 
                 String imagePath = AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\GFC.jpg";
-                XImage xImage = XImage.FromFile(imagePath);
-                XGraphics gfx = XGraphics.FromPdfPage(page);
-                XFont font = new XFont("Verdana", 20, XFontStyle.BoldItalic);
-                //Header Start
-                //gfx.DrawString("Guahan Financing Corporation", font, XBrushes.Black, new XRect(0, 0, page.Width, 80), XStringFormats.Center);
-                //System.Windows.MessageBox.Show(xImage.Width.ToString());
-                gfx.DrawImage(xImage, 40, 10, xImage.Width - 260, xImage.Height / 3);
-                font = new XFont("Verdana", 18, XFontStyle.Italic);
-                gfx.DrawString("List Of Employees", font, XBrushes.Black, new XRect(0, 0, page.Width, 220), XStringFormats.Center);
-                font = new XFont("Verdana", 10, XFontStyle.Italic);
-                gfx.DrawString("As of " + DateTime.Today.Date.ToString().Split(' ')[0], font, XBrushes.Black, new XRect(0, 0, page.Width, 250), XStringFormats.Center);
-                //Header EndDateTime.Today.Date.ToString(), font, XBrushes.Black, new XRect(0, 0, 200, 200), XStringFormats.Center);
-                //Header End
+                sheet.Shapes.AddPicture(imagePath, MsoTriState.msoFalse, MsoTriState.msoCTrue, 60, 0, 600, 100);
+                sheet.PageSetup.CenterHeaderPicture.Filename = imagePath;
 
-                //ColumnHeader Start
-                font = new XFont("Verdana", 10, XFontStyle.Bold);
-                gfx.DrawString("Name", font, XBrushes.Black, new XRect(0, 0, 180, 350), XStringFormats.Center);
-                gfx.DrawString("Position", font, XBrushes.Black, new XRect(0, 0, 400, 350), XStringFormats.Center);
-                gfx.DrawString("Department", font, XBrushes.Black, new XRect(0, 0, 600, 350), XStringFormats.Center);
-                gfx.DrawString("Email", font, XBrushes.Black, new XRect(0, 0, 830, 350), XStringFormats.Center);
-                gfx.DrawString("Contact", font, XBrushes.Black, new XRect(0, 0, 1050, 350), XStringFormats.Center);
-                //ColumnHeader End
+                sheet.Range["A10", "D10"].MergeCells = true;
 
-                int n = 380;
-                int p = 1;
-                font = new XFont("Verdana", 10, XFontStyle.Regular);
+                sheet.Cells[12, 1] = "Employee ID";
+                sheet.Cells[12, 3] = "Employee Name";
+                sheet.Cells[12, 5] = "Position";
+                sheet.Cells[12, 7] = "Department";
+                sheet.Cells[12, 9] = "Contact";
+                sheet.Cells[12, 11] = "Email";
+                sheet.get_Range("A12", "K12").Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
+                sheet.get_Range("A12", "K12").Font.Underline = true;
+
+                int y = 13;
+
                 using (var ctx = new newContext())
                 {
-                    var emp = from em in ctx.Employees
-                              where em.Active == true
-                              select em;
+                    var ser = from se in ctx.Employees
+                              where se.Active == true
+                              select se;
 
-                    foreach (var i in emp)
+                    var emp2 = ctx.Employees.Find(UserID);
+
+                    //sheet.Cells[10, 1] = "Prepared By: " + emp2.LastName + ", " + emp2.FirstName + " " + emp2.MI + " " + emp2.Suffix;
+                    sheet.PageSetup.LeftFooter = "Prepared By: " + emp2.LastName + ", " + emp2.FirstName + " " + emp2.MI + " " + emp2.Suffix;
+                    emp2 = ctx.Employees.Find(1);
+                    sheet.PageSetup.CenterFooter = "Confirmed By: " + emp2.LastName + ", " + emp2.FirstName + " " + emp2.MI + " " + emp2.Suffix;
+                    foreach (var i in ser)
                     {
-                        gfx.DrawString(i.LastName + ", " + i.FirstName + " " + i.MI + " " + i.Suffix, font, XBrushes.Black, new XRect(0, 0, 180, n), XStringFormats.Center);
-                        gfx.DrawString(i.Position.PositionName, font, XBrushes.Black, new XRect(0, 0, 400, n), XStringFormats.Center);
-                        gfx.DrawString(i.Department, font, XBrushes.Black, new XRect(0, 0, 600, n), XStringFormats.Center);
-                        gfx.DrawString(i.Email.ToString(), font, XBrushes.Black, new XRect(0, 0, 830, n), XStringFormats.Center);
-                        var ctr = ctx.EmployeeContacts.Where(x => x.EmployeeID == i.EmployeeID).Count();
-                        if (ctr > 0)
+                        sheet.Cells[y, 1] = i.EmployeeID;
+                        string myString = i.LastName + ", " + i.FirstName + " " + i.MI + " " + i.Suffix;
+                        try
                         {
-                            var em = ctx.EmployeeContacts.Where(x => x.EmployeeID == i.EmployeeID).First();
-                            String str = em.Contact.ToString();
-                            gfx.DrawString(str, font, XBrushes.Black, new XRect(0, 0, 1050, n), XStringFormats.Center);
+                            myString = myString.Substring(0, 20);
                         }
-                        n += 30;
-                        if (n >= 1150)
+                        catch (Exception) { myString = i.LastName + ", " + i.FirstName + " " + i.MI + " " + i.Suffix; }
+                        sheet.Cells[y, 3] = myString;
+                        sheet.Cells[y, 5] = i.Position.PositionName;
+                        sheet.Cells[y, 7] = i.Department;
+                        try
                         {
-                            gfx.DrawString("Page " + p.ToString(), font, XBrushes.Black, new XRect(0, 0, 1500, 1150), XStringFormats.Center); ;
-                            page = document.AddPage();
-                            page.Orientation = PageOrientation.Landscape;
-                            gfx = XGraphics.FromPdfPage(page);
-                            font = new XFont("Verdana", 20, XFontStyle.BoldItalic);
-                            gfx.DrawImage(xImage, 40, 10, xImage.Width - 260, xImage.Height / 3);
-                            font = new XFont("Verdana", 18, XFontStyle.Italic);
-                            gfx.DrawString("List Of Employees", font, XBrushes.Black, new XRect(0, 0, page.Width, 220), XStringFormats.Center);
-                            font = new XFont("Verdana", 10, XFontStyle.Italic);
-                            gfx.DrawString("As of " + DateTime.Today.Date.ToString().Split(' ')[0], font, XBrushes.Black, new XRect(0, 0, page.Width, 250), XStringFormats.Center);
-                            //ColumnHeader Start
-                            font = new XFont("Verdana", 10, XFontStyle.Bold);
-                            gfx.DrawString("Name", font, XBrushes.Black, new XRect(0, 0, 180, 250), XStringFormats.Center);
-                            gfx.DrawString("Position", font, XBrushes.Black, new XRect(0, 0, 400, 250), XStringFormats.Center);
-                            gfx.DrawString("Department", font, XBrushes.Black, new XRect(0, 0, 600, 250), XStringFormats.Center);
-                            gfx.DrawString("Email", font, XBrushes.Black, new XRect(0, 0, 830, 250), XStringFormats.Center);
-                            gfx.DrawString("Contact", font, XBrushes.Black, new XRect(0, 0, 1050, 250), XStringFormats.Center);
-                            //ColumnHeader End
-                            n = 280;
-                            p++;
+                            var c1 = ctx.EmployeeContacts.Where(x => x.EmployeeID == i.EmployeeID).First();
+                            sheet.Cells[y, 9] = c1.Contact;
                         }
+                        catch (Exception)
+                        { sheet.Cells[y, 9] = ""; }
+
+                        sheet.Cells[y, 11] = i.Email; 
+
+
+                        y++;
                     }
-                    if (n < 1150)
-                    {
-                        gfx.DrawString("Page " + p.ToString(), font, XBrushes.Black, new XRect(0, 0, 1500, 1150), XStringFormats.Center);
-                    }
+                    sheet.get_Range("A13", "A" + y).Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignRight;
+                    sheet.get_Range("C13", "C" + y).Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
+                    sheet.get_Range("E13", "E" + y).Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
+                    sheet.get_Range("G13", "G" + y).Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
+                    sheet.get_Range("I13", "I" + y).Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignRight;
+                    sheet.get_Range("K13", "K" + y).Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
+
                 }
 
-                //Footer Start
-                font = new XFont("Verdana", 10, XFontStyle.Italic);
-                string user = "";
-                using (var ctx = new newContext())
-                {
-                    var usr = ctx.Employees.Find(UserID);
-                    user = usr.LastName + ", " + usr.FirstName + " " + usr.MI + " " + usr.Suffix;
-                }
-                gfx.DrawString("Prepared By: " + user, font, XBrushes.Black, new XRect(0, 0, 200, 1150), XStringFormats.Center);
-                //Footer End
+                Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)(sheet.UsedRange.Columns);
+                range.AutoFit();
 
-                const string filename = "Employees.pdf";
-                document.Save(filename);
-                Process.Start(filename);
+
+                // Let loose control of the Excel instance
+
+                xl.Visible = false;
+                xl.UserControl = false;
+                xl.StandardFont = "Segoe UI";
+                xl.StandardFontSize = 12;
+
+
+
+                // Set a flag saying that all is well and it is ok to save our changes to a file.
+
+                SaveChanges = true;
+
+                //  Save the file to disk
+                sheet.Protect();
+
+                wb.SaveAs(FileName, Microsoft.Office.Interop.Excel.XlFileFormat.xlWorkbookNormal,
+                          null, null, false, false, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlShared,
+                          false, false, null, null, null);
+                object paramMissing = Type.Missing;
+
+                wb = xl.Workbooks.Open(FileName,
+                    paramMissing, paramMissing, paramMissing, paramMissing,
+                    paramMissing, paramMissing, paramMissing, paramMissing,
+                    paramMissing, paramMissing, paramMissing, paramMissing,
+                    paramMissing, paramMissing);
+
+                string paramExportFilePath = AppDomain.CurrentDomain.BaseDirectory + @"iEmployees.pdf";
+                XlFixedFormatType paramExportFormat = XlFixedFormatType.xlTypePDF;
+                XlFixedFormatQuality paramExportQuality =
+                XlFixedFormatQuality.xlQualityStandard;
+                bool paramOpenAfterPublish = false;
+                bool paramIncludeDocProps = true;
+                bool paramIgnorePrintAreas = true;
+                object paramFromPage = Type.Missing;
+                object paramToPage = Type.Missing;
+
+                if (wb != null)
+                    wb.ExportAsFixedFormat(paramExportFormat,
+                        paramExportFilePath, paramExportQuality,
+                        paramIncludeDocProps, paramIgnorePrintAreas, paramFromPage,
+                        paramToPage, paramOpenAfterPublish,
+                        paramMissing);
+
+                Process xlProcess = Process.Start(paramExportFilePath);
             }
-            catch (Exception ex)
+            catch (Exception err)
             {
-                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
+                String msg;
+                msg = "Error: ";
+                msg = String.Concat(msg, err.Message);
+                msg = String.Concat(msg, " Line: ");
+                msg = String.Concat(msg, err.Source);
+                MessageBox.Show(msg);
             }
         }
 
         private void btnAgents_Copy1_Click(object sender, RoutedEventArgs e)
         {
+            string FileName = AppDomain.CurrentDomain.BaseDirectory + @"iAgents.xls";
+            Microsoft.Office.Interop.Excel._Application xl = null;
+            Microsoft.Office.Interop.Excel._Workbook wb = null;
+            Microsoft.Office.Interop.Excel._Worksheet sheet = null;
+            bool SaveChanges = false;
+
             try
             {
-                PdfDocument document = new PdfDocument();
-                document.Info.Title = "List Of Agents";
+                if (File.Exists(FileName)) { File.Delete(FileName); }
 
-                PdfPage page = document.AddPage();
-                page.Orientation = PageOrientation.Landscape;
+                GC.Collect();
+
+                // Create a new instance of Excel from scratch
+
+                xl = new Microsoft.Office.Interop.Excel.Application();
+                xl.Visible = false;
+                wb = (Microsoft.Office.Interop.Excel._Workbook)(xl.Workbooks.Add(Missing.Value));
+                sheet = (Microsoft.Office.Interop.Excel._Worksheet)(wb.Sheets[1]);
+
+                // set come column heading names
+                sheet.Name = "List Of Agents";
+                sheet.PageSetup.Orientation = Microsoft.Office.Interop.Excel.XlPageOrientation.xlLandscape;
+                sheet.Cells.Style.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+                sheet.PageSetup.RightFooter = "Page &P of &N";
+                sheet.PageSetup.TopMargin = 0.5;
+                sheet.Range["A2", "F2"].MergeCells = true;
+                sheet.Range["A7", "E7"].MergeCells = true;
+                sheet.Range["A8", "K8"].MergeCells = true;
+                sheet.Range["A8", "K8"].Style.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+                sheet.Cells[8, 1] = "List of Agents";
+                sheet.get_Range("A8", "K8").Font.Bold = true;
+                sheet.get_Range("A8", "K8").Font.Size = 18;
+                sheet.Range["A9", "K9"].MergeCells = true;
+                sheet.Range["A9", "K9"].Style.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+                sheet.Cells[9, 1] = "Date Prepared: " + DateTime.Now;
+                sheet.Range["A1", "Z1"].Columns.AutoFit();
+                sheet.Range["A2", "Z2"].Columns.AutoFit();
+                //sheet.Cells["1:100"].Rows.AutoFit(); 
                 String imagePath = AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\GFC.jpg";
-                XImage xImage = XImage.FromFile(imagePath);
-                XGraphics gfx = XGraphics.FromPdfPage(page);
-                XFont font = new XFont("Verdana", 20, XFontStyle.BoldItalic);
-                //Header Start
-                //gfx.DrawString("Guahan Financing Corporation", font, XBrushes.Black, new XRect(0, 0, page.Width, 80), XStringFormats.Center);
-                //System.Windows.MessageBox.Show(xImage.Width.ToString());
-                gfx.DrawImage(xImage, 40, 10, xImage.Width - 260, xImage.Height / 3);
-                font = new XFont("Verdana", 18, XFontStyle.Italic);
-                gfx.DrawString("List Of Agents", font, XBrushes.Black, new XRect(0, 0, page.Width, 220), XStringFormats.Center);
-                font = new XFont("Verdana", 10, XFontStyle.Italic);
-                gfx.DrawString("As of " + DateTime.Today.Date.ToString().Split(' ')[0], font, XBrushes.Black, new XRect(0, 0, page.Width, 250), XStringFormats.Center);
-                //Header End
+                sheet.Shapes.AddPicture(imagePath, MsoTriState.msoFalse, MsoTriState.msoCTrue, 80, 0, 600, 100);
+                sheet.PageSetup.CenterHeaderPicture.Filename = imagePath;
 
-                //ColumnHeader Start
-                font = new XFont("Verdana", 10, XFontStyle.Bold);
-                gfx.DrawString("Name", font, XBrushes.Black, new XRect(0, 0, 180, 350), XStringFormats.Center);
-                gfx.DrawString("Email", font, XBrushes.Black, new XRect(0, 0, 400, 350), XStringFormats.Center);
-                gfx.DrawString("Contact", font, XBrushes.Black, new XRect(0, 0, 600, 350), XStringFormats.Center);
-                //ColumnHeader End
+                sheet.Range["A10", "D10"].MergeCells = true;
 
-                int n = 380;
-                int p = 1;
-                font = new XFont("Verdana", 10, XFontStyle.Regular);
+                sheet.Cells[12, 1] = "Agent ID";
+                sheet.Cells[12, 3] = "Agent Name";
+                sheet.Cells[12, 5] = "Province";
+                sheet.Cells[12, 7] = "Contact";
+                sheet.Cells[12, 9] = "Email";
+                sheet.get_Range("A12", "K12").Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
+                sheet.get_Range("A12", "K12").Font.Underline = true;
+
+                int y = 13;
+
                 using (var ctx = new newContext())
                 {
-                    var emp = from em in ctx.Agents
-                              where em.Active == true
-                              select em;
+                    var ser = from se in ctx.Agents
+                              where se.Active == true
+                              select se;
 
-                    foreach (var i in emp)
-                    {
-                        gfx.DrawString(i.LastName + ", " + i.FirstName + " " + i.MI + " " + i.Suffix, font, XBrushes.Black, new XRect(0, 0, 180, n), XStringFormats.Center);
-                        gfx.DrawString(i.Email, font, XBrushes.Black, new XRect(0, 0, 400, n), XStringFormats.Center);
-                        var ctr = ctx.AgentContacts.Where(x => x.AgentID == i.AgentID).Count();
-                        if (ctr > 0)
-                        {
-                            var em = ctx.AgentContacts.Where(x => x.AgentID == i.AgentID).First();
-                            String str = em.Contact.ToString();
-                            gfx.DrawString(str, font, XBrushes.Black, new XRect(0, 0, 600, 250), XStringFormats.Center);
-                        }
-                        n += 30;
-                        if (n >= 1150)
-                        {
-                            gfx.DrawString("Page " + p.ToString(), font, XBrushes.Black, new XRect(0, 0, 1500, 1150), XStringFormats.Center);
-                            page = document.AddPage();
-                            page.Orientation = PageOrientation.Landscape;
-                            gfx = XGraphics.FromPdfPage(page);
-                            font = new XFont("Verdana", 20, XFontStyle.BoldItalic);
-                            gfx.DrawImage(xImage, 40, 10, xImage.Width - 260, xImage.Height / 3);
-                            font = new XFont("Verdana", 18, XFontStyle.Italic);
-                            gfx.DrawString("List Of Agents", font, XBrushes.Black, new XRect(0, 0, page.Width, 220), XStringFormats.Center);
-                            font = new XFont("Verdana", 10, XFontStyle.Italic);
-                            gfx.DrawString("As of " + DateTime.Today.Date.ToString().Split(' ')[0], font, XBrushes.Black, new XRect(0, 0, page.Width, 250), XStringFormats.Center);
-                            //ColumnHeader Start
-                            font = new XFont("Verdana", 10, XFontStyle.Bold);
+                    var emp2 = ctx.Employees.Find(UserID);
 
-                            //ColumnHeader End
-                            n = 280;
-                            p++;
-                        }
-                    }
-                    if (n < 1150)
+                    //sheet.Cells[10, 1] = "Prepared By: " + emp2.LastName + ", " + emp2.FirstName + " " + emp2.MI + " " + emp2.Suffix;
+                    sheet.PageSetup.LeftFooter = "Prepared By: " + emp2.LastName + ", " + emp2.FirstName + " " + emp2.MI + " " + emp2.Suffix;
+                    emp2 = ctx.Employees.Find(1);
+                    sheet.PageSetup.CenterFooter = "Confirmed By: " + emp2.LastName + ", " + emp2.FirstName + " " + emp2.MI + " " + emp2.Suffix;
+                    foreach (var i in ser)
                     {
-                        gfx.DrawString("Page " + p.ToString(), font, XBrushes.Black, new XRect(0, 0, 1500, 1150), XStringFormats.Center);
+                        sheet.Cells[y, 1] = i.AgentID;
+                        string myString = i.LastName + ", " + i.FirstName + " " + i.MI + " " + i.Suffix;
+                        try
+                        {
+                            myString = myString.Substring(0, 20);
+                        }
+                        catch (Exception) { myString = i.LastName + ", " + i.FirstName + " " + i.MI + " " + i.Suffix; }
+                        sheet.Cells[y, 3] = myString;
+                        try
+                        {
+                            var c1 = ctx.AgentAddresses.Where(x => x.AgentID == i.AgentID).First();
+                            sheet.Cells[y, 5] = c1.Province;
+                        }
+                        catch (Exception)
+                        { sheet.Cells[y, 5] = "";}
+
+                        try
+                        {
+                            var c1 = ctx.AgentContacts.Where(x => x.AgentID == i.AgentID).First();
+                            sheet.Cells[y, 7] = c1.Contact;
+                        }
+                        catch (Exception)
+                        { sheet.Cells[y, 7] = ""; }
+
+                        sheet.Cells[y, 9] = i.Email;
+
+
+                        y++;
                     }
+                    sheet.get_Range("A13", "A" + y).Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignRight;
+                    sheet.get_Range("C13", "C" + y).Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
+                    sheet.get_Range("E13", "E" + y).Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
+                    sheet.get_Range("G13", "G" + y).Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignRight;
+                    sheet.get_Range("I13", "I" + y).Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
+                    
+
                 }
 
-                //Footer Start
-                font = new XFont("Verdana", 10, XFontStyle.Italic);
-                string user = "";
-                using (var ctx = new newContext())
-                {
-                    var usr = ctx.Employees.Find(UserID);
-                    user = usr.LastName + ", " + usr.FirstName + " " + usr.MI + " " + usr.Suffix;
-                }
-                gfx.DrawString("Prepared By: " + user, font, XBrushes.Black, new XRect(0, 0, 200, 1150), XStringFormats.Center);
-                //Footer End
+                Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)(sheet.UsedRange.Columns);
+                range.AutoFit();
 
-                const string filename = "Agents.pdf";
-                document.Save(filename);
-                Process.Start(filename);
+
+                // Let loose control of the Excel instance
+
+                xl.Visible = false;
+                xl.UserControl = false;
+                xl.StandardFont = "Segoe UI";
+                xl.StandardFontSize = 12;
+
+
+
+                // Set a flag saying that all is well and it is ok to save our changes to a file.
+
+                SaveChanges = true;
+
+                //  Save the file to disk
+                sheet.Protect();
+
+                wb.SaveAs(FileName, Microsoft.Office.Interop.Excel.XlFileFormat.xlWorkbookNormal,
+                          null, null, false, false, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlShared,
+                          false, false, null, null, null);
+                object paramMissing = Type.Missing;
+
+                wb = xl.Workbooks.Open(FileName,
+                    paramMissing, paramMissing, paramMissing, paramMissing,
+                    paramMissing, paramMissing, paramMissing, paramMissing,
+                    paramMissing, paramMissing, paramMissing, paramMissing,
+                    paramMissing, paramMissing);
+
+                string paramExportFilePath = AppDomain.CurrentDomain.BaseDirectory + @"iAgents.pdf";
+                XlFixedFormatType paramExportFormat = XlFixedFormatType.xlTypePDF;
+                XlFixedFormatQuality paramExportQuality =
+                XlFixedFormatQuality.xlQualityStandard;
+                bool paramOpenAfterPublish = false;
+                bool paramIncludeDocProps = true;
+                bool paramIgnorePrintAreas = true;
+                object paramFromPage = Type.Missing;
+                object paramToPage = Type.Missing;
+
+                if (wb != null)
+                    wb.ExportAsFixedFormat(paramExportFormat,
+                        paramExportFilePath, paramExportQuality,
+                        paramIncludeDocProps, paramIgnorePrintAreas, paramFromPage,
+                        paramToPage, paramOpenAfterPublish,
+                        paramMissing);
+
+                Process xlProcess = Process.Start(paramExportFilePath);
             }
-            catch (Exception ex)
+            catch (Exception err)
             {
-                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
+                String msg;
+                msg = "Error: ";
+                msg = String.Concat(msg, err.Message);
+                msg = String.Concat(msg, " Line: ");
+                msg = String.Concat(msg, err.Source);
+                MessageBox.Show(msg);
             }
         }
 

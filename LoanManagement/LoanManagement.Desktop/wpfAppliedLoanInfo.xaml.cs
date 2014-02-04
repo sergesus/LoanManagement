@@ -206,6 +206,31 @@ namespace LoanManagement.Desktop
             {
                 if (status == "Approval" || status == "UApproval")
                 {
+                    using (var ctx = new newContext())
+                    {
+                        var lon = ctx.Loans.Find(lId);
+                        var ctr = ctx.Loans.Where(x => x.ClientID == lon.ClientID && (x.Status == "Applied" || x.Status == "Released" || x.Status == "Approved") && x.LoanID != lon.LoanID).Count();
+                        if (ctr > 0)
+                        {
+                            System.Windows.MessageBox.Show("Client cannot have more than one(1) Loan application/Loan", "Notice", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                            return;
+                        }
+
+                        ctr = ctx.Loans.Where(x => x.ClientID == lon.ClientID && (x.Status == "Closed Account" || x.Status == "Under Collection")).Count();
+                        if (ctr > 0)
+                        {
+                            System.Windows.MessageBox.Show("Client has bad record due to Closed Account/Unpaid Balance. Unable to process loan.", "Notice", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                            return;
+                        }
+
+                        ctr = ctx.Loans.Where(x => x.ClientID == lon.ClientID && x.Status == "Released" && x.Service.Department != lon.Service.Department).Count();
+                        if (ctr > 0)
+                        {
+                            System.Windows.MessageBox.Show("Client has an existing loan on other department", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                            return;
+                        }
+                    }
+
                     wpfLoanApproval frm = new wpfLoanApproval();
                     frm.status = status;
                     frm.UserID = UserID;
@@ -269,12 +294,30 @@ namespace LoanManagement.Desktop
                         using (var ctx = new newContext())
                         {
                             var lon = ctx.Loans.Find(lId);
-                            var ctr = ctx.Loans.Where(x => x.ClientID == lon.ClientID && (x.Status == "Applied" || x.Status == "Released" || x.Status == "Closed Account" || x.Status == "Approved") && x.LoanID != lon.LoanID).Count();
-                            if (ctr > 0)
+                            var ctr = ctx.Loans.Where(x => x.ClientID == lon.ClientID && (x.Status == "Applied" || x.Status == "Released" || x.Status == "Approved") && x.LoanID != lon.LoanID).Count();
+                            if (lon.Status == "Declined")
                             {
-                                System.Windows.MessageBox.Show("Client cannot have more than one(1) application/Loan", "Notice", MessageBoxButton.OK, MessageBoxImage.Exclamation);
-                                return;
+                                if (ctr > 0)
+                                {
+                                    System.Windows.MessageBox.Show("Client cannot have more than one(1) Loan application/Loan", "Notice", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                                    return;
+                                }
+
+                                ctr = ctx.Loans.Where(x => x.ClientID == lon.ClientID && (x.Status == "Closed Account" || x.Status == "Under Collection")).Count();
+                                if (ctr > 0)
+                                {
+                                    System.Windows.MessageBox.Show("Client has bad record due to Closed Account/Unpaid Balance. Unable to process loan.", "Notice", MessageBoxButton.OK, MessageBoxImage.Exclamation);
+                                    return;
+                                }
+
+                                ctr = ctx.Loans.Where(x => x.ClientID == lon.ClientID && x.Status == "Released" && x.Service.Department != lon.Service.Department).Count();
+                                if (ctr > 0)
+                                {
+                                    System.Windows.MessageBox.Show("Client has an existing loan on other department", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                                    return;
+                                }
                             }
+
                             if (lon.Status == "Approved")
                             {
                                 ctx.ApprovedLoans.Remove(lon.ApprovedLoan);

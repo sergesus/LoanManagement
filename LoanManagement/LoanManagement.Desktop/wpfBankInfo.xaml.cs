@@ -223,7 +223,7 @@ namespace LoanManagement.Desktop
                 //str = str.ToLower();
                 str = Regex.Replace(str, "(?:^|\\s)\\w", new MatchEvaluator(delegate(Match m) { return m.Value.ToUpper(); }));
                 txt.Text = str;
-                if (!Regex.IsMatch(str, @"^[a-zA-Z0-9 @.]*$") || str.Length > 25)
+                if (!Regex.IsMatch(str, @"^[a-zA-Z0-9 @.]*$"))
                     err = true;
 
                 if (isRequired == true)
