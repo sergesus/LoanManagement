@@ -50,7 +50,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var lon = ctx.Loans.Find(lID);
 
@@ -85,7 +85,7 @@ namespace LoanManagement.Desktop
                 //Grid grid = new Grid();
                 wdw1.Background = myBrush;
 
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     ctx.Database.ExecuteSqlCommand("delete  from dbo.TempClearings");
                 }
@@ -104,7 +104,7 @@ namespace LoanManagement.Desktop
             {
                 if (System.Windows.MessageBox.Show("Are you sure you want to confirm this requirement?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         var lon = ctx.Loans.Find(lID);
                         int n = Convert.ToInt32(getRow(dg1,0));
@@ -131,7 +131,7 @@ namespace LoanManagement.Desktop
             {
                 if (System.Windows.MessageBox.Show("Are you sure you want to remove the confirmation?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         var lon = ctx.Loans.Find(lID);
                         int n = Convert.ToInt32(getRow(dg2, 0));

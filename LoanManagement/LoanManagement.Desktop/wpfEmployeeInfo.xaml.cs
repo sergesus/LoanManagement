@@ -187,7 +187,7 @@ namespace LoanManagement.Desktop
                 str = str.ToLower();
                 str = Regex.Replace(str, "(?:^|\\s)\\w", new MatchEvaluator(delegate(Match m) { return m.Value.ToUpper(); }));
                 txt.Text = str;
-                if (!Regex.IsMatch(str, @"^[a-zA-Z ]*$") || str.Length > 25)
+                if (!Regex.IsMatch(str, @"^[a-zA-Z ]*$"))
                     err = true;
 
                 if (isRequired == true)
@@ -325,7 +325,7 @@ namespace LoanManagement.Desktop
                 int num2 = 0;
                 if (status == "Add")
                 {
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         num1 = ctx.TempAdresses.Count();
                         num2 = ctx.TempContacts.Count();
@@ -333,7 +333,7 @@ namespace LoanManagement.Desktop
                 }
                 else
                 {
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         num1 = ctx.EmployeeAddresses.Where(x => x.EmployeeID == uId).Count();
                         num2 = ctx.EmployeeContacts.Where(x => x.EmployeeID == uId).Count();
@@ -416,7 +416,7 @@ namespace LoanManagement.Desktop
 
                 selectedFileName = AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\myImg.gif";
                 cmbPosition.Items.Clear();
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var pos = from po in ctx.Positions
                               select po;
@@ -438,7 +438,7 @@ namespace LoanManagement.Desktop
                     bitmap.EndInit();
                     img.Source = bitmap;
 
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         ctx.Database.ExecuteSqlCommand("delete from dbo.TempAddresses");
                         ctx.Database.ExecuteSqlCommand("delete from dbo.TempContacts");
@@ -461,7 +461,7 @@ namespace LoanManagement.Desktop
                     }
 
 
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
 
                         var ctr = ctx.Loans.Where(x => x.CI == uId && x.Status == "Released").Count();
@@ -549,7 +549,7 @@ namespace LoanManagement.Desktop
                     //for view
                     if (status == "View")
                     {
-                        using (var ctx = new newerContext())
+                        using (var ctx = new finalContext())
                         {
                             EmployeeAddress empAdd = new EmployeeAddress { Street = txtStreet.Text, Province = txtProvince.Text, City = txtCity.Text, EmployeeID = uId };
                             ctx.EmployeeAddresses.Add(empAdd);
@@ -563,7 +563,7 @@ namespace LoanManagement.Desktop
                         return;
                     }
 
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         TempAddress add = new TempAddress { Street = txtStreet.Text, Province = txtProvince.Text, City = txtCity.Text };
                         ctx.TempAdresses.Add(add);
@@ -578,7 +578,7 @@ namespace LoanManagement.Desktop
                     //for view
                     if (status == "View")
                     {
-                        using (var ctx = new newerContext())
+                        using (var ctx = new finalContext())
                         {
                             var adds = ctx.EmployeeAddresses.Find(Convert.ToInt32(getRow(dgAddress, 0)));
                             adds.City = txtCity.Text;
@@ -595,7 +595,7 @@ namespace LoanManagement.Desktop
                     }
 
 
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         var add = ctx.TempAdresses.Find(Convert.ToInt32(getRow(dgAddress, 0)));
                         add.City = txtCity.Text;
@@ -632,7 +632,7 @@ namespace LoanManagement.Desktop
                     //for view
                     if (status == "View")
                     {
-                        using (var ctx = new newerContext())
+                        using (var ctx = new finalContext())
                         {
                             var add = ctx.EmployeeAddresses.Find(Convert.ToInt32(getRow(dgAddress, 0)));
                             txtCity.Text = add.City;
@@ -643,7 +643,7 @@ namespace LoanManagement.Desktop
                         return;
                     }
 
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         var add=ctx.TempAdresses.Find(Convert.ToInt32(getRow(dgAddress, 0)));
                         txtCity.Text = add.City;
@@ -698,7 +698,7 @@ namespace LoanManagement.Desktop
                     //for view
                     if (status == "View")
                     {
-                        using (var ctx = new newerContext())
+                        using (var ctx = new finalContext())
                         {
                             EmployeeContact empCont = new EmployeeContact { Contact = txtContact.Text, EmployeeID = uId };
                             ctx.EmployeeContacts.Add(empCont);
@@ -712,7 +712,7 @@ namespace LoanManagement.Desktop
                         return;
                     }
 
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         TempContact con = new TempContact { Contact = txtContact.Text };
                         ctx.TempContacts.Add(con);
@@ -727,7 +727,7 @@ namespace LoanManagement.Desktop
                     //for view
                     if (status == "View")
                     {
-                        using (var ctx = new newerContext())
+                        using (var ctx = new finalContext())
                         {
                             var conts = ctx.EmployeeContacts.Find(Convert.ToInt32(getRow(dgAddress, 0)));
                             conts.Contact = txtContact.Text;
@@ -741,7 +741,7 @@ namespace LoanManagement.Desktop
                         return;
                     }
 
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         var con = ctx.TempContacts.Find(Convert.ToInt32(getRow(dgContact, 0)));
                         con.Contact = txtContact.Text;
@@ -776,7 +776,7 @@ namespace LoanManagement.Desktop
                     //for view
                     if (status == "View")
                     {
-                        using (var ctx = new newerContext())
+                        using (var ctx = new finalContext())
                         {
                             var cont = ctx.EmployeeContacts.Find(Convert.ToInt32(getRow(dgAddress, 0)));
                             txtContact.Text = cont.Contact;
@@ -785,7 +785,7 @@ namespace LoanManagement.Desktop
                         return;
                     }
 
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         var add = ctx.TempContacts.Find(Convert.ToInt32(getRow(dgContact, 0)));
                         txtContact.Text = add.Contact;
@@ -807,7 +807,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     try
                     {
@@ -845,7 +845,7 @@ namespace LoanManagement.Desktop
 
         private void btnDelContact_Click(object sender, RoutedEventArgs e)
         {
-            using (var ctx = new newerContext())
+            using (var ctx = new finalContext())
             {
                 try
                 {
@@ -934,7 +934,7 @@ namespace LoanManagement.Desktop
                     }
                     
 
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         int pID = ctx.Positions.Where(x=>x.PositionName==cmbPosition.Text).First().PositionID;
                         Employee emp = new Employee { FirstName = txtFName.Text, LastName = txtLName.Text, PositionID = pID, Suffix = txtSuffix.Text, MI = txtMI.Text, Active = true, Department = cmbDept.Text, Email = txtEmail.Text, Photo = ConvertImageToByteArray(selectedFileName) };
@@ -973,7 +973,7 @@ namespace LoanManagement.Desktop
                     {
                         return;
                     }
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         int pID = ctx.Positions.Where(x => x.PositionName == cmbPosition.Text).First().PositionID;
                         var emp = ctx.Employees.Find(uId);
@@ -1007,7 +1007,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     DialogResult dr = System.Windows.Forms.MessageBox.Show("Are you sure you want to delete this record?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (dr == System.Windows.Forms.DialogResult.Yes)

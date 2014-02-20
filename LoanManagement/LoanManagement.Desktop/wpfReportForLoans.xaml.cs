@@ -41,7 +41,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     string dept = "";
                     ComboBoxItem typeItem = (ComboBoxItem)cmbDept.SelectedItem;
@@ -163,7 +163,7 @@ namespace LoanManagement.Desktop
 
                 sheet.Range["A10", "D10"].MergeCells = true;
 
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     
                     sheet.Cells[11, 1] = "Status:  " + cmbStat.Text;
@@ -218,7 +218,7 @@ namespace LoanManagement.Desktop
 
 
                 int ictr = 0;
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     
                     

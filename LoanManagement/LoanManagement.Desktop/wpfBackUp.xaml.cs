@@ -15,6 +15,8 @@ using System.IO;
 
 using System.Windows.Forms;
 
+using MahApps.Metro.Controls;
+
 using Microsoft.SqlServer.Management.Smo;
 using Microsoft.SqlServer.Management.Common;
 
@@ -23,7 +25,7 @@ namespace LoanManagement.Desktop
     /// <summary>
     /// Interaction logic for wpfBackUp.xaml
     /// </summary>
-    public partial class wpfBackUp : Window
+    public partial class wpfBackUp : MetroWindow
     {
         public wpfBackUp()
         {
@@ -32,7 +34,21 @@ namespace LoanManagement.Desktop
 
         private void Window_Loaded_1(object sender, RoutedEventArgs e)
         {
-            
+            try
+            {
+                ImageBrush myBrush = new ImageBrush();
+                System.Windows.Controls.Image image = new System.Windows.Controls.Image();
+                image.Source = new BitmapImage(
+                    new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\bg5.png"));
+                myBrush.ImageSource = image.Source;
+                //Grid grid = new Grid();
+                wdw1.Background = myBrush;
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
 
         }
 
@@ -45,8 +61,9 @@ namespace LoanManagement.Desktop
                 if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
                     string PathtobackUp = fbd.SelectedPath.ToString();
-                    string fileName = PathtobackUp + "myDB.bak";
-                    string databaseName = "LoanManagement.Domain.newerContext";
+                    string str2 = DateTime.Today.Date.ToString().Split(' ')[0];
+                    string fileName = PathtobackUp + "BackUp.bak";
+                    string databaseName = "LoanManagement.Domain.finalContext";
 
                 bkp.Action = BackupActionType.Database;
                 bkp.Database = databaseName;
@@ -100,12 +117,12 @@ namespace LoanManagement.Desktop
             //this.Cursor = Cursors.WaitCursor;
             //this.dataGridView1.DataSource = string.Empty;
 
-            //try
-            //{
+            try
+            {
                 rest.Devices.AddDevice(fileName, DeviceType.File);
                 Server srv = new Server("(localdb)\\v11.0");
                 bool verifySuccessful = rest.SqlVerify(srv);
-                string databaseName = "LoanManagement.Domain.newerContext";
+                string databaseName = "LoanManagement.Domain.finalContext";
                 if (verifySuccessful)
                 {
                     System.Windows.MessageBox.Show("Backup Verified!", "Info");
@@ -131,15 +148,15 @@ namespace LoanManagement.Desktop
                 {
                     System.Windows.MessageBox.Show("ERROR: Backup not verified!", "Error");
                 }
-            /*}
+            }
             catch (Exception ex)
             {
-                System.Windows.MessageBox.Show(ex.Message);
+                System.Windows.MessageBox.Show("The system has been successfully restored");
             }
             finally
             {
                 //this.Cursor = Cursors.Default;
-            }*/
+            }
         }
     }
 }

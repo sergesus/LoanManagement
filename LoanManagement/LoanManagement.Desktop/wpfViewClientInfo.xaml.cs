@@ -55,7 +55,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     if (rdAdd.IsChecked == true)
                     {
@@ -105,7 +105,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var clt = ctx.Clients.Find(cID);
                     try
@@ -212,7 +212,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     int n = Convert.ToInt32(getRow(dgLoans, 0));
                     var lon = ctx.Loans.Find(n);

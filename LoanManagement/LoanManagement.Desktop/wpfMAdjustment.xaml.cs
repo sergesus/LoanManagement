@@ -42,7 +42,7 @@ namespace LoanManagement.Desktop
                     System.Windows.MessageBox.Show("TO date must be breater than or equal to FROM date", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                     return;
                 }
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var py = from p in ctx.MPaymentInfoes
                              where (p.DueDate <= dtTo.SelectedDate.Value && p.DueDate >= dtFrom.SelectedDate.Value) && (p.PaymentStatus == "Unpaid" || p.PaymentStatus=="Pending")

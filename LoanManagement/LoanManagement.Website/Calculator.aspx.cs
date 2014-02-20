@@ -51,7 +51,7 @@ namespace LoanManagement.Website
         {
             try
             {
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var tol = from t in ctx.Services
                               where t.Active == true
@@ -75,7 +75,7 @@ namespace LoanManagement.Website
         {
             try
             {
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     string value = cmbTOL.Text;
                     var ser = ctx.Services.Where(x => x.Name == value).First();
@@ -122,7 +122,7 @@ namespace LoanManagement.Website
         {
             try
             {
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     double val = Convert.ToDouble(txtAmt.Text);
                     var ser = ctx.Services.Find(Convert.ToInt32(Session["iService"]));

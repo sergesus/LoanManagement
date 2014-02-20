@@ -19,6 +19,8 @@ using Microsoft.Office.Core;
 using Microsoft.Office.Interop.Excel;
 using System.Diagnostics;
 
+using System.Windows.Threading;
+
 using PdfSharp;
 using PdfSharp.Drawing;
 using PdfSharp.Pdf;
@@ -51,6 +53,12 @@ namespace LoanManagement.Desktop
         public wpfMain()
         {
             InitializeComponent();
+            DispatcherTimer timer = new DispatcherTimer(new TimeSpan(0, 0, 1), DispatcherPriority.Normal, delegate
+            {
+                this.dateText.Content = DateTime.Now.ToString();
+                checkDue();
+                checkNotif();
+            }, this.Dispatcher);
         }
 
         private void btnSettings_Click(object sender, RoutedEventArgs e)
@@ -58,9 +66,52 @@ namespace LoanManagement.Desktop
             //MessageBox.Show("asd");
         }
 
+        private void checkNotif()
+        { 
+            try
+            {
+                using (var ctx = new finalContext())
+                {
+                    var ctr1 = ctx.FPaymentInfo.Where(x => x.PaymentStatus.Contains("Due")).Count();
+                    if (ctr1 > 0)
+                    {
+                        lblNDue.Content = ctr1;
+                        lblNDue.Visibility = Visibility.Visible;
+                    }
+                    else
+                        lblNDue.Visibility = Visibility.Hidden;
+
+                    var ctr2 = ctx.Clients.Where(x => x.isConfirmed == false).Count();
+                    if (ctr2 > 0)
+                    {
+                        lblNReg.Content = ctr2;
+                        lblNReg.Visibility = Visibility.Visible;
+                    }
+                    else
+                        lblNReg.Visibility = Visibility.Hidden;
+
+                    var usr = ctx.Employees.Find(UserID);
+
+                    var ctr3 = ctx.TemporaryLoanApplications.Where(x => x.Service.Department == usr.Department).Count();
+                    if (ctr3 > 0)
+                    {
+                        lblNApp.Content = ctr3;
+                        lblNApp.Visibility = Visibility.Visible;
+                    }
+                    else
+                        lblNApp.Visibility = Visibility.Hidden;
+                }
+            }
+            catch (Exception ex)
+            {
+                //System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
         private void autoCancel()
         {
-            using (var ctx = new newerContext())
+            using (var ctx = new finalContext())
             {
                 DateTime dt = DateTime.Now.AddMonths(-1);
                 var lon = from l in ctx.ApprovedLoans
@@ -79,7 +130,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var iCtx = new newerContext())
+                using (var iCtx = new finalContext())
                 {
                     var l = from x in iCtx.TemporaryLoanApplications
                             where x.ExpirationDate <= DateTime.Today.Date && x.Client.isConfirmed == true
@@ -105,7 +156,7 @@ namespace LoanManagement.Desktop
 
 
 
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var clt = from x in ctx.Clients
                               where x.isConfirmed == false && x.iClientExpiration.ExpirationDate <= DateTime.Today.Date
@@ -148,7 +199,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var lon = from lo in ctx.FPaymentInfo
                               where lo.PaymentDate <= DateTime.Today.Date && (lo.PaymentStatus == "Pending" || lo.PaymentStatus == "On Hold")
@@ -340,7 +391,7 @@ namespace LoanManagement.Desktop
                                     var c = ctx.PassedToCollectors.Where(x => x.LoanID == itm.LoanID).Count();
                                     if (c < 1)
                                     {
-                                        using (var ctx2 = new newerContext())
+                                        using (var ctx2 = new finalContext())
                                         {
                                             PassedToCollector pc = new PassedToCollector { DatePassed = DateTime.Today.Date, LoanID = itm.LoanID, RemainingBalance = tRem, TotalPassedBalance = tRem, TotalPaidBeforePassing = tPaid };
                                             var l1 = ctx2.Loans.Find(itm.LoanID);
@@ -490,6 +541,43 @@ namespace LoanManagement.Desktop
                 cmbM2.SelectedIndex = 0;
                 cmbY1.SelectedIndex = 0;
                 cmbY2.SelectedIndex = 0;
+
+                String selectedFileName = AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\myImg.gif";
+                BitmapImage bitmap = new BitmapImage();
+                bitmap.BeginInit();
+                bitmap.UriSource = new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\myImg.gif");
+                bitmap.EndInit();
+                img.Source = bitmap;
+
+                try
+                {
+                    using (var ctx = new finalContext())
+                    {
+                        var usr = ctx.Users.Find(UserID);
+                        lblName.Content = usr.Employee.LastName + ", " + usr.Employee.FirstName;
+                        lblPosition.Content = usr.Employee.Position.PositionName;
+                        byte[] imageArr;
+                        imageArr = usr.Employee.Photo;
+                        BitmapImage bi = new BitmapImage();
+                        bi.BeginInit();
+                        bi.CreateOptions = BitmapCreateOptions.None;
+                        bi.CacheOption = BitmapCacheOption.Default;
+                        bi.StreamSource = new MemoryStream(imageArr);
+                        bi.EndInit();
+                        img.Source = bi;
+                    }
+                }
+                catch (Exception ex)
+                {
+                    //System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                    selectedFileName = AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\myImg.gif";
+                    bitmap = new BitmapImage();
+                    bitmap.BeginInit();
+                    bitmap.UriSource = new Uri(AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\myImg.gif");
+                    bitmap.EndInit();
+                    img.Source = bitmap;
+                    return;
+                }
             }
             catch (Exception ex)
             {
@@ -1152,7 +1240,7 @@ namespace LoanManagement.Desktop
 
                 int y = 13;
 
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var ser = from se in ctx.Clients
                               where se.Active == true
@@ -1344,7 +1432,7 @@ namespace LoanManagement.Desktop
 
                 int y = 13;
 
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var ser = from se in ctx.Services
                               where se.Active == true
@@ -1496,7 +1584,7 @@ namespace LoanManagement.Desktop
 
                 int y = 13;
 
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var ser = from se in ctx.Employees
                               where se.Active == true
@@ -1659,7 +1747,7 @@ namespace LoanManagement.Desktop
 
                 int y = 13;
 
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var ser = from se in ctx.Agents
                               where se.Active == true
@@ -1904,7 +1992,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     string dept = "";
                     ComboBoxItem typeItem = (ComboBoxItem)cmbDept.SelectedItem;
@@ -2019,7 +2107,7 @@ namespace LoanManagement.Desktop
                 double unp = 0;
                 double exp = 0;
 
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 { 
                     DateTime endOfMonth = new DateTime(dt.Year, dt.Month, DateTime.DaysInMonth(dt.Year, dt.Month));
                     var lns = from ln in ctx.ReleasedLoans
@@ -2332,7 +2420,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var set = ctx.OnlineSettings.Find(1);
                     txtHome.Text = set.HomeDescription;
@@ -2354,7 +2442,7 @@ namespace LoanManagement.Desktop
             {
                 if (System.Windows.MessageBox.Show("Are you sure you want to save this changes?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         var set = ctx.OnlineSettings.Find(1);
                         set.AboutDescription = txtAbout.Text;
@@ -2388,6 +2476,224 @@ namespace LoanManagement.Desktop
                 {
                     Process.Start(pathString);
                 }
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void btnRDeposits_Click(object sender, RoutedEventArgs e)
+        {
+            string FileName = AppDomain.CurrentDomain.BaseDirectory + @"iDeposits.xls";
+            Microsoft.Office.Interop.Excel._Application xl = null;
+            Microsoft.Office.Interop.Excel._Workbook wb = null;
+            Microsoft.Office.Interop.Excel._Worksheet sheet = null;
+            bool SaveChanges = false;
+
+            try
+            {
+                if (File.Exists(FileName)) { File.Delete(FileName); }
+
+                GC.Collect();
+
+                // Create a new instance of Excel from scratch
+
+                xl = new Microsoft.Office.Interop.Excel.Application();
+                xl.Visible = false;
+                wb = (Microsoft.Office.Interop.Excel._Workbook)(xl.Workbooks.Add(Missing.Value));
+                sheet = (Microsoft.Office.Interop.Excel._Worksheet)(wb.Sheets[1]);
+
+                // set come column heading names
+                sheet.Name = "Daily Deposits";
+                sheet.PageSetup.Orientation = Microsoft.Office.Interop.Excel.XlPageOrientation.xlLandscape;
+                sheet.Cells.Style.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+                sheet.PageSetup.RightFooter = "Page &P of &N";
+                sheet.PageSetup.TopMargin = 0.5;
+                sheet.Range["A2", "F2"].MergeCells = true;
+                sheet.Range["A7", "E7"].MergeCells = true;
+                sheet.Range["A8", "H8"].MergeCells = true;
+                sheet.Range["A8", "H8"].Style.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+                sheet.Cells[8, 1] = "Daily Deposits";
+                sheet.get_Range("A8", "H8").Font.Bold = true;
+                sheet.get_Range("A8", "H8").Font.Size = 18;
+                sheet.Range["A9", "H9"].MergeCells = true;
+                sheet.Range["A9", "H9"].Style.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+                sheet.Cells[9, 1] = "Date Prepared: " + DateTime.Now;
+                sheet.Range["A1", "Z1"].Columns.AutoFit();
+                sheet.Range["A2", "Z2"].Columns.AutoFit();
+                //sheet.Cells["1:100"].Rows.AutoFit(); 
+                String imagePath = AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\GFC.jpg";
+                sheet.Shapes.AddPicture(imagePath, MsoTriState.msoFalse, MsoTriState.msoCTrue, 60, 0, 600, 100);
+                sheet.PageSetup.CenterHeaderPicture.Filename = imagePath;
+
+                sheet.Range["A10", "D10"].MergeCells = true;
+
+                sheet.Cells[12, 2] = "Cheque Number";
+                sheet.Cells[12, 4] = "Client Name";
+                sheet.Cells[12, 6] = "Cheque Due Date";
+                sheet.Cells[12, 8] = "Bank";
+                sheet.get_Range("A12", "K12").Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
+                sheet.get_Range("A12", "K12").Font.Underline = true;
+
+                int y = 13;
+
+                using (var ctx = new finalContext())
+                {
+                    var ser = from se in ctx.FPaymentInfo
+                              where se.PaymentStatus.Contains("Due")
+                              select se;
+
+                    var emp2 = ctx.Employees.Find(UserID);
+
+                    //sheet.Cells[10, 1] = "Prepared By: " + emp2.LastName + ", " + emp2.FirstName + " " + emp2.MI + " " + emp2.Suffix;
+                    sheet.PageSetup.LeftFooter = "Prepared By: " + emp2.LastName + ", " + emp2.FirstName + " " + emp2.MI + " " + emp2.Suffix;
+                    emp2 = ctx.Employees.Find(1);
+                    sheet.PageSetup.CenterFooter = "Confirmed By: " + emp2.LastName + ", " + emp2.FirstName + " " + emp2.MI + " " + emp2.Suffix;
+                    foreach (var i in ser)
+                    {
+                        sheet.Cells[y, 2] = i.ChequeInfo;
+                        string myString = i.Loan.Client.LastName + ", " + i.Loan.Client.FirstName + " " + i.Loan.Client.MiddleName + " " + i.Loan.Client.Suffix;
+                        try
+                        {
+                            myString = myString.Substring(0, 20);
+                        }
+                        catch (Exception) { myString = i.Loan.Client.LastName + ", " + i.Loan.Client.FirstName + " " + i.Loan.Client.MiddleName + " " + i.Loan.Client.Suffix; }
+                        sheet.Cells[y, 4] = myString;
+                        sheet.Cells[y, 6] = i.ChequeDueDate.ToString().Split(' ')[0];
+                        var bd = ctx.Banks.Find(i.Loan.BankID);
+                        sheet.Cells[y, 8] = bd.BankName;
+                        y++;
+                    }
+                    sheet.get_Range("B13", "B" + y).Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignRight;
+                    sheet.get_Range("D13", "D" + y).Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
+                    sheet.get_Range("F13", "F" + y).Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
+                    sheet.get_Range("H13", "H" + y).Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignRight;
+
+                }
+
+                Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)(sheet.UsedRange.Columns);
+                range.AutoFit();
+
+
+                // Let loose control of the Excel instance
+
+                xl.Visible = false;
+                xl.UserControl = false;
+                xl.StandardFont = "Segoe UI";
+                xl.StandardFontSize = 12;
+
+
+
+                // Set a flag saying that all is well and it is ok to save our changes to a file.
+
+                SaveChanges = true;
+
+                //  Save the file to disk
+                sheet.Protect();
+
+                wb.SaveAs(FileName, Microsoft.Office.Interop.Excel.XlFileFormat.xlWorkbookNormal,
+                          null, null, false, false, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlShared,
+                          false, false, null, null, null);
+                object paramMissing = Type.Missing;
+
+                wb = xl.Workbooks.Open(FileName,
+                    paramMissing, paramMissing, paramMissing, paramMissing,
+                    paramMissing, paramMissing, paramMissing, paramMissing,
+                    paramMissing, paramMissing, paramMissing, paramMissing,
+                    paramMissing, paramMissing);
+
+                string paramExportFilePath = AppDomain.CurrentDomain.BaseDirectory + @"iClients.pdf";
+                XlFixedFormatType paramExportFormat = XlFixedFormatType.xlTypePDF;
+                XlFixedFormatQuality paramExportQuality =
+                XlFixedFormatQuality.xlQualityStandard;
+                bool paramOpenAfterPublish = false;
+                bool paramIncludeDocProps = true;
+                bool paramIgnorePrintAreas = true;
+                object paramFromPage = Type.Missing;
+                object paramToPage = Type.Missing;
+
+                if (wb != null)
+                    wb.ExportAsFixedFormat(paramExportFormat,
+                        paramExportFilePath, paramExportQuality,
+                        paramIncludeDocProps, paramIgnorePrintAreas, paramFromPage,
+                        paramToPage, paramOpenAfterPublish,
+                        paramMissing);
+
+                Process xlProcess = Process.Start(paramExportFilePath);
+            }
+            catch (Exception err)
+            {
+                String msg;
+                msg = "Error: ";
+                msg = String.Concat(msg, err.Message);
+                msg = String.Concat(msg, " Line: ");
+                msg = String.Concat(msg, err.Source);
+                MessageBox.Show(msg);
+            }
+        }
+
+        private void btnUBackUp_Click(object sender, RoutedEventArgs e)
+        {
+            wpfBackUp frm = new wpfBackUp();
+            frm.ShowDialog();
+        }
+
+        private void dateText_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+            Process.Start(System.Environment.SystemDirectory + @"\TimeDate.cpl");
+        }
+
+        private void btnRef_Copy_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                wpfDepositCheques frm = new wpfDepositCheques();
+                frm.status = "Deposit";
+                frm.UserID = UserID;
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void btnRef_Copy1_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                wpfClient frm = new wpfClient();
+                frm.UserID = UserID;
+                frm.status = true;
+                frm.status2 = "Confirmation";
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
+        }
+
+        private void btnRef_Copy2_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                wpfLoanSearch frm = new wpfLoanSearch();
+                frm.status = "Confirmation";
+                frm.UserID = UserID;
+                using (var ctx = new finalContext())
+                {
+                    var usr = ctx.Employees.Find(UserID);
+                    if (usr.Department == "Both")
+                        frm.iDept = "Financing";
+                    else
+                        frm.iDept = usr.Department;
+                }
+                frm.ShowDialog();
             }
             catch (Exception ex)
             {

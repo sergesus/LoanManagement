@@ -20,7 +20,7 @@ namespace LoanManagement.Website
             if (Session["newID"] != null)
             {
                 int id = Convert.ToInt32((string)Session["newID"]);
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var clt = ctx.Clients.Find(id);
                     string email = clt.Email;

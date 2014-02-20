@@ -49,7 +49,7 @@ namespace LoanManagement.Website
                 }
                 DateTime bDay = Convert.ToDateTime(txtBirthday.Text);
 
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var ctr = ctx.Clients.Where(x => x.FirstName == txtFirstName.Text && x.LastName == txtLastName.Text && x.MiddleName == txtMiddleName.Text && x.Suffix == txtSuffix.Text && x.Birthday == bDay).Count();
                     if (ctr > 0)

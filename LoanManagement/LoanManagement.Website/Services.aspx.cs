@@ -19,7 +19,7 @@ namespace LoanManagement.Website
                 Session["UpdateChecker"] = null;
                 Session["Service"] = null;
                 Session["iService"] = null;
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var ser = from se in ctx.Services
                               where se.Active == true
@@ -51,7 +51,7 @@ namespace LoanManagement.Website
             try
             {
                 int sID = Convert.ToInt32(dg1.SelectedRow.Cells[1].Text);
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var ser = ctx.Services.Find(sID);
                     double ded = ser.AgentCommission;

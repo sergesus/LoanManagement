@@ -49,7 +49,7 @@ namespace LoanManagement.Desktop
 
                 if (status == "Releasing")
                 {
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         ctx.Database.ExecuteSqlCommand("delete from dbo.GenSOAs");
                         ctx.SaveChanges();
@@ -191,7 +191,7 @@ namespace LoanManagement.Desktop
                 }
                 else if (status == "UReleasing")
                 {
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         var lon = ctx.Loans.Find(lId);
                         var pys = from p in ctx.MPaymentInfoes
@@ -253,7 +253,7 @@ namespace LoanManagement.Desktop
                 //num = 0;
                 if (status == "Releasing")
                 {
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         var lon = ctx.Loans.Find(lId);
                         var ser = ctx.Services.Find(lon.ServiceID);
@@ -321,7 +321,7 @@ namespace LoanManagement.Desktop
                 {
                     double max = 0;
                     double min = 0;
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         var lon = ctx.Loans.Find(lId);
                         var ser = ctx.Services.Find(lon.ServiceID);
@@ -360,7 +360,7 @@ namespace LoanManagement.Desktop
                     MessageBoxResult mr = MessageBox.Show("Are you sure you want to process this transaction?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
                     if (mr == MessageBoxResult.Yes)
                     {
-                        using (var ctx = new newerContext())
+                        using (var ctx = new finalContext())
                         {
                             int bId = 0;
                             var lon = ctx.Loans.Find(lId);
@@ -390,7 +390,7 @@ namespace LoanManagement.Desktop
                 else if (status == "UReleasing")
                 {
                     
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         var lon = ctx.Loans.Find(lId);
                         lon.CollectortID = ciId;
@@ -486,7 +486,7 @@ namespace LoanManagement.Desktop
 
                 int y = 13;
 
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var ser = from se in ctx.GenSOA
                               select se;
@@ -628,7 +628,7 @@ namespace LoanManagement.Desktop
 
                 sheet.Range["A10", "D10"].MergeCells = true;
 
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var lon = ctx.Loans.Find(lId);
                     sheet.Cells[11, 1] = "Client Name: " + lon.Client.LastName + ", " + lon.Client.FirstName + " " + lon.Client.MiddleName + " " + lon.Client.Suffix;
@@ -666,7 +666,7 @@ namespace LoanManagement.Desktop
 
                 int y = 17;
 
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var ser = from se in ctx.GenSOA
                               select se;

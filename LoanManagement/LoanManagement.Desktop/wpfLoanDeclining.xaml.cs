@@ -65,7 +65,7 @@ namespace LoanManagement.Desktop
                     return;
                 }
 
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var lon = ctx.Loans.Find(lId);
                     lon.Status = "Declined";

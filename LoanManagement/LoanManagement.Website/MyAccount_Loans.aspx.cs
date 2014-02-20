@@ -25,7 +25,7 @@ namespace LoanManagement.Website
                 {
                     Response.Redirect("/Login.aspx");
                 }
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     int cID = Convert.ToInt32(Session["ID"]);
                     var clt = ctx.Clients.Find(cID);
@@ -90,7 +90,7 @@ namespace LoanManagement.Website
             try
             {
                 //Page.ClientScript.RegisterStartupScript(this.GetType(), "showAl", "ShowConfirmation();", true); 
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     int n = Convert.ToInt32(Session["ID"]);
                     var lon = ctx.TemporaryLoanApplications.Where(x => x.ClientID == n).First();
@@ -118,7 +118,7 @@ namespace LoanManagement.Website
         {
             try
             {
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     int n = Convert.ToInt32(Session["ID"]);
                     var lon = ctx.TemporaryLoanApplications.Where(x => x.ClientID == n).First();
@@ -139,7 +139,7 @@ namespace LoanManagement.Website
             try
             {
                 string s = dgLoans.SelectedRow.Cells[1].Text;
-                Response.Redirect("/MyAccount_Loans_LoanInfo.aspx?LoanID=" +s );
+                Response.Redirect("/MyAccount_Loans_LoanInfo.aspx?LoanID=" + s );
             }
             catch (Exception) { return; }
         } 

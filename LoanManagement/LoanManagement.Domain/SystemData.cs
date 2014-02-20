@@ -9,7 +9,7 @@ using System.Data.Entity;
 namespace LoanManagement.Domain
 {
 
-    public class newerContext : DbContext
+    public class finalContext : DbContext
     {
         public DbSet<State> State { get; set; }
         public DbSet<User> Users { get; set; }

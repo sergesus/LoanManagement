@@ -84,7 +84,7 @@ namespace LoanManagement.Desktop
                 {
                     if (txtSearch.Text == "")
                     {
-                        using (var ctx = new newerContext())
+                        using (var ctx = new finalContext())
                         {
                             var clt = from cl in ctx.Clients
                                       where cl.Active == true && cl.ClientID != cId 
@@ -94,7 +94,7 @@ namespace LoanManagement.Desktop
                     }
                     else
                     {
-                        using (var ctx = new newerContext())
+                        using (var ctx = new finalContext())
                         {
                             var clt = from cl in ctx.Clients
                                       where cl.Active == true && cl.ClientID != cId && (cl.ClientID == n || (cl.FirstName + cl.MiddleName + cl.LastName).Contains(txtSearch.Text.Replace(" ", "")))
@@ -107,7 +107,7 @@ namespace LoanManagement.Desktop
                 {
                     if (txtSearch.Text == "")
                     {
-                        using (var ctx = new newerContext())
+                        using (var ctx = new finalContext())
                         {
                             var agt = from ag in ctx.Agents
                                       where ag.Active == true
@@ -117,7 +117,7 @@ namespace LoanManagement.Desktop
                     }
                     else
                     {
-                        using (var ctx = new newerContext())
+                        using (var ctx = new finalContext())
                         {
                             var agt = from ag in ctx.Agents
                                       where ag.Active == true && (ag.FirstName + " " + ag.MI + " " + ag.LastName).Replace(" ", "").Contains(txtSearch.Text.Replace(" ", ""))
@@ -130,7 +130,7 @@ namespace LoanManagement.Desktop
                 {
                     if (txtSearch.Text == "")
                     {
-                        using (var ctx = new newerContext())
+                        using (var ctx = new finalContext())
                         {
                             var agt = from ag in ctx.Employees
                                       where ag.Active == true
@@ -140,7 +140,7 @@ namespace LoanManagement.Desktop
                     }
                     else
                     {
-                        using (var ctx = new newerContext())
+                        using (var ctx = new finalContext())
                         {
                             var agt = from ag in ctx.Employees
                                       where ag.Active == true && (ag.FirstName + " " + ag.MI + " " + ag.LastName).Replace(" ", "").Contains(txtSearch.Text.Replace(" ", ""))
@@ -153,7 +153,7 @@ namespace LoanManagement.Desktop
                 {
                     if (txtSearch.Text == "")
                     {
-                        using (var ctx = new newerContext())
+                        using (var ctx = new finalContext())
                         {
                             var agt = from ag in ctx.Employees
                                       where ag.Active == true && ag.Position.PositionName.Contains("Collector")
@@ -163,7 +163,7 @@ namespace LoanManagement.Desktop
                     }
                     else
                     {
-                        using (var ctx = new newerContext())
+                        using (var ctx = new finalContext())
                         {
                             var agt = from ag in ctx.Employees
                                       where ag.Active == true && (ag.FirstName + " " + ag.MI + " " + ag.LastName).Replace(" ", "").Contains(txtSearch.Text.Replace(" ", "")) && ag.Position.PositionName.Contains("Collector")
@@ -176,7 +176,7 @@ namespace LoanManagement.Desktop
                 {
                     if (txtSearch.Text == "")
                     {
-                        using (var ctx = new newerContext())
+                        using (var ctx = new finalContext())
                         {
                             var agt = from ag in ctx.Employees
                                       where ag.Active == true && ag.Position.PositionName.Contains("Collector")
@@ -186,7 +186,7 @@ namespace LoanManagement.Desktop
                     }
                     else
                     {
-                        using (var ctx = new newerContext())
+                        using (var ctx = new finalContext())
                         {
                             var agt = from ag in ctx.Employees
                                       where ag.Active == true && (ag.FirstName + " " + ag.MI + " " + ag.LastName).Replace(" ", "").Contains(txtSearch.Text.Replace(" ", "")) && ag.Position.PositionName.Contains("Collector")
@@ -199,7 +199,7 @@ namespace LoanManagement.Desktop
                 {
                     if (txtSearch.Text == "")
                     {
-                        using (var ctx = new newerContext())
+                        using (var ctx = new finalContext())
                         {
                             var agt = from ag in ctx.Employees
                                       where ag.Active == true
@@ -209,7 +209,7 @@ namespace LoanManagement.Desktop
                     }
                     else
                     {
-                        using (var ctx = new newerContext())
+                        using (var ctx = new finalContext())
                         {
                             var agt = from ag in ctx.Employees
                                       where ag.Active == true && (ag.FirstName + " " + ag.MI + " " + ag.LastName).Replace(" ", "").Contains(txtSearch.Text.Replace(" ", ""))
@@ -237,7 +237,7 @@ namespace LoanManagement.Desktop
                     {
                         int cbId = Convert.ToInt32(getRow(dgClient, 0));
 
-                        using (var ctx = new newerContext())
+                        using (var ctx = new finalContext())
                         {
                             var c = ctx.Loans.Where(x => (x.Status == "Applied" || x.Status == "Approved" ||
                                 x.Status == "Released" || x.Status == "Under Collection" || x.Status == "Closed Account") && (x.ClientID == cbId || x.CoBorrower == cbId)).Count();
@@ -251,7 +251,7 @@ namespace LoanManagement.Desktop
                         var frm = Application.Current.Windows[ctr - 2] as wpfLoanApplication;
                         frm.cbId = Convert.ToInt32(getRow(dgClient, 0));
                         frm.UserID = UserID;
-                        using (var ctx = new newerContext())
+                        using (var ctx = new finalContext())
                         {
                             var agt = ctx.Clients.Find(cbId);
                             String str = "(" + cbId + ")" + agt.FirstName + " " + agt.MiddleName + " " + agt.LastName;
@@ -296,7 +296,7 @@ namespace LoanManagement.Desktop
                     frm.UserID = UserID;
                     int num = Convert.ToInt32(getRow(dgClient, 0));
                     frm.ciId = num;
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         var agt = ctx.Employees.Find(num);
                         String str = "(" + num + ")" + agt.FirstName + " " + agt.MI + " " + agt.LastName;
@@ -311,7 +311,7 @@ namespace LoanManagement.Desktop
                     frm.UserID = UserID;
                     int num = Convert.ToInt32(getRow(dgClient, 0));
                     frm.ciId = num;
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         var agt = ctx.Employees.Find(num);
                         String str = "(" + num + ")" + agt.FirstName + " " + agt.MI + " " + agt.LastName;
@@ -326,7 +326,7 @@ namespace LoanManagement.Desktop
                     frm.UserID = UserID;
                     int num = Convert.ToInt32(getRow(dgClient, 0));
                     frm.cID = num;
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         var agt = ctx.Employees.Find(num);
                         String str = "(" + num + ")" + agt.FirstName + " " + agt.MI + " " + agt.LastName;

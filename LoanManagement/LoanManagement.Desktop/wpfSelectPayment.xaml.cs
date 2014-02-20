@@ -36,7 +36,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var lon = from lo in ctx.FPaymentInfo
                               where lo.PaymentDate <= DateTime.Today.Date && (lo.PaymentStatus == "Pending" || lo.PaymentStatus == "On Hold")
@@ -228,7 +228,7 @@ namespace LoanManagement.Desktop
                                     var c = ctx.PassedToCollectors.Where(x => x.LoanID == itm.LoanID).Count();
                                     if (c < 1)
                                     {
-                                        using (var ctx2 = new newerContext())
+                                        using (var ctx2 = new finalContext())
                                         {
                                             PassedToCollector pc = new PassedToCollector { DatePassed = DateTime.Today.Date, LoanID = itm.LoanID, RemainingBalance = tRem, TotalPassedBalance = tRem, TotalPaidBeforePassing = tPaid };
                                             var l1 = ctx2.Loans.Find(itm.LoanID);

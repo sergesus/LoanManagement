@@ -23,7 +23,7 @@ namespace LoanManagement.Website
                 {
                     Response.Redirect("/Login.aspx");
                 }
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     int cID = Convert.ToInt32(Session["ID"]);
                     var clt = ctx.Clients.Find(cID);

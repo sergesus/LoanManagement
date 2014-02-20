@@ -60,7 +60,7 @@ namespace LoanManagement.Desktop
                 //Grid grid = new Grid();
                 wdw1.Background = myBrush;
 
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var lon = ctx.Loans.Find(lId);
                     lblDesAmt.Content = "Php " + lon.LoanApplication.AmountApplied.ToString("N2");
@@ -89,7 +89,7 @@ namespace LoanManagement.Desktop
             {
                 double max  = 0;
                 double min = 0;
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 { 
                     var lon = ctx.Loans.Find(lId);
                     var ser = ctx.Services.Find(lon.ServiceID);
@@ -112,7 +112,7 @@ namespace LoanManagement.Desktop
                 }
                 string qst = "Are you sure you want to process this transaction?";
 
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var c1 = ctx.RequirementChecklists.Where(x => x.LoanID == lId).Count();
                     var lon = ctx.Loans.Find(lId);
@@ -125,7 +125,7 @@ namespace LoanManagement.Desktop
                 System.Windows.MessageBoxResult mr = System.Windows.MessageBox.Show(qst, "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (mr == System.Windows.MessageBoxResult.Yes)
                 {
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         var lon = ctx.Loans.Find(lId);
                         if (status == "Approval" || status == "Renewal Approval")
@@ -195,7 +195,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     
 
@@ -245,7 +245,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     ctx.Database.ExecuteSqlCommand("delete from dbo.GenSOAs");
                     ctx.SaveChanges();
@@ -440,7 +440,7 @@ namespace LoanManagement.Desktop
         {
             wpfViewClientInfo frm = new wpfViewClientInfo();
             frm.status = "View2";
-            using (var ctx = new newerContext())
+            using (var ctx = new finalContext())
             {
                 var lon = ctx.Loans.Find(lId);
                 frm.cID = lon.ClientID;
@@ -507,7 +507,7 @@ namespace LoanManagement.Desktop
 
                 int y = 13;
 
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var ser = from se in ctx.GenSOA
                               select se;

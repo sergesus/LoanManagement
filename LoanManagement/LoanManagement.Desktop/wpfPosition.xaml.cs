@@ -48,7 +48,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var post = from ps in ctx.Positions
                                select new { PositionID = ps.PositionID, Position = ps.PositionName, Description = ps.Description };
@@ -75,7 +75,7 @@ namespace LoanManagement.Desktop
                 wdw1.Background = myBrush;
                 resetGrid();
 
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     
                     var usr = ctx.Employees.Find(UserID);
@@ -144,7 +144,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     int n;
                     try
@@ -173,7 +173,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var n2 = ctx.Employees.Find(UserID);
                     int n = Convert.ToInt32(getRow(dgBank, 0));

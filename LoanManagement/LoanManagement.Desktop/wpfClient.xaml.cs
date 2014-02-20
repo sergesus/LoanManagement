@@ -147,7 +147,7 @@ namespace LoanManagement.Desktop
             {
                 if (status2 == "Confirmation")
                 {
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         var clt = from cl in ctx.Clients
                                   where cl.Active == status && cl.isConfirmed == false && cl.isRegistered == true
@@ -158,7 +158,7 @@ namespace LoanManagement.Desktop
                 }
                 else
                 {
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         var clt = from cl in ctx.Clients
                                   where cl.Active == status && cl.isConfirmed == true
@@ -193,7 +193,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     img.Visibility = Visibility.Visible;
                     var clt = ctx.Clients.Find(Convert.ToInt32(getRow(dgClient, 0)));
@@ -224,7 +224,7 @@ namespace LoanManagement.Desktop
                 MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure you want to Retrieve this record?", "Question", MessageBoxButton.YesNo);
                 if (mr == MessageBoxResult.Yes)
                 {
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         var agt = ctx.Clients.Find(n);
                         agt.Active = true;
@@ -247,7 +247,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     img.Visibility = Visibility.Visible;
                     var clt = ctx.Clients.Find(Convert.ToInt32(getRow(dgClient, 0)));
@@ -274,7 +274,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                //using (var ctx = new newerContext())
+                //using (var ctx = new finalContext())
                 //{
                 //    int n;
                 //    try

@@ -28,7 +28,7 @@ namespace LoanManagement.Website
 
                 int cID = Convert.ToInt32(Session["ID"]);
 
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var c1 = ctx.TemporaryLoanApplications.Where(x => x.ClientID == cID).Count();
                     if (c1 > 0)
@@ -93,7 +93,7 @@ namespace LoanManagement.Website
             {
                 int cID = Convert.ToInt32(Session["ID"]);
 
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     string lID = dg.SelectedRow.Cells[1].Text;
                     var c1 = ctx.TemporaryLoanApplications.Where(x => x.ClientID == cID).Count();

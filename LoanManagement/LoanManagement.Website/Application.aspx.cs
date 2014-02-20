@@ -21,7 +21,7 @@ namespace LoanManagement.Website
                 if (Session["ID"] != null)
                 {
                     Session["ref"] = "true";
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         int n = Convert.ToInt32(Session["ID"]);
                         var c = ctx.Loans.Where(x => x.ClientID == n && (x.Status == "Applied" || x.Status == "Under Collection" || x.Status == "Closed Account" || x.Status == "Released")).Count();
@@ -68,7 +68,7 @@ namespace LoanManagement.Website
             }
             catch (Exception)
             {
-                Response.Redirect("/Index.aspx");
+                //Response.Redirect("/Index.aspx");
             }
         }
 
@@ -87,7 +87,7 @@ namespace LoanManagement.Website
         {
             try
             {
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var tol = from t in ctx.Services
                               where t.Active == true
@@ -111,7 +111,7 @@ namespace LoanManagement.Website
         {
             try
             {
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     int n = Convert.ToInt32(Session["ID"]);
                     var c = ctx.TemporaryLoanApplications.Where(x => x.ClientID == n).Count();
@@ -180,7 +180,7 @@ namespace LoanManagement.Website
                 {
                     lblCaptcha.Visible = !true;
                 }
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     double val = Convert.ToDouble(txtAmt.Text);
                     var ser = ctx.Services.Find(Convert.ToInt32(Session["Service"]));
@@ -201,7 +201,7 @@ namespace LoanManagement.Website
                     var c = ctx.TemporaryLoanApplications.Where(x => x.ClientID == n).Count();
                     if (c > 0)
                     {
-                        using (var ictx = new newerContext())
+                        using (var ictx = new finalContext())
                         {
                             int num = Convert.ToInt32(Session["ID"]);
                             var ln = ictx.TemporaryLoanApplications.Where(x => x.ClientID == num).First();
@@ -240,7 +240,7 @@ namespace LoanManagement.Website
             }
             catch (Exception)
             {
-                Response.Redirect("/Index.aspx");
+                //Response.Redirect("/Index.aspx");
             }
         }
 

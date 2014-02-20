@@ -35,7 +35,7 @@ namespace LoanManagement.Website
         {
             try
             {
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var ctr1 = ctx.Clients.Where(x => x.Username == txtUsername.Text && x.Password == txtPassword.Text && x.isRegistered == true).Count();
                     if (ctr1 > 0)

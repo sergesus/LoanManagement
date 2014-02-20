@@ -26,7 +26,7 @@ namespace LoanManagement.Website
             try
             {
                 int lID = Convert.ToInt32(Request.QueryString["LoanID"]);
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var c = ctx.Loans.Where(x => x.LoanID == lID).Count();
                     if (c > 0)
@@ -123,8 +123,8 @@ namespace LoanManagement.Website
             {
                 if (Session["ID"] == null)
                     Response.Redirect("/Login.aspx");
-                else
-                    Response.Redirect("MyAccount_Loans.aspx");
+                //else
+                //    Response.Redirect("MyAccount_Loans.aspx");
             }
 
         }

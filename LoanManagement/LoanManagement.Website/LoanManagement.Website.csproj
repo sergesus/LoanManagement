@@ -68,9 +68,9 @@
     <Content Include="About.aspx" />
     <Content Include="Application.aspx" />
     <Content Include="ApplicationSuccess.aspx" />
-    <Content Include="App_Data\LoanManagement.Domain.newerContext.mdf" />
-    <Content Include="App_Data\LoanManagement.Domain.newerContext_log.ldf">
-      <DependentUpon>LoanManagement.Domain.newerContext.mdf</DependentUpon>
+    <Content Include="App_Data\LoanManagement.Domain.finalContext.mdf" />
+    <Content Include="App_Data\LoanManagement.Domain.finalContext_log.ldf">
+      <DependentUpon>LoanManagement.Domain.finalContext.mdf</DependentUpon>
     </Content>
     <Content Include="Calculator.aspx" />
     <Content Include="Confirmation.aspx" />
@@ -264,6 +264,7 @@
       <Name>LoanManagement.Domain</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

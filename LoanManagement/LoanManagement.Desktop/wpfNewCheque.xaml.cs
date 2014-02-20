@@ -51,7 +51,7 @@ namespace LoanManagement.Desktop
                 {
                     lblDaif.Visibility = Visibility.Hidden;
                     chDaif.Visibility = Visibility.Hidden;
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         var fp = from f in ctx.FPaymentInfo
                                  where f.LoanID == lID && f.PaymentStatus!= "Cleared"
@@ -66,7 +66,7 @@ namespace LoanManagement.Desktop
                     return;
                 }
 
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var fp = ctx.FPaymentInfo.Find(fId);
                     txtAmt.Text = fp.Amount.ToString("N2");
@@ -83,7 +83,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     FPaymentInfo fp = ctx.FPaymentInfo.Find(fId);
                     DepositedCheque dp = ctx.DepositedCheques.Find(fId);
@@ -172,7 +172,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var fp = ctx.FPaymentInfo.Find(fId);
                     double tot = fp.Amount + fp.ReturnedCheque.Fee;
@@ -190,7 +190,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var fp = ctx.FPaymentInfo.Find(fId);
                     txtAmt.Text = fp.Amount.ToString("N2");

@@ -58,7 +58,7 @@ namespace LoanManagement.Website
                     lblCaptcha.Visible = !true;
                 }
 
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var clt = ctx.Clients.Where(x => x.TrackingNumber == txtTN.Text).First();
                     var c = ctx.Clients.Where(x => x.Username == txtUsername.Text).Count();
@@ -115,7 +115,7 @@ namespace LoanManagement.Website
         {
             try
             {
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var c = ctx.Clients.Where(x => x.TrackingNumber == txtTN.Text).Count();
                     if (c > 0)

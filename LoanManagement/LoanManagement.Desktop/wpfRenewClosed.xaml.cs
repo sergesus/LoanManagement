@@ -38,7 +38,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     myNum = ctx.FPaymentInfo.Where(x => x.LoanID == lId && x.PaymentStatus == "Void").Count();
 
@@ -183,7 +183,7 @@ namespace LoanManagement.Desktop
                         return;
                     }
 
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         var bk = ctx.Banks.Where(x => x.BankName == cmbBank.Text).First();
                         int bId = bk.BankID;

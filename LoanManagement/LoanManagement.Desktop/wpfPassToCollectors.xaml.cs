@@ -47,7 +47,7 @@ namespace LoanManagement.Desktop
                 //Grid grid = new Grid();
                 wdw1.Background = myBrush;
 
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var lon = ctx.Loans.Find(n);
                     lblClient.Content = lon.Client.LastName + ", " + lon.Client.FirstName + " " + lon.Client.MiddleName + " " + lon.Client.Suffix;
@@ -89,7 +89,7 @@ namespace LoanManagement.Desktop
             if (mr == MessageBoxResult.Yes)
             {
 
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var lon = ctx.Loans.Find(n);
                     lon.Status = "Under Collection";//active

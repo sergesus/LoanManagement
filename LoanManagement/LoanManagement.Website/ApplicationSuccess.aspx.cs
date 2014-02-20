@@ -26,7 +26,7 @@ namespace LoanManagement.Website
                 if (Session["tempLoan"] != null)
                 {
                     int lID = Convert.ToInt32(Session["tempLoan"]);
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         var lon = ctx.TemporaryLoanApplications.Find(lID);
                         lblContent.Text = "Your loan application has been successfully applied. Please visit our branch ON or BEFORE " + lon.ExpirationDate.ToString().Split(' ')[0] + " to submit the requirements, provide other information and to confirm of the application. Thankyou";

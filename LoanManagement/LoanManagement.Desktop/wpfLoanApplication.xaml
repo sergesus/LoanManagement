@@ -72,15 +72,15 @@
                     </DockPanel>
                 </Button>
             </Grid>
-            <Label x:Name="___No_Name_1_Copy" Content="C.I.:" HorizontalAlignment="Left" Height="30" Margin="8,216,0,0" VerticalAlignment="Top" Width="117" FontFamily="Cambria" FontSize="18"/>
-            <TextBox x:Name="txtCI" HorizontalAlignment="Left" Height="30" Margin="58,216,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="273" FontFamily="Cambria" FontSize="18" IsEnabled="False"/>
+            <Label x:Name="___No_Name_1_Copy" Content="C.I.:" HorizontalAlignment="Left" Height="30" Margin="8,216,0,0" VerticalAlignment="Top" Width="117" FontFamily="Cambria" FontSize="18" Visibility="Hidden"/>
+            <TextBox x:Name="txtCI" HorizontalAlignment="Left" Height="30" Margin="58,216,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="273" FontFamily="Cambria" FontSize="18" IsEnabled="False" Visibility="Hidden"/>
             <Button x:Name="btnContinue" HorizontalAlignment="Left" Height="39" Margin="108,236,0,0" VerticalAlignment="Top" Width="164" BorderBrush="#CC48CB00" BorderThickness="2" Background="#7F48CB00" Click="btnContinue_Click" Grid.Column="2">
                 <DockPanel LastChildFill="True">
                     <Label HorizontalContentAlignment="Center" DockPanel.Dock="Right" Foreground="#FF343434" Height="28" FontSize="16" Content="Continue"/>
                     <Image Source="Images/Cont.ico" />
                 </DockPanel>
             </Button>
-            <Button HorizontalAlignment="Left" Height="33" Margin="345,216,0,0" VerticalAlignment="Top" Width="48" Click="Button_Click_4" BorderBrush="#FF4AEE0D">
+            <Button HorizontalAlignment="Left" Height="33" Margin="345,216,0,0" VerticalAlignment="Top" Width="48" Click="Button_Click_4" BorderBrush="#FF4AEE0D" Visibility="Hidden">
                 <DockPanel LastChildFill="True">
                     <Image Source="Images/Search.ico" />
                 </DockPanel>

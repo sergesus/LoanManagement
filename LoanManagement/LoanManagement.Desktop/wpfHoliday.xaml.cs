@@ -81,7 +81,7 @@ namespace LoanManagement.Desktop
                 }
                 if (txtSearch.Text != "")
                 {
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         var bank = from h in ctx.Holidays
                                    where h.HolidayID == n || h.HolidayName.Contains(txtSearch.Text)
@@ -92,7 +92,7 @@ namespace LoanManagement.Desktop
                 }
                 else
                 {
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         var bank = from h in ctx.Holidays
                                    select h;

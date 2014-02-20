@@ -260,7 +260,7 @@ namespace LoanManagement.Desktop
             {
                 if (status == "View")
                 {
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         Holiday h = ctx.Holidays.Find(hId);
                         isYearly.IsChecked = h.isYearly;
@@ -304,7 +304,7 @@ namespace LoanManagement.Desktop
 
                 if (status == "Add")
                 {
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         //if (isYearly.IsChecked == true)
                         //{
@@ -397,7 +397,7 @@ namespace LoanManagement.Desktop
                 }
                 else
                 {
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         var h = ctx.Holidays.Find(hId);
                         h.HolidayName = txtName.Text;
@@ -490,7 +490,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     DialogResult dr = System.Windows.Forms.MessageBox.Show("Are you sure you want to delete this record?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (dr == System.Windows.Forms.DialogResult.Yes)

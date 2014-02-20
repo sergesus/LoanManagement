@@ -55,7 +55,7 @@
                                     <RadioButton x:Name="rdOwned1" Content="Owned(Not Mortgage)" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="1.482,7" FontSize="18" IsChecked="True"/>
                                     <RadioButton x:Name="rdOwned2" Content="Owned(Mortgage)" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="1.482,7" Margin="0,16,0,0" FontSize="18"/>
                                     <RadioButton x:Name="rdUsed" Content="Used Free" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="1.482,7" Margin="0,31,0,0" FontSize="18"/>
-                                    <RadioButton x:Name="rdRented" Content="Rented/Mo." HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="1.482,7" Margin="0,47,0,0" FontSize="18"/>
+                                    <RadioButton x:Name="rdRented" Content="Rented/Mo." HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="1.482,7" Margin="0,47,0,0" FontSize="18" Visibility="Hidden"/>
                                     <Label x:Name="lblRented" Content="**" HorizontalAlignment="Left" Height="23" Margin="242,40,0,0" VerticalAlignment="Top" Width="34" Foreground="Red" Visibility="Hidden"/>
                                 </Grid>
                                 <Label Content="Length of stay:" HorizontalAlignment="Left" Height="44" Margin="158,129,0,0" VerticalAlignment="Top" Width="138" RenderTransformOrigin="0.37,1.448" Foreground="Black" FontSize="18"/>

@@ -49,7 +49,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var lon = from lo in ctx.FPaymentInfo
                               where lo.PaymentDate <= DateTime.Today.Date && (lo.PaymentStatus == "Pending" || lo.PaymentStatus == "On Hold")
@@ -241,7 +241,7 @@ namespace LoanManagement.Desktop
                                     var c = ctx.PassedToCollectors.Where(x => x.LoanID == itm.LoanID).Count();
                                     if (c < 1)
                                     {
-                                        using (var ctx2 = new newerContext())
+                                        using (var ctx2 = new finalContext())
                                         {
                                             PassedToCollector pc = new PassedToCollector { DatePassed = DateTime.Today.Date, LoanID = itm.LoanID, RemainingBalance = tRem, TotalPassedBalance = tRem, TotalPaidBeforePassing = tPaid };
                                             var l1 = ctx2.Loans.Find(itm.LoanID);
@@ -275,7 +275,7 @@ namespace LoanManagement.Desktop
             {
                 wpfAgentInfo frm = new wpfAgentInfo();
                 frm.status = "View";
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var lon = ctx.Loans.Find(lId);
                     frm.aId = lon.AgentID;
@@ -293,7 +293,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var lon = ctx.Loans.Find(lId);
                     if (lon.Service.Type == "Collateral")
@@ -528,9 +528,18 @@ namespace LoanManagement.Desktop
 
                     if (lon.Status == "Released" || lon.Status == "Paid" || lon.Status == "Closed Account"
                         || lon.Status == "Under Collection")
+                    {
                         btnSOA.Visibility = Visibility.Visible;
+                        if(lon.Service.Department == "Financing")
+                            btnrSOA.Visibility = Visibility.Visible;
+                        else
+                            btnrSOA.Visibility = Visibility.Hidden;
+                    }
                     else
+                    {
                         btnSOA.Visibility = Visibility.Hidden;
+                        btnrSOA.Visibility = Visibility.Hidden;
+                    }
 
                     if (status == "Restructure")
                     {
@@ -557,7 +566,7 @@ namespace LoanManagement.Desktop
                 myBrush.ImageSource = image.Source;
                 //Grid grid = new Grid();
                 wdw1.Background = myBrush;
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var lon = ctx.Loans.Find(lId);
                     lblName.Content = lon.Client.LastName + ", " + lon.Client.FirstName + " " + lon.Client.MiddleName;
@@ -600,7 +609,7 @@ namespace LoanManagement.Desktop
                 }
                 else if (status == "Holding")
                 {
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         //var dts = ctx.FPaymentInfo.Where(x => x.LoanID == lId && x.PaymentStatus == "Pending").First();
                         if (DateTime.Today.Date > Convert.ToDateTime(lblEDt.Content) || DateTime.Today.Date < Convert.ToDateTime(lblSDt.Content))
@@ -668,7 +677,7 @@ namespace LoanManagement.Desktop
                     {
                         if (iDept == "Financing")
                         {
-                            using (var ctx = new newerContext())
+                            using (var ctx = new finalContext())
                             {
                                 var lon = ctx.Loans.Find(lId);
                                 lon.Status = "Approved";
@@ -688,7 +697,7 @@ namespace LoanManagement.Desktop
                         }
                         else
                         {
-                            using (var ctx = new newerContext())
+                            using (var ctx = new finalContext())
                             {
                                 var lon = ctx.Loans.Find(lId);
                                 lon.Status = "Approved";
@@ -710,7 +719,7 @@ namespace LoanManagement.Desktop
                 }
                 else if (status == "Holding")
                 {
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         var ctrs = ctx.FPaymentInfo.Where(x => x.LoanID == lId && x.PaymentStatus == "On Hold").Count();
                         if (ctrs < 1)
@@ -742,7 +751,7 @@ namespace LoanManagement.Desktop
                     MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure you want to process this transaction?", "Question", MessageBoxButton.YesNo);
                     if (mr == MessageBoxResult.Yes)
                     {
-                        using (var ctx = new newerContext())
+                        using (var ctx = new finalContext())
                         {
                             AdjustedLoan al = ctx.AdjustedLoans.Find(lId);
                             var py = from p in ctx.FPaymentInfo
@@ -773,7 +782,7 @@ namespace LoanManagement.Desktop
             wpfViewClientInfo frm = new wpfViewClientInfo();
             frm.status = "View2";
             frm.Height = 600;
-            using (var ctx = new newerContext())
+            using (var ctx = new finalContext())
             {
                 var lon = ctx.Loans.Find(lId);
                 frm.cID = lon.ClientID;
@@ -837,7 +846,7 @@ namespace LoanManagement.Desktop
 
                 sheet.Range["A10", "D10"].MergeCells = true;
 
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var lon = ctx.Loans.Find(lId);
 
@@ -911,7 +920,7 @@ namespace LoanManagement.Desktop
 
                 int y = 17;
 
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var lon = ctx.Loans.Find(lId);
 
@@ -1069,6 +1078,272 @@ namespace LoanManagement.Desktop
             {
                 System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
+            }
+        }
+
+        private void btnrSOA_Click(object sender, RoutedEventArgs e)
+        {
+            string FileName = AppDomain.CurrentDomain.BaseDirectory + @"iSOA.xls";
+            Microsoft.Office.Interop.Excel._Application xl = null;
+            Microsoft.Office.Interop.Excel._Workbook wb = null;
+            Microsoft.Office.Interop.Excel._Worksheet sheet = null;
+            Microsoft.Office.Interop.Excel._Worksheet sheet2 = null;
+            bool SaveChanges = false;
+
+            try
+            {
+                if (File.Exists(FileName)) { File.Delete(FileName); }
+
+                GC.Collect();
+
+                // Create a new instance of Excel from scratch
+
+                xl = new Microsoft.Office.Interop.Excel.Application();
+                xl.Visible = false;
+                wb = (Microsoft.Office.Interop.Excel._Workbook)(xl.Workbooks.Add(Missing.Value));
+                //sheet = (Microsoft.Office.Interop.Excel._Worksheet)(wb.Sheets[1]);
+                sheet = wb.Worksheets.Add();
+                //sheet2 = wb.Worksheets.Add();
+
+                // set come column heading names
+                sheet.Name = "Statement Of Account";
+                sheet.PageSetup.Orientation = Microsoft.Office.Interop.Excel.XlPageOrientation.xlPortrait;
+                sheet.Cells.Style.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+                sheet.PageSetup.RightFooter = "Page &P of &N";
+                sheet.PageSetup.TopMargin = 0.5;
+                sheet.PageSetup.RightMargin = 0.5;
+                sheet.Range["A2", "F2"].MergeCells = true;
+                sheet.Range["A7", "E7"].MergeCells = true;
+                sheet.Range["A8", "G8"].MergeCells = true;
+                sheet.Range["A8", "G8"].Style.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+                sheet.Cells[8, 1] = "Statement Of Account";
+                sheet.get_Range("A8", "G8").Font.Bold = true;
+                sheet.get_Range("A8", "G8").Font.Size = 18;
+                sheet.Range["A9", "G9"].MergeCells = true;
+                sheet.Range["A9", "G9"].Style.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+                sheet.Cells[9, 1] = "Date Prepared: " + DateTime.Now;
+                sheet.Range["A1", "Z1"].Columns.AutoFit();
+                sheet.Range["A2", "Z2"].Columns.AutoFit();
+                //sheet.Cells["1:100"].Rows.AutoFit(); 
+                String imagePath = AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\GFC.jpg";
+                sheet.Shapes.AddPicture(imagePath, MsoTriState.msoFalse, MsoTriState.msoCTrue, 40, 0, 400, 100);
+                sheet.PageSetup.CenterHeaderPicture.Filename = imagePath;
+
+                sheet.Range["A10", "D10"].MergeCells = true;
+
+                using (var ctx = new finalContext())
+                {
+                    var lon = ctx.Loans.Find(lId);
+
+                    if (lon.Service.Department == "Financing")
+                    {
+                        sheet.Cells[11, 1] = "Client Name: " + lon.Client.LastName + ", " + lon.Client.FirstName + " " + lon.Client.MiddleName + " " + lon.Client.Suffix;
+                        try
+                        {
+                            var agt = ctx.Agents.Find(lon.AgentID);
+                            sheet.Cells[12, 1] = "Agent Name: " + agt.LastName + ", " + agt.FirstName + " " + agt.MI + " " + agt.Suffix;
+                        }
+                        catch (Exception) { sheet.Cells[12, 1] = "Agent Name: -"; }
+                        sheet.Cells[13, 1] = "Type of Loan: " + lon.Service.Name;
+
+                        sheet.Cells[15, 1] = "Payment History";
+
+                       
+
+                        
+                    }
+                    else
+                    {
+                        sheet.Cells[11, 1] = "Client Name: " + lon.Client.LastName + ", " + lon.Client.FirstName + " " + lon.Client.MiddleName + " " + lon.Client.Suffix;
+                        try
+                        {
+                            var agt = ctx.Agents.Find(lon.AgentID);
+                            sheet.Cells[12, 1] = "Agent Name: " + agt.LastName + ", " + agt.FirstName + " " + agt.MI + " " + agt.Suffix;
+                        }
+                        catch (Exception) { sheet.Cells[12, 1] = "Agent Name: -"; }
+                        var py = ctx.MPaymentInfoes.Where(x => x.LoanID == lId && x.PaymentNumber == 1).First();
+
+                        try
+                        {
+                            var cb = ctx.Clients.Find(lon.CoBorrower);
+                            sheet.Cells[13, 1] = "Co-Borrower: " + cb.LastName + ", " + cb.FirstName + " " + cb.MiddleName + " " + cb.Suffix;
+                        }
+                        catch (Exception) { sheet.Cells[13, 1] = "Co-Borrower: -"; }
+
+                        var cl = ctx.Employees.Find(lon.CollectortID);
+                        sheet.Cells[14, 1] = "Collector: " + cl.LastName + " , " + cl.FirstName + " " + cl.MI + " " + cl.Suffix;
+                        sheet.Cells[11, 10] = "Type of Loan: " + lon.Service.Name;
+                        sheet.Cells[12, 10] = "Principal Loan: " + lon.ReleasedLoan.Principal.ToString("N2");
+                        sheet.Cells[13, 10] = "First Payment: " + py.DueDate.ToString().Split(' ')[0];
+                        sheet.Cells[14, 10] = "Amount: " + py.Amount.ToString("N2");
+                    }
+
+                    if (lon.Service.Department == "Financing")
+                    {
+                        sheet.get_Range("A11", "K14").Font.Italic = true;
+                        sheet.get_Range("A11", "K14").Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
+                        sheet.Cells[16, 1] = "Payment No.";
+                        sheet.Cells[16, 3] = "Cheque No.";
+                        sheet.Cells[16, 5] = "Payment Date";
+                        sheet.Cells[16, 7] = "Amount";
+                        sheet.get_Range("A15", "J16").Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
+                        sheet.get_Range("A15", "J16").Font.Underline = true;
+                    }
+                    else
+                    {
+                        sheet.get_Range("A11", "K14").Font.Italic = true;
+                        sheet.get_Range("A11", "K14").Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
+                        sheet.Cells[16, 2] = "Payment No.";
+                        sheet.Cells[16, 4] = "Amount";
+                        sheet.Cells[16, 6] = "Due Date";
+                        sheet.get_Range("B16", "J16").Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
+                        sheet.get_Range("B16", "J16").Font.Underline = true;
+                    }
+                }
+
+                int y = 17;
+
+                using (var ctx = new finalContext())
+                {
+                    var lon = ctx.Loans.Find(lId);
+
+
+                    //var emp2 = ctx.Employees.Find(UserID);
+                    //sheet.PageSetup.LeftFooter = "Prepared By: " + emp2.LastName + ", " + emp2.FirstName + " " + emp2.MI + " " + emp2.Suffix;
+                    //emp2 = ctx.Employees.Find(1);
+                    //sheet.PageSetup.CenterFooter = "Confirmed By: " + emp2.LastName + ", " + emp2.FirstName + " " + emp2.MI + " " + emp2.Suffix;
+                    if (lon.Service.Department == "Financing")
+                    {
+                        var ser = from se in ctx.FPaymentInfo
+                                  where se.LoanID == lId && se.PaymentStatus=="Cleared"
+                                  select se;
+                        //sheet.Cells[10, 1] = "Prepared By: " + emp2.LastName + ", " + emp2.FirstName + " " + emp2.MI + " " + emp2.Suffix;
+
+
+                        int iNum = 0;
+                        foreach (var i in ser)
+                        {
+                            sheet.Cells[y, 1] = "Number " + i.PaymentNumber;
+                            sheet.Cells[y, 3] = i.ChequeInfo;
+                            sheet.Cells[y, 5] = i.PaymentDate.ToString().Split(' ')[0];
+                            sheet.Cells[y, 7] = i.Amount;
+
+                            iNum++;
+                            y++;
+                        }
+
+
+
+                        sheet.get_Range("B17", "A" + y).Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
+                        sheet.get_Range("D17", "C" + y).Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignRight;
+                        sheet.get_Range("F17", "E" + y).Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignRight;
+                        int x1 = y;
+                        y+=5;
+                        var py = ctx.FPaymentInfo.Where(x => x.LoanID == lId && (x.PaymentStatus.Contains("Due") || x.PaymentStatus.Contains("Pending"))).First();
+                        sheet.Cells[y, 1] = "Next Payment: " + py.ChequeDueDate.ToString().Split(' ')[0];
+                        y++;
+                        sheet.Cells[y, 1] = "Amount: " + py.Amount.ToString("N2");
+                        y++;
+                        double pen = 0.0;
+                        var c = ctx.ReturnedCheques.Where(x => x.FPaymentInfo.LoanID == lId && x.isPaid == false).Count();
+                        if (c > 0)
+                        {
+                            var c1 = from ic in ctx.ReturnedCheques
+                                     where ic.FPaymentInfo.LoanID == lId && ic.isPaid == false
+                                     select ic;
+                            foreach (var itm in c1)
+                            {
+                                pen = pen + itm.Fee;
+                            }
+                        }
+                        sheet.Cells[y, 1] = "Penalties: " + pen.ToString("N2");
+                        y++;
+                        double tot = py.Amount + pen;
+                        sheet.Cells[y, 1] = "Total Amount: " + tot.ToString("N2");
+                        sheet.get_Range("A" + x1, "J" + y).Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
+                        sheet.get_Range("A1", "J" + y).EntireColumn.AutoFit();
+                    }
+                    else
+                    {
+                        var ser = from se in ctx.GenSOA
+                                  select se;
+                        int iNum = 0;
+                        foreach (var i in ser)
+                        {
+                            sheet.Cells[y, 3] = i.PaymentNumber;
+                            sheet.Cells[y, 5] = i.Amount;
+                            sheet.Cells[y, 7] = i.PaymentDate.ToString().Split(' ')[0];
+                            sheet.Cells[y, 9] = i.RemainingBalance;
+
+                            iNum++;
+                            y++;
+                        }
+
+                        sheet.get_Range("C17", "A" + y).Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignRight;
+                        sheet.get_Range("E17", "C" + y).Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignRight;
+                        sheet.get_Range("G17", "E" + y).Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
+                        sheet.get_Range("I17", "G" + y).Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignRight;
+
+                        sheet.get_Range("B16", "J" + y).EntireColumn.AutoFit();
+                    }
+
+                    //sheet.Range["A16", "I" + y].AutoFit();
+                    sheet.get_Range("B16", "J" + y).EntireColumn.AutoFit();
+
+                    // Let loose control of the Excel instance
+                }
+                xl.Visible = false;
+                xl.UserControl = false;
+                xl.StandardFont = "Segoe UI";
+                xl.StandardFontSize = 12;
+
+
+
+                // Set a flag saying that all is well and it is ok to save our changes to a file.
+
+                SaveChanges = true;
+
+                //  Save the file to disk
+                sheet.Protect();
+
+                wb.SaveAs(FileName, Microsoft.Office.Interop.Excel.XlFileFormat.xlWorkbookNormal,
+                          null, null, false, false, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlShared,
+                          false, false, null, null, null);
+                object paramMissing = Type.Missing;
+
+                wb = xl.Workbooks.Open(FileName,
+                    paramMissing, paramMissing, paramMissing, paramMissing,
+                    paramMissing, paramMissing, paramMissing, paramMissing,
+                    paramMissing, paramMissing, paramMissing, paramMissing,
+                    paramMissing, paramMissing);
+
+                string paramExportFilePath = AppDomain.CurrentDomain.BaseDirectory + @"iOfficialSchedule.pdf";
+                XlFixedFormatType paramExportFormat = XlFixedFormatType.xlTypePDF;
+                XlFixedFormatQuality paramExportQuality =
+                XlFixedFormatQuality.xlQualityStandard;
+                bool paramOpenAfterPublish = false;
+                bool paramIncludeDocProps = true;
+                bool paramIgnorePrintAreas = true;
+                object paramFromPage = Type.Missing;
+                object paramToPage = Type.Missing;
+
+                if (wb != null)
+                    wb.ExportAsFixedFormat(paramExportFormat,
+                        paramExportFilePath, paramExportQuality,
+                        paramIncludeDocProps, paramIgnorePrintAreas, paramFromPage,
+                        paramToPage, paramOpenAfterPublish,
+                        paramMissing);
+
+                Process xlProcess = Process.Start(paramExportFilePath);
+            }
+            catch (Exception err)
+            {
+                String msg;
+                msg = "Error: ";
+                msg = String.Concat(msg, err.Message);
+                msg = String.Concat(msg, " Line: ");
+                msg = String.Concat(msg, err.Source);
+                System.Windows.MessageBox.Show(msg);
             }
         }
     }

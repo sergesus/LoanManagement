@@ -39,7 +39,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var lon = ctx.Loans.Find(lID);
                     myNum = ctx.CollateralInformations.Where(x => x.ServiceID == lon.ServiceID).Count();
@@ -120,7 +120,7 @@ namespace LoanManagement.Desktop
             {
                 if (System.Windows.MessageBox.Show("Are you sure you want to save this information?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question) == MessageBoxResult.Yes)
                 {
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         //System.Windows.MessageBox.Show(myStr.Count().ToString());
                         int ctr = 0;

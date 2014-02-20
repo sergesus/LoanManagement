@@ -48,7 +48,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var iCtx = new newerContext())
+                using (var iCtx = new finalContext())
                 {
                     var l = from x in iCtx.TemporaryLoanApplications
                             where x.ExpirationDate <= DateTime.Today.Date && x.Client.isConfirmed == true
@@ -74,7 +74,7 @@ namespace LoanManagement.Desktop
 
 
 
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var clt = from x in ctx.Clients
                               where x.isConfirmed == false && x.iClientExpiration.ExpirationDate <= DateTime.Today.Date
@@ -117,7 +117,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     DateTime dt = DateTime.Today.Date.AddDays(7);
                     var lons = from lo in ctx.FPaymentInfo
@@ -174,7 +174,7 @@ namespace LoanManagement.Desktop
 
         private void checkState()
         {
-            using (var ctx = new newerContext())
+            using (var ctx = new finalContext())
             {
                 var st = ctx.State.Find(1);
                 if (st.iState > 2)
@@ -198,7 +198,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var lon = from lo in ctx.FPaymentInfo
                               where lo.PaymentDate <= DateTime.Today.Date && (lo.PaymentStatus == "Pending" || lo.PaymentStatus == "On Hold")
@@ -390,7 +390,7 @@ namespace LoanManagement.Desktop
                                     var c = ctx.PassedToCollectors.Where(x => x.LoanID == itm.LoanID).Count();
                                     if (c < 1)
                                     {
-                                        using (var ctx2 = new newerContext())
+                                        using (var ctx2 = new finalContext())
                                         {
                                             PassedToCollector pc = new PassedToCollector { DatePassed = DateTime.Today.Date, LoanID = itm.LoanID, RemainingBalance = tRem, TotalPassedBalance = tRem, TotalPaidBeforePassing = tPaid };
                                             var l1 = ctx2.Loans.Find(itm.LoanID);
@@ -431,7 +431,7 @@ namespace LoanManagement.Desktop
                 checkExpiration();
                 remind();
                 /*
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     Domain.Position pos = new Domain.Position { PositionName = "Administrator", Description = "ForAdmins" };
                     ctx.SaveChanges();
@@ -496,7 +496,7 @@ namespace LoanManagement.Desktop
 
 
 
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var count = ctx.Users.Where(x => x.Username == txtUsername.Text && x.Password == txtPassword.Password).Count();
                     if (count > 0)
@@ -601,7 +601,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var ctr = ctx.Users.Where(x => x.Username == txtUsername.Text).Count();
                     if (ctr > 0)
@@ -640,7 +640,7 @@ namespace LoanManagement.Desktop
             int ascii = Convert.ToInt16(e.Key);
             if (ascii == 2)
             {
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var st = ctx.State.Find(1);
                     if (st.iState > 2)

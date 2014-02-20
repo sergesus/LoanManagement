@@ -19,7 +19,7 @@ namespace LoanManagement.Website
                 Session["Service"] = null;
                 Session["UpdateChecker"] = null;
                 Session["iService"] = null;
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var set = ctx.OnlineSettings.Find(1);
                     lblDesc.Text = set.HomeDescription.Replace("\n", "<br />"); ;

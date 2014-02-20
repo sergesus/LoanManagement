@@ -54,7 +54,7 @@ namespace LoanManagement.Desktop
 
         private void reset()
         {
-            using (var ctx = new newerContext())
+            using (var ctx = new finalContext())
             {
                 var lon = ctx.Loans.Find(lId);
                 lblName.Content = name;
@@ -122,7 +122,7 @@ namespace LoanManagement.Desktop
             wpfViewClientInfo frm = new wpfViewClientInfo();
             frm.status = "View2";
             frm.Height = 600;
-            using (var ctx = new newerContext())
+            using (var ctx = new finalContext())
             {
                 var lon = ctx.Loans.Find(lId);
                 frm.cID = lon.ClientID;

@@ -57,7 +57,7 @@ namespace LoanManagement.Desktop
             {
                 if (status == "UReleasing")
                 {
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         var lons = from ge in ctx.FPaymentInfo
                                    where ge.LoanID == lId
@@ -135,7 +135,7 @@ namespace LoanManagement.Desktop
 
                 if (status == "Releasing" || status == "Renewal")
                 {
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         myNum = 0;
                         ctx.Database.ExecuteSqlCommand("delete from dbo.GenSOAs");
@@ -267,7 +267,7 @@ namespace LoanManagement.Desktop
                 }
                 else if (status == "UReleasing")
                 {
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         var lon = ctx.Loans.Find(lId);
                         var lons = from ge in ctx.FPaymentInfo
@@ -307,7 +307,7 @@ namespace LoanManagement.Desktop
                 //num = 0;
                 if (status == "Releasing" || status == "Renewal")
                 {
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         var lon = ctx.Loans.Find(lId);
                         var ser = ctx.Services.Find(lon.ServiceID);
@@ -360,7 +360,7 @@ namespace LoanManagement.Desktop
                     refresh();
                     refr();
                     int myCtr = 0;
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         var lon = ctx.Loans.Find(lId);
                         var bnk = ctx.Banks.Find(lon.BankID);
@@ -412,7 +412,7 @@ namespace LoanManagement.Desktop
 
         private void cmbBank_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            /*using (var ctx = new newerContext())
+            /*using (var ctx = new finalContext())
             { 
                 ComboBoxItem typeItem = (ComboBoxItem)cmbBank.SelectedItem;
                 string value = typeItem.Content.ToString();
@@ -515,7 +515,7 @@ namespace LoanManagement.Desktop
 
                 sheet.Range["A10", "D10"].MergeCells = true;
 
-                using(var ctx = new newerContext())
+                using(var ctx = new finalContext())
                 {
                     var lon = ctx.Loans.Find(lId);
                     sheet.Cells[11, 1] = "Client Name: " + lon.Client.LastName + ", " + lon.Client.FirstName + " " + lon.Client.MiddleName + " " + lon.Client.Suffix;
@@ -546,7 +546,7 @@ namespace LoanManagement.Desktop
 
                 int y = 17;
 
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var ser = from se in ctx.GenSOA
                               select se;
@@ -647,7 +647,7 @@ namespace LoanManagement.Desktop
                 {
                     double max = 0;
                     double min = 0;
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         var lon = ctx.Loans.Find(lId);
                         var ser = ctx.Services.Find(lon.ServiceID);
@@ -712,7 +712,7 @@ namespace LoanManagement.Desktop
                     {
                         if (status == "Renewal")
                         {
-                            using (var ctx = new newerContext())
+                            using (var ctx = new finalContext())
                             {
                                 var bk = ctx.Banks.Where(x => x.BankName == cmbBank.Text).First();
                                 int bId = bk.BankID;
@@ -764,7 +764,7 @@ namespace LoanManagement.Desktop
                         }
                         else
                         {
-                            using (var ctx = new newerContext())
+                            using (var ctx = new finalContext())
                             {
                                 var bk = ctx.Banks.Where(x => x.BankName == cmbBank.Text).First();
                                 int bId = bk.BankID;
@@ -801,7 +801,7 @@ namespace LoanManagement.Desktop
                 else if (status == "UReleasing")
                 {
                     int myCtr = 0;
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         var lons = from lo in ctx.FPaymentInfo
                                    where lo.LoanID == lId
@@ -833,7 +833,7 @@ namespace LoanManagement.Desktop
 
         private void txtAmt_LostFocus(object sender, RoutedEventArgs e)
         {
-            using (var ctx = new newerContext())
+            using (var ctx = new finalContext())
             {
                 var lon = ctx.Loans.Find(lId);
                 var ser = ctx.Services.Find(lon.ServiceID);
@@ -910,7 +910,7 @@ namespace LoanManagement.Desktop
 
                 int y = 13;
 
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var ser = from se in ctx.GenSOA
                               select se;

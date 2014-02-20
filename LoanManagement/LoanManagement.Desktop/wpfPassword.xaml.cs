@@ -61,7 +61,7 @@ namespace LoanManagement.Desktop
             {
                 if (status == "view")
                 {
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         var ctr = ctx.Users.Where(x => x.EmployeeID == ID && x.Password == txtPassword.Password).Count();
                         if (ctr > 0)
@@ -82,7 +82,7 @@ namespace LoanManagement.Desktop
                 }
                 else if (status == "void")
                 {
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         var ctr = ctx.Users.Where(x => x.EmployeeID == UserID && x.Password == txtPassword.Password).Count();
                         if (ctr > 0)
@@ -102,7 +102,7 @@ namespace LoanManagement.Desktop
                 }
                 else if (status == "scope")
                 {
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         var ctr = ctx.Users.Where(x => x.EmployeeID == ID && x.Password == txtPassword.Password).Count();
                         if (ctr > 0)

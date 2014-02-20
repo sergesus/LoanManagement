@@ -58,7 +58,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var emp = from em in ctx.Users where em.Employee.Active == true select new { EmployeeID= em.EmployeeID, Name = em.Employee.FirstName + " " + em.Employee.MI + " " + em.Employee.LastName, Username = em.Username };
                     dgEmp.ItemsSource = emp.ToList();
@@ -75,7 +75,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     img.Visibility = Visibility.Visible;
                     var emp = ctx.Employees.Find(Convert.ToInt32(getRow(dgEmp, 0)));
@@ -143,7 +143,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 { 
                     int n = Convert.ToInt32(getRow(dgEmp,0));
                     var emp = ctx.Employees.Find(n);
@@ -181,7 +181,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     int n = Convert.ToInt32(getRow(dgEmp, 0));
                     var emp = ctx.Employees.Find(n);
@@ -211,7 +211,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var emp = from em in ctx.Users 
                               where em.Employee.Active == true && em.Username.Contains(txtSearch.Text)

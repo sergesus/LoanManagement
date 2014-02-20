@@ -45,7 +45,7 @@ namespace LoanManagement.Desktop
                 /*MessageBoxResult mr = MessageBox.Show("Sure?", "Question", MessageBoxButton.YesNo);
                 if (mr == MessageBoxResult.Yes)
                 {
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         AdjustedLoan al = new AdjustedLoan { DateAdjusted = DateTime.Today.Date, Days = Convert.ToInt32(txtDays.Text), Fee = Convert.ToDouble(lblFee.Content), LoanID = lId };
                         var py = from p in ctx.FPaymentInfo
@@ -87,7 +87,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var lon = ctx.Loans.Find(lId);
                     double rem = 0;

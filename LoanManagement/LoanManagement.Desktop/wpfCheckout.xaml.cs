@@ -49,7 +49,7 @@ namespace LoanManagement.Desktop
                         return;
                     }
 
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure you want to process this transaction?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
                         if (mr == MessageBoxResult.Yes)
@@ -76,7 +76,7 @@ namespace LoanManagement.Desktop
                     MessageBoxResult mr = MessageBox.Show("Are you sure you want to process this transaction?", "Question", MessageBoxButton.YesNo);
                     if (mr == MessageBoxResult.Yes)
                     {
-                        using (var ctx = new newerContext())
+                        using (var ctx = new finalContext())
                         {
                             AdjustedLoan al = new AdjustedLoan { DateAdjusted = DateTime.Today.Date, Days = Convert.ToInt32(days), Fee = Convert.ToDouble(lbl2.Content), LoanID = lId };
                             var py = from p in ctx.FPaymentInfo
@@ -151,7 +151,7 @@ namespace LoanManagement.Desktop
                 else if (status == "Holding")
                 {
                     lbl1.Content = "Cheque Holding";
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     { 
                        var dts = ctx.FPaymentInfo.Where(x => x.LoanID == lId && (x.PaymentStatus == "Pending" || x.PaymentStatus == "On Hold")).First();
                        double hFee = dts.Amount * (dts.Loan.Service.Holding / 100);
@@ -170,7 +170,7 @@ namespace LoanManagement.Desktop
                 else if (status == "Daif")
                 {
                     lbl1.Content = "DAIF Fee";
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         var fee = ctx.ReturnedCheques.Find(fId);
                         double hFee = Convert.ToDouble(fee.Fee.ToString("N2"));
@@ -180,7 +180,7 @@ namespace LoanManagement.Desktop
                 else if (status == "RenewClosed")
                 {
                     lbl1.Content = "Closed Account Fee";
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         var fee = ctx.ClosedAccounts.Where(x => x.isPaid == false && x.LoanID == lId).First();
                         double hFee = Convert.ToDouble(fee.Fee.ToString("N2"));

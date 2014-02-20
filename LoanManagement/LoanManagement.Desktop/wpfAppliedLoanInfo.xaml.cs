@@ -41,7 +41,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var lon = ctx.Loans.Find(lId);
 
@@ -185,7 +185,7 @@ namespace LoanManagement.Desktop
             wpfViewClientInfo frm = new wpfViewClientInfo();
             frm.status = "View2";
             frm.Height = 600;
-            using (var ctx = new newerContext())
+            using (var ctx = new finalContext())
             {
                 var lon = ctx.Loans.Find(lId);
                 frm.cID = lon.ClientID;
@@ -204,7 +204,7 @@ namespace LoanManagement.Desktop
             {
                 wpfAgentInfo frm = new wpfAgentInfo();
                 frm.status = "View";
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var lon = ctx.Loans.Find(lId);
                     frm.aId = lon.AgentID;
@@ -224,7 +224,7 @@ namespace LoanManagement.Desktop
             {
                 if (status == "Approval" || status == "UApproval" || status=="Renewal Approval")
                 {
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         var lon = ctx.Loans.Find(lId);
                         if (status != "Renewal Approval")
@@ -262,7 +262,7 @@ namespace LoanManagement.Desktop
                 else if (status == "Releasing" || status == "Renewal")
                 {
                     String iDept = "";
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         var ln = ctx.Loans.Find(lId);
                         iDept = ln.Service.Department;
@@ -304,6 +304,8 @@ namespace LoanManagement.Desktop
                     wpfLoanDeclining frm = new wpfLoanDeclining();
                     frm.lId = lId;
                     frm.status = "Renewal";
+                    if (status == "Approval")
+                        frm.status = status;
                     frm.UserID = UserID;
                     this.Close();
                     frm.ShowDialog();
@@ -313,7 +315,7 @@ namespace LoanManagement.Desktop
                     System.Windows.MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure you want to update this loan?", "Question", MessageBoxButton.YesNo);
                     if (mr == System.Windows.MessageBoxResult.Yes)
                     {
-                        using (var ctx = new newerContext())
+                        using (var ctx = new finalContext())
                         {
                             var lon = ctx.Loans.Find(lId);
                             var ctr = ctx.Loans.Where(x => x.ClientID == lon.ClientID && (x.Status == "Applied" || x.Status == "Released" || x.Status == "Approved") && x.LoanID != lon.LoanID).Count();

@@ -41,7 +41,7 @@ namespace LoanManagement.Desktop
                 myBrush.ImageSource = image.Source;
                 wdw1.Background = myBrush;
 
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var sc = ctx.PositionScopes.Find(ID);
                     cClient.IsChecked = sc.MClient;
@@ -85,7 +85,7 @@ namespace LoanManagement.Desktop
             MessageBoxResult mr = MessageBox.Show("Are you sure you want to save this record", "Question", MessageBoxButton.YesNo);
             if (mr == MessageBoxResult.Yes)
             {
-                using (var ctx = new newerContext())
+                using (var ctx = new finalContext())
                 {
                     var sc = ctx.PositionScopes.Find(ID);
                     sc.MClient = Convert.ToBoolean(cClient.IsChecked);

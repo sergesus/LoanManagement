@@ -39,7 +39,7 @@ namespace LoanManagement.Website
 
                 if (status == "Online")
                 {
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         var ctr = ctx.TemporaryLoanApplications.Where(x => x.TemporaryLoanApplicationID == id && x.ClientID == cID).Count();
                         if (ctr < 1)
@@ -50,7 +50,7 @@ namespace LoanManagement.Website
                 }
                 else
                 {
-                    using (var ctx = new newerContext())
+                    using (var ctx = new finalContext())
                     {
                         var ctr = ctx.Loans.Where(x => x.LoanID == id && x.ClientID == cID).Count();
                         if (ctr < 1)
