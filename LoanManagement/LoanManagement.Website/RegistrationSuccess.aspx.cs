@@ -17,6 +17,12 @@ namespace LoanManagement.Website
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            using (var ctx = new finalContext())
+            {
+                var set = ctx.OnlineSettings.Find(1);
+                lblVisitor.Text = set.Visitor.ToString();
+            }
+            lblTime.Text = DateTime.Now.ToString("MMM dd, yyyy | hh:mm tt");
             if (Session["newID"] != null)
             {
                 int id = Convert.ToInt32((string)Session["newID"]);
@@ -47,6 +53,11 @@ namespace LoanManagement.Website
             {
                 lblContent.Text = "Account has been successfully registered. You can now login to use our online features.";
             }
+        }
+
+        protected void Timer1_Tick(object sender, EventArgs e)
+        {
+            lblTime.Text = DateTime.Now.ToString("MMM dd yyyy, | hh:mm tt");
         }
 
         protected void LinkButton1_Click(object sender, EventArgs e)

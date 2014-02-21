@@ -403,7 +403,7 @@
                                         <Image Source="Images/Refresh.ico" />
                                     </DockPanel>
                                 </Button>
-                                <ComboBox x:Name="cmbM1" HorizontalAlignment="Left" Height="31" Margin="125,80,0,0" VerticalAlignment="Top" Width="89" FontSize="18">
+                                <ComboBox x:Name="cmbM1" HorizontalAlignment="Left" Height="31" Margin="125,80,0,0" VerticalAlignment="Top" Width="100" FontSize="18">
                                     <ComboBoxItem Content="January"/>
                                     <ComboBoxItem Content="February"/>
                                     <ComboBoxItem Content="March"/>
@@ -417,7 +417,7 @@
                                     <ComboBoxItem Content="November"/>
                                     <ComboBoxItem Content="December"/>
                                 </ComboBox>
-                                <ComboBox x:Name="cmbM2" HorizontalAlignment="Left" Height="31" Margin="126,116,0,0" VerticalAlignment="Top" Width="88" FontSize="18">
+                                <ComboBox x:Name="cmbM2" HorizontalAlignment="Left" Height="31" Margin="126,116,0,0" VerticalAlignment="Top" Width="99" FontSize="18">
                                     <ComboBoxItem Content="January"/>
                                     <ComboBoxItem Content="February"/>
                                     <ComboBoxItem Content="March"/>
@@ -609,6 +609,24 @@
                                     <Image Source="Images/Bank.ico" />
                                 </DockPanel>
                             </Button>
+                            <Button x:Name="btnRAging" HorizontalAlignment="Left" Height="118" Margin="249,10,0,0" VerticalAlignment="Top" Width="128" BorderBrush="#FF4AEE0D" BorderThickness="4" Grid.Column="1" Click="btnRAging_Click">
+                                <DockPanel LastChildFill="True">
+                                    <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom" Foreground="#FF343434" Content="Aging Accounts"/>
+                                    <Image Source="Images/Application.ico" />
+                                </DockPanel>
+                            </Button>
+                            <Button x:Name="btnAgents_Copy2" HorizontalAlignment="Left" Height="118" Margin="249,133,0,0" VerticalAlignment="Top" Width="128" BorderBrush="#FF4AEE0D" BorderThickness="4" Grid.Column="1" Click="btnAgents_Copy2_Click">
+                                <DockPanel LastChildFill="True">
+                                    <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom" Foreground="#FF343434" Content="List of Cheques"/>
+                                    <Image Source="Images/Bank.ico" />
+                                </DockPanel>
+                            </Button>
+                            <Button x:Name="btnRAgentCom" HorizontalAlignment="Left" Height="118" Margin="249,256,0,0" VerticalAlignment="Top" Width="128" BorderBrush="#FF4AEE0D" BorderThickness="4" Grid.Column="1" Click="btnRAgentCom_Click">
+                                <DockPanel LastChildFill="True">
+                                    <Label HorizontalContentAlignment="Center" DockPanel.Dock="Bottom" Foreground="#FF343434" Content="Agent Commision Rep."/>
+                                    <Image Source="Images/Employee.ico" />
+                                </DockPanel>
+                            </Button>
                         </Grid>
                     </TabItem>
                 </TabControl>
@@ -683,9 +701,9 @@
                 </DockPanel>
             </Button>
             <Label x:Name="dateText" Content="" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,635,0,0" Width="218" FontSize="18" Foreground="#CC48CB00" RenderTransformOrigin="1.107,0.71" FontWeight="Bold" MouseDown="dateText_MouseDown"/>
-            <Label x:Name="lblNDue" Content="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,218,0,0" Width="32" FontSize="11" Foreground="#CCFFFFFF" RenderTransformOrigin="1.107,0.71" Height="23" Background="#FFFF3030" FontWeight="Bold" HorizontalContentAlignment="Center"/>
-            <Label x:Name="lblNReg" Content="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,259,0,0" Width="32" FontSize="11" Foreground="#CCFFFFFF" RenderTransformOrigin="1.107,0.71" Height="23" Background="#FFFF3030" FontWeight="Bold" HorizontalContentAlignment="Center"/>
-            <Label x:Name="lblNApp" Content="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,299,0,0" Width="32" FontSize="11" Foreground="#CCFFFFFF" RenderTransformOrigin="1.107,0.71" Height="23" Background="#FFFF3030" FontWeight="Bold" HorizontalContentAlignment="Center"/>
+            <Label x:Name="lblNDue" Content="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,218,0,0" Width="32" FontSize="11" Foreground="#CCFFFFFF" RenderTransformOrigin="1.107,0.71" Height="23" Background="#FFFF3030" FontWeight="Bold" HorizontalContentAlignment="Center" Visibility="Hidden"/>
+            <Label x:Name="lblNReg" Content="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,259,0,0" Width="32" FontSize="11" Foreground="#CCFFFFFF" RenderTransformOrigin="1.107,0.71" Height="23" Background="#FFFF3030" FontWeight="Bold" HorizontalContentAlignment="Center" Visibility="Hidden"/>
+            <Label x:Name="lblNApp" Content="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="10,299,0,0" Width="32" FontSize="11" Foreground="#CCFFFFFF" RenderTransformOrigin="1.107,0.71" Height="23" Background="#FFFF3030" FontWeight="Bold" HorizontalContentAlignment="Center" Visibility="Hidden"/>
         </Grid>
     </Grid>
 </Controls:MetroWindow>

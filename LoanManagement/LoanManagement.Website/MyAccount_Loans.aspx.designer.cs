@@ -31,6 +31,15 @@ namespace LoanManagement.Website {
         protected global::System.Web.UI.HtmlControls.HtmlForm Form1;
         
         /// <summary>
+        /// Timer1 control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.Timer Timer1;
+        
+        /// <summary>
         /// LinkButton2 control.
         /// </summary>
         /// <remarks>
@@ -182,6 +191,24 @@ namespace LoanManagement.Website {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Button btnView;
+        
+        /// <summary>
+        /// lblTime control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblTime;
+        
+        /// <summary>
+        /// lblVisitor control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblVisitor;
         
         /// <summary>
         /// ScriptManager1 control.

@@ -72,7 +72,7 @@ namespace LoanManagement.Desktop
             {
                 using (var ctx = new finalContext())
                 {
-                    var ctr1 = ctx.FPaymentInfo.Where(x => x.PaymentStatus.Contains("Due")).Count();
+                    var ctr1 = ctx.FPaymentInfo.Where(x => x.PaymentStatus == "Due").Count();
                     if (ctr1 > 0)
                     {
                         lblNDue.Content = ctr1;
@@ -2700,6 +2700,181 @@ namespace LoanManagement.Desktop
                 System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 return;
             }
+        }
+
+        private void btnRAging_Click(object sender, RoutedEventArgs e)
+        {
+            string FileName = AppDomain.CurrentDomain.BaseDirectory + @"iAging.xls";
+            Microsoft.Office.Interop.Excel._Application xl = null;
+            Microsoft.Office.Interop.Excel._Workbook wb = null;
+            Microsoft.Office.Interop.Excel._Worksheet sheet = null;
+            bool SaveChanges = false;
+
+            try
+            {
+                if (File.Exists(FileName)) { File.Delete(FileName); }
+
+                GC.Collect();
+
+                // Create a new instance of Excel from scratch
+
+                xl = new Microsoft.Office.Interop.Excel.Application();
+                xl.Visible = false;
+                wb = (Microsoft.Office.Interop.Excel._Workbook)(xl.Workbooks.Add(Missing.Value));
+                sheet = (Microsoft.Office.Interop.Excel._Worksheet)(wb.Sheets[1]);
+
+                // set come column heading names
+                sheet.Name = "Aging Accounts";
+                sheet.PageSetup.Orientation = Microsoft.Office.Interop.Excel.XlPageOrientation.xlLandscape;
+                sheet.Cells.Style.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+                sheet.PageSetup.RightFooter = "Page &P of &N";
+                sheet.PageSetup.TopMargin = 0.5;
+                sheet.Range["A2", "F2"].MergeCells = true;
+                sheet.Range["A7", "E7"].MergeCells = true;
+                sheet.Range["A8", "K8"].MergeCells = true;
+                sheet.Range["A8", "K8"].Style.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+                sheet.Cells[8, 1] = "Aging Accounts";
+                sheet.get_Range("A8", "K8").Font.Bold = true;
+                sheet.get_Range("A8", "K8").Font.Size = 18;
+                sheet.Range["A9", "K9"].MergeCells = true;
+                sheet.Range["A9", "K9"].Style.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignCenter;
+                sheet.Cells[9, 1] = "Date Prepared: " + DateTime.Now;
+                sheet.Range["A1", "Z1"].Columns.AutoFit();
+                sheet.Range["A2", "Z2"].Columns.AutoFit();
+                //sheet.Cells["1:100"].Rows.AutoFit(); 
+                String imagePath = AppDomain.CurrentDomain.BaseDirectory + "\\Icons\\GFC.jpg";
+                sheet.Shapes.AddPicture(imagePath, MsoTriState.msoFalse, MsoTriState.msoCTrue, 60, 0, 600, 100);
+                sheet.PageSetup.CenterHeaderPicture.Filename = imagePath;
+
+                sheet.Range["A10", "D10"].MergeCells = true;
+
+                sheet.Cells[12, 1] = "Loan ID";
+                sheet.Cells[12, 3] = "Client";
+                sheet.Cells[12, 5] = "Term";
+                sheet.Cells[12, 7] = "Unpaid Chqs.";
+                sheet.Cells[12, 9] = "Total Unpaid";
+                sheet.Cells[12, 11] = "Mode";
+                sheet.get_Range("A12", "K12").Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
+                sheet.get_Range("A12", "K12").Font.Underline = true;
+
+                int y = 13;
+
+                using (var ctx = new finalContext())
+                {
+                    var ser = from se in ctx.Loans
+                              where se.Status == "Released"
+                              select se;
+
+                    var emp2 = ctx.Employees.Find(UserID);
+
+                    //sheet.Cells[10, 1] = "Prepared By: " + emp2.LastName + ", " + emp2.FirstName + " " + emp2.MI + " " + emp2.Suffix;
+                    sheet.PageSetup.LeftFooter = "Prepared By: " + emp2.LastName + ", " + emp2.FirstName + " " + emp2.MI + " " + emp2.Suffix;
+                    emp2 = ctx.Employees.Find(1);
+                    sheet.PageSetup.CenterFooter = "Confirmed By: " + emp2.LastName + ", " + emp2.FirstName + " " + emp2.MI + " " + emp2.Suffix;
+                    foreach (var i in ser)
+                    {
+                        var ctr = ctx.FPaymentInfo.Where(x => x.PaymentStatus.Contains("Due") && x.LoanID == i.LoanID).Count();
+                        if (ctr >= 2)
+                        {
+
+                            sheet.Cells[y, 1] = i.LoanID;
+                            string myString = i.Client.LastName + ", " + i.Client.FirstName + " " + i.Client.MiddleName + " " + i.Client.Suffix;
+                            try
+                            {
+                                myString = myString.Substring(0, 20);
+                            }
+                            catch (Exception) { myString = i.Client.LastName + ", " + i.Client.FirstName + " " + i.Client.MiddleName + " " + i.Client.Suffix; }
+                            sheet.Cells[y, 3] = myString;
+                            sheet.Cells[y, 5] = i.Term;
+                            sheet.Cells[y, 7] = ctr;
+                            var f = ctx.FPaymentInfo.Where(x => x.LoanID == i.LoanID).First();
+                            sheet.Cells[y, 9] = (ctr * f.Amount);
+                            sheet.Cells[y, 11] = i.Mode;
+
+                            y++;
+                        }
+                        sheet.get_Range("A13", "A" + y).Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignRight;
+                        sheet.get_Range("C13", "C" + y).Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
+                        sheet.get_Range("E13", "E" + y).Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignRight;
+                        sheet.get_Range("G13", "G" + y).Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignRight;
+                        sheet.get_Range("I13", "I" + y).Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignRight;
+                        sheet.get_Range("K13", "K" + y).Cells.HorizontalAlignment = Microsoft.Office.Interop.Excel.XlHAlign.xlHAlignLeft;
+                    }
+                }
+
+                Microsoft.Office.Interop.Excel.Range range = (Microsoft.Office.Interop.Excel.Range)(sheet.UsedRange.Columns);
+                range.AutoFit();
+
+
+                // Let loose control of the Excel instance
+
+                xl.Visible = false;
+                xl.UserControl = false;
+                xl.StandardFont = "Segoe UI";
+                xl.StandardFontSize = 12;
+
+
+
+                // Set a flag saying that all is well and it is ok to save our changes to a file.
+
+                SaveChanges = true;
+
+                //  Save the file to disk
+                sheet.Protect();
+
+                wb.SaveAs(FileName, Microsoft.Office.Interop.Excel.XlFileFormat.xlWorkbookNormal,
+                          null, null, false, false, Microsoft.Office.Interop.Excel.XlSaveAsAccessMode.xlShared,
+                          false, false, null, null, null);
+                object paramMissing = Type.Missing;
+
+                wb = xl.Workbooks.Open(FileName,
+                    paramMissing, paramMissing, paramMissing, paramMissing,
+                    paramMissing, paramMissing, paramMissing, paramMissing,
+                    paramMissing, paramMissing, paramMissing, paramMissing,
+                    paramMissing, paramMissing);
+
+                string paramExportFilePath = AppDomain.CurrentDomain.BaseDirectory + @"iAging.pdf";
+                XlFixedFormatType paramExportFormat = XlFixedFormatType.xlTypePDF;
+                XlFixedFormatQuality paramExportQuality =
+                XlFixedFormatQuality.xlQualityStandard;
+                bool paramOpenAfterPublish = false;
+                bool paramIncludeDocProps = true;
+                bool paramIgnorePrintAreas = true;
+                object paramFromPage = Type.Missing;
+                object paramToPage = Type.Missing;
+
+                if (wb != null)
+                    wb.ExportAsFixedFormat(paramExportFormat,
+                        paramExportFilePath, paramExportQuality,
+                        paramIncludeDocProps, paramIgnorePrintAreas, paramFromPage,
+                        paramToPage, paramOpenAfterPublish,
+                        paramMissing);
+
+                Process xlProcess = Process.Start(paramExportFilePath);
+            }
+            catch (Exception err)
+            {
+                String msg;
+                msg = "Error: ";
+                msg = String.Concat(msg, err.Message);
+                msg = String.Concat(msg, " Line: ");
+                msg = String.Concat(msg, err.Source);
+                MessageBox.Show(msg);
+            }
+        }
+
+        private void btnAgents_Copy2_Click(object sender, RoutedEventArgs e)
+        {
+            wpfReporstForCheques frm = new wpfReporstForCheques();
+            frm.UserID = UserID;
+            frm.ShowDialog();
+        }
+
+        private void btnRAgentCom_Click(object sender, RoutedEventArgs e)
+        {
+            wpfReportsForComission frm = new wpfReportsForComission();
+            frm.UserID = UserID;
+            frm.ShowDialog();
         }
     }
 }

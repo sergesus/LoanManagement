@@ -79,6 +79,7 @@ namespace LoanManagement.Domain
         public DbSet<LoanRenewal> LoanRenewals { get; set; }
         public DbSet<OnlineSetting> OnlineSettings { get; set; }
         public DbSet<PositionScope> PositionScopes { get; set; }
+        public DbSet<AgentCommission> AgentCommission { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -1052,6 +1053,17 @@ namespace LoanManagement.Domain
         public string AboutDescription { get; set; }
         public string MissionVision { get; set; }
         public string ContactInfo { get; set; }
+
+        public int Visitor { get; set; }
+    }
+
+    public class AgentCommission
+    {
+        public int AgentCommissionID { get; set; }
+        public string AgentName { get; set; }
+        public int NoOfAccounts { get; set; }
+        public double TotalRelease { get; set; }
+        public double TotalCommission { get; set; }
     }
 
 }

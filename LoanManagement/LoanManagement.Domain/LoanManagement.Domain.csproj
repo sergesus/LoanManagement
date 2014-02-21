@@ -45,85 +45,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\201401010633219_UpdatedTempLoans.cs" />
-    <Compile Include="Migrations\201401010633219_UpdatedTempLoans.Designer.cs">
-      <DependentUpon>201401010633219_UpdatedTempLoans.cs</DependentUpon>
+    <Compile Include="Migrations\201402210126060_AddedVisitorCOunter.cs" />
+    <Compile Include="Migrations\201402210126060_AddedVisitorCOunter.Designer.cs">
+      <DependentUpon>201402210126060_AddedVisitorCOunter.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201401010633435_Checker1.cs" />
-    <Compile Include="Migrations\201401010633435_Checker1.Designer.cs">
-      <DependentUpon>201401010633435_Checker1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201401010900296_Checker2.cs" />
-    <Compile Include="Migrations\201401010900296_Checker2.Designer.cs">
-      <DependentUpon>201401010900296_Checker2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201401010902346_Checker3.cs" />
-    <Compile Include="Migrations\201401010902346_Checker3.Designer.cs">
-      <DependentUpon>201401010902346_Checker3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201401011208528_Tester.cs" />
-    <Compile Include="Migrations\201401011208528_Tester.Designer.cs">
-      <DependentUpon>201401011208528_Tester.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201401040216154_UpdatedDeclined.cs" />
-    <Compile Include="Migrations\201401040216154_UpdatedDeclined.Designer.cs">
-      <DependentUpon>201401040216154_UpdatedDeclined.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201401040841454_AddedReqChecklist.cs" />
-    <Compile Include="Migrations\201401040841454_AddedReqChecklist.Designer.cs">
-      <DependentUpon>201401040841454_AddedReqChecklist.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201401040844551_AddedReqChecklist2.cs" />
-    <Compile Include="Migrations\201401040844551_AddedReqChecklist2.Designer.cs">
-      <DependentUpon>201401040844551_AddedReqChecklist2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201401040846338_AddedReqChecklist3.cs" />
-    <Compile Include="Migrations\201401040846338_AddedReqChecklist3.Designer.cs">
-      <DependentUpon>201401040846338_AddedReqChecklist3.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201401041152074_AddedCollateral.cs" />
-    <Compile Include="Migrations\201401041152074_AddedCollateral.Designer.cs">
-      <DependentUpon>201401041152074_AddedCollateral.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201401041157137_AddedCollateral2.cs" />
-    <Compile Include="Migrations\201401041157137_AddedCollateral2.Designer.cs">
-      <DependentUpon>201401041157137_AddedCollateral2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201401042258514_CollateralLoanInfo.cs" />
-    <Compile Include="Migrations\201401042258514_CollateralLoanInfo.Designer.cs">
-      <DependentUpon>201401042258514_CollateralLoanInfo.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201401042310278_CollateralLoanInfo2.cs" />
-    <Compile Include="Migrations\201401042310278_CollateralLoanInfo2.Designer.cs">
-      <DependentUpon>201401042310278_CollateralLoanInfo2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201401070056586_AddedRenewal.cs" />
-    <Compile Include="Migrations\201401070056586_AddedRenewal.Designer.cs">
-      <DependentUpon>201401070056586_AddedRenewal.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201401070127116_AddedRenewal2.cs" />
-    <Compile Include="Migrations\201401070127116_AddedRenewal2.Designer.cs">
-      <DependentUpon>201401070127116_AddedRenewal2.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201401120725350_AddedOnlineSettings.cs" />
-    <Compile Include="Migrations\201401120725350_AddedOnlineSettings.Designer.cs">
-      <DependentUpon>201401120725350_AddedOnlineSettings.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201401190907130_AddedPostionScope.cs" />
-    <Compile Include="Migrations\201401190907130_AddedPostionScope.Designer.cs">
-      <DependentUpon>201401190907130_AddedPostionScope.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201401190907471_Checker.cs" />
-    <Compile Include="Migrations\201401190907471_Checker.Designer.cs">
-      <DependentUpon>201401190907471_Checker.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201401190935540_Checker21.cs" />
-    <Compile Include="Migrations\201401190935540_Checker21.Designer.cs">
-      <DependentUpon>201401190935540_Checker21.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201401191029058_Checke3.cs" />
-    <Compile Include="Migrations\201401191029058_Checke3.Designer.cs">
-      <DependentUpon>201401191029058_Checke3.cs</DependentUpon>
+    <Compile Include="Migrations\201402212349294_AddedComm.cs" />
+    <Compile Include="Migrations\201402212349294_AddedComm.Designer.cs">
+      <DependentUpon>201402212349294_AddedComm.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -134,65 +62,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201401010633219_UpdatedTempLoans.resx">
-      <DependentUpon>201401010633219_UpdatedTempLoans.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201402210126060_AddedVisitorCOunter.resx">
+      <DependentUpon>201402210126060_AddedVisitorCOunter.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201401010633435_Checker1.resx">
-      <DependentUpon>201401010633435_Checker1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201401010900296_Checker2.resx">
-      <DependentUpon>201401010900296_Checker2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201401010902346_Checker3.resx">
-      <DependentUpon>201401010902346_Checker3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201401011208528_Tester.resx">
-      <DependentUpon>201401011208528_Tester.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201401040216154_UpdatedDeclined.resx">
-      <DependentUpon>201401040216154_UpdatedDeclined.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201401040841454_AddedReqChecklist.resx">
-      <DependentUpon>201401040841454_AddedReqChecklist.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201401040844551_AddedReqChecklist2.resx">
-      <DependentUpon>201401040844551_AddedReqChecklist2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201401040846338_AddedReqChecklist3.resx">
-      <DependentUpon>201401040846338_AddedReqChecklist3.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201401041152074_AddedCollateral.resx">
-      <DependentUpon>201401041152074_AddedCollateral.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201401041157137_AddedCollateral2.resx">
-      <DependentUpon>201401041157137_AddedCollateral2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201401042258514_CollateralLoanInfo.resx">
-      <DependentUpon>201401042258514_CollateralLoanInfo.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201401042310278_CollateralLoanInfo2.resx">
-      <DependentUpon>201401042310278_CollateralLoanInfo2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201401070056586_AddedRenewal.resx">
-      <DependentUpon>201401070056586_AddedRenewal.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201401070127116_AddedRenewal2.resx">
-      <DependentUpon>201401070127116_AddedRenewal2.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201401120725350_AddedOnlineSettings.resx">
-      <DependentUpon>201401120725350_AddedOnlineSettings.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201401190907130_AddedPostionScope.resx">
-      <DependentUpon>201401190907130_AddedPostionScope.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201401190907471_Checker.resx">
-      <DependentUpon>201401190907471_Checker.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201401190935540_Checker21.resx">
-      <DependentUpon>201401190935540_Checker21.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201401191029058_Checke3.resx">
-      <DependentUpon>201401191029058_Checke3.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201402212349294_AddedComm.resx">
+      <DependentUpon>201402212349294_AddedComm.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

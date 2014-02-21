@@ -16,9 +16,16 @@ namespace LoanManagement.Website
         {
             try
             {
+                lblTime.Text = DateTime.Now.ToString("MMM dd yyyy, | hh:mm tt");
                 Session["Service"] = null;
                 Session["UpdateChecker"] = null;
                 Session["iService"] = null;
+
+                using (var ctx = new finalContext())
+                {
+                    var set = ctx.OnlineSettings.Find(1);
+                    lblVisitor.Text = set.Visitor.ToString();
+                }
 
                 using(var ctx = new finalContext())
                 {
@@ -43,6 +50,11 @@ namespace LoanManagement.Website
         protected void LinkButton2_Click(object sender, EventArgs e)
         {
             Response.Redirect("/Login.aspx");
+        }
+
+        protected void Timer1_Tick(object sender, EventArgs e)
+        {
+            lblTime.Text = DateTime.Now.ToString("MMM dd yyyy, | hh:mm tt");
         }
     }
 }

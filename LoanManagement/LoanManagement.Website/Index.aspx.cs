@@ -16,13 +16,27 @@ namespace LoanManagement.Website
         {
             try
             {
+                lblTime.Text = DateTime.Now.ToString("MMM dd, yyyy | hh:mm tt");
                 Session["Service"] = null;
                 Session["UpdateChecker"] = null;
                 Session["iService"] = null;
+
+                if (Session["Visit"] == null)
+                {
+                    Session["Visit"] = "Visited";
+                    using (var ctx = new finalContext())
+                    {
+                        var set = ctx.OnlineSettings.Find(1);
+                        set.Visitor = set.Visitor + 1;
+                        ctx.SaveChanges();
+                    }
+
+                }
                 using (var ctx = new finalContext())
                 {
                     var set = ctx.OnlineSettings.Find(1);
                     lblDesc.Text = set.HomeDescription.Replace("\n", "<br />"); ;
+                    lblVisitor.Text = set.Visitor.ToString();
                 }
             }
             catch (Exception)
@@ -40,6 +54,11 @@ namespace LoanManagement.Website
         protected void LinkButton2_Click(object sender, EventArgs e)
         {
             Response.Redirect("/Login.aspx");
+        }
+
+        protected void Timer1_Tick(object sender, EventArgs e)
+        {
+            lblTime.Text = DateTime.Now.ToString("MMM dd yyyy, | hh:mm tt");
         }
 
         

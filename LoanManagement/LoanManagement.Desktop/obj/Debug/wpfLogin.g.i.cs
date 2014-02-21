@@ -153,12 +153,6 @@ namespace LoanManagement.Desktop {
             
             #line default
             #line hidden
-            
-            #line 24 "..\..\wpfLogin.xaml"
-            this.txtUsername.TextChanged += new System.Windows.Controls.TextChangedEventHandler(this.txtUsername_TextChanged);
-            
-            #line default
-            #line hidden
             return;
             case 4:
             this.txtPassword = ((System.Windows.Controls.PasswordBox)(target));

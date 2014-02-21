@@ -22,6 +22,8 @@
 </head>
 <body>
 <form id="Form1" runat="server">
+        <asp:Timer ID="Timer1" runat="server" OnTick="Timer1_Tick">
+        </asp:Timer>
 <div id="templatemo_container">
 	<div id="templatemo_site_title_bar">
         <div id="site_title">
@@ -145,7 +147,7 @@
         <div id="templatemo_footer_bar">
                 Copyright © 2013 | Guahan Financing Corporation | All Rights Reserved
 		<br />
-            <a href="Index.aspx">Home</a> | <a href="About.aspx">About/Contact</a> | <a href="Services.aspx">Services</a> | <a href="Downloads.aspx">Downloands</a> | <a href="Application.aspx">Application</a> | <a href="Calculator.aspx">Calculator</a> | <a href ="RegisterClient.aspx">Client Registration</a> | <a href="RegisterUser.aspx">Register User</a> | <a href="Login.aspx">Login</a> | <a href="MyAccount_Main.aspx">My Account</a> | <a href="MyAccount_Edit.aspx">Edit Account</a> <br /> <a href="MyAccount_Loans.aspx">My Loans</a> | <a href="MyAccount_Submit.aspx">Submit Requirements</a>
+            <a href="Index.aspx">Home</a> | <a href="About.aspx">About/Contact</a> | <a href="Services.aspx">Services</a> | <a href="Downloads.aspx">Downloands</a> | <a href="Application.aspx">Application</a> | <a href="Calculator.aspx">Calculator</a> | <a href ="RegisterClient.aspx">Client Registration</a> | <a href="RegisterUser.aspx">Register User</a> | <a href="Login.aspx">Login</a> | <a href="MyAccount_Main.aspx">My Account</a> | <a href="MyAccount_Edit.aspx">Edit Account</a> <br /> <a href="MyAccount_Loans.aspx">My Loans</a> | <a href="MyAccount_Submit.aspx">Submit Requirements</a><br /><asp:Label ID="lblTime" runat="server" Text="-"></asp:Label>&nbsp;| Visitor No. : <asp:Label ID="lblVisitor" runat="server" Text="-"></asp:Label>
         </div>  <!-- end of footer -->
 	</div> <!-- end of footer_wrapper -->
 </div> <!-- end of container -->

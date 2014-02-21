@@ -234,8 +234,14 @@
     <Compile Include="wpfRenewClosed.xaml.cs">
       <DependentUpon>wpfRenewClosed.xaml</DependentUpon>
     </Compile>
+    <Compile Include="wpfReporstForCheques.xaml.cs">
+      <DependentUpon>wpfReporstForCheques.xaml</DependentUpon>
+    </Compile>
     <Compile Include="wpfReportForLoans.xaml.cs">
       <DependentUpon>wpfReportForLoans.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="wpfReportsForComission.xaml.cs">
+      <DependentUpon>wpfReportsForComission.xaml</DependentUpon>
     </Compile>
     <Compile Include="wpfRequirementsChecklist.xaml.cs">
       <DependentUpon>wpfRequirementsChecklist.xaml</DependentUpon>
@@ -443,7 +449,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="wpfReporstForCheques.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="wpfReportForLoans.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="wpfReportsForComission.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

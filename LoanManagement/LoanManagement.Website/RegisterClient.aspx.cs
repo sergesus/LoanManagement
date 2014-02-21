@@ -14,7 +14,12 @@ namespace LoanManagement.Website
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
+            using (var ctx = new finalContext())
+            {
+                var set = ctx.OnlineSettings.Find(1);
+                lblVisitor.Text = set.Visitor.ToString();
+            }
+            lblTime.Text = DateTime.Now.ToString("MMM dd, yyyy | hh:mm tt");
         }
 
         protected void LinkButton1_Click(object sender, EventArgs e)
@@ -26,6 +31,11 @@ namespace LoanManagement.Website
         protected void LinkButton2_Click(object sender, EventArgs e)
         {
             Response.Redirect("/Login.aspx");
+        }
+
+        protected void Timer1_Tick(object sender, EventArgs e)
+        {
+            lblTime.Text = DateTime.Now.ToString("MMM dd yyyy, | hh:mm tt");
         }
 
         protected void btnRegister_Click1(object sender, EventArgs e)

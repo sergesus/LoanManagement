@@ -15,6 +15,12 @@ namespace LoanManagement.Website
         {
             try
             {
+                using (var ctx = new finalContext())
+                {
+                    var set = ctx.OnlineSettings.Find(1);
+                    lblVisitor.Text = set.Visitor.ToString();
+                }
+                lblTime.Text = DateTime.Now.ToString("MMM dd, yyyy | hh:mm tt");
                 Page.Response.Cache.SetCacheability(HttpCacheability.NoCache);
                 Session["Service"] = null;
                 Session["UpdateChecker"] = null;
@@ -50,6 +56,11 @@ namespace LoanManagement.Website
                 else
                     Response.Redirect("/Index.aspx");
             }
+        }
+
+        protected void Timer1_Tick(object sender, EventArgs e)
+        {
+            lblTime.Text = DateTime.Now.ToString("MMM dd yyyy, | hh:mm tt");
         }
 
         protected void LinkButton1_Click(object sender, EventArgs e)
