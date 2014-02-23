@@ -45,7 +45,7 @@ namespace LoanManagement.Desktop
                 //Grid grid = new Grid();
                 wdw1.Background = myBrush;
 
-                using (var ctx = new iContext())
+                using (var ctx = new newContext())
                 {
                     FPaymentInfo fp = ctx.FPaymentInfo.Find(fId);
                     double n = 0;
@@ -73,7 +73,7 @@ namespace LoanManagement.Desktop
                 {
                     if (rdDaif.IsChecked == true)
                     {
-                        using (var ctx = new iContext())
+                        using (var ctx = new newContext())
                         {
                             FPaymentInfo fp = ctx.FPaymentInfo.Find(fId);
                             ReturnedCheque rc = new ReturnedCheque { DateReturned = DateTime.Today.Date, Fee = DaifFee, FPaymentInfoID = fId, Remarks = "DAIF", isPaid = false };
@@ -90,7 +90,7 @@ namespace LoanManagement.Desktop
                     }
                     else
                     {
-                        using (var ctx = new iContext())
+                        using (var ctx = new newContext())
                         {
                             FPaymentInfo fp = ctx.FPaymentInfo.Find(fId);
                             ClosedAccount cc = new ClosedAccount { DateClosed = DateTime.Today.Date, Fee = ClosedFee, LoanID = fp.LoanID, isPaid = false };

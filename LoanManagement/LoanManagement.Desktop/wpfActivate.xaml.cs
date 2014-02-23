@@ -30,7 +30,7 @@ namespace LoanManagement.Desktop
 
         private void btnLogIn_Click(object sender, RoutedEventArgs e)
         {
-            using (var ctx = new iContext())
+            using (var ctx = new newContext())
             {
                 if (txtUsername.Text == "" || txtPassword.Password == "")
                 {

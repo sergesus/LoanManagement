@@ -77,7 +77,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new iContext())
+                using (var ctx = new newContext())
                 {
                     var bank = from bn in ctx.Banks
                                where bn.Active == status
@@ -150,7 +150,7 @@ namespace LoanManagement.Desktop
                 MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure you want to retreive this record?", "Question", MessageBoxButton.YesNo);
                 if (mr == MessageBoxResult.Yes)
                 {
-                    using (var ctx = new iContext())
+                    using (var ctx = new newContext())
                     {
                         var agt = ctx.Banks.Find(n);
                         agt.Active = true;
@@ -173,7 +173,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new iContext())
+                using (var ctx = new newContext())
                 {
                     int n;
                     try

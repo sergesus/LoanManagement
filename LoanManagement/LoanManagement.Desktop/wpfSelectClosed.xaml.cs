@@ -84,7 +84,20 @@ namespace LoanManagement.Desktop
 
         private void btnPass_Click(object sender, RoutedEventArgs e)
         {
-
+            try
+            {
+                wpfLoanSearch frm = new wpfLoanSearch();
+                frm.status = "Pass";
+                frm.iDept = "Financing";
+                frm.UserID = UserID;
+                this.Close();
+                frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                System.Windows.MessageBox.Show("Runtime Error: " + ex.Message, "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return;
+            }
         }
 
         private void btnClear_Click(object sender, RoutedEventArgs e)

@@ -9,7 +9,7 @@ using System.Data.Entity;
 namespace LoanManagement.Domain
 {
 
-    public class iContext : DbContext
+    public class newContext : DbContext
     {
         public DbSet<State> State { get; set; }
         public DbSet<User> Users { get; set; }
@@ -67,6 +67,8 @@ namespace LoanManagement.Domain
         public DbSet<Holiday> Holidays { get; set; }
         public DbSet<MPaymentInfo> MPaymentInfoes { get; set; }
         public DbSet<MicroPayment> MicroPayments { get; set; }
+        public DbSet<MicroAdjusment> MicroAdjusments { get; set; }
+        public DbSet<PassedToCollector> PassedToCollectors { get; set; }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -163,6 +165,9 @@ namespace LoanManagement.Domain
             modelBuilder.Entity<MicroPayment>()
                 .HasKey(x => x.MPaymentInfoID)
                 .HasRequired(x => x.MPaymentInfo);
+            modelBuilder.Entity<PassedToCollector>()
+                .HasKey(x => x.LoanID)
+                .HasRequired(x => x.Loan);
                 
         }
     }
@@ -638,6 +643,7 @@ namespace LoanManagement.Domain
         public virtual ReleasedLoan ReleasedLoan { get; set; }
         public virtual AdjustedLoan AdjustedLoan { get; set; }
         public virtual PaidLoan PaidLoan { get; set; }
+        public virtual PassedToCollector PassedToCollector { get; set; }
         public virtual RestructuredLoan RestructuredLoan { get; set; }
         public ICollection<FPaymentInfo> FPaymentInfo { get; set; }
         public ICollection<MPaymentInfo> MPaymentInfo { get; set; }
@@ -878,6 +884,25 @@ namespace LoanManagement.Domain
         public DateTime? DatePaid { get; set; }
 
         public virtual MPaymentInfo MPaymentInfo { get; set; }
+    }
+
+    public class MicroAdjusment
+    {
+        public int MicroAdjusmentID { get; set; }
+        public DateTime FromDate { get; set; }
+        public DateTime ToDate { get; set; }
+        public string ReasonOfAdjustment { get; set; }
+    }
+
+    public class PassedToCollector
+    {
+        public int LoanID { get; set; }
+        public double TotalPaidBeforePassing { get; set; }
+        public double TotalPassedBalance { get; set; }
+        public double RemainingBalance { get; set; }
+        public DateTime DatePassed { get; set; }
+
+        public virtual Loan Loan { get; set; }
     }
 
 }

@@ -79,7 +79,7 @@ namespace LoanManagement.Desktop
             try
             {
                 ciId = 0;
-                using (var ctx = new iContext())
+                using (var ctx = new newContext())
                 {
                     var svc = from sv in ctx.Services
                               where sv.Active == true
@@ -102,7 +102,7 @@ namespace LoanManagement.Desktop
                 if (status == "Edit")
                 {
                     cboxAgent.IsEnabled = !true;
-                    using (var ctx = new iContext())
+                    using (var ctx = new newContext())
                     {
 
                         var lon = ctx.Loans.Find(lId);
@@ -187,7 +187,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new iContext())
+                using (var ctx = new newContext())
                 {
                     var clt = ctx.Clients.Find(cId);
                     
@@ -263,7 +263,7 @@ namespace LoanManagement.Desktop
             {
                 if (txtAgent.Text == "")
                 {
-                    using (var ctx = new iContext())
+                    using (var ctx = new newContext())
                     {
                         var agt = ctx.Agents.Find(agentId);
                         String str = "(" + agentId.ToString() + ")" + agt.FirstName + " " + agt.MI + ". " + agt.LastName;
@@ -283,7 +283,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new iContext())
+                using (var ctx = new newContext())
                 {
                     ComboBoxItem typeItem = (ComboBoxItem)cmbServices.SelectedItem;
                     string value = typeItem.Content.ToString();
@@ -408,7 +408,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new iContext())
+                using (var ctx = new newContext())
                 {
                     var ser = ctx.Services.Find(servId);
                     double val=Convert.ToDouble(txtAmt.Text);
@@ -433,7 +433,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new iContext())
+                using (var ctx = new newContext())
                 {
                     var ser = ctx.Services.Find(servId);
                     double val = Convert.ToDouble(txtTerm.Text);
@@ -478,7 +478,7 @@ namespace LoanManagement.Desktop
             {
                 if (txtCat.Text == "Non Collateral")
                 {
-                    using (var ctx = new iContext())
+                    using (var ctx = new newContext())
                     {
                         var ictr = ctx.Loans.Where(x => x.ClientID == cId && x.Status == "Released" && x.Service.Type == "Non Collateral" && x.Service.Department == iDept).Count();
                         if (ictr > 0)
@@ -504,7 +504,7 @@ namespace LoanManagement.Desktop
                     return;
                 }
 
-                using (var ctx = new iContext())
+                using (var ctx = new newContext())
                 {
                     var ser = ctx.Services.Find(servId);
                     if (ser.Type == "Non Collateral" && txtID.Text == "")
@@ -526,7 +526,7 @@ namespace LoanManagement.Desktop
 
                 }
 
-                using (var ctx = new iContext())
+                using (var ctx = new newContext())
                 {
                     var ser = ctx.Services.Find(servId);
                     double deduction = 0;

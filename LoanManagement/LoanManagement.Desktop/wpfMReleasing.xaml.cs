@@ -42,7 +42,7 @@ namespace LoanManagement.Desktop
 
                 if (status == "Releasing")
                 {
-                    using (var ctx = new iContext())
+                    using (var ctx = new newContext())
                     {
                         ctx.Database.ExecuteSqlCommand("delete from dbo.GenSOAs");
                         ctx.SaveChanges();
@@ -184,7 +184,7 @@ namespace LoanManagement.Desktop
                 }
                 else if (status == "UReleasing")
                 {
-                    using (var ctx = new iContext())
+                    using (var ctx = new newContext())
                     {
                         var lon = ctx.Loans.Find(lId);
                         var pys = from p in ctx.MPaymentInfoes
@@ -246,7 +246,7 @@ namespace LoanManagement.Desktop
                 //num = 0;
                 if (status == "Releasing")
                 {
-                    using (var ctx = new iContext())
+                    using (var ctx = new newContext())
                     {
                         var lon = ctx.Loans.Find(lId);
                         var ser = ctx.Services.Find(lon.ServiceID);
@@ -314,7 +314,7 @@ namespace LoanManagement.Desktop
                 {
                     double max = 0;
                     double min = 0;
-                    using (var ctx = new iContext())
+                    using (var ctx = new newContext())
                     {
                         var lon = ctx.Loans.Find(lId);
                         var ser = ctx.Services.Find(lon.ServiceID);
@@ -353,7 +353,7 @@ namespace LoanManagement.Desktop
                     MessageBoxResult mr = MessageBox.Show("Are you sure you want to process this transaction?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
                     if (mr == MessageBoxResult.Yes)
                     {
-                        using (var ctx = new iContext())
+                        using (var ctx = new newContext())
                         {
                             int bId = 0;
                             var lon = ctx.Loans.Find(lId);
@@ -383,7 +383,7 @@ namespace LoanManagement.Desktop
                 else if (status == "UReleasing")
                 {
                     
-                    using (var ctx = new iContext())
+                    using (var ctx = new newContext())
                     {
                         var lon = ctx.Loans.Find(lId);
                         lon.CollectortID = ciId;

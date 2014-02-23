@@ -43,7 +43,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new iContext())
+                using (var ctx = new newContext())
                 {
                     var lon = from lo in ctx.FPaymentInfo
                               where lo.PaymentDate <= DateTime.Today.Date && (lo.PaymentStatus == "Pending" || lo.PaymentStatus == "On Hold")
@@ -105,7 +105,7 @@ namespace LoanManagement.Desktop
                         itm.PaymentStatus = "Unpaid";
                         itm.TotalPayment = 0;
                         var ser = ctx.Services.Find(itm.Loan.ServiceID);
-
+                        var iAmt = itm.TotalAmount;
                         //var ln = ctx.Loans.Find(itm.LoanID);
 
                         double cRem = itm.RemainingLoanBalance;
@@ -124,7 +124,7 @@ namespace LoanManagement.Desktop
 
                         double ciRate = ser.LatePaymentPenalty / 100;
                         double ctRate = itm.TotalAmount * ciRate;
-                        double ctBalance = itm.TotalAmount + ctRate;
+                        double ctBalance = itm.TotalAmount;
 
                         //System.Windows.MessageBox.Show(ciRate.ToString());
                         //System.Windows.MessageBox.Show(ctRate.ToString());
@@ -214,8 +214,9 @@ namespace LoanManagement.Desktop
                             String st = "Unpaid";
                             if (dt2 > DateTime.Today.Date)
                                 st = "Pending";
-
-                            MPaymentInfo mpi = new MPaymentInfo { PaymentNumber = n + 1, Amount = itm.Amount, TotalBalance = tBalance, BalanceInterest = tRate, DueDate = dt, ExcessBalance = 0, LoanID = itm.LoanID, PaymentStatus = st, TotalAmount = tAmount, RemainingLoanBalance = tRem, PreviousBalance = itm.TotalAmount };
+                            
+                            MPaymentInfo mpi = new MPaymentInfo { PaymentNumber = n + 1, Amount = itm.Amount, TotalBalance = tBalance, BalanceInterest = tRate, DueDate = dt, ExcessBalance = 0, LoanID = itm.LoanID, PaymentStatus = st, TotalAmount = tAmount, RemainingLoanBalance = tRem, PreviousBalance = iAmt };
+                            iAmt = tAmount;
                             n++;
                             ctx.MPaymentInfoes.Add(mpi);
                         }
@@ -239,7 +240,7 @@ namespace LoanManagement.Desktop
             {
                 wpfAgentInfo frm = new wpfAgentInfo();
                 frm.status = "View";
-                using (var ctx = new iContext())
+                using (var ctx = new newContext())
                 {
                     var lon = ctx.Loans.Find(lId);
                     frm.aId = lon.AgentID;
@@ -257,7 +258,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new iContext())
+                using (var ctx = new newContext())
                 {
                     var lon = ctx.Loans.Find(lId);
 
@@ -364,6 +365,12 @@ namespace LoanManagement.Desktop
                     double remain = lon.ReleasedLoan.TotalLoan - r;
                     lblRemaining.Content = remain.ToString("N2");
 
+                    if (lon.Status == "Under Collection")
+                    {
+                        remain = lon.PassedToCollector.RemainingBalance;
+                        lblRemaining.Content = remain.ToString("N2");
+                    }
+
                     if (status != "Holding")
                     {
                         lblS.Visibility = Visibility.Hidden;
@@ -390,6 +397,17 @@ namespace LoanManagement.Desktop
 
                     if (iDept == "Micro Business")
                     {
+                        try
+                        {
+                            var re1 = ctx.MPaymentInfoes.Where(x => x.LoanID == lId && x.PaymentStatus == "Pending").First();
+                            double remain1 = re1.RemainingLoanBalance;
+                            lblRemaining.Content = remain1.ToString("N2");
+                        }
+                        catch(Exception)
+                        {
+                            lblRemaining.Content = "0.00";
+                        }
+
                         var pys = from p in ctx.MPaymentInfoes
                                   where p.LoanID == lId
                                   select new { No = p.PaymentNumber, Amount = p.Amount, PrevBalance = p.PreviousBalance, PrevBalanceInterest = p.BalanceInterest, TotalBalance = p.TotalBalance, ExcessiveBalance = p.ExcessBalance, TotalAmount = p.TotalAmount, DueDate = p.DueDate, RemaingBalance = p.RemainingLoanBalance, TotalPayment = p.TotalPayment, PaymentDate = p.PaymentDate, Status = p.PaymentStatus };
@@ -452,7 +470,7 @@ namespace LoanManagement.Desktop
                 myBrush.ImageSource = image.Source;
                 //Grid grid = new Grid();
                 wdw1.Background = myBrush;
-                using (var ctx = new iContext())
+                using (var ctx = new newContext())
                 {
                     var lon = ctx.Loans.Find(lId);
                     lblName.Content = lon.Client.LastName + ", " + lon.Client.FirstName + " " + lon.Client.MiddleName;
@@ -495,7 +513,7 @@ namespace LoanManagement.Desktop
                 }
                 else if (status == "Holding")
                 {
-                    using (var ctx = new iContext())
+                    using (var ctx = new newContext())
                     {
                         //var dts = ctx.FPaymentInfo.Where(x => x.LoanID == lId && x.PaymentStatus == "Pending").First();
                         if (DateTime.Today.Date > Convert.ToDateTime(lblEDt.Content) || DateTime.Today.Date < Convert.ToDateTime(lblSDt.Content))
@@ -563,7 +581,7 @@ namespace LoanManagement.Desktop
                     {
                         if (iDept == "Financing")
                         {
-                            using (var ctx = new iContext())
+                            using (var ctx = new newContext())
                             {
                                 var lon = ctx.Loans.Find(lId);
                                 lon.Status = "Approved";
@@ -583,7 +601,7 @@ namespace LoanManagement.Desktop
                         }
                         else
                         {
-                            using (var ctx = new iContext())
+                            using (var ctx = new newContext())
                             {
                                 var lon = ctx.Loans.Find(lId);
                                 lon.Status = "Approved";
@@ -605,7 +623,7 @@ namespace LoanManagement.Desktop
                 }
                 else if (status == "Holding")
                 {
-                    using (var ctx = new iContext())
+                    using (var ctx = new newContext())
                     {
                         var ctrs = ctx.FPaymentInfo.Where(x => x.LoanID == lId && x.PaymentStatus == "On Hold").Count();
                         if (ctrs < 1)
@@ -637,7 +655,7 @@ namespace LoanManagement.Desktop
                     MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure you want to process this transaction?", "Question", MessageBoxButton.YesNo);
                     if (mr == MessageBoxResult.Yes)
                     {
-                        using (var ctx = new iContext())
+                        using (var ctx = new newContext())
                         {
                             AdjustedLoan al = ctx.AdjustedLoans.Find(lId);
                             var py = from p in ctx.FPaymentInfo
@@ -668,7 +686,7 @@ namespace LoanManagement.Desktop
             wpfViewClientInfo frm = new wpfViewClientInfo();
             frm.status = "View2";
             frm.Height = 600;
-            using (var ctx = new iContext())
+            using (var ctx = new newContext())
             {
                 var lon = ctx.Loans.Find(lId);
                 frm.cID = lon.ClientID;

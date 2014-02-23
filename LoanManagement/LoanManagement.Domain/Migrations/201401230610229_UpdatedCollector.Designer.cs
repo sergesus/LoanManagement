@@ -5,13 +5,13 @@ namespace LoanManagement.Domain.Migrations
     using System.Data.Entity.Migrations.Infrastructure;
     using System.Resources;
     
-    public sealed partial class AddedPosScope : IMigrationMetadata
+    public sealed partial class UpdatedCollector : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(AddedPosScope));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(UpdatedCollector));
         
         string IMigrationMetadata.Id
         {
-            get { return "201309290057572_AddedPosScope"; }
+            get { return "201401230610229_UpdatedCollector"; }
         }
         
         string IMigrationMetadata.Source

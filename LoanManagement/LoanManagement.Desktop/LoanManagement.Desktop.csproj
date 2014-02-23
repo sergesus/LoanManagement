@@ -192,6 +192,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="wpfMAdjustment.xaml.cs">
+      <DependentUpon>wpfMAdjustment.xaml</DependentUpon>
+    </Compile>
     <Compile Include="wpfMain.xaml.cs">
       <DependentUpon>wpfMain.xaml</DependentUpon>
     </Compile>
@@ -203,6 +206,9 @@
     </Compile>
     <Compile Include="wpfNewCheque.xaml.cs">
       <DependentUpon>wpfNewCheque.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="wpfPassToCollectors.xaml.cs">
+      <DependentUpon>wpfPassToCollectors.xaml</DependentUpon>
     </Compile>
     <Compile Include="wpfPassword.xaml.cs">
       <DependentUpon>wpfPassword.xaml</DependentUpon>
@@ -363,6 +369,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="wpfMAdjustment.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="wpfMain.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -376,6 +386,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="wpfNewCheque.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="wpfPassToCollectors.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -48,7 +48,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new iContext())
+                using (var ctx = new newContext())
                 {
                     DateTime dt = DateTime.Today.Date.AddDays(7);
                     var lons = from lo in ctx.FPaymentInfo
@@ -105,7 +105,7 @@ namespace LoanManagement.Desktop
 
         private void checkState()
         {
-            using (var ctx = new iContext())
+            using (var ctx = new newContext())
             {
                 var st = ctx.State.Find(1);
                 if (st.iState > 2)
@@ -129,7 +129,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new iContext())
+                using (var ctx = new newContext())
                 {
                     var lon = from lo in ctx.FPaymentInfo
                               where lo.PaymentDate <= DateTime.Today.Date && (lo.PaymentStatus == "Pending" || lo.PaymentStatus == "On Hold")
@@ -191,6 +191,7 @@ namespace LoanManagement.Desktop
                         itm.PaymentStatus = "Unpaid";
                         itm.TotalPayment = 0;
                         var ser = ctx.Services.Find(itm.Loan.ServiceID);
+                        double iAmt = itm.TotalAmount;
 
                         //var ln = ctx.Loans.Find(itm.LoanID);
 
@@ -210,7 +211,7 @@ namespace LoanManagement.Desktop
 
                         double ciRate = ser.LatePaymentPenalty / 100;
                         double ctRate = itm.TotalAmount * ciRate;
-                        double ctBalance = itm.TotalAmount + ctRate;
+                        double ctBalance = itm.TotalAmount;
 
                         //System.Windows.MessageBox.Show(ciRate.ToString());
                         //System.Windows.MessageBox.Show(ctRate.ToString());
@@ -301,7 +302,9 @@ namespace LoanManagement.Desktop
                             if (dt2 > DateTime.Today.Date)
                                 st = "Pending";
 
-                            MPaymentInfo mpi = new MPaymentInfo { PaymentNumber = n + 1, Amount = itm.Amount, TotalBalance = tBalance, BalanceInterest = tRate, DueDate = dt, ExcessBalance = 0, LoanID = itm.LoanID, PaymentStatus = st, TotalAmount = tAmount, RemainingLoanBalance = tRem, PreviousBalance = itm.TotalAmount };
+                            
+                            MPaymentInfo mpi = new MPaymentInfo { PaymentNumber = n + 1, Amount = itm.Amount, TotalBalance = tBalance, BalanceInterest = tRate, DueDate = dt, ExcessBalance = 0, LoanID = itm.LoanID, PaymentStatus = st, TotalAmount = tAmount, RemainingLoanBalance = tRem, PreviousBalance = iAmt };
+                            iAmt = tAmount;
                             n++;
                             ctx.MPaymentInfoes.Add(mpi);
                         }
@@ -329,7 +332,7 @@ namespace LoanManagement.Desktop
                 checkDue();
                 remind();
                 /*
-                using (var ctx = new iContext())
+                using (var ctx = new newContext())
                 {
                     Domain.Position pos = new Domain.Position { PositionName = "Administrator", Description = "ForAdmins" };
                     ctx.SaveChanges();
@@ -394,7 +397,7 @@ namespace LoanManagement.Desktop
 
 
 
-                using (var ctx = new iContext())
+                using (var ctx = new newContext())
                 {
                     var count = ctx.Users.Where(x => x.Username == txtUsername.Text && x.Password == txtPassword.Password).Count();
                     if (count > 0)
@@ -490,7 +493,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new iContext())
+                using (var ctx = new newContext())
                 {
                     var ctr = ctx.Users.Where(x => x.Username == txtUsername.Text).Count();
                     if (ctr > 0)
@@ -529,7 +532,7 @@ namespace LoanManagement.Desktop
             int ascii = Convert.ToInt16(e.Key);
             if (ascii == 2)
             {
-                using (var ctx = new iContext())
+                using (var ctx = new newContext())
                 {
                     var st = ctx.State.Find(1);
                     if (st.iState > 2)

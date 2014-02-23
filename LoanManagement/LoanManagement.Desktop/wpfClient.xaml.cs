@@ -126,7 +126,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new iContext())
+                using (var ctx = new newContext())
                 {
                     var clt = from cl in ctx.Clients
                               where cl.Active == status && cl.isConfirmed == true
@@ -160,7 +160,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new iContext())
+                using (var ctx = new newContext())
                 {
                     img.Visibility = Visibility.Visible;
                     var clt = ctx.Clients.Find(Convert.ToInt32(getRow(dgClient, 0)));
@@ -191,7 +191,7 @@ namespace LoanManagement.Desktop
                 MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure you want to retreive this record?", "Question", MessageBoxButton.YesNo);
                 if (mr == MessageBoxResult.Yes)
                 {
-                    using (var ctx = new iContext())
+                    using (var ctx = new newContext())
                     {
                         var agt = ctx.Clients.Find(n);
                         agt.Active = true;
@@ -214,7 +214,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new iContext())
+                using (var ctx = new newContext())
                 {
                     img.Visibility = Visibility.Visible;
                     var clt = ctx.Clients.Find(Convert.ToInt32(getRow(dgClient, 0)));
@@ -241,7 +241,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new iContext())
+                using (var ctx = new newContext())
                 {
                     int n;
                     try

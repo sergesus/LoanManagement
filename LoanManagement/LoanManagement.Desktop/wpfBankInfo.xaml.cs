@@ -275,14 +275,14 @@ namespace LoanManagement.Desktop
                 int num1 = 0;
                 if (status == "Add")
                 {
-                    using (var ctx = new iContext())
+                    using (var ctx = new newContext())
                     {
                         num1 = ctx.TempAdresses.Count();
                     }
                 }
                 else
                 {
-                    using (var ctx = new iContext())
+                    using (var ctx = new newContext())
                     {
                         num1 = ctx.BankAdresses.Where(x => x.BankID == bId).Count();
                     }
@@ -359,7 +359,7 @@ namespace LoanManagement.Desktop
                     //for view
                     if (status == "View")
                     {
-                        using (var ctx = new iContext())
+                        using (var ctx = new newContext())
                         {
                             var add = ctx.BankAdresses.Where(x => x.BankID == bId).Count();
                             int ctr = add + 1;
@@ -377,7 +377,7 @@ namespace LoanManagement.Desktop
                         return;
                     }
 
-                    using (var ctx = new iContext())
+                    using (var ctx = new newContext())
                     {
                         TempAddress add = new TempAddress { Street = txtStreet.Text, Province = txtProvince.Text, City = txtCity.Text };
                         ctx.TempAdresses.Add(add);
@@ -392,7 +392,7 @@ namespace LoanManagement.Desktop
                     //for view
                     if (status == "View")
                     {
-                        using (var ctx = new iContext())
+                        using (var ctx = new newContext())
                         {
                             int bankNum = Convert.ToInt32(getRow(dgAddress, 0));
                             var add = ctx.BankAdresses.Where(x => x.BankID == bId && x.BankNum == bankNum).First();
@@ -410,7 +410,7 @@ namespace LoanManagement.Desktop
                     }
 
 
-                    using (var ctx = new iContext())
+                    using (var ctx = new newContext())
                     {
                         var add = ctx.TempAdresses.Find(Convert.ToInt32(getRow(dgAddress, 0)));
                         add.City = txtCity.Text;
@@ -446,7 +446,7 @@ namespace LoanManagement.Desktop
                     //for view
                     if (status == "View")
                     {
-                        using (var ctx = new iContext())
+                        using (var ctx = new newContext())
                         {
                             var add = ctx.BankAdresses.Where(x=> x.BankID==bId && x.BankNum==Convert.ToInt32(getRow(dgAddress,0))).First();
                             txtCity.Text = add.City;
@@ -457,7 +457,7 @@ namespace LoanManagement.Desktop
                         return;
                     }
 
-                    using (var ctx = new iContext())
+                    using (var ctx = new newContext())
                     {
                         var add = ctx.TempAdresses.Find(Convert.ToInt32(getRow(dgAddress, 0)));
                         txtCity.Text = add.City;
@@ -479,7 +479,7 @@ namespace LoanManagement.Desktop
 
         private void btnDelAddress_Click(object sender, RoutedEventArgs e)
         {
-            using (var ctx = new iContext())
+            using (var ctx = new newContext())
             {
                 try
                 {
@@ -535,7 +535,7 @@ namespace LoanManagement.Desktop
 
                 if (status == "Add")
                 {
-                    using (var ctx = new iContext())
+                    using (var ctx = new newContext())
                     {
                         var num = ctx.Banks.Where(x => x.BankName == txtName.Text).Count();
                         if (num > 0)
@@ -567,7 +567,7 @@ namespace LoanManagement.Desktop
                 }
                 else
                 {
-                    using (var ctx = new iContext())
+                    using (var ctx = new newContext())
                     {
                         var bank = ctx.Banks.Find(bId);
                         bank.BankName = txtName.Text;
@@ -597,7 +597,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new iContext())
+                using (var ctx = new newContext())
                 {
                     DialogResult dr = System.Windows.Forms.MessageBox.Show("Are you sure you want to delete this record?", "Question", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                     if (dr == System.Windows.Forms.DialogResult.Yes)
@@ -632,7 +632,7 @@ namespace LoanManagement.Desktop
                 tbInfo.IsSelected = true;
                 if (status == "Add")
                 {
-                    using (var ctx = new iContext())
+                    using (var ctx = new newContext())
                     {
                         ctx.Database.ExecuteSqlCommand("delete from dbo.TempAddresses");
                     }
@@ -641,7 +641,7 @@ namespace LoanManagement.Desktop
                 }
                 else
                 {
-                    using (var ctx = new iContext())
+                    using (var ctx = new newContext())
                     {
                         var ctr = ctx.Loans.Where(x => x.BankID == bId && x.Status == "Released").Count();
                         if (ctr > 0)

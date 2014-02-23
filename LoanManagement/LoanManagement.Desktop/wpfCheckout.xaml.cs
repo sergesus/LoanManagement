@@ -49,7 +49,7 @@ namespace LoanManagement.Desktop
                         return;
                     }
 
-                    using (var ctx = new iContext())
+                    using (var ctx = new newContext())
                     {
                         MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure you want to process this transaction?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
                         if (mr == MessageBoxResult.Yes)
@@ -76,7 +76,7 @@ namespace LoanManagement.Desktop
                     MessageBoxResult mr = MessageBox.Show("Are you sure you want to process this transaction?", "Question", MessageBoxButton.YesNo);
                     if (mr == MessageBoxResult.Yes)
                     {
-                        using (var ctx = new iContext())
+                        using (var ctx = new newContext())
                         {
                             AdjustedLoan al = new AdjustedLoan { DateAdjusted = DateTime.Today.Date, Days = Convert.ToInt32(days), Fee = Convert.ToDouble(lbl2.Content), LoanID = lId };
                             var py = from p in ctx.FPaymentInfo
@@ -136,7 +136,7 @@ namespace LoanManagement.Desktop
                 else if (status == "Holding")
                 {
                     lbl1.Content = "Cheque Holding";
-                    using (var ctx = new iContext())
+                    using (var ctx = new newContext())
                     { 
                        var dts = ctx.FPaymentInfo.Where(x => x.LoanID == lId && (x.PaymentStatus == "Pending" || x.PaymentStatus == "On Hold")).First();
                        double hFee = dts.Amount * (dts.Loan.Service.Holding / 100);

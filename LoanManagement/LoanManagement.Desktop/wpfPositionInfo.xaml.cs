@@ -45,7 +45,7 @@ namespace LoanManagement.Desktop
 
                 if (status == "View")
                 {
-                    using (var ctx = new iContext())
+                    using (var ctx = new newContext())
                     {
                         Domain.Position pos = ctx.Positions.Find(pID);
                         txtPosition.Text = pos.PositionName;
@@ -65,7 +65,7 @@ namespace LoanManagement.Desktop
         {
             if (status == "Add")
             {
-                using (var ctx = new iContext())
+                using (var ctx = new newContext())
                 {
                     var ctr = ctx.Positions.Where(x => x.PositionName == txtPosition.Text).Count();
                     if (ctr > 0)
@@ -86,7 +86,7 @@ namespace LoanManagement.Desktop
             }
             else
             {
-                using (var ctx = new iContext())
+                using (var ctx = new newContext())
                 {
                     Domain.Position pos = ctx.Positions.Find(pID);
                     pos.PositionName = txtPosition.Text;

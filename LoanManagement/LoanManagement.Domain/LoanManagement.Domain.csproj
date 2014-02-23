@@ -45,69 +45,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Migrations\201309152347506_AddedPaidLoan.cs" />
-    <Compile Include="Migrations\201309152347506_AddedPaidLoan.Designer.cs">
-      <DependentUpon>201309152347506_AddedPaidLoan.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201309152358267_AddedNullable.cs" />
-    <Compile Include="Migrations\201309152358267_AddedNullable.Designer.cs">
-      <DependentUpon>201309152358267_AddedNullable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201309160011588_AddedViewLoans.cs" />
-    <Compile Include="Migrations\201309160011588_AddedViewLoans.Designer.cs">
-      <DependentUpon>201309160011588_AddedViewLoans.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201309170230253_AddedServices.cs" />
-    <Compile Include="Migrations\201309170230253_AddedServices.Designer.cs">
-      <DependentUpon>201309170230253_AddedServices.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201309250052312_State.cs" />
-    <Compile Include="Migrations\201309250052312_State.Designer.cs">
-      <DependentUpon>201309250052312_State.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201309250147302_AddedItext.cs" />
-    <Compile Include="Migrations\201309250147302_AddedItext.Designer.cs">
-      <DependentUpon>201309250147302_AddedItext.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201309260020540_AddedAuditTrail.cs" />
-    <Compile Include="Migrations\201309260020540_AddedAuditTrail.Designer.cs">
-      <DependentUpon>201309260020540_AddedAuditTrail.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201309281318238_AddedNullableForDates.cs" />
-    <Compile Include="Migrations\201309281318238_AddedNullableForDates.Designer.cs">
-      <DependentUpon>201309281318238_AddedNullableForDates.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201309290057572_AddedPosScope.cs" />
-    <Compile Include="Migrations\201309290057572_AddedPosScope.Designer.cs">
-      <DependentUpon>201309290057572_AddedPosScope.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201312110129488_AddedCredentials.cs" />
-    <Compile Include="Migrations\201312110129488_AddedCredentials.Designer.cs">
-      <DependentUpon>201312110129488_AddedCredentials.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201312170111509_AddedTracking.cs" />
-    <Compile Include="Migrations\201312170111509_AddedTracking.Designer.cs">
-      <DependentUpon>201312170111509_AddedTracking.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201312190158042_AddedHoliday.cs" />
-    <Compile Include="Migrations\201312190158042_AddedHoliday.Designer.cs">
-      <DependentUpon>201312190158042_AddedHoliday.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201312210934399_AddedMPaymentInfo.cs" />
-    <Compile Include="Migrations\201312210934399_AddedMPaymentInfo.Designer.cs">
-      <DependentUpon>201312210934399_AddedMPaymentInfo.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201312211006284_AddedCollectorID.cs" />
-    <Compile Include="Migrations\201312211006284_AddedCollectorID.Designer.cs">
-      <DependentUpon>201312211006284_AddedCollectorID.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201312220023410_AddedMicroPayments.cs" />
-    <Compile Include="Migrations\201312220023410_AddedMicroPayments.Designer.cs">
-      <DependentUpon>201312220023410_AddedMicroPayments.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201401070100450_AddedMPayment.cs" />
-    <Compile Include="Migrations\201401070100450_AddedMPayment.Designer.cs">
-      <DependentUpon>201401070100450_AddedMPayment.cs</DependentUpon>
+    <Compile Include="Migrations\201401230610229_UpdatedCollector.cs" />
+    <Compile Include="Migrations\201401230610229_UpdatedCollector.Designer.cs">
+      <DependentUpon>201401230610229_UpdatedCollector.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -118,53 +58,8 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201309152347506_AddedPaidLoan.resx">
-      <DependentUpon>201309152347506_AddedPaidLoan.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201309152358267_AddedNullable.resx">
-      <DependentUpon>201309152358267_AddedNullable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201309160011588_AddedViewLoans.resx">
-      <DependentUpon>201309160011588_AddedViewLoans.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201309170230253_AddedServices.resx">
-      <DependentUpon>201309170230253_AddedServices.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201309250052312_State.resx">
-      <DependentUpon>201309250052312_State.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201309250147302_AddedItext.resx">
-      <DependentUpon>201309250147302_AddedItext.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201309260020540_AddedAuditTrail.resx">
-      <DependentUpon>201309260020540_AddedAuditTrail.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201309281318238_AddedNullableForDates.resx">
-      <DependentUpon>201309281318238_AddedNullableForDates.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201309290057572_AddedPosScope.resx">
-      <DependentUpon>201309290057572_AddedPosScope.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201312110129488_AddedCredentials.resx">
-      <DependentUpon>201312110129488_AddedCredentials.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201312170111509_AddedTracking.resx">
-      <DependentUpon>201312170111509_AddedTracking.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201312190158042_AddedHoliday.resx">
-      <DependentUpon>201312190158042_AddedHoliday.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201312210934399_AddedMPaymentInfo.resx">
-      <DependentUpon>201312210934399_AddedMPaymentInfo.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201312211006284_AddedCollectorID.resx">
-      <DependentUpon>201312211006284_AddedCollectorID.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201312220023410_AddedMicroPayments.resx">
-      <DependentUpon>201312220023410_AddedMicroPayments.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201401070100450_AddedMPayment.resx">
-      <DependentUpon>201401070100450_AddedMPayment.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201401230610229_UpdatedCollector.resx">
+      <DependentUpon>201401230610229_UpdatedCollector.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

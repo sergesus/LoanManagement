@@ -69,7 +69,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new iContext())
+                using (var ctx = new newContext())
                 {
                     var emp = from em in ctx.Employees where em.Active == status select new { em.EmployeeID, em.FirstName, em.MI, em.LastName, em.Suffix, em.Position.PositionName };
                     dgEmp.ItemsSource = emp.ToList();
@@ -116,7 +116,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new iContext())
+                using (var ctx = new newContext())
                 {
                     img.Visibility = Visibility.Visible;
                     var emp = ctx.Employees.Find(Convert.ToInt32(getRow(dgEmp, 0)));
@@ -205,7 +205,7 @@ namespace LoanManagement.Desktop
                 MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure you want to retreive this record?", "Question", MessageBoxButton.YesNo);
                 if (mr == MessageBoxResult.Yes)
                 {
-                    using (var ctx = new iContext())
+                    using (var ctx = new newContext())
                     {
                         var agt = ctx.Employees.Find(n);
                         agt.Active = true;
@@ -228,7 +228,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new iContext())
+                using (var ctx = new newContext())
                 {
                     img.Visibility = Visibility.Visible;
                     var emp = ctx.Employees.Find(Convert.ToInt32(getRow(dgEmp, 0)));
@@ -257,7 +257,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new iContext())
+                using (var ctx = new newContext())
                 {
                     int n;
                     try

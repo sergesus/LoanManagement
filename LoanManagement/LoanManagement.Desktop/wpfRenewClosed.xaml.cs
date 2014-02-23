@@ -37,7 +37,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new iContext())
+                using (var ctx = new newContext())
                 {
                     myNum = ctx.FPaymentInfo.Where(x => x.LoanID == lId && x.PaymentStatus == "Void").Count();
 
@@ -171,7 +171,7 @@ namespace LoanManagement.Desktop
                 MessageBoxResult mr = MessageBox.Show("Are you sure you want to process this transaction?", "Question", MessageBoxButton.YesNo);
                 if (mr == MessageBoxResult.Yes)
                 {
-                    using (var ctx = new iContext())
+                    using (var ctx = new newContext())
                     {
                         var bk = ctx.Banks.Where(x => x.BankName == cmbBank.Text).First();
                         int bId = bk.BankID;

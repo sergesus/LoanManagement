@@ -41,7 +41,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new iContext())
+                using (var ctx = new newContext())
                 {
                     var lon = ctx.Loans.Find(lId);
 
@@ -167,7 +167,7 @@ namespace LoanManagement.Desktop
             wpfViewClientInfo frm = new wpfViewClientInfo();
             frm.status = "View2";
             frm.Height = 600;
-            using (var ctx = new iContext())
+            using (var ctx = new newContext())
             {
                 var lon = ctx.Loans.Find(lId);
                 frm.cID = lon.ClientID;
@@ -186,7 +186,7 @@ namespace LoanManagement.Desktop
             {
                 wpfAgentInfo frm = new wpfAgentInfo();
                 frm.status = "View";
-                using (var ctx = new iContext())
+                using (var ctx = new newContext())
                 {
                     var lon = ctx.Loans.Find(lId);
                     frm.aId = lon.AgentID;
@@ -216,7 +216,7 @@ namespace LoanManagement.Desktop
                 else if (status == "Releasing")
                 {
                     String iDept = "";
-                    using (var ctx = new iContext())
+                    using (var ctx = new newContext())
                     {
                         var ln = ctx.Loans.Find(lId);
                         iDept = ln.Service.Department;
@@ -266,7 +266,7 @@ namespace LoanManagement.Desktop
                     System.Windows.MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure you want to update this loan?", "Question", MessageBoxButton.YesNo);
                     if (mr == System.Windows.MessageBoxResult.Yes)
                     {
-                        using (var ctx = new iContext())
+                        using (var ctx = new newContext())
                         {
                             var lon = ctx.Loans.Find(lId);
                             var ctr = ctx.Loans.Where(x => x.ClientID == lon.ClientID && (x.Status == "Applied" || x.Status == "Released" || x.Status == "Closed Account" || x.Status == "Approved") && x.LoanID != lon.LoanID).Count();

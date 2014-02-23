@@ -77,5 +77,13 @@ namespace LoanManagement.Desktop
                 return;
             }
         }
+
+        private void btnAdjustment_Click(object sender, RoutedEventArgs e)
+        {
+            wpfMAdjustment frm = new wpfMAdjustment();
+            frm.UserID = UserID;
+            this.Close();
+            frm.ShowDialog();
+        }
     }
 }

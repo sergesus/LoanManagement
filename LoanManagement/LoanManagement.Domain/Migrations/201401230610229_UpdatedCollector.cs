@@ -3,16 +3,16 @@ namespace LoanManagement.Domain.Migrations
     using System;
     using System.Data.Entity.Migrations;
     
-    public partial class AddedNullable : DbMigration
+    public partial class UpdatedCollector : DbMigration
     {
         public override void Up()
         {
-            AlterColumn("dbo.ClearedCheques", "DateCleared", c => c.DateTime());
+            AddColumn("dbo.PassedToCollectors", "TotalPaidBeforePassing", c => c.Double(nullable: false));
         }
         
         public override void Down()
         {
-            AlterColumn("dbo.ClearedCheques", "DateCleared", c => c.DateTime(nullable: false));
+            DropColumn("dbo.PassedToCollectors", "TotalPaidBeforePassing");
         }
     }
 }

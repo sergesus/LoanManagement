@@ -64,7 +64,7 @@ namespace LoanManagement.Desktop
                 //Grid grid = new Grid();
                 wdw1.Background = myBrush;
 
-                using (var ctx = new iContext())
+                using (var ctx = new newContext())
                 {
                     var lon = ctx.Loans.Find(lId);
                     lblDesAmt.Content = "Php " + lon.LoanApplication.AmountApplied.ToString("N2");
@@ -93,7 +93,7 @@ namespace LoanManagement.Desktop
             {
                 double max  = 0;
                 double min = 0;
-                using (var ctx = new iContext())
+                using (var ctx = new newContext())
                 { 
                     var lon = ctx.Loans.Find(lId);
                     var ser = ctx.Services.Find(lon.ServiceID);
@@ -110,7 +110,7 @@ namespace LoanManagement.Desktop
                 System.Windows.MessageBoxResult mr = System.Windows.MessageBox.Show("Are you sure you want to process this transaction?", "Question", MessageBoxButton.YesNo, MessageBoxImage.Question);
                 if (mr == System.Windows.MessageBoxResult.Yes)
                 {
-                    using (var ctx = new iContext())
+                    using (var ctx = new newContext())
                     {
                         var lon = ctx.Loans.Find(lId);
                         if (status == "Approval")
@@ -174,7 +174,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new iContext())
+                using (var ctx = new newContext())
                 {
                     
 
@@ -224,7 +224,7 @@ namespace LoanManagement.Desktop
         {
             try
             {
-                using (var ctx = new iContext())
+                using (var ctx = new newContext())
                 {
                     ctx.Database.ExecuteSqlCommand("delete from dbo.GenSOAs");
                     ctx.SaveChanges();
@@ -387,7 +387,7 @@ namespace LoanManagement.Desktop
         {
             wpfViewClientInfo frm = new wpfViewClientInfo();
             frm.status = "View2";
-            using (var ctx = new iContext())
+            using (var ctx = new newContext())
             {
                 var lon = ctx.Loans.Find(lId);
                 frm.cID = lon.ClientID;
@@ -414,7 +414,7 @@ namespace LoanManagement.Desktop
                 gfx.DrawImage(xImage, 40, 10, xImage.Width - 260, xImage.Height / 3);
                 font = new XFont("Verdana", 18, XFontStyle.Italic);
                 gfx.DrawString("Preview of Payment Schedule", font, XBrushes.Black, new XRect(0, 0, page.Width, 220), XStringFormats.Center);
-                using (var ctx = new iContext())
+                using (var ctx = new newContext())
                 {
                     font = new XFont("Verdana", 10, XFontStyle.Italic);
                     var lon = ctx.Loans.Find(lId);
@@ -444,7 +444,7 @@ namespace LoanManagement.Desktop
                 int n = 460;
                 int p = 1;
                 font = new XFont("Verdana", 10, XFontStyle.Regular);
-                using (var ctx = new iContext())
+                using (var ctx = new newContext())
                 {
                     var clt = from cl in ctx.GenSOA
                               select cl;
@@ -492,7 +492,7 @@ namespace LoanManagement.Desktop
                 //Footer Start
                 font = new XFont("Verdana", 10, XFontStyle.Italic);
                 string user = "";
-                using (var ctx = new iContext())
+                using (var ctx = new newContext())
                 {
                     var usr = ctx.Employees.Find(UserID);
                     user = usr.LastName + ", " + usr.FirstName + " " + usr.MI + " " + usr.Suffix;
